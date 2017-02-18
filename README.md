@@ -1,4 +1,4 @@
-DE-IK SMART-CAMPUS
+DE-IK SMART-CAMPUS [![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
 
 Building the project:
 mvn clean install
