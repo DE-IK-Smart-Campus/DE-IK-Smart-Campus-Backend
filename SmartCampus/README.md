@@ -1,4 +1,4 @@
-DE-IK-SMART CAMPUS
+DE-IK SMART-CAMPUS
 
 Building the project:
 mvn clean install
