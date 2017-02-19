@@ -37,15 +37,19 @@ Running from the smart-campus-web module:
 Running as jar:
 
 `java -jar [smart-campus-web]/target/jarFileName.jar`
+
 With Wildfly 10:
 
 Build the project with:
+
 `mvn clean install -Pwith-wildfly`
 
 Running from the parent:
+
 `mvn -pl smart-campus-web wildfly:run`
 
 Running from the smart-campus-web module:
+
 `mvn wildfly:run`
 
 With the run goal the server starts and deploys the .war.
