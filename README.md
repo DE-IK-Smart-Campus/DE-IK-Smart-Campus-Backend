@@ -1,22 +1,23 @@
 DE-IK SMART-CAMPUS [![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
 
 First configure your settings.xml in your .m2 folder with this profile:
-"<profiles>
+> <profiles>
 		<profile>
 			<id>local</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<mysql.connection.url>jdbc:mysql://hostname:3306/smartcampus-db-schema-name</mysql.connection.url>
-				<mysql.username>mysql-username</mysql.username>
-				<mysql.password>mysql-password</mysql.password>
+				<mysql.connection.url>jdbc:mysql://smartcampus:3306/smartcampus</mysql.connection.url>
+				<mysql.username>nandi</mysql.username>
+				<mysql.password>mysql</mysql.password>
 			</properties>
 		</profile>
 	</profiles>
 	<activeProfiles>
 		<activeProfile>local</activeProfile>
-	</activeProfiles>"
+> 	</activeProfiles>
+
 
 Building the project:
 
