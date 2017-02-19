@@ -1,22 +1,25 @@
 DE-IK SMART-CAMPUS [![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
 
-First configure your settings.xml in your .m2 folder with this profile:
-> <profiles>
-		<profile>
-			<id>local</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<mysql.connection.url>jdbc:mysql://smartcampus:3306/smartcampus</mysql.connection.url>
-				<mysql.username>nandi</mysql.username>
-				<mysql.password>mysql</mysql.password>
-			</properties>
-		</profile>
+First configure your settings.xml in your .m2 folder with this profile, you can find an example in config/maven folder.
+
+
+    <profiles>
+		    <profile>
+			    <id>local</id>
+			    <activation>
+				    <activeByDefault>true</activeByDefault>
+			    </activation>
+			    <properties>
+				    <mysql.connection.url>jdbc:mysql://smartcampus:3306/smartcampus</mysql.connection.url>
+				    <mysql.username>nandi</mysql.username>
+				    <mysql.password>mysql</mysql.password>
+			    </properties>
+		    </profile>
 	</profiles>
-	<activeProfiles>
-		<activeProfile>local</activeProfile>
-> 	</activeProfiles>
+    <activeProfiles>
+	    <activeProfile>local</activeProfile>
+    </activeProfiles>
+
 
 
 Building the project:
