@@ -1,9 +1,14 @@
 package hu.unideb.smartcampus.persistence.repository;
 
-import hu.unideb.smartcampus.persistence.entity.SampleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import hu.unideb.smartcampus.persistence.entity.SampleEntity;
+
+/**
+ * Sample repository which provides operations for {@link SampleEntity}.
+ */
 @Repository
-public interface SampleRepository extends JpaRepository<Long, SampleEntity> {
+public interface SampleRepository extends JpaRepository<SampleEntity, Long> {
+
 }

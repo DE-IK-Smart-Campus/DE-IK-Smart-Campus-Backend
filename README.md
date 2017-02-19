@@ -1,11 +1,17 @@
 DE-IK SMART-CAMPUS [![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
 
 Building the project:
-mvn clean install
+
+`mvn clean install`
 
 Running from the parent:
-mvn -pl smart-campus-web spring-boot:run
+
+`mvn -pl smart-campus-web spring-boot:run`
 
 Running from the smart-campus-web module:
-mvn spring-boot:run
 
+`mvn spring-boot:run`
+
+Running as a jar:
+
+`java -jar [smart-campus-web]/target/jarFileName.jar`

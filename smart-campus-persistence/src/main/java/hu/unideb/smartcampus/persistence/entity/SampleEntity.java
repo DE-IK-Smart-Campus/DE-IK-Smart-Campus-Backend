@@ -1,16 +1,21 @@
 package hu.unideb.smartcampus.persistence.entity;
 
+import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-
+/**
+ * Sample entity.
+ */
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class SampleEntity extends AbstractEntity<Long> {
+public class SampleEntity extends BaseEntity<Long> {
 
-    private String name;
+  /**
+   * The name of the sample entity.
+   */
+  private String name;
 }
