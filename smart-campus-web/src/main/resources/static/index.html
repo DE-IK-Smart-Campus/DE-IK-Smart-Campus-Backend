@@ -1,14 +1,14 @@
 <!doctype html>
-<html>
+<html ng-app="app">
 <head>
     <title>Hello AngularJS</title>
+    <script type="text/javascript" src="assets/angular/angular.js"></script>
+    <script type="text/javascript" src="assets/angular/angular-resource.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
 </head>
 <body>
-<div class="container">
-    <h1>Greeting</h1>
-    <div>
-        ZSOOOOT
-    </div>
+<div class="container" ng-controller="AppCtrl">
+    <p>{{content}}</p>
 </div>
 </body>
 </html>
