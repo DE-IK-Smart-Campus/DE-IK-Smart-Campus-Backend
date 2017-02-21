@@ -55,3 +55,17 @@ Running from the smart-campus-web module:
 With the run goal the server starts and deploys the .war.
 With start goal you can start the server.
 With deploy goal you can deploy the app and etc...
+
+
+Test data:
+
+|  Username  |  Password  |
+|: -------  :|:  ------  :|
+|  admin  |  admin  |
+|  adamkai  |  password  |
+|  nolbi  |  password  |
+|  holikai  |  password  |
+|  filtikai  |  password  |
+|  palu  |  password  |
+|  butikai  |  password  |
+|  gabai  |  password  |

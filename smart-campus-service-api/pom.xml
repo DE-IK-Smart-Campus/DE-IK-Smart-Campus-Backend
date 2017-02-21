@@ -11,4 +11,11 @@
 
     <artifactId>smart-campus-service-api</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>hu.unideb</groupId>
+            <artifactId>smart-campus-shared</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

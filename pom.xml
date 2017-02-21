@@ -19,6 +19,7 @@
 		<module>smart-campus-service-api</module>
 		<module>smart-campus-service-impl</module>
 		<module>smart-campus-web</module>
+		<module>smart-campus-shared</module>
 	</modules>
 
 	<properties>
@@ -55,6 +56,11 @@
 				<artifactId>smart-campus-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-shared</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -62,6 +68,11 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -159,6 +170,13 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 	<profiles>
