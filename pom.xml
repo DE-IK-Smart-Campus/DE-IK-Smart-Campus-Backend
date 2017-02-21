@@ -31,10 +31,17 @@
 		<rulesets.xml.location>${project.basedir}/../config/rules/rulesets.xml</rulesets.xml.location>
 		<checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
 		<version.wildfly>10.1.0.Final</version.wildfly>
+		<java.ee.version>7.0</java.ee.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<scope>provided</scope>
+				<version>${java.ee.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>hu.unideb</groupId>
 				<artifactId>smart-campus-persistence</artifactId>
