@@ -1,13 +1,19 @@
 package hu.unideb.smartcampus.service.api.domain;
 
+import static hu.unideb.smartcampus.shared.exclusion.FieldExclusion.EXCLUDE_PASSWORD;
+
 import hu.unideb.smartcampus.shared.enumeration.Role;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * User domain object.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = EXCLUDE_PASSWORD)
 public class User extends BaseObject<Long> {
 
   /**

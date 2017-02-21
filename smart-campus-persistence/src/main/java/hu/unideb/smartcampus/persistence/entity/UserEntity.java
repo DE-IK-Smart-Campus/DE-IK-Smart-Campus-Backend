@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.persistence.entity;
 
+import static hu.unideb.smartcampus.shared.exclusion.FieldExclusion.EXCLUDE_PASSWORD;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_PASSWORD;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_ROLE;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_USERNAME;
@@ -16,13 +17,17 @@ import javax.validation.constraints.Size;
 import hu.unideb.smartcampus.shared.enumeration.Role;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * UserEntity which represents the user.
  */
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = EXCLUDE_PASSWORD)
 @Entity
 @Table(name = TABLE_NAME_USER, uniqueConstraints = @UniqueConstraint(columnNames = COLUMN_NAME_USERNAME))
 public class UserEntity extends BaseEntity<Long> {
