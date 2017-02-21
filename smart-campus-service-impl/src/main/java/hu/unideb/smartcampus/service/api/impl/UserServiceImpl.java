@@ -12,7 +12,6 @@ import hu.unideb.smartcampus.service.api.domain.User;
 
 /**
  * Implementation for {@link UserService}.
- * {@inheritDoc}
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
   @Override
   public Optional<User> getByUsername(final String username) {
