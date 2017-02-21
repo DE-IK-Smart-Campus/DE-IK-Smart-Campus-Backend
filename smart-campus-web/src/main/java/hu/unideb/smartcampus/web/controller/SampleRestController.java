@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
 import hu.unideb.smartcampus.service.api.SampleService;
 
 /**
@@ -32,8 +34,10 @@ public class SampleRestController {
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/sample")
-  public ResponseEntity<String> getSample() {
+  public ResponseEntity<Map<String, String>> getSample() {
     this.sampleService.sampleDependencyValidationMethod();
-    return ResponseEntity.ok("Content");
+    Map<String, String> responseMap = new HashMap<>();
+    responseMap.put("content", "Content.");
+    return ResponseEntity.ok(responseMap);
   }
 }
