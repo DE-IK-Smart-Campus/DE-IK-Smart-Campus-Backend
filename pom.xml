@@ -14,6 +14,39 @@
 		<version>1.5.1.RELEASE</version>
 	</parent>
 
+	<name>Smart Campus Web Application</name>
+	<description>This module provides the server side of the project called Smart Campus at the University of Debrecen.</description>
+	<inceptionYear>2017</inceptionYear>
+
+	<developers>
+		<developer>
+			<id>Nandi</id>
+			<name>Nándor Holozsnyák</name>
+			<email>holi60@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<!-- add yourself -->
+	</developers>
+
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
+	</ciManagement>
+
+	<issueManagement>
+		<system>Trello (private)</system>
+		<url>https://trello.com/smartcampus7</url>
+	</issueManagement>
+
+	<scm>
+		<url>https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
+		<connection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</connection>
+	</scm>
+
 	<modules>
 		<module>smart-campus-persistence</module>
 		<module>smart-campus-service-api</module>
