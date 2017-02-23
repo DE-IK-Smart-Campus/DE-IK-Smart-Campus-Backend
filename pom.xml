@@ -65,10 +65,17 @@
 		<rulesets.xml.location>${project.basedir}/../config/rules/rulesets.xml</rulesets.xml.location>
 		<checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
 		<version.wildfly>10.1.0.Final</version.wildfly>
+		<jaxrs.version>2.0.1</jaxrs.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${jaxrs.version}</version>
+				<scope>provided</scope>
+			</dependency>
 			<dependency>
 				<groupId>hu.unideb</groupId>
 				<artifactId>smart-campus-persistence</artifactId>
