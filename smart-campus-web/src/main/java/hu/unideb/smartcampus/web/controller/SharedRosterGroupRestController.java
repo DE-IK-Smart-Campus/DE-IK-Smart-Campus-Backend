@@ -25,8 +25,8 @@ public class SharedRosterGroupRestController {
    * Constructor for dependency injection.
    */
   @Autowired
-  public SharedRosterGroupRestController(final SharedRosterService sampleService) {
-    this.sharedRosterGroup = sampleService;
+  public SharedRosterGroupRestController(final SharedRosterService sharedRosterGroup) {
+    this.sharedRosterGroup = sharedRosterGroup;
   }
 
   /**

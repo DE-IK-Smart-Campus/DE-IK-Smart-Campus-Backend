@@ -20,22 +20,22 @@ public class CreateGroupRequest extends BaseRequest implements Serializable {
   /**
    * Group ID.
    */
-  private String group;
+  private final String group;
 
   /**
    * Group name.
    */
-  private String name;
+  private final String name;
 
   /**
    * Group description.
    */
-  private String description;
+  private final String description;
 
   /**
    * Displayed groups for the new group.
    */
-  private String display;
+  private final String display;
 
   /**
    * Constructor which is made for the @Builder for Lombok.
@@ -49,7 +49,6 @@ public class CreateGroupRequest extends BaseRequest implements Serializable {
   @Builder
   public CreateGroupRequest(String host, String group, String name, String description,
       String display) {
-    super();
     this.host = host;
     this.group = group;
     this.name = name;

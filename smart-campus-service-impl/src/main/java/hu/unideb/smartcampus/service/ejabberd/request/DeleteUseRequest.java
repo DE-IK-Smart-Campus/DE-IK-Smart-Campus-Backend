@@ -20,17 +20,17 @@ public class DeleteUseRequest extends BaseRequest implements Serializable {
   /**
    * Group from the user should be removed.
    */
-  private String group;
+  private final String group;
 
   /**
    * JID of the user.
    */
-  private String user;
+  private final String user;
 
   /**
    * Host of the group, sometimes it is the XMPP server's host.
    */
-  private String grouphost;
+  private final String grouphost;
 
   /**
    * Constructor which is made for the @Builder for Lombok.
@@ -41,7 +41,6 @@ public class DeleteUseRequest extends BaseRequest implements Serializable {
    */
   @Builder
   public DeleteUseRequest(String host, String group, String user) {
-    super();
     this.host = host;
     this.group = group;
     this.user = user;

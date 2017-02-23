@@ -26,7 +26,6 @@ public class GroupRequest extends BaseRequest implements Serializable {
    * @param host the host.
    */
   public GroupRequest(String host) {
-    super();
     this.host = host;
   }
 

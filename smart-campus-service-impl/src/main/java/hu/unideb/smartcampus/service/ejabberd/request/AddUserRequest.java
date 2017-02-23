@@ -20,17 +20,17 @@ public class AddUserRequest extends BaseRequest implements Serializable {
   /**
    * Group where the user should be added.
    */
-  private String group;
+  private final String group;
 
   /**
    * JID of the username.
    */
-  private String user;
+  private final String user;
 
   /**
    * Host of the group, sometimes it is the XMPP server's host.
    */
-  private String grouphost;
+  private final String grouphost;
 
   /**
    * Constructor which is made for the @Builder for Lombok.

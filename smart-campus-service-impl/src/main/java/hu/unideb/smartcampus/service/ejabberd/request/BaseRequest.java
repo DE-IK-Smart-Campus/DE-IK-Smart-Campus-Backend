@@ -2,10 +2,17 @@ package hu.unideb.smartcampus.service.ejabberd.request;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * A parent class for every XMPP request.
  *
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseRequest implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -15,21 +22,4 @@ public class BaseRequest implements Serializable {
    */
   protected String host;
 
-  /**
-   * Returns the host.
-   *
-   * @return the host.
-   */
-  public String getHost() {
-    return host;
-  }
-
-  /**
-   * Set the host.
-   *
-   * @param host the host.
-   */
-  public void setHost(String host) {
-    this.host = host;
-  }
 }

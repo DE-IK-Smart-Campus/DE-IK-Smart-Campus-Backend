@@ -18,8 +18,13 @@ import hu.unideb.smartcampus.persistence.config.PersistenceConfiguration;
 @PropertySource("classpath:smartcampus.properties")
 public class ServiceConfiguration {
 
+  /**
+   * Construct an instance of PropertySourcesPlaceholderConfigurer.
+   *
+   * @return a bean instance of PropertySourcesPlaceholderConfigurer.
+   */
   @Bean
-  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+  public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
     return new PropertySourcesPlaceholderConfigurer();
   }
 
