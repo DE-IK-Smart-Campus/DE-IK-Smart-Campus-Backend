@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * A parent class for every XMPP request.
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class BaseRequest implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -20,6 +18,6 @@ public class BaseRequest implements Serializable {
   /**
    * The main host.
    */
-  protected String host;
+  protected final String host;
 
 }

@@ -41,7 +41,7 @@ public class DeleteUseRequest extends BaseRequest implements Serializable {
    */
   @Builder
   public DeleteUseRequest(String host, String group, String user) {
-    this.host = host;
+    super(host);
     this.group = group;
     this.user = user;
     this.grouphost = host;

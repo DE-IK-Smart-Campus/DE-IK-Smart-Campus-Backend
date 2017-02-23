@@ -5,7 +5,6 @@ import java.io.Serializable;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * Group request can be used to list groups in given host.
@@ -13,8 +12,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Builder
-@NoArgsConstructor
 @SuppressWarnings({"PMD.SingularField"})
 public class GroupRequest extends BaseRequest implements Serializable {
 
@@ -25,8 +22,9 @@ public class GroupRequest extends BaseRequest implements Serializable {
    *
    * @param host the host.
    */
+  @Builder
   public GroupRequest(String host) {
-    this.host = host;
+    super(host);
   }
 
 }

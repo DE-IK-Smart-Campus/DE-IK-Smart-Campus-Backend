@@ -49,7 +49,7 @@ public class CreateGroupRequest extends BaseRequest implements Serializable {
   @Builder
   public CreateGroupRequest(String host, String group, String name, String description,
       String display) {
-    this.host = host;
+    super(host);
     this.group = group;
     this.name = name;
     this.description = description;

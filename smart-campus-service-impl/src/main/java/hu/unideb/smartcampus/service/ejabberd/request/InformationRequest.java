@@ -30,7 +30,7 @@ public class InformationRequest extends BaseRequest implements Serializable {
    */
   @Builder
   public InformationRequest(String host, String group) {
-    this.host = host;
+    super(host);
     this.group = group;
   }
 
