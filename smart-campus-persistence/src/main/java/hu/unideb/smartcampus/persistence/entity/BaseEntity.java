@@ -20,6 +20,9 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 public class BaseEntity<T extends Serializable> implements Serializable {
 
+  /**
+   * Serial version UID.
+   */
   private static final long serialVersionUID = -862719550032921202L;
 
   /**

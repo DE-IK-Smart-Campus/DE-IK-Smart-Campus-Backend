@@ -87,7 +87,7 @@
             <!-- we use class comments as source for xdoc files, so content is big and that is by design -->
             <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration | //PackageDeclaration | //ClassOrInterfaceDeclaration[@Image='JavadocTagInfo'] | //ClassOrInterfaceDeclaration[@Image='SeverityLevel'] | //ClassOrInterfaceDeclaration[@Image='LeftCurlyOption'] | //ClassOrInterfaceDeclaration[@Image='RightCurlyOption'] | //ClassOrInterfaceDeclaration[@Image='ImportOrderOption']"/>
             <property name="maxLines" value="8"/>
-            <property name="maxLineLength" value="100"/>
+            <property name="maxLineLength" value="150"/>
         </properties>
     </rule>
 
@@ -148,6 +148,7 @@
         <exclude name="FieldDeclarationsShouldBeAtStartOfClass"/>
         <!-- too much alarms of Checks, we will never move logic out of Check, each Check is independent logic container -->
         <exclude name="GodClass"/>
+        <exclude name="SingularField" />
     </rule>
 
     <rule ref="rulesets/java/design.xml/ConfusingTernary">
@@ -200,11 +201,21 @@
 
     <rule ref="rulesets/java/finalizers.xml"/>
     <rule ref="rulesets/java/imports.xml"/>
+    <rule ref="rulesets/java/imports.xml/TooManyStaticImports">
+        <properties>
+            <property name="maximumStaticImports" value="20"/>
+        </properties>
+    </rule>
     <rule ref="rulesets/java/javabeans.xml">
         <!-- too many false-positives -->
         <exclude name="BeanMembersShouldSerialize"/>
     </rule>
     <rule ref="rulesets/java/junit.xml"/>
+    <rule ref="rulesets/java/junit.xml/JUnitTestContainsTooManyAsserts">
+        <properties>
+            <property name="maximumAsserts" value="10"/>
+        </properties>
+    </rule>
     <rule ref="rulesets/java/logging-jakarta-commons.xml"/>
 
     <rule ref="rulesets/java/logging-java.xml"/>
@@ -266,6 +277,7 @@
         <properties>
             <!-- Main is good name for class containing main method, Tag as inner class name is also fine -->
             <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@Image='Main' or @Image='Tag']"/>
+            <property name="minimum" value="4"/>
         </properties>
     </rule>
 

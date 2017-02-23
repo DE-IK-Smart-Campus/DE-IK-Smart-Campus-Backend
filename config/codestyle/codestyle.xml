@@ -156,7 +156,7 @@
     </option>
     <option name="STATIC_METHODS_ORDER_WEIGHT" value="5"/>
     <option name="METHODS_ORDER_WEIGHT" value="4"/>
-    <option name="RIGHT_MARGIN" value="100"/>
+    <option name="RIGHT_MARGIN" value="150"/>
     <option name="JD_ALIGN_PARAM_COMMENTS" value="false"/>
     <option name="JD_ALIGN_EXCEPTION_COMMENTS" value="false"/>
     <option name="JD_ADD_BLANK_AFTER_DESCRIPTION" value="false"/>
@@ -272,7 +272,7 @@
         <option name="PARENT_SETTINGS_INSTALLED" value="true"/>
     </codeStyleSettings>
     <codeStyleSettings language="JAVA">
-        <option name="RIGHT_MARGIN" value="100"/>
+        <option name="RIGHT_MARGIN" value="150"/>
         <option name="KEEP_CONTROL_STATEMENT_IN_ONE_LINE" value="false"/>
         <option name="KEEP_BLANK_LINES_IN_CODE" value="1"/>
         <option name="CALL_PARAMETERS_WRAP" value="1"/>
