@@ -41,7 +41,6 @@ public class AddUserRequest extends BaseRequest implements Serializable {
    */
   @Builder
   public AddUserRequest(String host, String group, String user) {
-    super();
     this.host = host;
     this.group = group;
     this.user = user;

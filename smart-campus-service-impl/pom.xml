@@ -12,8 +12,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -23,6 +24,19 @@
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-service-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>hu.unideb</groupId>
+			<artifactId>smart-campus-shared</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+			<classifier>tests</classifier>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
