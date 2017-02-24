@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
@@ -35,10 +36,11 @@ public class UserRestController {
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/login")
-  public ResponseEntity login() {
+  public ResponseEntity login(@RequestParam(name = "user") String user,
+      @RequestParam(name = "pass") String password) {
     ResponseEntity<String> body = ResponseEntity.ok().body("OK");
     try {
-      ejabberdUser.login("java", "admin");
+      ejabberdUser.login(user, password);
     } catch (XmppException e) {
       body = ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
