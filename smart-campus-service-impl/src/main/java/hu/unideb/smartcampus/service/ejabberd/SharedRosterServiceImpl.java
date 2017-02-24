@@ -23,11 +23,11 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.ClientProvider;
 import hu.unideb.smartcampus.service.api.HttpStatusValidator;
-import hu.unideb.smartcampus.service.ejabberd.request.AddUserRequest;
-import hu.unideb.smartcampus.service.ejabberd.request.CreateGroupRequest;
-import hu.unideb.smartcampus.service.ejabberd.request.DeleteUseRequest;
-import hu.unideb.smartcampus.service.ejabberd.request.GroupRequest;
-import hu.unideb.smartcampus.service.ejabberd.request.InformationRequest;
+import hu.unideb.smartcampus.service.ejabberd.srg.request.AddUserRequest;
+import hu.unideb.smartcampus.service.ejabberd.srg.request.CreateGroupRequest;
+import hu.unideb.smartcampus.service.ejabberd.srg.request.DeleteUseRequest;
+import hu.unideb.smartcampus.service.ejabberd.srg.request.GroupRequest;
+import hu.unideb.smartcampus.service.ejabberd.srg.request.InformationRequest;
 
 
 /**

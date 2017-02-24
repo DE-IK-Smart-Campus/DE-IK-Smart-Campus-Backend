@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.ejabberd.request;
+package hu.unideb.smartcampus.service.ejabberd.srg.request;
 
 import java.io.Serializable;
 
@@ -7,23 +7,23 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Request which can be used to add user to a given group on a host.
+ * Delete request can be used to delete user from given group.
  *
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings({"PMD.SingularField"})
-public class AddUserRequest extends BaseRequest implements Serializable {
+public class DeleteUseRequest extends BaseRequest implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
   /**
-   * Group where the user should be added.
+   * Group from the user should be removed.
    */
   private final String group;
 
   /**
-   * JID of the username.
+   * JID of the user.
    */
   private final String user;
 
@@ -37,10 +37,10 @@ public class AddUserRequest extends BaseRequest implements Serializable {
    *
    * @param host the host.
    * @param group the group.
-   * @param user the user.
+   * @param user the user's JID which should be deleted.
    */
   @Builder
-  public AddUserRequest(String host, String group, String user) {
+  public DeleteUseRequest(String host, String group, String user) {
     super(host);
     this.group = group;
     this.user = user;
