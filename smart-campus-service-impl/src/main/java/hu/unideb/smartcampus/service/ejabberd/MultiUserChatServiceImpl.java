@@ -6,7 +6,6 @@ import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_SUBSCRIBE_COMMAND;
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_UNSUBSCRIBE_COMMAND;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -68,12 +67,10 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
   @Override
   public void createRoom(String roomName) {
     LOGGER.info("Creating new multi user chat (MUC) with name:{}", roomName);
-    WebTarget client =
-        clientProvider.createClientByUrl(MULTI_USER_CHAT_CREATE_ROOM_WITH_OPT_COMMAND);
-    Map<String, String> subscriptionOptions = defaultOptions();
-    Entity<CreateRoomRequest> entity =
-        Entity.entity(CreateRoomRequest.builder().name(roomName).options(subscriptionOptions)
-            .host(host).service(service).build(), MediaType.APPLICATION_JSON);
+    WebTarget client = clientProvider.createClientByUrl(MULTI_USER_CHAT_CREATE_ROOM_COMMAND);
+    Entity<CreateRoomRequest> entity = Entity.entity(
+        CreateRoomRequest.builder().name(roomName).host(host).service(service).build(),
+        MediaType.APPLICATION_JSON);
     Response post = client.request().post(entity);
     if (statusValidator.isOk(post)) {
       LOGGER.info("Multi user chat room with name {} created.", roomName);
@@ -81,14 +78,6 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
       LOGGER.info("Multi user chat room could not been created.", roomName);
     }
   }
-
-
-  private Map<String, String> defaultOptions() {
-    Map<String, String> subscriptionOptions = new HashMap<>();
-    subscriptionOptions.put("allow_subscription", "true");
-    return subscriptionOptions;
-  }
-
 
   /**
    * {@inheritDoc}.
