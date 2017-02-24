@@ -9,11 +9,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>war</packaging>
 	<artifactId>smart-campus-web</artifactId>
-
+  
 	<properties>
 		<jboss.home>${project.parent.basedir}/smart-campus-wildfly/target/wildfly-10.1.0.Final</jboss.home>
 	</properties>
-
+  
 	<dependencies>
 		<dependency>
 			<groupId>hu.unideb</groupId>
