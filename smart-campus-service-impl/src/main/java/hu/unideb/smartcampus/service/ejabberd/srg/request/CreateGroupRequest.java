@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.ejabberd.request;
+package hu.unideb.smartcampus.service.ejabberd.srg.request;
 
 import java.io.Serializable;
 
