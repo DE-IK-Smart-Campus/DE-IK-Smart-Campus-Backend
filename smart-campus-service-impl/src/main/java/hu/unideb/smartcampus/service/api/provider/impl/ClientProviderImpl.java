@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.impl;
+package hu.unideb.smartcampus.service.api.provider.impl;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -7,7 +7,7 @@ import javax.ws.rs.client.WebTarget;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.ClientProvider;
+import hu.unideb.smartcampus.service.api.provider.ClientProvider;
 
 /**
  * ClientProvider implementation.
