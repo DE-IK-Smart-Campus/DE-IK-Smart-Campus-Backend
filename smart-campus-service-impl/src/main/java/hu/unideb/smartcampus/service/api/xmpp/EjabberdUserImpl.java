@@ -4,20 +4,20 @@ import java.io.IOException;
 
 import javax.annotation.PreDestroy;
 
-import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
+import hu.unideb.smartcampus.shared.exception.XmppException;
 
 /**
  * Session scoped service for XMPP connection.
@@ -36,12 +36,13 @@ public class EjabberdUserImpl implements EjabberdUser {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(EjabberdUserImpl.class);
 
-  private static final String SMARTCAMPUS = "smartcampus";
-
   /**
    * XMPP connection to Ejabberd server.
    */
   private XMPPTCPConnection connection;
+
+  @Autowired
+  private XmppClientConfigurationService connectionConfigurationService;
 
   @PreDestroy
   public void preDestroy() {
@@ -87,17 +88,11 @@ public class EjabberdUserImpl implements EjabberdUser {
   }
 
   private void initConnection(String username, String password) throws XmppException {
-    XMPPTCPConnectionConfiguration conf = getConfigurationByUsernameAndPassword(username, password);
+    XMPPTCPConnectionConfiguration conf =
+        connectionConfigurationService.getConfigurationByUsernameAndPassword(username, password);
     connection = new XMPPTCPConnection(conf);
     connect();
     doLogin();
-  }
-
-  private XMPPTCPConnectionConfiguration getConfigurationByUsernameAndPassword(String username,
-      String password) {
-    return XMPPTCPConnectionConfiguration.builder().setHost(SMARTCAMPUS).setServiceName(SMARTCAMPUS)
-        .setPort(5222).setSecurityMode(SecurityMode.disabled).setDebuggerEnabled(true)
-        .setUsernameAndPassword(username, password).build();
   }
 
   private void connect() throws ConnectionException {
