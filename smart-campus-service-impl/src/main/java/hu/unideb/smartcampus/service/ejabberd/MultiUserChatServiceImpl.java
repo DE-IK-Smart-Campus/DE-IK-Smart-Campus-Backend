@@ -6,21 +6,19 @@ import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_SUBSCRIBE_COMMAND;
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_UNSUBSCRIBE_COMMAND;
 
-import java.util.Map;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.ClientProvider;
-import hu.unideb.smartcampus.service.api.HttpStatusValidator;
+import java.util.Map;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import hu.unideb.smartcampus.service.api.ResponseStatusValidator;
+import hu.unideb.smartcampus.service.api.provider.ClientProvider;
 import hu.unideb.smartcampus.service.ejabberd.muc.request.CreateRoomRequest;
 import hu.unideb.smartcampus.service.ejabberd.muc.request.DestroyRoomRequest;
 import hu.unideb.smartcampus.service.ejabberd.muc.request.SubscribeRequest;
@@ -28,7 +26,6 @@ import hu.unideb.smartcampus.service.ejabberd.muc.request.UnsubscribeRequest;
 
 /**
  * Multi user chat (MUC) service implementation.
- *
  */
 @Service
 public class MultiUserChatServiceImpl implements MultiUserChatService {
@@ -59,7 +56,7 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
   private ClientProvider clientProvider;
 
   @Autowired
-  private HttpStatusValidator statusValidator;
+  private ResponseStatusValidator statusValidator;
 
   /**
    * {@inheritDoc}.

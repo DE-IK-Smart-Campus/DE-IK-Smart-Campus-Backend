@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.Optional;
 import javax.annotation.PostConstruct;
 import hu.unideb.smartcampus.service.api.provider.PropertyProvider;
 import hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey;
@@ -29,8 +28,8 @@ public class PropertyProviderImpl implements PropertyProvider {
   }
 
   @Override
-  public Optional<String> getPropertyValue(final ConfigPropertyKey configPropertyKey) {
-    return Optional.ofNullable(this.configProperties.get(configPropertyKey));
+  public String getPropertyValue(final ConfigPropertyKey configPropertyKey) {
+    return this.configProperties.get(configPropertyKey);
   }
 
   /**
