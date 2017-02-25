@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
  * Service for checking response status.
  *
  */
-public interface HttpStatusValidator {
+public interface ResponseStatusValidator {
 
   /**
    * Checks if a response's status is OK.

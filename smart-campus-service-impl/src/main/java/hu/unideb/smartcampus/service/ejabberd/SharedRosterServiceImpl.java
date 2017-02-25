@@ -1,33 +1,29 @@
 package hu.unideb.smartcampus.service.ejabberd;
 
+import static hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey.SMART_CAMPUS_XMPP_DOMAIN;
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_COMMAND;
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_USER_COMMAND;
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_DELETE_USER_COMMAND;
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_INFO_COMMAND;
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_LIST_COMMAND;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.provider.ClientProvider;
-import hu.unideb.smartcampus.service.api.HttpStatusValidator;
-import hu.unideb.smartcampus.service.ejabberd.srg.request.AddUserRequest;
-import hu.unideb.smartcampus.service.ejabberd.srg.request.CreateGroupRequest;
-import hu.unideb.smartcampus.service.ejabberd.srg.request.DeleteUseRequest;
-import hu.unideb.smartcampus.service.ejabberd.srg.request.GroupRequest;
-import hu.unideb.smartcampus.service.ejabberd.srg.request.InformationRequest;
+import java.util.List;
+import java.util.Map;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
+import hu.unideb.smartcampus.service.api.ResponseStatusValidator;
+import hu.unideb.smartcampus.service.api.provider.ClientResponseProvider;
+import hu.unideb.smartcampus.service.api.provider.PropertyProvider;
+import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.AddUserRequest;
+import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.CreateGroupRequest;
+import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.DeleteUseRequest;
+import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.GroupRequest;
+import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.InformationRequest;
 
 
 /**
@@ -40,18 +36,19 @@ import hu.unideb.smartcampus.service.ejabberd.srg.request.InformationRequest;
 @Service
 public class SharedRosterServiceImpl implements SharedRosterService {
   private static final Logger LOGGER = LoggerFactory.getLogger(SharedRosterServiceImpl.class);
-
-  /**
-   * XMPP Server domain.
-   */
-  @Value("${smartcampus.xmpp.domain}")
-  private String domain;
+  private static final GenericType<Map<String, String>> MAP_GENERIC_TYPE = new GenericType<Map<String, String>>() {
+  };
+  private static final GenericType<List<String>> LIST_GENERIC_TYPE = new GenericType<List<String>>() {
+  };
 
   @Autowired
-  private ClientProvider clientProvider;
+  private PropertyProvider propertyProvider;
 
   @Autowired
-  private HttpStatusValidator statusValidator;
+  private ResponseStatusValidator statusValidator;
+
+  @Autowired
+  private ClientResponseProvider clientResponseProvider;
 
   /**
    * {@inheritDoc}.
@@ -59,12 +56,15 @@ public class SharedRosterServiceImpl implements SharedRosterService {
   @Override
   public void addUserToGroup(String user, String group) {
     LOGGER.info("Add user {} to group {}", user, group);
-    WebTarget client = clientProvider.createClientByUrl(SHARED_ROSTER_GROUP_CREATE_USER_COMMAND);
-    Entity<AddUserRequest> entity =
-        Entity.entity(AddUserRequest.builder().host(domain).group(group).user(user).build(),
-            MediaType.APPLICATION_JSON);
-    Response post = client.request().post(entity);
-    if (statusValidator.isOk(post)) {
+
+    final AddUserRequest addUserRequest = AddUserRequest.builder()
+        .host(this.getXmppDomainPropertyValue())
+        .group(group)
+        .user(user)
+        .build();
+    final Response response = this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_CREATE_USER_COMMAND, addUserRequest);
+
+    if (statusValidator.isOk(response)) {
       LOGGER.info("{} user added to group {}", user, group);
     } else {
       LOGGER.info("Adding user to group failed... Try again later.");
@@ -76,15 +76,19 @@ public class SharedRosterServiceImpl implements SharedRosterService {
    */
   @Override
   public void createNewGroup(String group, String groupName, String description,
-      List<String> displayedGroups) {
+                             List<String> displayedGroups) {
     LOGGER.info("Creating group called {}.", group);
-    WebTarget target = clientProvider.createClientByUrl(SHARED_ROSTER_GROUP_CREATE_COMMAND);
-    Entity<CreateGroupRequest> entity = Entity.entity(
-        CreateGroupRequest.builder().host(domain).group(group).description(description)
-            .name(groupName).display(getDisplayedGroups(displayedGroups)).build(),
-        MediaType.APPLICATION_JSON);
-    Response post = target.request().post(entity);
-    if (statusValidator.isOk(post)) {
+
+    final CreateGroupRequest createGroupRequest = CreateGroupRequest.builder()
+        .host(this.getXmppDomainPropertyValue())
+        .group(group)
+        .description(description)
+        .name(groupName)
+        .display(this.getDisplayedGroups(displayedGroups))
+        .build();
+    final Response response = this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_CREATE_COMMAND, createGroupRequest);
+
+    if (statusValidator.isOk(response)) {
       LOGGER.info("{} created.", group);
     } else {
       LOGGER.info("Creating group failed... Try again later.");
@@ -97,12 +101,15 @@ public class SharedRosterServiceImpl implements SharedRosterService {
   @Override
   public void deleteUserFromGroup(String user, String group) {
     LOGGER.info("Deleting user {} from group called {}.", user, group);
-    WebTarget client = clientProvider.createClientByUrl(SHARED_ROSTER_GROUP_DELETE_USER_COMMAND);
-    Entity<DeleteUseRequest> entity =
-        Entity.entity(DeleteUseRequest.builder().host(domain).group(group).user(user).build(),
-            MediaType.APPLICATION_JSON);
-    Response post = client.request().post(entity);
-    if (statusValidator.isOk(post)) {
+
+    final DeleteUseRequest deleteUseRequest = DeleteUseRequest.builder()
+        .host(this.getXmppDomainPropertyValue())
+        .user(user)
+        .group(group)
+        .build();
+    final Response response = this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_DELETE_USER_COMMAND, deleteUseRequest);
+
+    if (statusValidator.isOk(response)) {
       LOGGER.info("{} deleted from group {}.", user, group);
     } else {
       LOGGER.info("Deleting user failed... Try again later.");
@@ -115,10 +122,13 @@ public class SharedRosterServiceImpl implements SharedRosterService {
   @Override
   public Map<String, String> getGroupInformation(String group) {
     LOGGER.info("Getting group information, {}.", group);
-    WebTarget client = clientProvider.createClientByUrl(SHARED_ROSTER_GROUP_INFO_COMMAND);
-    Entity<InformationRequest> entity = Entity.entity(
-        InformationRequest.builder().host(domain).group(group).build(), MediaType.APPLICATION_JSON);
-    return client.request().post(entity).readEntity(new GenericType<Map<String, String>>() {});
+
+    final InformationRequest informationRequest = InformationRequest.builder()
+        .host(this.getXmppDomainPropertyValue())
+        .group(group)
+        .build();
+    return this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest)
+        .readEntity(MAP_GENERIC_TYPE);
   }
 
   /**
@@ -127,16 +137,22 @@ public class SharedRosterServiceImpl implements SharedRosterService {
   @Override
   public List<String> getGroupList() {
     LOGGER.info("Getting group list.");
-    WebTarget target = clientProvider.createClientByUrl(SHARED_ROSTER_GROUP_LIST_COMMAND);
-    Entity<GroupRequest> entity =
-        Entity.entity(new GroupRequest(domain), MediaType.APPLICATION_JSON);
-    return target.request().post(entity).readEntity(new GenericType<List<String>>() {});
+
+    final GroupRequest groupRequest = GroupRequest.builder()
+        .host(this.getXmppDomainPropertyValue())
+        .build();
+    return this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest)
+        .readEntity(LIST_GENERIC_TYPE);
   }
 
   private String getDisplayedGroups(List<String> displayedGroups) {
     StringBuilder builder = new StringBuilder();
     displayedGroups.stream().forEach(p -> builder.append(p).append("\n"));
     return builder.toString();
+  }
+
+  private String getXmppDomainPropertyValue() {
+    return this.propertyProvider.getPropertyValue(SMART_CAMPUS_XMPP_DOMAIN);
   }
 
 }

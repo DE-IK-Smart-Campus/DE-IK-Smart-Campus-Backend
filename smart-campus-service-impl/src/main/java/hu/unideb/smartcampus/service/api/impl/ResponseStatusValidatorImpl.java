@@ -1,17 +1,15 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.HttpStatusValidator;
+import javax.ws.rs.core.Response;
+import hu.unideb.smartcampus.service.api.ResponseStatusValidator;
 
 /**
- * HttpStatusValidator implementation.
- *
+ * ResponseStatusValidator implementation.
  */
 @Service
-public class HttpStatusValidatorImpl implements HttpStatusValidator {
+public class ResponseStatusValidatorImpl implements ResponseStatusValidator {
 
   /**
    * {@inheritDoc}.
@@ -20,5 +18,4 @@ public class HttpStatusValidatorImpl implements HttpStatusValidator {
   public boolean isOk(Response response) {
     return Response.Status.OK.equals(response.getStatusInfo());
   }
-
 }
