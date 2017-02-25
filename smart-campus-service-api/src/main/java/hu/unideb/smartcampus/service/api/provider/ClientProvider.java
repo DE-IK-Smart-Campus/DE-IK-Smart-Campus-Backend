@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api;
+package hu.unideb.smartcampus.service.api.provider;
 
 import javax.ws.rs.client.WebTarget;
 

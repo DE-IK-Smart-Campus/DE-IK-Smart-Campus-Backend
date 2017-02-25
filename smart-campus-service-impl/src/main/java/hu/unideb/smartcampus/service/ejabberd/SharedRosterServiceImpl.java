@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.ClientProvider;
+import hu.unideb.smartcampus.service.api.provider.ClientProvider;
 import hu.unideb.smartcampus.service.api.HttpStatusValidator;
 import hu.unideb.smartcampus.service.ejabberd.srg.request.AddUserRequest;
 import hu.unideb.smartcampus.service.ejabberd.srg.request.CreateGroupRequest;
