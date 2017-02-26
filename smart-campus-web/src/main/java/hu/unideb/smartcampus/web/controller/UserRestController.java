@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.exception.XmppException;
+import hu.unideb.smartcampus.webservice.api.xmpp.EjabberdUser;
+
 
 /**
  * Sample rest controller.
@@ -32,12 +33,11 @@ public class UserRestController {
 
   /**
    * Sample endpoint.
-   *
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/login")
   public ResponseEntity login(@RequestParam(name = "user") String user,
-      @RequestParam(name = "pass") String password) {
+                              @RequestParam(name = "pass") String password) {
     ResponseEntity<String> body = ResponseEntity.ok().body("OK");
     try {
       ejabberdUser.login(user, password);
@@ -49,7 +49,6 @@ public class UserRestController {
 
   /**
    * Sample endpoint.
-   *
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/logout")
