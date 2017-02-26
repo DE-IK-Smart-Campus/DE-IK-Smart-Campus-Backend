@@ -7,15 +7,16 @@ import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_INFO_COMMAND;
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_LIST_COMMAND;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
 import hu.unideb.smartcampus.service.api.ResponseStatusValidator;
 import hu.unideb.smartcampus.service.api.provider.ClientResponseProvider;
 import hu.unideb.smartcampus.service.api.provider.PropertyProvider;
@@ -36,10 +37,6 @@ import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.InformationRe
 @Service
 public class SharedRosterServiceImpl implements SharedRosterService {
   private static final Logger LOGGER = LoggerFactory.getLogger(SharedRosterServiceImpl.class);
-  private static final GenericType<Map<String, String>> MAP_GENERIC_TYPE = new GenericType<Map<String, String>>() {
-  };
-  private static final GenericType<List<String>> LIST_GENERIC_TYPE = new GenericType<List<String>>() {
-  };
 
   @Autowired
   private PropertyProvider propertyProvider;
@@ -127,9 +124,7 @@ public class SharedRosterServiceImpl implements SharedRosterService {
         .host(this.getXmppDomainPropertyValue())
         .group(group)
         .build();
-    Object entity = this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest).getEntity();
-    Map<String, String> entityMap = (Map<String, String>) entity;
-    return entityMap;
+    return (Map<String, String>) this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest).getEntity();
   }
 
   /**
@@ -142,9 +137,7 @@ public class SharedRosterServiceImpl implements SharedRosterService {
     final GroupRequest groupRequest = GroupRequest.builder()
         .host(this.getXmppDomainPropertyValue())
         .build();
-    Object entity = this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest).getEntity();
-    List<String> entityList = (List<String>) entity;
-    return entityList;
+    return (List<String>) this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest).getEntity();
   }
 
   private String getDisplayedGroups(List<String> displayedGroups) {

@@ -32,55 +32,122 @@ import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.InformationRe
 import hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey;
 import hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants;
 
+/**
+ * Test for SRG service.
+ *
+ */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings({"PMD.UnusedPrivateField"})
 public class SharedRosterServiceImplTest {
 
+  /**
+   * Endline constant.
+   */
   private static final String ENDLINE = "\n";
 
+  /**
+   * Test Group Two test data.
+   */
   private static final String TEST_GROUP_TWO = "Test Group Two";
 
+  /**
+   * Test Group One test data.
+   */
   private static final String TEST_GROUP_ONE = "Test Group One";
 
+  /**
+   * Test data in list.
+   */
   private static final List<String> GROUP_LIST = Arrays.asList(TEST_GROUP_ONE,TEST_GROUP_TWO);
 
+  /**
+   * OK response.
+   */
   private static final Response OK_RESPONSE = Response.status(Status.OK).build();
 
+  /**
+   * BAD_REQUEST response.
+   */
   private static final Response BAD_RESPONSE = Response.status(Status.BAD_REQUEST).build();
 
+  /**
+   * Test value for map.
+   */
   private static final String TEST_VALUE = "Test value";
 
+  /**
+   * Test key for map.
+   */
   private static final String TEST_KEY = "Test key";
 
+  /**
+   * Displayed Groups in room list.
+   */
   private static final String DISPLAYED_GROUPS = "displayedGroups";
 
+  /**
+   * Displayed groups with endline character.
+   */
   private static final String DISPLAYED_GROUPS_PARAM = DISPLAYED_GROUPS + ENDLINE;
 
+  /**
+   * Test description.
+   */
   private static final String TEST_DESC = "TestDesc";
 
+  /**
+   * Test user.
+   */
   private static final String TEST_USER = "TestUser";
 
+  /**
+   * Test group.
+   */
   private static final String TEST_GROUP = "testGroup";
 
+  /**
+   * Test host and domain.
+   */
   private static final String SMARTCAMPUS = "smartcampus";
 
+  /**
+   * Shared Roster Service implementation.
+   */
   @InjectMocks
   private SharedRosterServiceImpl sharedRosterService;
 
+  /**
+   * Client response provider mock.
+   */
   @Mock
   private ClientResponseProvider clientResponseProvider;
 
+  /**
+   * Property provider mock.
+   */
   @Mock
   private PropertyProvider propertyProvider;
 
+  /**
+   * Response status validator spy.
+   */
   @Spy
   private ResponseStatusValidatorImpl statusValidator;
 
+  /**
+   * Before each method.
+   * @throws Exception when something goes wrong.
+   */
   @Before
   public void setUp() throws Exception {
     given(propertyProvider.getPropertyValue(ConfigPropertyKey.SMART_CAMPUS_XMPP_DOMAIN)).willReturn(SMARTCAMPUS);
   }
 
+  /**
+   * Test add user with OK response.
+   */
   @Test
+  @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testAddUserToGroupOkResponse() {
     //given
     final AddUserRequest addUserRequest = AddUserRequest.builder()
@@ -97,7 +164,11 @@ public class SharedRosterServiceImplTest {
 
   }
 
+  /**
+   * Test add user with BAD_REQUEST response.
+   */
   @Test
+  @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testAddUserToGroupBadResponse() {
     //given
     final AddUserRequest addUserRequest = AddUserRequest.builder()
@@ -114,7 +185,11 @@ public class SharedRosterServiceImplTest {
 
   }
 
+  /**
+   * Test create new group with OK response.
+   */
   @Test
+  @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testCreateNewGroupOkResponse() {
     //given
     final CreateGroupRequest createGroupRequest = CreateGroupRequest.builder()
@@ -132,7 +207,11 @@ public class SharedRosterServiceImplTest {
     //then
   }
 
+  /**
+   * Test create new group with BAD_REQUEST response.
+   */
   @Test
+  @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testCreateNewGroupBadResponse() {
     //given
     final CreateGroupRequest createGroupRequest = CreateGroupRequest.builder()
@@ -150,7 +229,11 @@ public class SharedRosterServiceImplTest {
     //then
   }
 
+  /**
+   * Test delete user from group with OK response.
+   */
   @Test
+  @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testDeleteUserFromGroupOkResponse() {
     //given
     final DeleteUseRequest deleteUseRequest = DeleteUseRequest.builder()
@@ -166,7 +249,11 @@ public class SharedRosterServiceImplTest {
     //then
   }
 
+  /**
+   * Test delete user from group with BAD_REQUEST response.
+   */
   @Test
+  @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testDeleteUserFromGroupBadResponse() {
     //given
     final DeleteUseRequest deleteUseRequest = DeleteUseRequest.builder()
@@ -182,6 +269,9 @@ public class SharedRosterServiceImplTest {
     //then
   }
 
+  /**
+   * Test get group information.
+   */
   @Test
   public void testGetGroupInformation() {
     //given
@@ -202,6 +292,9 @@ public class SharedRosterServiceImplTest {
     Assert.assertEquals(TEST_VALUE, groupInformation.get(TEST_KEY));
   }
 
+  /**
+   * Test get group list.
+   */
   @Test
   public void testGetGroupList() {
     //given
