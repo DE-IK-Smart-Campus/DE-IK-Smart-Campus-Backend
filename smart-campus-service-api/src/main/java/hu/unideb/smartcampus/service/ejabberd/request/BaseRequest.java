@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.ejabberd.sharedroster.request;
+package hu.unideb.smartcampus.service.ejabberd.request;
 
 import java.io.Serializable;
 

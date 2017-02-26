@@ -58,7 +58,7 @@ public class SharedRosterServiceImplTest {
   /**
    * Test data in list.
    */
-  private static final List<String> GROUP_LIST = Arrays.asList(TEST_GROUP_ONE,TEST_GROUP_TWO);
+  private static final List<String> GROUP_LIST = Arrays.asList(TEST_GROUP_ONE, TEST_GROUP_TWO);
 
   /**
    * OK response.
@@ -136,11 +136,13 @@ public class SharedRosterServiceImplTest {
 
   /**
    * Before each method.
+   *
    * @throws Exception when something goes wrong.
    */
   @Before
   public void setUp() throws Exception {
-    given(propertyProvider.getPropertyValue(ConfigPropertyKey.SMART_CAMPUS_XMPP_DOMAIN)).willReturn(SMARTCAMPUS);
+    given(propertyProvider.getPropertyValue(ConfigPropertyKey.SMART_CAMPUS_XMPP_DOMAIN))
+        .willReturn(SMARTCAMPUS);
   }
 
   /**
@@ -149,18 +151,17 @@ public class SharedRosterServiceImplTest {
   @Test
   @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testAddUserToGroupOkResponse() {
-    //given
-    final AddUserRequest addUserRequest = AddUserRequest.builder()
-        .host(SMARTCAMPUS)
-        .group(TEST_GROUP)
-        .user(TEST_USER)
-        .build();
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_USER_COMMAND, addUserRequest)).willReturn(OK_RESPONSE);
+    // given
+    final AddUserRequest addUserRequest =
+        AddUserRequest.builder().host(SMARTCAMPUS).group(TEST_GROUP).user(TEST_USER).build();
+    given(clientResponseProvider.sendPostRequest(
+        SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_USER_COMMAND, addUserRequest))
+            .willReturn(OK_RESPONSE);
 
-    //when
-    sharedRosterService.addUserToGroup(TEST_USER,TEST_GROUP);
+    // when
+    sharedRosterService.addUserToGroup(TEST_USER, TEST_GROUP);
 
-    //then
+    // then
 
   }
 
@@ -170,18 +171,17 @@ public class SharedRosterServiceImplTest {
   @Test
   @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testAddUserToGroupBadResponse() {
-    //given
-    final AddUserRequest addUserRequest = AddUserRequest.builder()
-        .host(SMARTCAMPUS)
-        .group(TEST_GROUP)
-        .user(TEST_USER)
-        .build();
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_USER_COMMAND, addUserRequest)).willReturn(BAD_RESPONSE);
+    // given
+    final AddUserRequest addUserRequest =
+        AddUserRequest.builder().host(SMARTCAMPUS).group(TEST_GROUP).user(TEST_USER).build();
+    given(clientResponseProvider.sendPostRequest(
+        SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_USER_COMMAND, addUserRequest))
+            .willReturn(BAD_RESPONSE);
 
-    //when
-    sharedRosterService.addUserToGroup(TEST_USER,TEST_GROUP);
+    // when
+    sharedRosterService.addUserToGroup(TEST_USER, TEST_GROUP);
 
-    //then
+    // then
 
   }
 
@@ -191,20 +191,19 @@ public class SharedRosterServiceImplTest {
   @Test
   @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testCreateNewGroupOkResponse() {
-    //given
-    final CreateGroupRequest createGroupRequest = CreateGroupRequest.builder()
-        .host(SMARTCAMPUS)
-        .group(TEST_GROUP)
-        .description(TEST_DESC)
-        .name(TEST_GROUP)
-        .display(DISPLAYED_GROUPS_PARAM)
-        .build();
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_COMMAND, createGroupRequest)).willReturn(OK_RESPONSE);
+    // given
+    final CreateGroupRequest createGroupRequest =
+        CreateGroupRequest.builder().host(SMARTCAMPUS).group(TEST_GROUP).description(TEST_DESC)
+            .name(TEST_GROUP).display(DISPLAYED_GROUPS_PARAM).build();
+    given(clientResponseProvider.sendPostRequest(
+        SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_COMMAND, createGroupRequest))
+            .willReturn(OK_RESPONSE);
 
-    //when
-    sharedRosterService.createNewGroup(TEST_GROUP, TEST_GROUP, TEST_DESC, Arrays.asList(DISPLAYED_GROUPS));
+    // when
+    sharedRosterService.createNewGroup(TEST_GROUP, TEST_GROUP, TEST_DESC,
+        Arrays.asList(DISPLAYED_GROUPS));
 
-    //then
+    // then
   }
 
   /**
@@ -213,20 +212,19 @@ public class SharedRosterServiceImplTest {
   @Test
   @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testCreateNewGroupBadResponse() {
-    //given
-    final CreateGroupRequest createGroupRequest = CreateGroupRequest.builder()
-        .host(SMARTCAMPUS)
-        .group(TEST_GROUP)
-        .description(TEST_DESC)
-        .name(TEST_GROUP)
-        .display(DISPLAYED_GROUPS_PARAM)
-        .build();
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_COMMAND, createGroupRequest)).willReturn(BAD_RESPONSE);
+    // given
+    final CreateGroupRequest createGroupRequest =
+        CreateGroupRequest.builder().host(SMARTCAMPUS).group(TEST_GROUP).description(TEST_DESC)
+            .name(TEST_GROUP).display(DISPLAYED_GROUPS_PARAM).build();
+    given(clientResponseProvider.sendPostRequest(
+        SharedRosterGroupConstants.SHARED_ROSTER_GROUP_CREATE_COMMAND, createGroupRequest))
+            .willReturn(BAD_RESPONSE);
 
-    //when
-    sharedRosterService.createNewGroup(TEST_GROUP, TEST_GROUP, TEST_DESC, Arrays.asList(DISPLAYED_GROUPS));
+    // when
+    sharedRosterService.createNewGroup(TEST_GROUP, TEST_GROUP, TEST_DESC,
+        Arrays.asList(DISPLAYED_GROUPS));
 
-    //then
+    // then
   }
 
   /**
@@ -235,18 +233,17 @@ public class SharedRosterServiceImplTest {
   @Test
   @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testDeleteUserFromGroupOkResponse() {
-    //given
-    final DeleteUseRequest deleteUseRequest = DeleteUseRequest.builder()
-        .host(SMARTCAMPUS)
-        .user(TEST_USER)
-        .group(TEST_GROUP)
-        .build();
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_DELETE_USER_COMMAND, deleteUseRequest)).willReturn(OK_RESPONSE);
+    // given
+    final DeleteUseRequest deleteUseRequest =
+        DeleteUseRequest.builder().host(SMARTCAMPUS).user(TEST_USER).group(TEST_GROUP).build();
+    given(clientResponseProvider.sendPostRequest(
+        SharedRosterGroupConstants.SHARED_ROSTER_GROUP_DELETE_USER_COMMAND, deleteUseRequest))
+            .willReturn(OK_RESPONSE);
 
-    //when
-    sharedRosterService.deleteUserFromGroup(TEST_USER,TEST_GROUP);
+    // when
+    sharedRosterService.deleteUserFromGroup(TEST_USER, TEST_GROUP);
 
-    //then
+    // then
   }
 
   /**
@@ -255,18 +252,17 @@ public class SharedRosterServiceImplTest {
   @Test
   @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert"})
   public void testDeleteUserFromGroupBadResponse() {
-    //given
-    final DeleteUseRequest deleteUseRequest = DeleteUseRequest.builder()
-        .host(SMARTCAMPUS)
-        .user(TEST_USER)
-        .group(TEST_GROUP)
-        .build();
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_DELETE_USER_COMMAND, deleteUseRequest)).willReturn(BAD_RESPONSE);
+    // given
+    final DeleteUseRequest deleteUseRequest =
+        DeleteUseRequest.builder().host(SMARTCAMPUS).user(TEST_USER).group(TEST_GROUP).build();
+    given(clientResponseProvider.sendPostRequest(
+        SharedRosterGroupConstants.SHARED_ROSTER_GROUP_DELETE_USER_COMMAND, deleteUseRequest))
+            .willReturn(BAD_RESPONSE);
 
-    //when
-    sharedRosterService.deleteUserFromGroup(TEST_USER,TEST_GROUP);
+    // when
+    sharedRosterService.deleteUserFromGroup(TEST_USER, TEST_GROUP);
 
-    //then
+    // then
   }
 
   /**
@@ -274,21 +270,20 @@ public class SharedRosterServiceImplTest {
    */
   @Test
   public void testGetGroupInformation() {
-    //given
-    final InformationRequest informationRequest = InformationRequest.builder()
-        .host(SMARTCAMPUS)
-        .group(TEST_GROUP)
-        .build();
+    // given
+    final InformationRequest informationRequest =
+        InformationRequest.builder().host(SMARTCAMPUS).group(TEST_GROUP).build();
 
     HashMap<Object, Object> entity = new HashMap<>();
     entity.put(TEST_KEY, TEST_VALUE);
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest)).willReturn(Response.ok().entity(entity
-        ).build());
+    given(clientResponseProvider.sendPostRequest(
+        SharedRosterGroupConstants.SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest))
+            .willReturn(Response.ok().entity(entity).build());
 
-    //when
+    // when
     Map<String, String> groupInformation = sharedRosterService.getGroupInformation(TEST_GROUP);
 
-    //then
+    // then
     Assert.assertEquals(TEST_VALUE, groupInformation.get(TEST_KEY));
   }
 
@@ -297,17 +292,18 @@ public class SharedRosterServiceImplTest {
    */
   @Test
   public void testGetGroupList() {
-    //given
-    final GroupRequest groupRequest = GroupRequest.builder()
-        .host(SMARTCAMPUS)
-        .build();
-    given(clientResponseProvider.sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest)).willReturn(Response.ok().entity(GROUP_LIST).build());
+    // given
+    final GroupRequest groupRequest = GroupRequest.builder().host(SMARTCAMPUS).build();
+    given(clientResponseProvider
+        .sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest))
+            .willReturn(Response.ok().entity(GROUP_LIST).build());
 
-    //when
+    // when
     List<String> groupList = sharedRosterService.getGroupList();
 
-    //then
-    Assert.assertThat(groupList.toArray(), Matchers.arrayContainingInAnyOrder(GROUP_LIST.toArray(new String[GROUP_LIST.size()])));
+    // then
+    Assert.assertThat(groupList.toArray(),
+        Matchers.arrayContainingInAnyOrder(GROUP_LIST.toArray(new String[GROUP_LIST.size()])));
   }
 
 }

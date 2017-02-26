@@ -1,15 +1,16 @@
 package hu.unideb.smartcampus.service.api.provider.impl;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import hu.unideb.smartcampus.service.api.provider.ClientProvider;
 import hu.unideb.smartcampus.service.api.provider.ClientResponseProvider;
-import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.BaseRequest;
+import hu.unideb.smartcampus.service.ejabberd.request.BaseRequest;
 
 @Service
 public class ClientResponseProviderImpl implements ClientResponseProvider {

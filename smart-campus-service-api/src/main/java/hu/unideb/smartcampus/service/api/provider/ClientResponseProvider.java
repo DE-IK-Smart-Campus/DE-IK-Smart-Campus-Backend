@@ -1,7 +1,8 @@
 package hu.unideb.smartcampus.service.api.provider;
 
 import javax.ws.rs.core.Response;
-import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.BaseRequest;
+
+import hu.unideb.smartcampus.service.ejabberd.request.BaseRequest;
 
 /**
  * Client response provider.

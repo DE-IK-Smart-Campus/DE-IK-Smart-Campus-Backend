@@ -2,6 +2,7 @@ package hu.unideb.smartcampus.service.ejabberd.sharedroster.request;
 
 import java.io.Serializable;
 
+import hu.unideb.smartcampus.service.ejabberd.request.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
