@@ -127,8 +127,9 @@ public class SharedRosterServiceImpl implements SharedRosterService {
         .host(this.getXmppDomainPropertyValue())
         .group(group)
         .build();
-    return this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest)
-        .readEntity(MAP_GENERIC_TYPE);
+    Object entity = this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest).getEntity();
+    Map<String, String> entityMap = (Map<String, String>) entity;
+    return entityMap;
   }
 
   /**
@@ -141,8 +142,9 @@ public class SharedRosterServiceImpl implements SharedRosterService {
     final GroupRequest groupRequest = GroupRequest.builder()
         .host(this.getXmppDomainPropertyValue())
         .build();
-    return this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest)
-        .readEntity(LIST_GENERIC_TYPE);
+    Object entity = this.clientResponseProvider.sendPostRequest(SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest).getEntity();
+    List<String> entityList = (List<String>) entity;
+    return entityList;
   }
 
   private String getDisplayedGroups(List<String> displayedGroups) {
