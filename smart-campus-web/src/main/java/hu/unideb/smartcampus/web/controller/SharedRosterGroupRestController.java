@@ -1,14 +1,13 @@
 package hu.unideb.smartcampus.web.controller;
 
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.unideb.smartcampus.service.ejabberd.SharedRosterService;
+import java.util.List;
+import hu.unideb.smartcampus.webservice.api.ejabberd.SharedRosterService;
 
 /**
  * SharedRosterService endpoint.
@@ -31,7 +30,6 @@ public class SharedRosterGroupRestController {
 
   /**
    * Get group list.
-   *
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/groups")

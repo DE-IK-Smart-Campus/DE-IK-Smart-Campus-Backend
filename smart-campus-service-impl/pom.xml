@@ -14,19 +14,17 @@
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-persistence</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-service-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
+			<groupId>hu.unideb</groupId>
+			<artifactId>smart-campus-shared</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.unideb</groupId>
