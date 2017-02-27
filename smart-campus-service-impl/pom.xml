@@ -14,17 +14,10 @@
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-persistence</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-service-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>hu.unideb</groupId>
-			<artifactId>smart-campus-shared</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.unideb</groupId>
