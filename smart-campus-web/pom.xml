@@ -17,28 +17,19 @@
 	<dependencies>
 		<dependency>
 			<groupId>hu.unideb</groupId>
-			<artifactId>smart-campus-shared</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-service-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-service-impl</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-webservice-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-webservice-impl</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

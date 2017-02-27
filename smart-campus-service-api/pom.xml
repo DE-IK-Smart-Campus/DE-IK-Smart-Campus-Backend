@@ -14,7 +14,6 @@
 		<dependency>
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-shared</artifactId>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
