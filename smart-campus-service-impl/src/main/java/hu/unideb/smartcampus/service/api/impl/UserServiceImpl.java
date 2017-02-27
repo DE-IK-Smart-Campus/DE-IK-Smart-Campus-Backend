@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
+import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.domain.User;
@@ -42,5 +43,11 @@ public class UserServiceImpl implements UserService {
     Assert.notNull(username);
 
     return Optional.ofNullable(this.conversionService.convert(this.userRepository.findByUsername(username), User.class));
+  }
+
+  @Override
+  public User save(final User user) {
+    UserEntity userEntity = conversionService.convert(user, UserEntity.class);
+    return conversionService.convert(userRepository.save(userEntity), User.class);
   }
 }
