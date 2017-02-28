@@ -10,10 +10,12 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.webservice.api.ejabberd.XmppUserService;
 import hu.unideb.smartcampus.webservice.api.ejabberd.domain.EjabberdUserRegistrationRequest;
 import hu.unideb.smartcampus.webservice.api.provider.ClientProvider;
+import hu.unideb.smartcampus.webservice.api.provider.PropertyProvider;
 
 @Service
 public class XmppUserServiceImpl implements XmppUserService {
@@ -21,12 +23,15 @@ public class XmppUserServiceImpl implements XmppUserService {
   @Autowired
   private ClientProvider clientProvider;
 
+  @Autowired
+  private PropertyProvider propertyProvider;
+
   @Override
   public void createUser(String username, String password) throws XmppException {
     WebTarget target = clientProvider.createClientByUrl(REGISTER_USER);
 
     EjabberdUserRegistrationRequest registrationRequest = EjabberdUserRegistrationRequest.builder()
-        .user(username).password(password).host("smartcampus").build();
+        .user(username).password(password).host(getXmppHost()).build();
 
     Response response = target.request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(registrationRequest, MediaType.APPLICATION_JSON));
@@ -35,6 +40,10 @@ public class XmppUserServiceImpl implements XmppUserService {
       throw new XmppException("XMPP server responded with status " + response.getStatus());
     }
 
+  }
+
+  private String getXmppHost() {
+    return propertyProvider.getPropertyValue(ConfigPropertyKey.SMART_CAMPUS_XMPP_HOST);
   }
 
 }
