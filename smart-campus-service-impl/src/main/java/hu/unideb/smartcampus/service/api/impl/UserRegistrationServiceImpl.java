@@ -9,6 +9,7 @@ import hu.unideb.smartcampus.service.api.UserRegistrationService;
 import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.service.api.exception.RegistrationFailedException;
+import hu.unideb.smartcampus.shared.enumeration.Role;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.webservice.api.ejabberd.XmppUserService;
 
@@ -31,7 +32,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
       throw new RegistrationFailedException(e);
     }
 
-    User user = User.builder().username(username).password(generatedPassword).build();
+    User user = User.builder().username(username).password(generatedPassword).role(Role.USER).build();
 
     userService.save(user);
   }

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 /**
  * Class to hold Ejabberd REST Endpoints for User related operations.
  *
- * 
+ *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SecurityConstants {
@@ -14,6 +14,6 @@ public class SecurityConstants {
   /**
    * The path of the user registering endpoint.
    */
-  public static final String REGISTER_USER = "register";
+  public static final String REGISTER_USER = "/register";
 
 }
