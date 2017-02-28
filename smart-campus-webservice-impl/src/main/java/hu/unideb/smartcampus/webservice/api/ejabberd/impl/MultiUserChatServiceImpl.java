@@ -25,7 +25,6 @@ import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.UnsubscribeRequ
 import hu.unideb.smartcampus.webservice.api.provider.ClientProvider;
 import hu.unideb.smartcampus.webservice.api.validator.ResponseStatusValidator;
 
-
 /**
  * Multi user chat (MUC) service implementation.
  */
@@ -96,7 +95,6 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
     }
   }
 
-
   /**
    * {@inheritDoc}.
    */
@@ -113,7 +111,6 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
       LOGGER.info("User {} could not unsubscribe from room:{}", user, room);
     }
   }
-
 
   /**
    * {@inheritDoc}.
