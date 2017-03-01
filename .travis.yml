@@ -8,7 +8,7 @@ notifications:
     on_failure: always
 deploy:
   provider: script
-  script: "mvn wildfly:redeploy -Dwildfly.host=$WILDFLY_HOST -Dwildfly.port=$WILDFLY_PORT -Dwildfly.user=$WILDFLY_USER -Dwildfly.password=$WILDFLY_PASSWORD -Dmysql.connection.url=$JDBC_URL -Dmysql.username=$JDBC_USER -Dmysql.password=$JDBC_PASSWORD"
+  script: "mvn wildfly:redeploy -Dwildfly.hostname=$WILDFLY_HOST -Dwildfly.port=$WILDFLY_PORT -Dwildfly.username=$WILDFLY_USER -Dwildfly.password=$WILDFLY_PASSWORD -Dmysql.connection.url=$JDBC_URL -Dmysql.username=$JDBC_USER -Dmysql.password=$JDBC_PASSWORD"
   on:
     branch: master
 env:
