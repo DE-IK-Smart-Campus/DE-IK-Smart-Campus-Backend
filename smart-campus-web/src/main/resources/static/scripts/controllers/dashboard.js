@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('appModule')
+angular.module('app')
   .controller('DashboardCtrl', function($scope, $state) {
 
     $scope.$state = $state;
