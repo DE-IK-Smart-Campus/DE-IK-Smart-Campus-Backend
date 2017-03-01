@@ -39,6 +39,16 @@
 				<role>Developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>Atka</id>
+			<name>Attila Fekete</name>
+			<email>atkavagyok@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
+                <role>Developer</role>
+			</roles>
+		</developer>
 		<!-- add yourself -->
 	</developers>
 
