@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public User save(final User user) {
     UserEntity userEntity = conversionService.convert(user, UserEntity.class);
     return conversionService.convert(userRepository.save(userEntity), User.class);

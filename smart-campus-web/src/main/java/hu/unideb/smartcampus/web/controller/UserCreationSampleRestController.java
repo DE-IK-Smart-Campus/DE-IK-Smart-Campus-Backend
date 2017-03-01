@@ -42,9 +42,9 @@ public class UserCreationSampleRestController {
 
     try {
       userRegistrationService.doRegister(username);
-      return ResponseEntity.status(HttpStatus.OK).build();
+      return ResponseEntity.ok().build();
     } catch (RegistrationFailedException e) {
-      LOGGER.info("", e);
+      LOGGER.error("Failed to registrate user", e);
       return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
     }
 

@@ -4,6 +4,9 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import hu.unideb.smartcampus.service.api.UserRegistrationService;
 import hu.unideb.smartcampus.service.api.UserService;
@@ -23,7 +26,11 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
   private UserService userService;
 
   @Override
+  @Transactional(rollbackFor = RegistrationFailedException.class,
+      propagation = Propagation.REQUIRES_NEW)
   public void doRegister(String username) throws RegistrationFailedException {
+    Assert.notNull(username);
+
     final String generatedPassword = UUID.randomUUID().toString();
 
     try {
