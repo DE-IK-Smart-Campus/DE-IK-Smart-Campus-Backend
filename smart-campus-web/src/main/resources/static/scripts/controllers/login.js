@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('appModule')
+angular.module('app')
   .controller('LoginCtrl', function($scope, $location) {
 
     $scope.submit = function() {

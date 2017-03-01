@@ -3,20 +3,26 @@
     <div class="row">
       <div class="col-sm-3 col-md-2 sidebar">
 
-       <div class="text-center">
-        <h2 class="brand">SmartCampus</h2>
-        <img src="images/flat-avatar.png" class="user-avatar" /><br />
-        <a ui-sref="login" class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+        <div class="text-center">
+          <h1>SmartCampus</h1>
+          <!-- TODO rewrite when authentication is working -->
+          <h4>Logged in with</h4>
+          <p>[NEPTUN-CODE]</p>
+          <a ui-sref="login" class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+        </div>
+
+        <ul class="nav nav-sidebar">
+          <li ng-class="{active: $state.includes('home')}"><a ui-sref="home">Home</a></li>
+          <li ng-class="{active: $state.includes('calendar')}"><a ui-sref="calendar">Calendar</a></li>
+          <li ng-class="{active: $state.includes('consultingHours')}"><a ui-sref="consultingHours">Consulting hours</a></li>
+          <li ng-class="{active: $state.includes('chat')}"><a ui-sref="chat">Chat</a></li>
+          <li ng-class="{active: $state.includes('other')}"><a ui-sref="other">Other</a></li>
+          <li ng-class="{active: $state.includes('aboutUs')}"><a ui-sref="aboutUs">About us</a></li>
+        </ul>
+
       </div>
-
-      <ul class="nav nav-sidebar">
-        <li ng-class="{active: $state.includes('overview')}"><a ui-sref="overview">Overview <span class="sr-only">(current)</span></a></li>
-        <li ng-class="{active: $state.includes('reports')}"><a ui-sref="reports">Reports</a></li>
-      </ul>
-
-    </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view>
+      </div>
     </div>
   </div>
-</div>
 </div>

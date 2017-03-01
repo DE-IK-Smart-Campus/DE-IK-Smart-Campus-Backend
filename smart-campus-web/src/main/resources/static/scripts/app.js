@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('appModule', [
+angular.module('app', [
     'ui.router',
     'ngAnimate'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.when('/dashboard', '/dashboard/overview');
+        $urlRouterProvider.when('/dashboard', '/dashboard/home');
         $urlRouterProvider.otherwise('/login');
 
         $stateProvider
@@ -27,15 +27,35 @@ angular.module('appModule', [
                 templateUrl: 'views/dashboard.html',
                 controller: 'DashboardCtrl'
             })
-            .state('overview', {
-                url: '/overview',
+            .state('home', {
+                url: '/home',
                 parent: 'dashboard',
-                templateUrl: 'views/dashboard/overview.html'
+                templateUrl: 'views/dashboard/home.html'
             })
-            .state('reports', {
-                url: '/reports',
+            .state('calendar', {
+                url: '/calendar',
                 parent: 'dashboard',
-                templateUrl: 'views/dashboard/reports.html'
+                templateUrl: 'views/dashboard/calendar.html'
+            })
+            .state('consultingHours', {
+                url: '/consulting-hours',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/consulting-hours.html'
+            })
+            .state('chat', {
+                url: '/chat',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/chat.html'
+            })
+            .state('other', {
+                url: '/other',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/other.html'
+            })
+            .state('aboutUs', {
+                url: '/about-us',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/about-us.html'
             });
 
     });
