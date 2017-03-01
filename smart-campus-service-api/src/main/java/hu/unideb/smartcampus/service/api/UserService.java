@@ -12,4 +12,12 @@ public interface UserService {
    * Retrieves {@link User} in {@link Optional}.
    */
   Optional<User> getByUsername(String username);
+
+  /**
+   * Saves the user.
+   * 
+   * @param user to be saved
+   * @return the persisted entity with its id set
+   */
+  User save(User user);
 }
