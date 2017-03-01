@@ -1,14 +1,22 @@
 <!doctype html>
-<html ng-app="app">
+<html class="no-js">
 <head>
-    <title>Hello AngularJS</title>
-    <script type="text/javascript" src="assets/angular/angular.js"></script>
-    <script type="text/javascript" src="assets/angular/angular-resource.js"></script>
-    <script type="text/javascript" src="app/app.js"></script>
+    <meta charset="utf-8">
+    <title>SmartCampus</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <script src="assets/angular/angular.js"></script>
+    <script src="assets/angular-mocks/angular-mocks.js"></script>
+    <script src="assets/ui-router/release/angular-ui-router.js"></script>
+    <script src="assets/angular-animate/angular-animate.js"></script>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/dashboard.js"></script>
 </head>
-<body>
-<div class="container" ng-controller="AppCtrl">
-    <p>{{content.content}}</p>
+<body ng-app="appModule">
+<div class="">
+    <div ui-view></div>
 </div>
 </body>
 </html>
