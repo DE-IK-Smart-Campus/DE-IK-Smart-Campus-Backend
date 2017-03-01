@@ -29,6 +29,16 @@
 				<role>Developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>Gabor</id>
+			<name>Gabor Ivanyi-Nagy</name>
+			<email>gabilampard@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
 		<!-- add yourself -->
 	</developers>
 
