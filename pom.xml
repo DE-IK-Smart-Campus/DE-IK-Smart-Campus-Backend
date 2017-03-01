@@ -48,11 +48,13 @@
 	</scm>
 
 	<modules>
+		<module>smart-campus-shared</module>
 		<module>smart-campus-persistence</module>
 		<module>smart-campus-service-api</module>
 		<module>smart-campus-service-impl</module>
+		<module>smart-campus-webservice-api</module>
+		<module>smart-campus-webservice-impl</module>
 		<module>smart-campus-web</module>
-		<module>smart-campus-shared</module>
 	</modules>
 
 	<properties>
@@ -69,6 +71,7 @@
 		<jaxrs.version>2.0.1</jaxrs.version>
 		<guava.version>21.0</guava.version>
 		<jersey.common.version>2.25.1</jersey.common.version>
+		<servlet.api.version>2.5</servlet.api.version>
 	</properties>
 
 	<dependencyManagement>
@@ -77,6 +80,11 @@
 				<groupId>javax.ws.rs</groupId>
 				<artifactId>javax.ws.rs-api</artifactId>
 				<version>${jaxrs.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet.api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
@@ -96,6 +104,16 @@
 			<dependency>
 				<groupId>hu.unideb</groupId>
 				<artifactId>smart-campus-service-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-webservice-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-webservice-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
