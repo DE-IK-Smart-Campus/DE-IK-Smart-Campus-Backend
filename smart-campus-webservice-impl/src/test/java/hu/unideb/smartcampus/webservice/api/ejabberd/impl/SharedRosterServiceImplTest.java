@@ -1,5 +1,4 @@
-package hu.unideb.smartcampus.service.ejabberd;
-
+package hu.unideb.smartcampus.webservice.api.ejabberd.impl;
 
 import static org.mockito.BDDMockito.given;
 
@@ -21,16 +20,16 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hu.unideb.smartcampus.service.api.impl.ResponseStatusValidatorImpl;
-import hu.unideb.smartcampus.service.api.provider.ClientResponseProvider;
-import hu.unideb.smartcampus.service.api.provider.PropertyProvider;
-import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.AddUserRequest;
-import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.CreateGroupRequest;
-import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.DeleteUseRequest;
-import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.GroupRequest;
-import hu.unideb.smartcampus.service.ejabberd.sharedroster.request.InformationRequest;
 import hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey;
 import hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.AddUserRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.CreateGroupRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.DeleteUseRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.GroupRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.InformationRequest;
+import hu.unideb.smartcampus.webservice.api.provider.ClientResponseProvider;
+import hu.unideb.smartcampus.webservice.api.provider.PropertyProvider;
+import hu.unideb.smartcampus.webservice.api.validator.impl.ResponseStatusValidatorImpl;
 
 /**
  * Test for SRG service.
@@ -109,6 +108,13 @@ public class SharedRosterServiceImplTest {
    * Test host and domain.
    */
   private static final String SMARTCAMPUS = "smartcampus";
+
+  /**
+   * Mocked response.
+   */
+  @Mock
+  private Response response;
+
 
   /**
    * Shared Roster Service implementation.
@@ -274,11 +280,13 @@ public class SharedRosterServiceImplTest {
     final InformationRequest informationRequest =
         InformationRequest.builder().host(SMARTCAMPUS).group(TEST_GROUP).build();
 
-    HashMap<Object, Object> entity = new HashMap<>();
+    Map<String, String> entity = new HashMap<>();
     entity.put(TEST_KEY, TEST_VALUE);
+
     given(clientResponseProvider.sendPostRequest(
         SharedRosterGroupConstants.SHARED_ROSTER_GROUP_INFO_COMMAND, informationRequest))
-            .willReturn(Response.ok().entity(entity).build());
+            .willReturn(response);
+    given(response.readEntity(sharedRosterService.MAP_GENERIC_TYPE)).willReturn(entity);
 
     // when
     Map<String, String> groupInformation = sharedRosterService.getGroupInformation(TEST_GROUP);
@@ -296,7 +304,8 @@ public class SharedRosterServiceImplTest {
     final GroupRequest groupRequest = GroupRequest.builder().host(SMARTCAMPUS).build();
     given(clientResponseProvider
         .sendPostRequest(SharedRosterGroupConstants.SHARED_ROSTER_GROUP_LIST_COMMAND, groupRequest))
-            .willReturn(Response.ok().entity(GROUP_LIST).build());
+            .willReturn(response);
+    given(response.readEntity(sharedRosterService.LIST_GENERIC_TYPE)).willReturn(GROUP_LIST);
 
     // when
     List<String> groupList = sharedRosterService.getGroupList();

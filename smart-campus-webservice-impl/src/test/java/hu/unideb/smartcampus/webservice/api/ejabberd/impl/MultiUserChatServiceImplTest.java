@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.ejabberd;
+package hu.unideb.smartcampus.webservice.api.ejabberd.impl;
 
 import static org.mockito.BDDMockito.given;
 
@@ -16,15 +16,16 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hu.unideb.smartcampus.service.api.impl.ResponseStatusValidatorImpl;
-import hu.unideb.smartcampus.service.api.provider.ClientResponseProvider;
-import hu.unideb.smartcampus.service.api.provider.PropertyProvider;
-import hu.unideb.smartcampus.service.ejabberd.multiuserchat.request.CreateRoomRequest;
-import hu.unideb.smartcampus.service.ejabberd.multiuserchat.request.DestroyRoomRequest;
-import hu.unideb.smartcampus.service.ejabberd.multiuserchat.request.SubscribeRequest;
-import hu.unideb.smartcampus.service.ejabberd.multiuserchat.request.UnsubscribeRequest;
 import hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey;
 import hu.unideb.smartcampus.shared.muc.MultiUserChatConstants;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.CreateRoomRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.DestroyRoomRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.SubscribeRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.UnsubscribeRequest;
+import hu.unideb.smartcampus.webservice.api.provider.ClientResponseProvider;
+import hu.unideb.smartcampus.webservice.api.provider.PropertyProvider;
+import hu.unideb.smartcampus.webservice.api.validator.impl.ResponseStatusValidatorImpl;
+
 
 /**
  * MUC Service test.
