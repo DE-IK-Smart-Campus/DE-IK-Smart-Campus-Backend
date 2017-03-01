@@ -1,8 +1,8 @@
-package hu.unideb.smartcampus.webservice.api.ejabberd.request.muc;
+package hu.unideb.smartcampus.service.ejabberd.multiuserchat.request;
 
 import java.util.Map;
 
-import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.BaseRequest;
+import hu.unideb.smartcampus.service.ejabberd.request.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,7 +33,6 @@ public class CreateRoomRequest extends BaseRequest {
 
   /**
    * Constructor which is made for the @Builder for Lombok.
-   *
    * @param host the host.
    * @param name room name.
    * @param service service name.

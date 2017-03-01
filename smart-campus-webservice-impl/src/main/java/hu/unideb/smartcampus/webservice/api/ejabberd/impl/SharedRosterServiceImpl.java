@@ -37,9 +37,9 @@ import hu.unideb.smartcampus.webservice.api.validator.ResponseStatusValidator;
 @Service
 public class SharedRosterServiceImpl implements SharedRosterService {
   private static final Logger LOGGER = LoggerFactory.getLogger(SharedRosterServiceImpl.class);
-  private static final GenericType<Map<String, String>> MAP_GENERIC_TYPE = new GenericType<Map<String, String>>() {
+  protected static final GenericType<Map<String, String>> MAP_GENERIC_TYPE = new GenericType<Map<String, String>>() {
   };
-  private static final GenericType<List<String>> LIST_GENERIC_TYPE = new GenericType<List<String>>() {
+  protected static final GenericType<List<String>> LIST_GENERIC_TYPE = new GenericType<List<String>>() {
   };
 
   @Autowired

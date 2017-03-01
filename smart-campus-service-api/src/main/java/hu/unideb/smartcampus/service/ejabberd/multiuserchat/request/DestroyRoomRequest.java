@@ -1,20 +1,18 @@
-package hu.unideb.smartcampus.webservice.api.ejabberd.request.muc;
+package hu.unideb.smartcampus.service.ejabberd.multiuserchat.request;
 
-import java.util.Map;
-
-import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.BaseRequest;
+import hu.unideb.smartcampus.service.ejabberd.request.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Create room request.
+ * Destroy room request.
  *
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings({"PMD.SingularField"})
-public class CreateRoomRequest extends BaseRequest {
+public class DestroyRoomRequest extends BaseRequest {
 
   /**
    * Room name.
@@ -27,24 +25,17 @@ public class CreateRoomRequest extends BaseRequest {
   private final String service;
 
   /**
-   * Room options.
-   */
-  private final Map<String, String> options;
-
-  /**
    * Constructor which is made for the @Builder for Lombok.
    *
-   * @param host the host.
+   * @param host host.
    * @param name room name.
    * @param service service name.
-   * @param options host.
    */
   @Builder
-  public CreateRoomRequest(String host, String name, String service, Map<String, String> options) {
+  public DestroyRoomRequest(String host, String name, String service) {
     super(host);
     this.name = name;
     this.service = service;
-    this.options = options;
   }
 
 

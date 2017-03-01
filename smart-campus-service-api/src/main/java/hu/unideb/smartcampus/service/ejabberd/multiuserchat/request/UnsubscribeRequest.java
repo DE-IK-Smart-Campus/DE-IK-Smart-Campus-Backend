@@ -1,6 +1,6 @@
-package hu.unideb.smartcampus.webservice.api.ejabberd.request.muc;
+package hu.unideb.smartcampus.service.ejabberd.multiuserchat.request;
 
-import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.BaseRequest;
+import hu.unideb.smartcampus.service.ejabberd.request.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
