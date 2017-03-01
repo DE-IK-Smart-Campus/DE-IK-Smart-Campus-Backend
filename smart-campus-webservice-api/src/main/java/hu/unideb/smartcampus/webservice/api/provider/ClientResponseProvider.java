@@ -1,7 +1,7 @@
 package hu.unideb.smartcampus.webservice.api.provider;
 
 import javax.ws.rs.core.Response;
-import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.BaseRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.base.BaseRequest;
 
 
 /**

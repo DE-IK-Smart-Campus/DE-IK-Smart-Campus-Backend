@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster;
+package hu.unideb.smartcampus.webservice.api.ejabberd.request.base;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;

@@ -7,7 +7,7 @@ import org.springframework.util.Assert;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.BaseRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.base.BaseRequest;
 import hu.unideb.smartcampus.webservice.api.provider.ClientProvider;
 import hu.unideb.smartcampus.webservice.api.provider.ClientResponseProvider;
 
