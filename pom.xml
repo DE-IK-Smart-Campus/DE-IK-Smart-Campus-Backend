@@ -285,6 +285,54 @@
 				<module>smart-campus-wildfly</module>
 			</modules>
 		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<smartcampus.ejabberd.api.host>http://smartcampus</smartcampus.ejabberd.api.host>
+				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
+				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
+				<smartcampus.xmpp.mucservice>conference.smartcampus</smartcampus.xmpp.mucservice>
+				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
+				<smartcampus.xmpp.host>smartcampus</smartcampus.xmpp.host>
+				<smartcampus.xmpp.domain>smartcampus</smartcampus.xmpp.domain>
+				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
+				<smartcampus.xmpp.service>smartcampus</smartcampus.xmpp.service>
+				<smartcampus.default.user>smartcampus</smartcampus.default.user>
+				<smartcampus.default.password>admin</smartcampus.default.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<smartcampus.ejabberd.api.host>http://wt2.inf.unideb.hu</smartcampus.ejabberd.api.host>
+				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
+				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
+				<smartcampus.xmpp.mucservice>conference.wt2.inf.unideb.hu</smartcampus.xmpp.mucservice>
+				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
+				<smartcampus.xmpp.host>wt2.inf.unideb.hu</smartcampus.xmpp.host>
+				<smartcampus.xmpp.domain>wt2.inf.unideb.hu</smartcampus.xmpp.domain>
+				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
+				<smartcampus.xmpp.service>wt2.inf.unideb.hu</smartcampus.xmpp.service>
+				<smartcampus.default.user>smartcampus</smartcampus.default.user>
+				<smartcampus.default.password>admin</smartcampus.default.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>master</id>
+			<properties>
+				<smartcampus.ejabberd.api.host>http://wt1.inf.unideb.hu</smartcampus.ejabberd.api.host>
+				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
+				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
+				<smartcampus.xmpp.mucservice>conference.wt1.inf.unideb.hu</smartcampus.xmpp.mucservice>
+				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
+				<smartcampus.xmpp.host>wt1.inf.unideb.hu</smartcampus.xmpp.host>
+				<smartcampus.xmpp.domain>wt1.inf.unideb.hu</smartcampus.xmpp.domain>
+				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
+				<smartcampus.xmpp.service>wt1.inf.unideb.hu</smartcampus.xmpp.service>
+				<smartcampus.default.user>smartcampus</smartcampus.default.user>
+				<smartcampus.default.password>admin</smartcampus.default.password>
+			</properties>
+		</profile>
 	</profiles>
 
 </project>
