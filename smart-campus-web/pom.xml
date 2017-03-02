@@ -80,6 +80,7 @@
 					<hostname>127.0.0.1</hostname>
 					<port>9990</port>
 					<jbossHome>${jboss.home}</jbossHome>
+                    <skip>false</skip>
 				</configuration>
 			</plugin>
 		</plugins>
