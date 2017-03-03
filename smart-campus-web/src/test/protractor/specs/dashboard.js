@@ -1,7 +1,9 @@
-describe('SmartCampus App test', function() {
-  it('should have a title', function() {
-    browser.get('http://localhost:8080/smartcampus-web/');
+require("../common/commons.js");
 
-    expect(browser.getTitle()).toEqual('SmartCampus');
-  });
+describe('SmartCampus App test', function () {
+    it('should have a title', function () {
+        browser.get('http://localhost:8080/smartcampus-web/');
+        goToRoot();
+        expect(browser.getTitle()).toEqual('SmartCampus');
+    });
 });

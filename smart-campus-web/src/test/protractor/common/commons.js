@@ -1,0 +1,7 @@
+goToRoot = function () {
+
+};
+
+login = function () {
+
+};
