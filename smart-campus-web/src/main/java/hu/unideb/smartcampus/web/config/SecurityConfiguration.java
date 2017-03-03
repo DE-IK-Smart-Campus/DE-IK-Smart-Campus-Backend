@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/home")
                     .permitAll()
                 .anyRequest()
-                    .authenticated()    
+                    .permitAll()
              .and()
                  .httpBasic()
              .and()
