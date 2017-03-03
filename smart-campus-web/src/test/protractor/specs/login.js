@@ -5,4 +5,9 @@ describe('Login screen', function () {
         goToRoot();
         expect(browser.getTitle()).toEqual('SmartCampus');
     });
+
+    it('should have a "Login" button', function () {
+        goToRoot();
+        expect(element(by.css('button')).getText()).toBe('Login');
+    });
 });
