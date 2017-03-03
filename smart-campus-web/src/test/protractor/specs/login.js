@@ -6,8 +6,11 @@ describe('Login screen', function () {
         expect(browser.getTitle()).toEqual('SmartCampus');
     });
 
+    it('should have two input fields', function () {
+        expect(element.all(by.css('input')).count()).toBe(2);
+    });
+
     it('should have a "Login" button', function () {
-        goToRoot();
         expect(element(by.css('button')).getText()).toBe('Login');
     });
 });
