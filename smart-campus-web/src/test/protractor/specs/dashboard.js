@@ -10,4 +10,8 @@ describe('Dashboard screen', function () {
     it('sidebar should have a "Logout" button', function () {
         expect(element(by.css('.sidebar a.btn')).getText()).toBe('Logout');
     });
+    
+    it('sidebar should have 6 navigation tabs', function () {
+        expect(element.all(by.css('.sidebar ul.nav.nav-sidebar li')).count()).toBe(6);
+    });
 });
