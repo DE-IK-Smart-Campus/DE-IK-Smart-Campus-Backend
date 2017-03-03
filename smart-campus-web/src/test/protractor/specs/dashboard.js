@@ -6,4 +6,8 @@ describe('Dashboard screen', function () {
         login();
         expect(browser.getTitle()).toEqual('SmartCampus');
     });
+
+    it('sidebar should have a "Logout" button', function () {
+        expect(element(by.css('.sidebar a.btn')).getText()).toBe('Logout');
+    });
 });
