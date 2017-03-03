@@ -1,6 +1,6 @@
-package hu.unideb.smartcampus.webservice.api.ejabberd.domain;
+package hu.unideb.smartcampus.webservice.api.ejabberd.request.domain;
 
-import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.BaseRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.base.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
 

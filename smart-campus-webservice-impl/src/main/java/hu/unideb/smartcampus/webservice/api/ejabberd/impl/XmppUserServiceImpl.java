@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.webservice.api.ejabberd.XmppUserService;
-import hu.unideb.smartcampus.webservice.api.ejabberd.domain.EjabberdUserRegistrationRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.domain.EjabberdUserRegistrationRequest;
 import hu.unideb.smartcampus.webservice.api.provider.ClientResponseProvider;
 import hu.unideb.smartcampus.webservice.api.provider.PropertyProvider;
 import hu.unideb.smartcampus.webservice.api.validator.ResponseStatusValidator;
