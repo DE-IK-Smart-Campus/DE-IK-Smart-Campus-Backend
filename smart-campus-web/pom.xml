@@ -77,9 +77,8 @@
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>1.1.0.Alpha11</version>
 				<configuration>
-					<hostname>127.0.0.1</hostname>
-					<port>9990</port>
 					<jbossHome>${jboss.home}</jbossHome>
+                    <skip>false</skip>
 				</configuration>
 			</plugin>
 		</plugins>
