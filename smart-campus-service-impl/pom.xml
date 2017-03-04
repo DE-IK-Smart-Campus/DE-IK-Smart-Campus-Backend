@@ -37,6 +37,10 @@
 				<artifactId>smart-campus-webservice-api</artifactId>
 				<scope>provided</scope>
 		</dependency>
+		<dependency>
+		  <groupId>ical4j</groupId>
+		  <artifactId>ical4j</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

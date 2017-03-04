@@ -73,6 +73,7 @@
 		<jersey.common.version>2.25.1</jersey.common.version>
 		<servlet.api.version>2.5</servlet.api.version>
 		<resteasy.version>3.0.2.Final</resteasy.version>
+        <ical4j.version>0.9.20</ical4j.version>
 	</properties>
 
 	<dependencyManagement>
@@ -160,6 +161,11 @@
 				<artifactId>smack-extensions</artifactId>
 				<version>${smack.version}</version>
 			</dependency>
+      <dependency>
+      <groupId>ical4j</groupId>
+      <artifactId>ical4j</artifactId>
+      <version>${ical4j.version}</version>
+    </dependency>
 		</dependencies>
 	</dependencyManagement>
 
