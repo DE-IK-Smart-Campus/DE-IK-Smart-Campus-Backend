@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import hu.unideb.smartcampus.shared.enumeration.ConfigPropertyKey;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.webservice.api.ejabberd.XmppUserService;
-import hu.unideb.smartcampus.webservice.api.ejabberd.domain.EjabberdUserRegistrationRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.domain.EjabberdUserRegistrationRequest;
 import hu.unideb.smartcampus.webservice.api.provider.ClientResponseProvider;
 import hu.unideb.smartcampus.webservice.api.provider.PropertyProvider;
 import hu.unideb.smartcampus.webservice.api.validator.ResponseStatusValidator;
@@ -34,7 +34,7 @@ public class XmppUserServiceImpl implements XmppUserService {
 
     Response response = clientResponseProvider.sendPostRequest(REGISTER_USER, registrationRequest);
 
-    if (responseStatusValidator.isOk(response)) {
+    if (!responseStatusValidator.isOk(response)) {
       throw new XmppException("XMPP server responded with status " + response.getStatus());
     }
 

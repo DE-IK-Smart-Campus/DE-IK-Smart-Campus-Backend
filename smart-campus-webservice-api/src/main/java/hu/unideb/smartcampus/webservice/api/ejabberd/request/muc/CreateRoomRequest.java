@@ -2,7 +2,7 @@ package hu.unideb.smartcampus.webservice.api.ejabberd.request.muc;
 
 import java.util.Map;
 
-import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.BaseRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.base.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
