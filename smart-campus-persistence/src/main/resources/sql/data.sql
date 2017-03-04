@@ -23,3 +23,20 @@ values (7, 'butikai', '$2y$10$BmS0lp1oV25PsKlA5AyXaeSDUeOGBMlxvWIoLghH.l3Au4Tdn2
 insert into user (id, username, password, role)
 values (8, 'gabai', '$2y$10$.D6nvZNahkSXVSRLHrtI5u0RERS6rdBqwMH/uja1Yi7DVfiHukzjm', 'USER');
 ----------------------------------------------------------------------------------------------------
+
+insert into instructor (id, name)
+values (1, 'instructor');
+
+insert into consulting_date (id, date)
+values (1, 'Friday 14-16');
+
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (1, 1);
+
+insert into subject(id,name) values (1,'AI');
+
+insert into instructor_subjects(instructor_id,subject_id)
+values (1, 1);
+
+insert into user_actual_subjects(user_id,subject_id)
+values (1, 1);

@@ -30,4 +30,30 @@ public class ColumnName {
      */
     public static final String COLUMN_NAME_ROLE = "role";
   }
+
+  /**
+   * Instructor column.
+   */
+  @NoArgsConstructor(access = AccessLevel.PRIVATE)
+  public static final class InstructorColumnName {
+
+    /**
+     * Name column.
+     */
+    public static final String COLUMN_NAME_NAME = "name";
+
+  }
+
+  /**
+   * Instructor column.
+   */
+  @NoArgsConstructor(access = AccessLevel.PRIVATE)
+  public static final class ConsultingDateColumnName {
+
+    /**
+     * Name column.
+     */
+    public static final String COLUMN_NAME_DATE = "date";
+
+  }
 }

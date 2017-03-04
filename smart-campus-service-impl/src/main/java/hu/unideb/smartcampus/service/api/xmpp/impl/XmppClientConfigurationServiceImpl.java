@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.webservice.api.xmpp.impl;
+package hu.unideb.smartcampus.service.api.xmpp.impl;
 
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;

@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.webservice.api.xmpp.impl;
+package hu.unideb.smartcampus.service.api.xmpp.impl;
 
 import java.io.IOException;
 
@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatManagerListener;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.slf4j.Logger;
@@ -23,6 +25,7 @@ import hu.unideb.smartcampus.webservice.api.xmpp.XmppClientConfigurationService;
 
 @Component
 @Scope(DefaultUserImpl.BEAN_SCOPE)
+@SuppressWarnings({"PMD.ExcessiveImports"})
 public class DefaultUserImpl implements DefaultUser {
 
   public static final String BEAN_SCOPE = "singleton";
@@ -46,8 +49,16 @@ public class DefaultUserImpl implements DefaultUser {
    */
   private XMPPTCPConnection connection;
 
+  /**
+   * XMPP server chat manager for default user.
+   */
+  private ChatManager chatManager;
+
   @Autowired
   private XmppClientConfigurationService connectionConfigurationService;
+
+  @Autowired
+  private ChatManagerListener chatManagerListener;
 
   /**
    * Init after class.
@@ -66,8 +77,7 @@ public class DefaultUserImpl implements DefaultUser {
 
 
   private void registerDefaultListener() {
-    connection.addAsyncStanzaListener(
-        packet -> LOGGER.info("Incoming Async stanza:{}", packet.toXML()), stanza -> true);
+    // empty
   }
 
   private void initConnection(String username, String password) throws XmppException {
@@ -76,7 +86,14 @@ public class DefaultUserImpl implements DefaultUser {
     connection = new XMPPTCPConnection(conf);
     connect();
     doLogin();
+    initChatManager();
   }
+
+  private void initChatManager() {
+    chatManager = ChatManager.getInstanceFor(connection);
+    chatManager.addChatListener(chatManagerListener);
+  }
+
 
   private void connect() throws ConnectionException {
     try {
