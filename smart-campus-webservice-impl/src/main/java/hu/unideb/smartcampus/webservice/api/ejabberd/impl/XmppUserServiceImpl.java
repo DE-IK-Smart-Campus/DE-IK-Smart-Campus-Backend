@@ -34,7 +34,7 @@ public class XmppUserServiceImpl implements XmppUserService {
 
     Response response = clientResponseProvider.sendPostRequest(REGISTER_USER, registrationRequest);
 
-    if (responseStatusValidator.isOk(response)) {
+    if (!responseStatusValidator.isOk(response)) {
       throw new XmppException("XMPP server responded with status " + response.getStatus());
     }
 
