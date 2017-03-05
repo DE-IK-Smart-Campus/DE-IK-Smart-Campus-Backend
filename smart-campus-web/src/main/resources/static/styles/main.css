@@ -6940,7 +6940,7 @@ button.close {
     color: rgba(255, 255, 255, .7)
 }
 
-@media (min-width: 768px) {
+@media {
     .dashboard-page .sidebar {
         position: fixed;
         top: 0;
