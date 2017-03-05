@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api;
 
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
 
 /**
@@ -10,6 +11,6 @@ public interface MessageProcessingService {
   /**
    * Process incoming message and returns a result JSON.
    */
-  String processMessage(String message) throws ProcessMessageException;
+  <T extends BaseWrapper> T processMessage(String message) throws ProcessMessageException;
 
 }

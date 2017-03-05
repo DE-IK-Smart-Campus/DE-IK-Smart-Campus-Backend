@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.MessageProcessingService;
 import hu.unideb.smartcampus.service.api.context.MessageProcessContext;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
-import hu.unideb.smartcampus.shared.message.BaseMessageType;
+import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 
 /**
  * Implementation of the message processing service.
@@ -25,44 +25,55 @@ public class MessageProcessingServiceImpl implements MessageProcessingService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MessageProcessingServiceImpl.class);
 
-  @Autowired
   private ObjectMapper objectMapper;
 
-  @Autowired
   private MessageProcessContext context;
 
-  @Autowired
   private ApplicationContext appContext;
+
+  /**
+   * Constructs a MessageProcessingServiceImpl instance with injected dependencies.
+   *
+   */
+  public MessageProcessingServiceImpl(ObjectMapper objectMapper, MessageProcessContext context,
+      ApplicationContext appContext) {
+    this.objectMapper = objectMapper;
+    this.context = context;
+    this.appContext = appContext;
+  }
 
   /**
    * {@inheritDoc}.
    */
   @Override
-  public String processMessage(String message) throws ProcessMessageException {
-    BaseMessageType decodedMessage;
+  public <T extends BaseWrapper> T processMessage(String message) throws ProcessMessageException {
+    BaseRequestType decodedMessage;
     decodedMessage = readDecodedMessage(message);
     LOGGER.info("Decoded JSON:{}", decodedMessage);
     return getResult(decodedMessage);
   }
 
-  private String getResult(BaseMessageType decodedMessage) {
+  private <T extends BaseWrapper> T getResult(BaseRequestType decodedMessage) {
     MessageProcessingClass bean;
-    String result = "";
+    BaseWrapper result = null;
     if (decodedMessage != null) {
-      Class<? extends MessageProcessingClass> wb =
-          context.getWebServiceMethods().get(decodedMessage.getClass());
-      bean = appContext.getBean(wb);
-      result = bean.getJson(decodedMessage);
+      bean = getProcessBean(decodedMessage);
+      result = bean.getResponse(decodedMessage);
     }
-    return result;
+    return (T) result;
   }
 
-  private BaseMessageType readDecodedMessage(String message) throws ProcessMessageException {
+  private MessageProcessingClass getProcessBean(BaseRequestType decodedMessage) {
+    Class<? extends MessageProcessingClass> wb =
+        context.getMessageServices().get(decodedMessage.getClass());
+    return appContext.getBean(wb);
+  }
+
+  private BaseRequestType readDecodedMessage(String message) throws ProcessMessageException {
     try {
-      return objectMapper.readValue(message, BaseMessageType.class);
+      return objectMapper.readValue(message, BaseRequestType.class);
     } catch (IOException e) {
-      LOGGER.error("Error while trying to read message as JSON.", e);
-      throw new ProcessMessageException("Error while trying to read message as JSON.", e);
+      throw new ProcessMessageException("Error while reading message, unknown message type.", e);
     }
   }
 

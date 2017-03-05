@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,11 +20,25 @@ import hu.unideb.smartcampus.service.api.domain.Subject;
 @Service
 public class ConsultingHourServiceImpl implements ConsultingHourService {
 
-  @Autowired
-  private UserRepository userRepository;
+  /**
+   * User repository.
+   */
+  private final UserRepository userRepository;
 
+  /**
+   * Entity to domain converter.
+   */
+  private final SubjectEntityToSubjectConverter converter;
+
+  /**
+   * Constructs an instance of ConsultingHourServiceImpl.
+   */
   @Autowired
-  private SubjectEntityToSubjectConverter converter;
+  public ConsultingHourServiceImpl(UserRepository userRepository,
+      SubjectEntityToSubjectConverter converter) {
+    this.userRepository = userRepository;
+    this.converter = converter;
+  }
 
   /**
    * {@inheritDoc}.
@@ -31,7 +46,10 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
   @Override
   public Set<Subject> getSubjectsByUserId(Long id) {
     Set<SubjectEntity> subjects = userRepository.getSubjectsByUserId(id);
-    return subjects.stream().map(e -> converter.convert(e)).collect(Collectors.toSet());
+    if (subjects == null) {
+      return Collections.emptySet();
+    }
+    return subjects.stream().map(converter::convert).collect(Collectors.toSet());
   }
 
 }

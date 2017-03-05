@@ -3,10 +3,10 @@ package hu.unideb.smartcampus.service.api.context;
 import java.util.Map;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.shared.message.BaseMessageType;
+import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 
 /**
- * Base interface.
+ * Intrerface of message process context.
  *
  */
 public interface MessageProcessContext {
@@ -14,5 +14,5 @@ public interface MessageProcessContext {
   /**
    * Base method.
    */
-  Map<Class<? extends BaseMessageType>, Class<? extends MessageProcessingClass>> getWebServiceMethods();
+  Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> getMessageServices();
 }

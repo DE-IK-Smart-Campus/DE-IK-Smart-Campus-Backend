@@ -2,7 +2,7 @@ package hu.unideb.smartcampus.service.api.domain;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -10,9 +10,9 @@ import lombok.ToString;
  *
  */
 @Data
-@NoArgsConstructor
-@ToString(callSuper = true)
-public class Subject {
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
+public class Subject extends BaseObject<Long> {
 
   /**
    * Name of the instructor.
@@ -23,7 +23,8 @@ public class Subject {
    * Constructs a subject entity.
    */
   @Builder
-  public Subject(final String name) {
+  public Subject(final Long id, final String name) {
+    super(id);
     this.name = name;
   }
 

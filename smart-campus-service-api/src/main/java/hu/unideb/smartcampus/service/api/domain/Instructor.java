@@ -4,7 +4,6 @@ import java.util.Set;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -12,9 +11,8 @@ import lombok.ToString;
  *
  */
 @Data
-@NoArgsConstructor
 @ToString(callSuper = true)
-public class Instructor {
+public class Instructor extends BaseObject<Long> {
 
   /**
    * Name of the instructor.
@@ -35,8 +33,9 @@ public class Instructor {
    * Constructs instructor entity.
    */
   @Builder
-  public Instructor(final String name, final Set<ConsultingDate> consultingDates,
+  public Instructor(final Long id, final String name, final Set<ConsultingDate> consultingDates,
       final Set<Subject> subjects) {
+    super(id);
     this.name = name;
     this.consultingDates = consultingDates;
     this.subjects = subjects;

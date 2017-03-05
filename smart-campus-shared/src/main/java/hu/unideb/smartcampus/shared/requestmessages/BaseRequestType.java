@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.shared.message;
+package hu.unideb.smartcampus.shared.requestmessages;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -11,10 +11,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY,
     property = "messageType")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ConsultingDatesProcessMessage.class,
+    @JsonSubTypes.Type(value = ConsultingDatesRequest.class,
         name = "ConsultingDatesProcessMessage"),
-    @JsonSubTypes.Type(value = AskSubjectsProcessingMessage.class,
-        name = "AskSubjectsProcessingMessage")})
-public interface BaseMessageType {
+    @JsonSubTypes.Type(value = RetrieveSubjectsRequest.class,
+        name = "AskSubjectsProcessMessage"),
+    @JsonSubTypes.Type(value = ExampleRequest.class, name = "ExampleProcessMessage"),})
+public interface BaseRequestType {
 
 }

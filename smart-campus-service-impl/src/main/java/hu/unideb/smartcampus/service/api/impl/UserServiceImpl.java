@@ -1,12 +1,13 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.Optional;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.UserService;
