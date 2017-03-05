@@ -58,4 +58,9 @@ angular.module('app', [
                 templateUrl: 'views/dashboard/about-us.html'
             });
 
-    });
+    }).directive('showSidebarButton', function () {
+        return {
+            restrict : 'E',
+            templateUrl : 'directives/show-sidebar.html'
+        };
+});
