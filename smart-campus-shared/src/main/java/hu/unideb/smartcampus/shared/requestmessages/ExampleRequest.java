@@ -13,9 +13,21 @@ import lombok.EqualsAndHashCode;
 public class ExampleRequest extends BaseRequest {
 
   /**
+   * Message type.
+   */
+  private static final String MESSAGE_TYPE = "ExampleProcessMessage";
+
+  /**
    * Example field.
    */
   private String example;
+
+  /**
+   * Constructor for Jackson.
+   */
+  public ExampleRequest() {
+    super(MESSAGE_TYPE);
+  }
 
   /**
    * Constructs an example request.

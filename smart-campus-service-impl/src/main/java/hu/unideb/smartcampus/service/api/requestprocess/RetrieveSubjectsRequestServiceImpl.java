@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import hu.unideb.smartcampus.service.api.ConsultingHourService;
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.domain.Subject;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectResponseWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
@@ -20,7 +19,8 @@ import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
  *
  */
 @Component
-public class RetrieveSubjectsRequestServiceImpl implements MessageProcessingClass {
+public class RetrieveSubjectsRequestServiceImpl
+    implements MessageProcessingClass<SubjectResponseWrapper> {
 
   private static final Logger LOGGER =
       LoggerFactory.getLogger(RetrieveSubjectsRequestServiceImpl.class);
@@ -32,11 +32,11 @@ public class RetrieveSubjectsRequestServiceImpl implements MessageProcessingClas
    * {@inheritDoc}.
    */
   @Override
-  public <T extends BaseWrapper> T getResponse(Object object) {
+  public SubjectResponseWrapper getResponse(Object object) {
     LOGGER.info("Retrieving user's subjects.");
     RetrieveSubjectsRequest msg = (RetrieveSubjectsRequest) object;
     Set<Subject> subjects = service.getSubjectsByUserId(msg.getUserId());
-    return (T) SubjectResponseWrapper.builder().subjectSet(subjects).build();
+    return SubjectResponseWrapper.builder().subjectSet(subjects).build();
   }
 
   /**

@@ -7,12 +7,12 @@ import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
  * Base interface of services which handles incoming message.
  *
  */
-public interface MessageProcessingClass {
+public interface MessageProcessingClass<T extends BaseWrapper> {
 
   /**
    * Generates a reply JSON.
    */
-  <T extends BaseWrapper> T getResponse(Object object);
+  T getResponse(Object object);
 
   /**
    * Supported class.

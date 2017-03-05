@@ -3,7 +3,6 @@ package hu.unideb.smartcampus.service.api.requestprocess;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.ExampleResponseWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;
@@ -13,15 +12,15 @@ import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;
  *
  */
 @Component
-public class ExampleRequestServiceImpl implements MessageProcessingClass {
+public class ExampleRequestServiceImpl implements MessageProcessingClass<ExampleResponseWrapper> {
 
   /**
    * {@inheritDoc}.
    */
   @Override
-  public <T extends BaseWrapper> T getResponse(Object object) {
+  public ExampleResponseWrapper getResponse(Object object) {
     ExampleRequest request = (ExampleRequest) object;
-    return (T) ExampleResponseWrapper.builder().example(request.getExample()).build();
+    return ExampleResponseWrapper.builder().example(request.getExample()).build();
   }
 
   /**

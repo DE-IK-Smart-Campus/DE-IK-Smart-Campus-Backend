@@ -12,13 +12,13 @@ import hu.unideb.smartcampus.shared.requestmessages.ConsultingDatesRequest;
  *
  */
 @Component
-public class ConsultingDatesRequestServiceImpl implements MessageProcessingClass {
+public class ConsultingDatesRequestServiceImpl implements MessageProcessingClass<BaseWrapper> {
 
   /**
    * {@inheritDoc}.
    */
   @Override
-  public <T extends BaseWrapper> T getResponse(Object object) {
+  public BaseWrapper getResponse(Object object) {
     return null;
   }
 
