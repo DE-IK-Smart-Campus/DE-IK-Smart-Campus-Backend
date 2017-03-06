@@ -1,27 +1,24 @@
-package hu.unideb.smartcampus.service.api.exception;
+package hu.unideb.smartcampus.service.api;
 
 /**
- * An exception class to indicate that an error happened during a parsing process.
+ * An exception class to indicate that a summary does not matches a given pattern.
  *
  */
-public class InputParseException extends Exception {
-
-  private static final long serialVersionUID = -178158630303557764L;
+public class UnparsableCalendarEventSummaryException extends Exception {
 
   /**
    * Default constructor.
    */
-  public InputParseException() {
+  public UnparsableCalendarEventSummaryException() {
     super();
   }
 
   /**
    * Constructor with message and cause parameters.
-   * 
    * @param message the message of the exception
    * @param cause the cause of the exception
    */
-  public InputParseException(String message, Throwable cause) {
+  public UnparsableCalendarEventSummaryException(String message, Throwable cause) {
     super(message, cause);
   }
 
@@ -30,7 +27,7 @@ public class InputParseException extends Exception {
    * 
    * @param message the message of the exception
    */
-  public InputParseException(String message) {
+  public UnparsableCalendarEventSummaryException(String message) {
     super(message);
   }
 
@@ -39,7 +36,7 @@ public class InputParseException extends Exception {
    * 
    * @param cause the cause of the exception
    */
-  public InputParseException(Throwable cause) {
+  public UnparsableCalendarEventSummaryException(Throwable cause) {
     super(cause);
   }
 
