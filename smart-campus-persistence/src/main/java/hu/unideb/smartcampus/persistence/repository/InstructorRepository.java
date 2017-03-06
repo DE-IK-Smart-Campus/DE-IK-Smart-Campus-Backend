@@ -28,4 +28,9 @@ public interface InstructorRepository extends JpaRepository<InstructorEntity, Lo
    * Get instructors by subject name.
    */
   Set<InstructorEntity> getInstructorsBySubjectName(String subjectName);
+
+  /**
+   * Get instructors by subject id.
+   */
+  Set<InstructorEntity> getInstructorsBySubjectId(Long id);
 }

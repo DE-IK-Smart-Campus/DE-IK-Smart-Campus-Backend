@@ -38,14 +38,16 @@ import lombok.ToString;
     @NamedQuery(name = "InstructorEntity.getInstructorConsultingHoursByInstructorName",
         query = "SELECT instr.consultingDates FROM InstructorEntity instr WHERE instr.name = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectName",
-        query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.name = ?1"),})
+        query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.name = ?1"),
+    @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectId",
+        query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.id = ?1")})
 public class InstructorEntity extends BaseEntity<Long> {
 
   /**
    * Name of the instructor.
    */
   @NotNull
-  @Size(min = 2, max = 20)
+  @Size(min = 2, max = 128)
   @Column(name = COLUMN_NAME_NAME)
   private String name;
 

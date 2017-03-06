@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.shared.requestmessages;
 
+import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,11 +13,6 @@ import lombok.EqualsAndHashCode;
 public class RetrieveSubjectsRequest extends BaseRequest {
 
   /**
-   * Message type.
-   */
-  private static final String MESSAGE_TYPE = "AskSubjectsProcessMessage";
-
-  /**
    * User id.
    */
   private Long userId;
@@ -25,7 +21,7 @@ public class RetrieveSubjectsRequest extends BaseRequest {
    * Constructor for Jackson.
    */
   public RetrieveSubjectsRequest() {
-    super(MESSAGE_TYPE);
+    super(RequestMessagesConstants.RETRIEVE_SUBJECTS_REQUEST_MESSAGE_TYPE);
   }
 
   /**

@@ -47,7 +47,7 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
       .subjects(Sets.newSet(sampleSubject)).build();
 
   /**
-   * UserRepository.
+   * InstructorRepository.
    */
   @Autowired
   private InstructorRepository instructorRepository;
