@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RetrieveInstructorConsultingHours extends BaseRequest implements BaseRequestType {
+public class RetrieveInstructorConsultingHours extends BaseRequest {
 
   /**
    * Instructor id.

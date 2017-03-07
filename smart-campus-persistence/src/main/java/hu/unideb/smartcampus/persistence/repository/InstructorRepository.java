@@ -10,7 +10,7 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 
 /**
- * User repository.
+ * Instructor repository.
  */
 @Repository
 public interface InstructorRepository extends JpaRepository<InstructorEntity, Long> {

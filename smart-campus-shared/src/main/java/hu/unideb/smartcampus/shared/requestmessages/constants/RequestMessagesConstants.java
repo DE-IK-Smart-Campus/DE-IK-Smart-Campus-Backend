@@ -42,4 +42,16 @@ public class RequestMessagesConstants {
   public static final String RETRIEVE_CONSULTING_HOURS_RESPONSE =
       "AskInstructorConsultingHoursProcessMessageResponse";
 
+  /**
+   * SignUpForConsultingHourRequest message type.
+   */
+  public static final String SIGN_UP_FOR_CONSULTING_HOUR_REQUEST =
+      "SignUpForConsultingHourProcessMessage";
+
+  /**
+   * SubjectRetrievalResponseWrapper response message type.
+   */
+  public static final String SIGN_UP_FOR_CONSULTING_HOUR_RESPONSE =
+      "SignUpForConsultingHourProcessMessageResponse";
+
 }

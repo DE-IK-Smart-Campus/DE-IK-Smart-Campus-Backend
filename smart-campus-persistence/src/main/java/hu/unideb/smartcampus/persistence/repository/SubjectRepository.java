@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 
 /**
- * User repository.
+ * Subject repository.
  */
 @Repository
 public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
