@@ -12,9 +12,9 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.ConsultingHourWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.FromToDate;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.InstructorConsultingHoursWrapper;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.ConsultingHourWrapper;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.FromToDateWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
@@ -65,8 +65,8 @@ public class RetrieveInsturctorConsultingHoursServiceImpl
         .reservedSum(entity.getSum()).build();
   }
 
-  private FromToDate convertToWrapperFromToDate(FromToDateEmbeddedEntity fromToDate) {
-    return FromToDate.builder().from(fromToDate.getFromDate().getTime())
+  private FromToDateWrapper convertToWrapperFromToDate(FromToDateEmbeddedEntity fromToDate) {
+    return FromToDateWrapper.builder().from(fromToDate.getFromDate().getTime())
         .to(fromToDate.getToDate().getTime()).build();
   }
 

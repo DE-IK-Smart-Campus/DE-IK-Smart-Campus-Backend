@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.domain.response.wrapper;
+package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
 
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +19,7 @@ public class ConsultingHourWrapper {
   /**
    * From to date.
    */
-  private FromToDate fromToDates;
+  private FromToDateWrapper fromToDates;
 
   /**
    * Sum of reserved studenst.
@@ -30,7 +30,7 @@ public class ConsultingHourWrapper {
    * Constructs a ConsultingHourWrapper.
    */
   @Builder
-  public ConsultingHourWrapper(final Long consultingHourId, final FromToDate fromToDates,
+  public ConsultingHourWrapper(final Long consultingHourId, final FromToDateWrapper fromToDates,
       final Integer reservedSum) {
     this.consultingHourId = consultingHourId;
     this.fromToDates = fromToDates;

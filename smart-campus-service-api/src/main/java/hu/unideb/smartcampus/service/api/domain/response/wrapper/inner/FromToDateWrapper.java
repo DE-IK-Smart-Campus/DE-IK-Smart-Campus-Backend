@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.domain.response.wrapper;
+package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class FromToDate implements Serializable {
+public class FromToDateWrapper implements Serializable {
 
   /**
    * UID.
@@ -33,7 +33,7 @@ public class FromToDate implements Serializable {
    * Constructs a FromToDate instance.
    */
   @Builder
-  public FromToDate(Long from, Long to) {
+  public FromToDateWrapper(Long from, Long to) {
     this.from = from;
     this.to = to;
   }

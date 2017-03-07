@@ -2,6 +2,7 @@ package hu.unideb.smartcampus.service.api.domain.response.wrapper;
 
 import java.util.List;
 
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.SubjectWrapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
