@@ -17,6 +17,7 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.InstructorConsultingHoursWrapper;
+import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingHoursRequestServiceImpl;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
@@ -27,8 +28,8 @@ public class RetrieveInsturctorConsultingHoursServiceImplTest {
   private static final long INSTRUCTOR_ID = 1L;
 
   @InjectMocks
-  private RetrieveInsturctorConsultingHoursServiceImpl service =
-      new RetrieveInsturctorConsultingHoursServiceImpl();
+  private RetrieveInstructorsConsultingHoursRequestServiceImpl service =
+      new RetrieveInstructorsConsultingHoursRequestServiceImpl();
 
   @Mock
   private InstructorRepository instructorRepositoy;

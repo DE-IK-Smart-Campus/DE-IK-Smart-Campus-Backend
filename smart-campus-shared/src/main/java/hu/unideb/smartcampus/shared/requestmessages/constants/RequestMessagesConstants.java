@@ -6,6 +6,21 @@ package hu.unideb.smartcampus.shared.requestmessages.constants;
 public class RequestMessagesConstants {
 
   /**
+   * Message type property.
+   */
+  public static final String MESSAGE_TYPE = "messageType";
+
+  /**
+   * Example request.
+   */
+  public static final String EXAMPLE_REQUEST = "ExampleProcessMessage";
+
+  /**
+   * Example response.
+   */
+  public static final String EXAMPLE_RESPONSE = "ExampleProcessMessageResponse";
+
+  /**
    * RetrieveSubjectsRequest message type.
    */
   public static final String RETRIEVE_SUBJECTS_REQUEST = "AskSubjectsProcessMessage";

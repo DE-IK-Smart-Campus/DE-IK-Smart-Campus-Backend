@@ -11,11 +11,12 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
  *
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY,
-    property = "messageType")
+    property = RequestMessagesConstants.MESSAGE_TYPE)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = RetrieveSubjectsRequest.class,
         name = RequestMessagesConstants.RETRIEVE_SUBJECTS_REQUEST),
-    @JsonSubTypes.Type(value = ExampleRequest.class, name = "ExampleProcessMessage"),
+    @JsonSubTypes.Type(value = ExampleRequest.class,
+        name = RequestMessagesConstants.EXAMPLE_REQUEST),
     @JsonSubTypes.Type(value = RetrieveInstructorConsultingHours.class,
         name = RequestMessagesConstants.RETRIEVE_CONSULTING_HOURS)})
 public interface BaseRequestType {

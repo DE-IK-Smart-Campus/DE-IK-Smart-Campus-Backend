@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.service.api.requestprocess.ExampleRequestServiceImpl;
-import hu.unideb.smartcampus.service.api.requestprocess.RetrieveSubjectsRequestServiceImpl;
+import hu.unideb.smartcampus.service.api.request.service.ExampleRequestServiceImpl;
+import hu.unideb.smartcampus.service.api.request.service.RetrieveSubjectsRequestServiceImpl;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;

@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.requestprocess;
+package hu.unideb.smartcampus.service.api.request.service;
 
 import static hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE;
 

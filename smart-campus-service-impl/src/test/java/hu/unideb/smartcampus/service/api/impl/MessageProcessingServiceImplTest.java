@@ -22,7 +22,7 @@ import hu.unideb.smartcampus.service.api.MessageProcessingService;
 import hu.unideb.smartcampus.service.api.context.MessageProcessContext;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.ExampleResponseWrapper;
-import hu.unideb.smartcampus.service.api.requestprocess.ExampleRequestServiceImpl;
+import hu.unideb.smartcampus.service.api.request.service.ExampleRequestServiceImpl;
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;

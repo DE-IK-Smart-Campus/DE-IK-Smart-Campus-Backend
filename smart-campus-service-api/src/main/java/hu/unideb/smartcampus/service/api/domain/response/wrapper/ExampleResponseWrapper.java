@@ -18,10 +18,11 @@ public class ExampleResponseWrapper extends BaseWrapper {
   private String example;
 
   /**
-   * Constructs an example wrapper.
+   * Constructs an ExampleResponseWrapper.
    */
   @Builder
-  public ExampleResponseWrapper(final String example) {
+  public ExampleResponseWrapper(final String example, final String messageType) {
+    super(messageType);
     this.example = example;
   }
 }

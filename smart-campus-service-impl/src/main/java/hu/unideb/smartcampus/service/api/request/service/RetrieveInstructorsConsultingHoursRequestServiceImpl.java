@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.requestprocess;
+package hu.unideb.smartcampus.service.api.request.service;
 
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +23,7 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
  * Retrieve instructor consulting dates service.
  */
 @Component
-public class RetrieveInsturctorConsultingHoursServiceImpl
+public class RetrieveInstructorsConsultingHoursRequestServiceImpl
     implements MessageProcessingClass<InstructorConsultingHoursWrapper> {
 
   @Autowired
