@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.shared.requestmessages;
 
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RetrieveInsturctorConsultingHours extends BaseRequest implements BaseRequestType {
+public class RetrieveInstructorConsultingHours extends BaseRequest implements BaseRequestType {
 
   /**
    * Instructor id.
@@ -20,14 +21,15 @@ public class RetrieveInsturctorConsultingHours extends BaseRequest implements Ba
   /**
    * Constructor for Jackson.
    */
-  public RetrieveInsturctorConsultingHours() {
+  public RetrieveInstructorConsultingHours() {
     super(RequestMessagesConstants.RETRIEVE_CONSULTING_HOURS);
   }
 
   /**
    * Constructs a RetrieveInsturctorConsultingHours instance.
    */
-  public RetrieveInsturctorConsultingHours(final String messageType, final Long instructorId) {
+  @Builder
+  public RetrieveInstructorConsultingHours(final String messageType, final Long instructorId) {
     super(messageType);
     this.instructorId = instructorId;
   }

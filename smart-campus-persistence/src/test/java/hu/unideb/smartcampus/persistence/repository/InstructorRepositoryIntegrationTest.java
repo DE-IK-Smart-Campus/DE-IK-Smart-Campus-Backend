@@ -3,14 +3,23 @@ package hu.unideb.smartcampus.persistence.repository;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_EQUAL_TO_ERROR_MESSAGE;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_NULL_VALUE_ERROR_MESSAGE;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_FRIDAY;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_FRIDAY_ID;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_MONDAY;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_MONDAY_ID;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.FRIDAY_END_DATE;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.FRIDAY_START_DATE;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.INSTRUCTOR_ID;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_END_DATE;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_START_DATE;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.NAME;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.SUBJECT_ID;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.SUBJECT_NAME;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Set;
 
@@ -22,6 +31,7 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.shared.test.util.FromToDateUtil;
 
 /**
  * Test for {@link InstructorRepository}.
@@ -31,23 +41,24 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
   /**
    * Sample subject.
    */
-  private final SubjectEntity sampleSubject = SubjectEntity.builder().id(1L).name("AI").build();
+  private static final SubjectEntity SAMPLE_SUBJECT =
+      SubjectEntity.builder().id(SUBJECT_ID).name(SUBJECT_NAME).build();
 
   /**
    * Friday consulting date entity.
    */
-  private ConsultingDateEntity fridayConsultingDate = createFridayConsultingDate();
+  private final ConsultingDateEntity fridayConsultingDate = createFridayConsultingDate();
 
   /**
    * Friday consulting date entity.
    */
-  private ConsultingDateEntity mondayConsultingDate = createMondayConsultingDate();
+  private final ConsultingDateEntity mondayConsultingDate = createMondayConsultingDate();
 
   /**
    * Instructor.
    */
   private final InstructorEntity instructor =
-      InstructorEntity.builder().id(INSTRUCTOR_ID).name(NAME).subjects(Sets.newSet(sampleSubject))
+      InstructorEntity.builder().id(INSTRUCTOR_ID).name(NAME).subjects(Sets.newSet(SAMPLE_SUBJECT))
           .consultingDates(Sets.newSet(fridayConsultingDate)).build();
 
   /**
@@ -58,47 +69,21 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
 
 
   private ConsultingDateEntity createMondayConsultingDate() {
-    return ConsultingDateEntity.builder().id(2L).date("Monday 08-10").fromToDate(getMonday())
-        .build();
+    return ConsultingDateEntity.builder().id(CONSULTING_DATE_MONDAY_ID).date(CONSULTING_DATE_MONDAY)
+        .fromToDate(getMonday()).build();
   }
 
   private FromToDateEmbeddedEntity getMonday() {
-    // 2017-03-07 14:00:00
-    Calendar from = Calendar.getInstance();
-    from.set(2017, 2, 6, 8, 0, 0);
-
-    // 2017-03-07 16:00:00
-    Calendar to = Calendar.getInstance();
-    to.set(2017, 2, 6, 10, 0, 0);
-
-    Timestamp fromDate = new Timestamp(from.getTime().getTime());
-    fromDate.setNanos(0);
-    Timestamp toDate = new Timestamp(to.getTime().getTime());
-    toDate.setNanos(0);
-
-    return FromToDateEmbeddedEntity.builder().fromDate(fromDate).toDate(toDate).build();
+    return FromToDateUtil.createEntity(MONDAY_START_DATE, MONDAY_END_DATE);
   }
 
   private ConsultingDateEntity createFridayConsultingDate() {
-    return ConsultingDateEntity.builder().id(1L).date("Friday 14-16").fromToDate(getFriday())
-        .build();
+    return ConsultingDateEntity.builder().id(CONSULTING_DATE_FRIDAY_ID).date(CONSULTING_DATE_FRIDAY)
+        .fromToDate(getFriday()).build();
   }
 
   private FromToDateEmbeddedEntity getFriday() {
-    // 2017-03-07 14:00:00
-    Calendar from = Calendar.getInstance();
-    from.set(2017, 2, 10, 14, 0, 0);
-
-    // 2017-03-07 16:00:00
-    Calendar to = Calendar.getInstance();
-    to.set(2017, 2, 10, 16, 0, 0);
-
-    Timestamp fromDate = new Timestamp(from.getTime().getTime());
-    fromDate.setNanos(0);
-    Timestamp toDate = new Timestamp(to.getTime().getTime());
-    toDate.setNanos(0);
-
-    return FromToDateEmbeddedEntity.builder().fromDate(fromDate).toDate(toDate).build();
+    return FromToDateUtil.createEntity(FRIDAY_START_DATE, FRIDAY_END_DATE);
   }
 
   /**

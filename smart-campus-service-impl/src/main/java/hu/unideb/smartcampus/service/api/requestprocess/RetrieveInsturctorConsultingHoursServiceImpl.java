@@ -16,7 +16,7 @@ import hu.unideb.smartcampus.service.api.domain.response.wrapper.ConsultingHourW
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.FromToDate;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.InstructorConsultingHoursWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
-import hu.unideb.smartcampus.shared.requestmessages.RetrieveInsturctorConsultingHours;
+import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
 /**
@@ -34,7 +34,7 @@ public class RetrieveInsturctorConsultingHoursServiceImpl
    */
   @Override
   public InstructorConsultingHoursWrapper getResponse(Object object) {
-    RetrieveInsturctorConsultingHours msg = (RetrieveInsturctorConsultingHours) object;
+    RetrieveInstructorConsultingHours msg = (RetrieveInstructorConsultingHours) object;
     Long instructorId = msg.getInstructorId();
 
     Calendar from = Calendar.getInstance();
@@ -76,7 +76,7 @@ public class RetrieveInsturctorConsultingHoursServiceImpl
    */
   @Override
   public Class<? extends BaseRequestType> getSupportedClass() {
-    return RetrieveInsturctorConsultingHours.class;
+    return RetrieveInstructorConsultingHours.class;
   }
 
 }
