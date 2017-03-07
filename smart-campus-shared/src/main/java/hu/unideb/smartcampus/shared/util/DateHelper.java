@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.shared.test.util;
+package hu.unideb.smartcampus.shared.util;
 
 import lombok.Builder;
 import lombok.Data;
@@ -36,7 +36,7 @@ public class DateHelper {
   private Integer minute;
 
   /**
-   * Second
+   * Second.
    */
   private Integer second;
 

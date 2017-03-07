@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.shared.test.property;
 
-import hu.unideb.smartcampus.shared.test.util.DateHelper;
+import hu.unideb.smartcampus.shared.util.DateHelper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

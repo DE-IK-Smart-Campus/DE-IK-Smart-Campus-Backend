@@ -31,7 +31,7 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
-import hu.unideb.smartcampus.shared.test.util.FromToDateUtil;
+import hu.unideb.smartcampus.persistence.util.FromToDateUtil;
 
 /**
  * Test for {@link InstructorRepository}.

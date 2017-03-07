@@ -1,6 +1,14 @@
 package hu.unideb.smartcampus.service.api.requestprocess;
 
-import java.sql.Timestamp;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_FRIDAY;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_FRIDAY_ID;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_MONDAY;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_MONDAY_ID;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.FRIDAY_END_DATE;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.FRIDAY_START_DATE;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_END_DATE;
+import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_START_DATE;
+
 import java.util.Calendar;
 import java.util.Set;
 
@@ -16,21 +24,34 @@ import org.mockito.runners.MockitoJUnitRunner;
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
+import hu.unideb.smartcampus.persistence.util.FromToDateUtil;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.InstructorConsultingHoursWrapper;
 import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingHoursRequestServiceImpl;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
+/**
+ * Test for {@link RetrieveInstructorsConsultingHoursRequestServiceImpl}.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class RetrieveInsturctorConsultingHoursServiceImplTest {
 
 
+  /**
+   * Instructor id.
+   */
   private static final long INSTRUCTOR_ID = 1L;
 
+  /**
+   * Service impl.
+   */
   @InjectMocks
   private RetrieveInstructorsConsultingHoursRequestServiceImpl service =
       new RetrieveInstructorsConsultingHoursRequestServiceImpl();
 
+  /**
+   * Instructor repository.
+   */
   @Mock
   private InstructorRepository instructorRepositoy;
 
@@ -45,49 +66,23 @@ public class RetrieveInsturctorConsultingHoursServiceImplTest {
    */
   private ConsultingDateEntity mondayConsultingDate = createMondayConsultingDate();
 
+
   private ConsultingDateEntity createMondayConsultingDate() {
-    return ConsultingDateEntity.builder().id(2L).date("Monday 08-10").fromToDate(getMonday()).sum(2)
-        .build();
+    return ConsultingDateEntity.builder().id(CONSULTING_DATE_MONDAY_ID).date(CONSULTING_DATE_MONDAY)
+        .fromToDate(getMonday()).build();
   }
 
   private FromToDateEmbeddedEntity getMonday() {
-    // 2017-03-07 14:00:00
-    Calendar from = Calendar.getInstance();
-    from.set(2017, 2, 6, 8, 0, 0);
-
-    // 2017-03-07 16:00:00
-    Calendar to = Calendar.getInstance();
-    to.set(2017, 2, 6, 10, 0, 0);
-
-    Timestamp fromDate = new Timestamp(from.getTime().getTime());
-    fromDate.setNanos(0);
-    Timestamp toDate = new Timestamp(to.getTime().getTime());
-    toDate.setNanos(0);
-
-    return FromToDateEmbeddedEntity.builder().fromDate(fromDate).toDate(toDate).build();
+    return FromToDateUtil.createEntity(MONDAY_START_DATE, MONDAY_END_DATE);
   }
 
-
   private ConsultingDateEntity createFridayConsultingDate() {
-    return ConsultingDateEntity.builder().id(1L).date("Friday 14-16").fromToDate(getFriday()).sum(3)
-        .build();
+    return ConsultingDateEntity.builder().id(CONSULTING_DATE_FRIDAY_ID).date(CONSULTING_DATE_FRIDAY)
+        .fromToDate(getFriday()).build();
   }
 
   private FromToDateEmbeddedEntity getFriday() {
-    // 2017-03-07 14:00:00
-    Calendar from = Calendar.getInstance();
-    from.set(2017, 2, 10, 14, 0, 0);
-
-    // 2017-03-07 16:00:00
-    Calendar to = Calendar.getInstance();
-    to.set(2017, 2, 10, 16, 0, 0);
-
-    Timestamp fromDate = new Timestamp(from.getTime().getTime());
-    fromDate.setNanos(0);
-    Timestamp toDate = new Timestamp(to.getTime().getTime());
-    toDate.setNanos(0);
-
-    return FromToDateEmbeddedEntity.builder().fromDate(fromDate).toDate(toDate).build();
+    return FromToDateUtil.createEntity(FRIDAY_START_DATE, FRIDAY_END_DATE);
   }
 
   /**

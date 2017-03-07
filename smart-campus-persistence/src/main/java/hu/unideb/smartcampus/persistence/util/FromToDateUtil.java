@@ -1,9 +1,10 @@
-package hu.unideb.smartcampus.shared.test.util;
+package hu.unideb.smartcampus.persistence.util;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
+import hu.unideb.smartcampus.shared.util.DateHelper;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -13,7 +14,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FromToDateUtil {
 
-  public static FromToDateEmbeddedEntity createEntity(DateHelper fromDate, DateHelper toDate) {
+  /**
+   * Creates an entity to tests.
+   */
+  public FromToDateEmbeddedEntity createEntity(DateHelper fromDate, DateHelper toDate) {
     Calendar from = createCalenderWithGivenOptions(fromDate);
     Calendar to = createCalenderWithGivenOptions(toDate);
     return FromToDateEmbeddedEntity.builder().fromDate(createTimestampWithZeroNanos(from))

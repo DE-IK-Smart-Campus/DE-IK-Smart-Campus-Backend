@@ -25,6 +25,9 @@ public class ExampleRequestServiceImplTest {
    */
   private ExampleRequestServiceImpl service = new ExampleRequestServiceImpl();
 
+  /**
+   * Test get response.
+   */
   @Test
   public void testGetResponse() {
     // given
