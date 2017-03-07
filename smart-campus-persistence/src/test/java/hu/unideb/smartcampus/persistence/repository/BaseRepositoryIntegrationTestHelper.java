@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import hu.unideb.smartcampus.persistence.config.PersistenceConfiguration;
+import hu.unideb.smartcampus.persistence.config.TestPersistenceConfiguration;
 import hu.unideb.smartcampus.shared.annotation.IntegrationTest;
 
 /**
@@ -13,6 +13,6 @@ import hu.unideb.smartcampus.shared.annotation.IntegrationTest;
  */
 @IntegrationTest
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = PersistenceConfiguration.class, webEnvironment = WebEnvironment.NONE)
+@SpringBootTest(classes = TestPersistenceConfiguration.class, webEnvironment = WebEnvironment.NONE)
 public class BaseRepositoryIntegrationTestHelper {
 }

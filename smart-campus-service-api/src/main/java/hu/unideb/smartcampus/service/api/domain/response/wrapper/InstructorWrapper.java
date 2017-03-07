@@ -26,7 +26,7 @@ public class InstructorWrapper extends BaseWrapper {
    * Constructs an InstructorWrapper instance.
    */
   @Builder
-  public InstructorWrapper(Long instructorId, String name) {
+  public InstructorWrapper(final Long instructorId, final String name) {
     this.instructorId = instructorId;
     this.name = name;
   }

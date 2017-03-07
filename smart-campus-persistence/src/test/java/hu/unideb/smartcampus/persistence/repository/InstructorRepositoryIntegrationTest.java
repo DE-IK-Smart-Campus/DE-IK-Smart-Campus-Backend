@@ -3,8 +3,6 @@ package hu.unideb.smartcampus.persistence.repository;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_EQUAL_TO_ERROR_MESSAGE;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_NULL_VALUE_ERROR_MESSAGE;
-import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE;
-import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_ID;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.INSTRUCTOR_ID;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.NAME;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -12,6 +10,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Set;
 
 import org.junit.Test;
@@ -19,6 +19,7 @@ import org.mockito.internal.util.collections.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
+import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 
@@ -28,29 +29,77 @@ import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrationTestHelper {
 
   /**
-   * Consulting entity.
-   */
-  private final ConsultingDateEntity consultingEntity =
-      ConsultingDateEntity.builder().id(CONSULTING_DATE_ID).date(CONSULTING_DATE).build();
-
-
-  /**
    * Sample subject.
    */
   private final SubjectEntity sampleSubject = SubjectEntity.builder().id(1L).name("AI").build();
 
   /**
+   * Friday consulting date entity.
+   */
+  private ConsultingDateEntity fridayConsultingDate = createFridayConsultingDate();
+
+  /**
+   * Friday consulting date entity.
+   */
+  private ConsultingDateEntity mondayConsultingDate = createMondayConsultingDate();
+
+  /**
    * Instructor.
    */
-  private final InstructorEntity instructor = InstructorEntity.builder().id(INSTRUCTOR_ID)
-      .name(NAME).consultingDates(Sets.newSet(consultingEntity))
-      .subjects(Sets.newSet(sampleSubject)).build();
+  private final InstructorEntity instructor =
+      InstructorEntity.builder().id(INSTRUCTOR_ID).name(NAME).subjects(Sets.newSet(sampleSubject))
+          .consultingDates(Sets.newSet(fridayConsultingDate)).build();
 
   /**
    * InstructorRepository.
    */
   @Autowired
   private InstructorRepository instructorRepository;
+
+
+  private ConsultingDateEntity createMondayConsultingDate() {
+    return ConsultingDateEntity.builder().id(2L).date("Monday 08-10").fromToDate(getMonday())
+        .build();
+  }
+
+  private FromToDateEmbeddedEntity getMonday() {
+    // 2017-03-07 14:00:00
+    Calendar from = Calendar.getInstance();
+    from.set(2017, 2, 6, 8, 0, 0);
+
+    // 2017-03-07 16:00:00
+    Calendar to = Calendar.getInstance();
+    to.set(2017, 2, 6, 10, 0, 0);
+
+    Timestamp fromDate = new Timestamp(from.getTime().getTime());
+    fromDate.setNanos(0);
+    Timestamp toDate = new Timestamp(to.getTime().getTime());
+    toDate.setNanos(0);
+
+    return FromToDateEmbeddedEntity.builder().fromDate(fromDate).toDate(toDate).build();
+  }
+
+  private ConsultingDateEntity createFridayConsultingDate() {
+    return ConsultingDateEntity.builder().id(1L).date("Friday 14-16").fromToDate(getFriday())
+        .build();
+  }
+
+  private FromToDateEmbeddedEntity getFriday() {
+    // 2017-03-07 14:00:00
+    Calendar from = Calendar.getInstance();
+    from.set(2017, 2, 10, 14, 0, 0);
+
+    // 2017-03-07 16:00:00
+    Calendar to = Calendar.getInstance();
+    to.set(2017, 2, 10, 16, 0, 0);
+
+    Timestamp fromDate = new Timestamp(from.getTime().getTime());
+    fromDate.setNanos(0);
+    Timestamp toDate = new Timestamp(to.getTime().getTime());
+    toDate.setNanos(0);
+
+    return FromToDateEmbeddedEntity.builder().fromDate(fromDate).toDate(toDate).build();
+  }
 
   /**
    * Test for "null" username.
@@ -108,7 +157,8 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
         instructorRepository.getInstructorConsultingHoursByInstructorName(NAME);
 
     // Then
-    assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, result, equalTo(Sets.newSet(consultingEntity)));
+    assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, result,
+        equalTo(Sets.newSet(fridayConsultingDate, mondayConsultingDate)));
 
   }
 
@@ -124,5 +174,26 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
 
     // Then
     assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, result, equalTo(Sets.newSet(instructor)));
+  }
+
+  /**
+   * Test get instructors consulting dates after given date.
+   */
+  @Test
+  public void getInstructorConsultingDatesByIdAndGivenDateShouldReturnConsultingDatesAfterGivenDate() {
+    // Given
+    Calendar from = Calendar.getInstance();
+    from.set(2017, 2, 6);
+
+    Calendar to = Calendar.getInstance();
+    to.set(2017, 2, 14);
+
+    // When
+    Set<ConsultingDateEntity> consultingDates = instructorRepository
+        .getInstructorConsultingDatesByIdAndGivenDate(1L, from.getTime(), to.getTime());
+
+    // Then
+    assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, consultingDates,
+        equalTo(Sets.newSet(fridayConsultingDate)));
   }
 }

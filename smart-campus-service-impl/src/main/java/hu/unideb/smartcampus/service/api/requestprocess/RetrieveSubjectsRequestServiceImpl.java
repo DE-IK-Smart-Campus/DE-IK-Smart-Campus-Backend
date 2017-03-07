@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.service.api.requestprocess;
 
-import static hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE_MESSAGE_TYPE;
+import static hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class RetrieveSubjectsRequestServiceImpl
     List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
 
     return SubjectRetrievalResponseWrapper.builder()
-        .messageType(RETRIEVE_SUBJECTS_RESPONSE_MESSAGE_TYPE)
+        .messageType(RETRIEVE_SUBJECTS_RESPONSE)
         .subjects(subjectsWrapper)
         .build();
   }

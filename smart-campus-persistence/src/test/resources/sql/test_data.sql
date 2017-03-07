@@ -43,18 +43,16 @@ values (5, 'Dr. Jeszenszky Péter');
 -------------------------------
 
 insert into consulting_date (id, date, START_DATE, END_DATE)
-
-values (1, 'Friday 14-16',STR_TO_DATE('2017/03/10 14:00:00', '%Y/%c/%d %T'),STR_TO_DATE('2017/03/10 16:00:00', '%Y/%c/%d %T'));
+values (1, 'Friday 14-16',PARSEDATETIME('10-03-2017 14:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'),PARSEDATETIME('10-03-2017 16:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'));
 
 insert into consulting_date (id, date, START_DATE, END_DATE)
-values (2, 'Monday 08-10',STR_TO_DATE('2017/03/14 8:00:00', '%Y/%c/%d %T'),STR_TO_DATE('2017/03/14 10:00:00', '%Y/%c/%d %T'));
+values (2, 'Monday 08-10',PARSEDATETIME('06-03-2017 08:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'),PARSEDATETIME('06-03-2017 10:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'));
 
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (1, 1);
 
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (1, 2);
-
 -- subjects
 insert into subject(id,name) values (1,'AI');
 

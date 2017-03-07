@@ -30,7 +30,7 @@ import lombok.ToString;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"consultingDates"})
 @ToString(callSuper = true)
 @Entity
 @Table(name = TABLE_NAME_INSTRUCTOR)
@@ -40,7 +40,9 @@ import lombok.ToString;
     @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectName",
         query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.name = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectId",
-        query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.id = ?1")})
+        query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.id = ?1"),
+    @NamedQuery(name = "InstructorEntity.getInstructorConsultingDatesByIdAndGivenDate",
+        query = "SELECT c FROM InstructorEntity instr join instr.consultingDates c WHERE instr.id = ?1 AND c.fromToDate.fromDate BETWEEN ?2 AND ?3")})
 public class InstructorEntity extends BaseEntity<Long> {
 
   /**

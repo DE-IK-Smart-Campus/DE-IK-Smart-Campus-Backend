@@ -21,7 +21,7 @@ public class RetrieveSubjectsRequest extends BaseRequest {
    * Constructor for Jackson.
    */
   public RetrieveSubjectsRequest() {
-    super(RequestMessagesConstants.RETRIEVE_SUBJECTS_REQUEST_MESSAGE_TYPE);
+    super(RequestMessagesConstants.RETRIEVE_SUBJECTS_REQUEST);
   }
 
   /**

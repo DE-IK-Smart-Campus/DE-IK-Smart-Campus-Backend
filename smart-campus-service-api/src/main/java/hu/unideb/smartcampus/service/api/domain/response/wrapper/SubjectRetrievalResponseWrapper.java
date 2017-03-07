@@ -20,17 +20,12 @@ public class SubjectRetrievalResponseWrapper extends BaseWrapper {
   private List<SubjectWrapper> subjects;
 
   /**
-   * Message type.
-   */
-  private String messageType;
-
-  /**
    * Constructs a wrapper for response.
    */
   @Builder
   public SubjectRetrievalResponseWrapper(final String messageType,
       final List<SubjectWrapper> subjects) {
-    this.messageType = messageType;
+    super(messageType);
     this.subjects = subjects;
   }
 }
