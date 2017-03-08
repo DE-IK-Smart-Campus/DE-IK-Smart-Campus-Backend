@@ -2,10 +2,6 @@ language: java
 jdk:
   - oraclejdk8
 
-language: node_js
-node_js:
-  - 0.8
-
 notifications:
   slack:
     rooms:
@@ -13,6 +9,7 @@ notifications:
     on_success: change
     on_failure: always
 
+before_install: npm install -g selenium-webdriver
 before_install: chmod +x ./config/script/install.sh ./config/script/deploy.sh
 install: ./config/script/install.sh
 after_success: ./config/script/deploy.sh
