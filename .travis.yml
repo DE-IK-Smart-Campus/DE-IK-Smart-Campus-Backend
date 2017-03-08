@@ -1,5 +1,6 @@
 language: java
-jdk: oraclejdk8
+jdk:
+  - oraclejdk8
 notifications:
   slack:
     rooms:
@@ -32,9 +33,3 @@ env:
 language: node_js
 node_js:
   - "6.10"
-
-sudo: false
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
