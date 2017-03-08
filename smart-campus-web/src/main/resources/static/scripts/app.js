@@ -35,7 +35,8 @@ angular.module('app', [
             .state('calendar', {
                 url: '/calendar',
                 parent: 'dashboard',
-                templateUrl: 'views/dashboard/calendar.html'
+                templateUrl: 'views/dashboard/calendar.html',
+                controller: 'CalendarCtrl'
             })
             .state('consultingHours', {
                 url: '/consulting-hours',
