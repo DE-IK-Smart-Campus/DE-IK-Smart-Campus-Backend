@@ -1,6 +1,6 @@
 #!/bin/sh
 
-npm install
+#npm install
 npm install -g protractor
 if [ "$TRAVIS_BRANCH" = "master" ]; then
 	mvn clean install -Pmaster -Dwildfly.hostname=$MASTER_HOSTNAME -Dwildfly.username=$WILDFLY_MASTER_USER -Dwildfly.password=$WILDFLY_MASTER_PASSWORD -Dmysql.connection.url=$MASTER_MYSQL_URL -Dmysql.username=$MASTER_MYSQL_USER -Dmysql.password=$MASTER_MYSQL_PASSWORD
