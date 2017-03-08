@@ -9,7 +9,6 @@ notifications:
     on_success: change
     on_failure: always
 
-before_install: npm install -g selenium-webdriver
 before_install: chmod +x ./config/script/install.sh ./config/script/deploy.sh
 install: ./config/script/install.sh
 after_success: ./config/script/deploy.sh
