@@ -32,3 +32,9 @@ env:
 language: node_js
 node_js:
   - "6.10"
+
+sudo: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
