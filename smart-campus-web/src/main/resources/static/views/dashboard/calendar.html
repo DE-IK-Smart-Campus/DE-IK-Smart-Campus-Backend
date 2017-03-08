@@ -4,10 +4,21 @@
   <div class="jumbotron">
     <div class="container">
       <h1>Calendar</h1>
-      <p>Nulla facilisi. Nunc et elit vel magna tempus faucibus. Donec in commodo ex. Nunc venenatis aliquam lacinia. Sed id magna a arcu fermentum
-         vehicula ac at odio. Nam est lacus, pretium quis commodo in, blandit ac sapien. Praesent pulvinar mauris a mauris ornare posuere. Proin
-         sodales aliquet erat eu imperdiet. Maecenas sed neque venenatis est aliquam pharetra. Nullam dictum urna at ipsum sagittis vulputate.
-         Maecenas rhoncus gravida scelerisque. Quisque sed pellentesque enim, ac finibus augue.</p>
+      <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
+      <div class="row">
+        <div class="col-md-6">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="isDatepickerOpened" datepicker-options="dateOptions"
+                   ng-required="true" close-text="Close"/>
+            <span class="input-group-btn">
+              <!--
+              TODO böttöns
+              -->
+            <button type="button" class="btn btn-default" ng-click="open()">asd</button>
+          </span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

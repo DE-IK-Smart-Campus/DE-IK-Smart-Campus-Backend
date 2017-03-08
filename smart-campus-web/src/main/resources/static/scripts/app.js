@@ -2,7 +2,8 @@
 
 angular.module('app', [
     'ui.router',
-    'ngAnimate'
+    'ngAnimate',
+    'ui.bootstrap'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -60,8 +61,8 @@ angular.module('app', [
             });
 
     }).directive('showSidebarButton', function () {
-        return {
-            restrict : 'E',
-            templateUrl : 'directives/show-sidebar.html'
-        };
+    return {
+        restrict: 'E',
+        templateUrl: 'directives/show-sidebar.html'
+    };
 });
