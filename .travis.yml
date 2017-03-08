@@ -1,13 +1,14 @@
 language: java
 jdk:
   - oraclejdk8
-script: jdk_switcher use oraclejdk8
 notifications:
   slack:
     rooms:
     - secure: JXjHzVsaD8twWkQ0AAoYIY9VoUR3l3NkebTYeP4PSx5x31IyfBZ4zjVnHA7wmhlsb3FIwgSwZ/GzgPDmoxkmNPluW5v2QE9LasrYEpfViI38EtvJlyAhI4YthblH7DyW6n1pPGMQ3Ugozde0StMcTuls+VHy64ipUQpxsAasB+4UjfEHftUEdoOTry5CaUDKuRORGP5/TAcBCc8Q9faFpyRNgzUbgiBFSAxo6mfdGxKHWWE41MoCz9HBcSq+rY8JShzo1dgpXCvRZ4se1vrutIT/5t7ROEwbPpnmeAZWgGEJqAg+gbv7TJ++DsEdCZ1DDJGirR2gBQywlsiVuXsqkA6A5ndSbRnKjSfHst11w1mmdBEIuOtgqQ6OErF6dDzOQXKmMxnK0eV3CWOdXHDRtYHYuK7+5wUVDIGpwSBFYt5yhmLC9ASeV2FDV6qUNrtZrBBTKyJmBi0rYtDakEhsFXLVsAJF7mmSR7l3Lg82VyvR50XgOXk/IslRLeuPnuHd2otxvLeyoyL/FQB6xZYUq0PJp93qhQEfcy7uQZRsv8aPSZqm5ChMaX/z1KhuZzCPYwiF7QvBZIDK2cby0NqohbzbNttlZNivwYhnSvAkCPFWG3ThstBtdIk2XJvT+30I0ClSS4gYc6G+4I/m8rA8ulAiNM7jypwfb5wHURZ4qCw=
     on_success: change
     on_failure: always
+
+before_install: jdk_switcher use oraclejdk8
 before_install: chmod +x ./config/script/install.sh ./config/script/deploy.sh
 install: ./config/script/install.sh
 after_success: ./config/script/deploy.sh
