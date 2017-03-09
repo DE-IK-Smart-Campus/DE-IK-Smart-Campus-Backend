@@ -1,25 +1,26 @@
-package hu.unideb.smartcampus.webservice.api.xmpp.impl;
+package hu.unideb.smartcampus.service.api.xmpp.impl;
 
 import java.io.IOException;
 
 import javax.annotation.PreDestroy;
 
+import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
-import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
+import org.jivesoftware.smack.bosh.BOSHConfiguration;
+import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
+import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.webservice.api.xmpp.EjabberdUser;
-import hu.unideb.smartcampus.webservice.api.xmpp.XmppClientConfigurationService;
 
 /**
  * Session scoped service for XMPP connection.
@@ -30,7 +31,7 @@ import hu.unideb.smartcampus.webservice.api.xmpp.XmppClientConfigurationService;
  * user too.
  * </p>
  */
-@Service
+@Component
 @Scope(scopeName = EjabberdUserImpl.BEAN_SCOPE, proxyMode = ScopedProxyMode.INTERFACES)
 public class EjabberdUserImpl implements EjabberdUser {
 
@@ -41,7 +42,7 @@ public class EjabberdUserImpl implements EjabberdUser {
   /**
    * XMPP connection to Ejabberd server.
    */
-  private XMPPTCPConnection connection;
+  private XMPPBOSHConnection connection;
 
   @Autowired
   private XmppClientConfigurationService connectionConfigurationService;
@@ -80,7 +81,7 @@ public class EjabberdUserImpl implements EjabberdUser {
    * {@inheritDoc}.
    */
   @Override
-  public XMPPTCPConnection getConnection() {
+  public AbstractXMPPConnection getConnection() {
     return connection;
   }
 
@@ -90,9 +91,9 @@ public class EjabberdUserImpl implements EjabberdUser {
   }
 
   private void initConnection(String username, String password) throws XmppException {
-    XMPPTCPConnectionConfiguration conf =
-        connectionConfigurationService.getConfigurationByUsernameAndPassword(username, password);
-    connection = new XMPPTCPConnection(conf);
+    BOSHConfiguration conf = connectionConfigurationService
+        .getBoshConfigurationByUserNameAndPassword(username, password);
+    connection = new XMPPBOSHConnection(conf);
     connect();
     doLogin();
   }
@@ -114,7 +115,4 @@ public class EjabberdUserImpl implements EjabberdUser {
       throw new LoginException("Error on logging in to Ejabberd server.", e);
     }
   }
-
-
-
 }

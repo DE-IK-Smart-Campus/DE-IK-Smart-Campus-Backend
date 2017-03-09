@@ -1,6 +1,6 @@
-package hu.unideb.smartcampus.webservice.api.xmpp;
+package hu.unideb.smartcampus.service.api.xmpp;
 
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.AbstractXMPPConnection;
 
 import hu.unideb.smartcampus.shared.exception.XmppException;
 
@@ -29,6 +29,6 @@ public interface EjabberdUser {
    *
    * @return provided XMPP connection.
    */
-  XMPPTCPConnection getConnection();
+  AbstractXMPPConnection getConnection();
 
 }

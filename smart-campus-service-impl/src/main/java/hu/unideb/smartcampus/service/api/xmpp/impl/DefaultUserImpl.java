@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.webservice.api.xmpp.impl;
+package hu.unideb.smartcampus.service.api.xmpp.impl;
 
 import java.io.IOException;
 
@@ -15,14 +15,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
+import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.webservice.api.xmpp.DefaultUser;
-import hu.unideb.smartcampus.webservice.api.xmpp.XmppClientConfigurationService;
 
+/**
+ * Default user implementation, smartcampus@HOST.
+ *
+ */
 @Component
 @Scope(DefaultUserImpl.BEAN_SCOPE)
+@SuppressWarnings({"PMD.ExcessiveImports"})
 public class DefaultUserImpl implements DefaultUser {
 
   public static final String BEAN_SCOPE = "singleton";
@@ -66,17 +71,17 @@ public class DefaultUserImpl implements DefaultUser {
 
 
   private void registerDefaultListener() {
-    connection.addAsyncStanzaListener(
-        packet -> LOGGER.info("Incoming Async stanza:{}", packet.toXML()), stanza -> true);
+    // empty
   }
 
   private void initConnection(String username, String password) throws XmppException {
-    XMPPTCPConnectionConfiguration conf =
-        connectionConfigurationService.getConfigurationByUsernameAndPassword(username, password);
+    XMPPTCPConnectionConfiguration conf = connectionConfigurationService
+        .getXmppConfigurationByUserNameAndPassword(username, password);
     connection = new XMPPTCPConnection(conf);
     connect();
     doLogin();
   }
+
 
   private void connect() throws ConnectionException {
     try {
@@ -97,7 +102,7 @@ public class DefaultUserImpl implements DefaultUser {
   }
 
   /**
-   * Receive message.
+   * {@inheritDoc}.
    */
   @Override
   public void receiveMessage(String message) {
@@ -105,6 +110,9 @@ public class DefaultUserImpl implements DefaultUser {
   }
 
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public XMPPTCPConnection getConnection() {
     return connection;

@@ -15,6 +15,14 @@
 			<groupId>hu.unideb</groupId>
 			<artifactId>smart-campus-shared</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack-tcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack-bosh</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>
