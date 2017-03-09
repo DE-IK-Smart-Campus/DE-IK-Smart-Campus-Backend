@@ -10,15 +10,18 @@
 
 	<artifactId>smart-campus-webservice-api</artifactId>
 
-	<dependencies>
-		<dependency>
-			<groupId>hu.unideb</groupId>
-			<artifactId>smart-campus-shared</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-		</dependency>
-	</dependencies>
-
+    <dependencies>
+        <dependency>
+            <groupId>hu.unideb</groupId>
+            <artifactId>smart-campus-shared</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+    </dependencies>
 </project>
