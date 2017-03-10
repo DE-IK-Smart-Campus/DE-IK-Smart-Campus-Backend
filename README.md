@@ -76,3 +76,11 @@ Test data:
 |  palu  |  password  |
 |  butikai  |  password  |
 |  gabai  |  password  |
+
+Running tests:
+
+You must have Selenium webdriver and Protractor installed!
+
+First you must start the webdriver-manager with `webdriver-manager start`.
+ 
+Then in another console you must go to `/smart-campus-web/src/test/protractor` and run `protractor protractor.conf.js`.
