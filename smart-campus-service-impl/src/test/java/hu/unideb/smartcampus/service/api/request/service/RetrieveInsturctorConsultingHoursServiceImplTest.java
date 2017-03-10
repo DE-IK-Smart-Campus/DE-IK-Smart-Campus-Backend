@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.requestprocess;
+package hu.unideb.smartcampus.service.api.request.service;
 
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_FRIDAY;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.CONSULTING_DATE_FRIDAY_ID;

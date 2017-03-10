@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.requestprocess;
+package hu.unideb.smartcampus.service.api.request.service;
 
 import org.junit.Assert;
 import org.junit.Test;
