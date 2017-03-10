@@ -12,8 +12,10 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
  * Example request processing service implementation.
  *
  */
-@Component
+@Component(ExampleRequestServiceImpl.BEAN_NAME)
 public class ExampleRequestServiceImpl implements MessageProcessingClass<ExampleResponseWrapper> {
+
+  public static final String BEAN_NAME = "exampleRequestServiceImpl";
 
   /**
    * {@inheritDoc}.
@@ -31,6 +33,14 @@ public class ExampleRequestServiceImpl implements MessageProcessingClass<Example
   @Override
   public Class<? extends BaseRequestType> getSupportedClass() {
     return ExampleRequest.class;
+  }
+
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public String getBeanName() {
+    return BEAN_NAME;
   }
 
 }

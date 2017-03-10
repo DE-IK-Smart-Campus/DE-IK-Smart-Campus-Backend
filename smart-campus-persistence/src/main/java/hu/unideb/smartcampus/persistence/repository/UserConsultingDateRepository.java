@@ -4,13 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import hu.unideb.smartcampus.persistence.entity.SampleEntity;
+import hu.unideb.smartcampus.persistence.entity.UserConsultingDateEntity;
 
 /**
- * Sample repository which provides operations for {@link SampleEntity}.
+ * User consulting date repository.
  */
 @Repository
 @Transactional
-public interface SampleRepository extends JpaRepository<SampleEntity, Long> {
+public interface UserConsultingDateRepository
+    extends JpaRepository<UserConsultingDateEntity, Long> {
 
 }

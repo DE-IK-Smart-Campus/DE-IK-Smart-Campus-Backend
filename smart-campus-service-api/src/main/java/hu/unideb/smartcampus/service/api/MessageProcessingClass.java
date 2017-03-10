@@ -18,4 +18,9 @@ public interface MessageProcessingClass<T extends BaseWrapper> {
    * Supported class.
    */
   Class<? extends BaseRequestType> getSupportedClass();
+  
+  /**
+   * Get the bean's name.
+   */
+  String getBeanName();
 }

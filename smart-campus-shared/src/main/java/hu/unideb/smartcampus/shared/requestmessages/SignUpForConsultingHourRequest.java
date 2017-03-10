@@ -14,6 +14,11 @@ import lombok.EqualsAndHashCode;
 public class SignUpForConsultingHourRequest extends BaseRequest {
 
   /**
+   * User's id.
+   */
+  private Long userId;
+
+  /**
    * Consulting hour id.
    */
   private Long consultingHourId;

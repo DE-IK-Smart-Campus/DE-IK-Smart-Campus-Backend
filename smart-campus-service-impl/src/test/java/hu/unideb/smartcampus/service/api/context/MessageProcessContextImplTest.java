@@ -40,23 +40,20 @@ public class MessageProcessContextImplTest {
   @Test
   public void getMessageServicesShouldReturnTheServices() {
     // given
-    Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> resultMap =
-        initResultMap();
+    Map<Class<? extends BaseRequestType>, String> resultMap = initResultMap();
 
     // when
-    Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> messageServices =
-        context.getMessageServices();
+    Map<Class<? extends BaseRequestType>, String> messageServices = context.getMessageServices();
 
     // then
     Assert.assertEquals(resultMap, messageServices);
 
   }
 
-  private Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> initResultMap() {
-    Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> resultMap =
-        new HashMap<>();
-    resultMap.put(RetrieveSubjectsRequest.class, RetrieveSubjectsRequestServiceImpl.class);
-    resultMap.put(ExampleRequest.class, ExampleRequestServiceImpl.class);
+  private Map<Class<? extends BaseRequestType>, String> initResultMap() {
+    Map<Class<? extends BaseRequestType>, String> resultMap = new HashMap<>();
+    resultMap.put(RetrieveSubjectsRequest.class, RetrieveSubjectsRequestServiceImpl.BEAN_NAME);
+    resultMap.put(ExampleRequest.class, ExampleRequestServiceImpl.BEAN_NAME);
     return resultMap;
   }
 

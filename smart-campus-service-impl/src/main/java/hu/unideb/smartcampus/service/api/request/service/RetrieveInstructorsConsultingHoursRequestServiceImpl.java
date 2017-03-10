@@ -22,9 +22,11 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
 /**
  * Retrieve instructor consulting dates service.
  */
-@Component
+@Component(RetrieveInstructorsConsultingHoursRequestServiceImpl.BEAN_NAME)
 public class RetrieveInstructorsConsultingHoursRequestServiceImpl
     implements MessageProcessingClass<InstructorConsultingHoursWrapper> {
+
+  public static final String BEAN_NAME = "retrieveInstructorsConsultingHoursRequestServiceImpl";
 
   @Autowired
   private InstructorRepository instructorRepository;
@@ -77,6 +79,14 @@ public class RetrieveInstructorsConsultingHoursRequestServiceImpl
   @Override
   public Class<? extends BaseRequestType> getSupportedClass() {
     return RetrieveInstructorConsultingHours.class;
+  }
+
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public String getBeanName() {
+    return BEAN_NAME;
   }
 
 }

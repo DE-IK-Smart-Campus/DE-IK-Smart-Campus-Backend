@@ -20,9 +20,14 @@ public final class TableName {
   public static final String TABLE_NAME_INSTRUCTOR = "instructor";
 
   /**
-   * Instructor table.
+   * Consulting date table.
    */
   public static final String TABLE_NAME_CONSULTING_DATE = "consulting_date";
+
+  /**
+   * User consulting date table.
+   */
+  public static final String TABLE_NAME_USER_CONSULTING_DATE = "user_consulting_date";
 
   /**
    * Subject table.

@@ -45,15 +45,35 @@ public class ColumnName {
   }
 
   /**
-   * Instructor column.
+   * Consulting date column.
    */
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
   public static final class ConsultingDateColumnName {
 
     /**
-     * Name column.
+     * Date column.
      */
     public static final String COLUMN_NAME_DATE = "date";
 
   }
+  
+  /**
+   * Consulting date column.
+   */
+  @NoArgsConstructor(access = AccessLevel.PRIVATE)
+  public static final class UserConsultingDateColumnName {
+
+    /**
+     * Reason column.
+     */
+    public static final String COLUMN_NAME_REASON = "reason";
+    
+    /**
+     * Duration column.
+     */
+    public static final String COLUMN_NAME_DURATION = "duration";
+    
+
+  }
+
 }

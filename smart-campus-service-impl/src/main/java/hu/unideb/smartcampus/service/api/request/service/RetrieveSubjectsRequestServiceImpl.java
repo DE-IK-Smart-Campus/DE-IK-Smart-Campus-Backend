@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
@@ -28,10 +27,11 @@ import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
  * Service for retrieve the given user's subjects.
  *
  */
-@Component
-@Transactional
+@Component(RetrieveSubjectsRequestServiceImpl.BEAN_NAME)
 public class RetrieveSubjectsRequestServiceImpl
     implements MessageProcessingClass<SubjectRetrievalResponseWrapper> {
+
+  public static final String BEAN_NAME = "retrieveSubjectsRequestServiceImpl";
 
   private static final Logger LOGGER =
       LoggerFactory.getLogger(RetrieveSubjectsRequestServiceImpl.class);
@@ -52,10 +52,8 @@ public class RetrieveSubjectsRequestServiceImpl
     Set<SubjectEntity> subjects = userRepositoy.getSubjectsByUserId(msg.getUserId());
     List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
 
-    return SubjectRetrievalResponseWrapper.builder()
-        .messageType(RETRIEVE_SUBJECTS_RESPONSE)
-        .subjects(subjectsWrapper)
-        .build();
+    return SubjectRetrievalResponseWrapper.builder().messageType(RETRIEVE_SUBJECTS_RESPONSE)
+        .subjects(subjectsWrapper).build();
   }
 
   private List<SubjectWrapper> createSubjectsWrapper(Set<SubjectEntity> subjects) {
@@ -84,6 +82,14 @@ public class RetrieveSubjectsRequestServiceImpl
   @Override
   public Class<? extends BaseRequestType> getSupportedClass() {
     return RetrieveSubjectsRequest.class;
+  }
+
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public String getBeanName() {
+    return BEAN_NAME;
   }
 
 

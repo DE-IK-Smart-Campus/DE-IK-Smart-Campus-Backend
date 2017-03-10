@@ -28,7 +28,7 @@ public class MessageProcessContextImpl implements MessageProcessContext {
   /**
    * Map of request process services.
    */
-  private Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> requestProcessServices;
+  private Map<Class<? extends BaseRequestType>, String> requestProcessServices;
 
   /**
    * List of message process services.
@@ -47,13 +47,13 @@ public class MessageProcessContextImpl implements MessageProcessContext {
   /**
    * {@inheritDoc}.
    */
-  public Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> getMessageServices() {
+  public Map<Class<? extends BaseRequestType>, String> getMessageServices() {
     if (requestProcessServices == null) {
       requestProcessServices =
-          new HashMap<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>>();
+          new HashMap<Class<? extends BaseRequestType>, String>();
       for (Object clazz : classes) {
         requestProcessServices.put(((MessageProcessingClass) clazz).getSupportedClass(),
-            ((MessageProcessingClass) clazz).getClass());
+            ((MessageProcessingClass) clazz).getBeanName());
       }
     }
     LOGGER.info("MessageService:{}", requestProcessServices);

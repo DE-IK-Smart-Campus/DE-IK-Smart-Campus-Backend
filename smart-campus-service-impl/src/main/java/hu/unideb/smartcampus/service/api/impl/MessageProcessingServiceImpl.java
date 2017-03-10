@@ -64,9 +64,8 @@ public class MessageProcessingServiceImpl implements MessageProcessingService {
   }
 
   private MessageProcessingClass getProcessBean(BaseRequestType decodedMessage) {
-    Class<? extends MessageProcessingClass> wb =
-        context.getMessageServices().get(decodedMessage.getClass());
-    return appContext.getBean(wb);
+    String wb = context.getMessageServices().get(decodedMessage.getClass());
+    return (MessageProcessingClass) appContext.getBean(wb);
   }
 
   private BaseRequestType readDecodedMessage(String message) throws ProcessMessageException {

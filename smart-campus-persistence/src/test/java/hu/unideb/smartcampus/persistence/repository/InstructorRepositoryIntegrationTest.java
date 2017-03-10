@@ -168,7 +168,7 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
   public void getInstructorConsultingDatesByIdAndGivenDateShouldReturnConsultingDatesAfterGivenDate() {
     // Given
     Calendar from = Calendar.getInstance();
-    from.set(2017, 2, 6);
+    from.set(2017, 2, 7);
 
     Calendar to = Calendar.getInstance();
     to.set(2017, 2, 14);

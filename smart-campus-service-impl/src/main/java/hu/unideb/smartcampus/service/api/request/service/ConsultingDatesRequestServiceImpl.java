@@ -11,8 +11,10 @@ import hu.unideb.smartcampus.shared.requestmessages.ConsultingDatesRequest;
  * Service for retrivie...
  *
  */
-@Component
+@Component("consultingDatesRequestServiceImpl")
 public class ConsultingDatesRequestServiceImpl implements MessageProcessingClass<BaseWrapper> {
+
+  public static final String BEAN_NAME = "consultingDatesRequestServiceImpl";
 
   /**
    * {@inheritDoc}.
@@ -28,6 +30,14 @@ public class ConsultingDatesRequestServiceImpl implements MessageProcessingClass
   @Override
   public Class<? extends BaseRequestType> getSupportedClass() {
     return ConsultingDatesRequest.class;
+  }
+
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public String getBeanName() {
+    return BEAN_NAME;
   }
 
 

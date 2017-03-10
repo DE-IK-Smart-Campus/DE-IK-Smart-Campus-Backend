@@ -17,7 +17,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.MessageProcessingService;
 import hu.unideb.smartcampus.service.api.context.MessageProcessContext;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
@@ -88,7 +87,7 @@ public class MessageProcessingServiceImplTest {
     given(context.getMessageServices()).willReturn(initResultMap());
     given(objectMapper.readValue(EXAMPLE_ESCAPED_JSON, BaseRequestType.class)).willReturn(
         ExampleRequest.builder().example(EXAMPLE_STRING).messageType(EXAMPLE_MESSAGE_TYPE).build());
-    given(appContext.getBean(ExampleRequestServiceImpl.class)).willReturn(exampleService);
+    given(appContext.getBean(ExampleRequestServiceImpl.BEAN_NAME)).willReturn(exampleService);
 
     // then
     BaseWrapper processMessage = messageProcessingService.processMessage(EXAMPLE_ESCAPED_JSON);
@@ -97,10 +96,9 @@ public class MessageProcessingServiceImplTest {
     Assert.assertEquals(EXAMPLE_STRING, ((ExampleResponseWrapper) processMessage).getExample());
   }
 
-  private Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> initResultMap() {
-    Map<Class<? extends BaseRequestType>, Class<? extends MessageProcessingClass>> resultMap =
-        new HashMap<>();
-    resultMap.put(ExampleRequest.class, ExampleRequestServiceImpl.class);
+  private Map<Class<? extends BaseRequestType>, String> initResultMap() {
+    Map<Class<? extends BaseRequestType>, String> resultMap = new HashMap<>();
+    resultMap.put(ExampleRequest.class, ExampleRequestServiceImpl.BEAN_NAME);
     return resultMap;
   }
 
