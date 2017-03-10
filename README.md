@@ -13,6 +13,13 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 				    <mysql.connection.url>jdbc:mysql://smartcampus:3306/smartcampus</mysql.connection.url>
 				    <mysql.username>nandi</mysql.username>
 				    <mysql.password>mysql</mysql.password>
+			        <ldap.host></ldap.host>
+			        <ldap.port></ldap.port>
+			        <ldap.basedn></ldap.basedn>
+			        <ldap.passwordattribute></ldap.passwordattribute>
+			        <ldap.userpattern></ldap.userpattern>
+			        <ldap.groupsearchbase></ldap.groupsearchbase>
+			        <ldap.groupfilter></ldap.groupfilter>
 			    </properties>
 		    </profile>
 	</profiles>
