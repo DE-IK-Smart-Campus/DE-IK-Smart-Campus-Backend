@@ -16,7 +16,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests() // TODO Remove
                 .antMatchers("/", "/home")
                     .permitAll()
                 .anyRequest()
