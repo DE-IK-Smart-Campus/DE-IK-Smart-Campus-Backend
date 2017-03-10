@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.web.config.security;
 
-import org.springframework.beans.factory.annotation.Value;
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
@@ -14,43 +15,43 @@ public class LdapConfigurationProperties {
   /**
    * The host of the LDAP provider.
    */
-  @Value("${ldap.provider.host}")
+  @Resource(lookup = "java:global/ldap.provider.host")
   protected String ldapProviderHost;
 
   /**
    * The port of the LDAP server.
    */
-  @Value("${ldap.provider.port}")
+  @Resource(lookup = "java:global/ldap.provider.port")
   protected String ldapProviderPort;
 
   /**
    * The base DN of the LDAP directory node.
    */
-  @Value("${ldap.provider.basedn}")
+  @Resource(lookup = "java:global/ldap.provider.basedn")
   protected String ldapProviderBaseDn;
 
   /**
    * The pattern of the user search.
    */
-  @Value("${ldap.userdnpattern}")
+  @Resource(lookup = "java:global/ldap.userdnpattern")
   protected String ldapUserDnPattern;
 
   /**
    * The base DN of the groups.
    */
-  @Value("${ldap.groupsearchbase}")
+  @Resource(lookup = "java:global/ldap.groupsearchbase")
   protected String ldapGroupSearchBase;
 
   /**
    * The password attribute of the user.
    */
-  @Value("${ldap.passwordattribute}")
+  @Resource(lookup = "java:global/ldap.passwordattribute")
   protected String passwordAttribute;
-  
+
   /**
    * Group search filter property.
    */
-  @Value("${ldap.groupfilter}")
+  @Resource(lookup = "java:global/ldap.groupfilter")
   protected String groupFilter;
-  
+
 }
