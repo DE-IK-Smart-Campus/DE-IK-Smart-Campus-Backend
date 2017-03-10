@@ -51,6 +51,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME));
   }
 
+  /**
+   * Context source bean.
+   */
   @Bean
   public DefaultSpringSecurityContextSource contextSource() {
     return new DefaultSpringSecurityContextSource(
