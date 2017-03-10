@@ -56,17 +56,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>hu.unideb</groupId>
-			<artifactId>smart-campus-wildfly</artifactId>
-			<version>1.0-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>3.2.0</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -90,43 +79,7 @@
 				<configuration>
 					<jbossHome>${jboss.home}</jbossHome>
 					<skip>false</skip>
-					<timeout>0</timeout>
 				</configuration>
-				<executions>
-					<execution>
-						<id>start-wildfly</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>stop-wildfly</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>undeploy</goal>
-							<goal>shutdown</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.github.greengerong</groupId>
-				<artifactId>maven-ng-protractor</artifactId>
-				<version>0.0.2</version>
-				<configuration>
-					<protractor>protractor</protractor>
-					<configFile>src/test/protractor/protractor.conf.js</configFile>
-				</configuration>
-				<executions>
-					<execution>
-						<id>ng-protractor</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
