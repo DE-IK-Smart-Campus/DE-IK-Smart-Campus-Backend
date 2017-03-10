@@ -45,11 +45,12 @@ public class SignUpForConsultingHourRequest extends BaseRequest {
    */
   @Builder
   public SignUpForConsultingHourRequest(final String messageType, final Long consultingHourId,
-      final String reason, final String duration) {
+      final String reason, final String duration, final Long userId) {
     super(messageType);
     this.consultingHourId = consultingHourId;
     this.reason = reason;
     this.duration = duration;
+    this.userId = userId;
   }
 
 }

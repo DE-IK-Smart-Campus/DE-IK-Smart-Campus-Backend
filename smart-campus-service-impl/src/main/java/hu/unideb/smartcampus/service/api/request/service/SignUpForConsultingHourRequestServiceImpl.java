@@ -27,6 +27,8 @@ public class SignUpForConsultingHourRequestServiceImpl
     implements MessageProcessingClass<SignUpForConsultingHourWrapper> {
 
   public static final String BEAN_NAME = "signUpForConsultingHourRequestServiceImpl";
+  
+  private static final String USER_DOES_NOT_EXISTS = "User does not exists.";
 
   private static final String NO_CONSULTING_DATE_EXISTS = "No consulting date exists.";
 
@@ -48,21 +50,31 @@ public class SignUpForConsultingHourRequestServiceImpl
   public SignUpForConsultingHourWrapper getResponse(Object object) {
     SignUpForConsultingHourRequest msg = (SignUpForConsultingHourRequest) object;
     ConsultingDateEntity dateEntity = consultingDateRepository.findOne(msg.getConsultingHourId());
+    UserEntity userEntity;
     String status = NO_CONSULTING_DATE_EXISTS;
     if (dateEntity != null) {
-      incrementSum(dateEntity);
-      consultingDateRepository.save(dateEntity);
-      userConsultingDateRepository.save(createUserConsultingDateEntityByRequest(msg, dateEntity));
-      status = OK;
+      status = USER_DOES_NOT_EXISTS;
+      userEntity = userRepository.findOne(msg.getUserId());
+      if (userEntity != null) {
+        incrementAndSaveConsultingSignUp(msg, dateEntity, userEntity);
+        status = OK;
+      }
     }
     return SignUpForConsultingHourWrapper.builder()
         .messageType(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_RESPONSE).status(status)
         .build();
   }
 
+  private void incrementAndSaveConsultingSignUp(SignUpForConsultingHourRequest msg,
+      ConsultingDateEntity dateEntity, UserEntity userEntity) {
+    incrementSum(dateEntity);
+    consultingDateRepository.save(dateEntity);
+    userConsultingDateRepository
+        .save(createUserConsultingDateEntityByRequest(msg, dateEntity, userEntity));
+  }
+
   private UserConsultingDateEntity createUserConsultingDateEntityByRequest(
-      SignUpForConsultingHourRequest msg, ConsultingDateEntity dateEntity) {
-    UserEntity userEntity = userRepository.findOne(msg.getUserId());
+      SignUpForConsultingHourRequest msg, ConsultingDateEntity dateEntity, UserEntity userEntity) {
     return UserConsultingDateEntity.builder().user(userEntity).consultingDate(dateEntity)
         .reason(msg.getReason()).duration(msg.getDuration()).build();
   }
