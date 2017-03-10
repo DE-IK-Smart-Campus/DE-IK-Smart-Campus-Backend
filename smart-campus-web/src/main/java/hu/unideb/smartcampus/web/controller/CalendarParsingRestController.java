@@ -1,12 +1,11 @@
 package hu.unideb.smartcampus.web.controller;
 
-import javax.ws.rs.QueryParam;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.CalendarService;
@@ -36,7 +35,7 @@ public class CalendarParsingRestController {
    * @return response
    */
   @PostMapping(path = "/processCalendar")
-  public ResponseEntity processCalendarUrl(@QueryParam("url") String url) {
+  public ResponseEntity processCalendarUrl(@RequestParam("url") String url) {
     try {
       calendarService.downloadCalendar(url);
       return ResponseEntity.ok().build();
