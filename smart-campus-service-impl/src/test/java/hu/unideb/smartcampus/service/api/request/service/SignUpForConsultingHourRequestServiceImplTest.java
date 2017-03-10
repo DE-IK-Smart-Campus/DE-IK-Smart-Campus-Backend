@@ -91,7 +91,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   private ConsultingDateRepository consultingDateRepository;
 
   /**
-   * User consulting date repository mock
+   * User consulting date repository mock.
    */
   @Mock
   private UserConsultingDateRepository userConsultingDateRepository;
