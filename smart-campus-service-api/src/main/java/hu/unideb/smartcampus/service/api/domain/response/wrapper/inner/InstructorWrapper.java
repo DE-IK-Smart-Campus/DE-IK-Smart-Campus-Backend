@@ -1,6 +1,5 @@
 package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
 
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +10,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class InstructorWrapper extends BaseWrapper {
+public class InstructorWrapper {
 
   /**
    * Instructor's id.

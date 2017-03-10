@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
@@ -27,7 +29,8 @@ import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
  * Service for retrieve the given user's subjects.
  *
  */
-@Component(RetrieveSubjectsRequestServiceImpl.BEAN_NAME)
+@Service(RetrieveSubjectsRequestServiceImpl.BEAN_NAME)
+@Transactional(propagation = Propagation.REQUIRED)
 public class RetrieveSubjectsRequestServiceImpl
     implements MessageProcessingClass<SubjectRetrievalResponseWrapper> {
 

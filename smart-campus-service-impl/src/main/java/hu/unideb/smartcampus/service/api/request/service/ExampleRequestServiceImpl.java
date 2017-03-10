@@ -1,6 +1,8 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.ExampleResponseWrapper;
@@ -12,7 +14,8 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
  * Example request processing service implementation.
  *
  */
-@Component(ExampleRequestServiceImpl.BEAN_NAME)
+@Service(ExampleRequestServiceImpl.BEAN_NAME)
+@Transactional(propagation = Propagation.REQUIRED)
 public class ExampleRequestServiceImpl implements MessageProcessingClass<ExampleResponseWrapper> {
 
   public static final String BEAN_NAME = "exampleRequestServiceImpl";

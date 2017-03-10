@@ -1,6 +1,8 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
@@ -11,7 +13,8 @@ import hu.unideb.smartcampus.shared.requestmessages.ConsultingDatesRequest;
  * Service for retrivie...
  *
  */
-@Component("consultingDatesRequestServiceImpl")
+@Service("consultingDatesRequestServiceImpl")
+@Transactional(propagation = Propagation.REQUIRED)
 public class ConsultingDatesRequestServiceImpl implements MessageProcessingClass<BaseWrapper> {
 
   public static final String BEAN_NAME = "consultingDatesRequestServiceImpl";

@@ -1,7 +1,8 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
@@ -20,8 +21,8 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
  * Processing signing up for consulting hours.
  *
  */
-@Component(SignUpForConsultingHourRequestServiceImpl.BEAN_NAME)
-@Transactional
+@Service(SignUpForConsultingHourRequestServiceImpl.BEAN_NAME)
+@Transactional(propagation = Propagation.REQUIRED)
 public class SignUpForConsultingHourRequestServiceImpl
     implements MessageProcessingClass<SignUpForConsultingHourWrapper> {
 

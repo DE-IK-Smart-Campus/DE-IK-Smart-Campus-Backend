@@ -2,7 +2,6 @@ package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
 
 import java.util.List;
 
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SubjectWrapper extends BaseWrapper {
+public class SubjectWrapper {
 
   /**
    * Subject name.

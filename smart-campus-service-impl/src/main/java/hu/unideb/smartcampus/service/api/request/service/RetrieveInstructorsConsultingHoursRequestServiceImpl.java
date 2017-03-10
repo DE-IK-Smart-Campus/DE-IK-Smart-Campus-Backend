@@ -6,7 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
@@ -22,7 +24,8 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
 /**
  * Retrieve instructor consulting dates service.
  */
-@Component(RetrieveInstructorsConsultingHoursRequestServiceImpl.BEAN_NAME)
+@Service(RetrieveInstructorsConsultingHoursRequestServiceImpl.BEAN_NAME)
+@Transactional(propagation = Propagation.REQUIRED)
 public class RetrieveInstructorsConsultingHoursRequestServiceImpl
     implements MessageProcessingClass<InstructorConsultingHoursWrapper> {
 
