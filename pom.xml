@@ -1,52 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>hu.unideb</groupId>
-	<artifactId>smart-campus</artifactId>
-	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
+    <groupId>hu.unideb</groupId>
+    <artifactId>smart-campus</artifactId>
+    <packaging>pom</packaging>
+    <version>1.1-SNAPSHOT</version>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.1.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.1.RELEASE</version>
+    </parent>
 
-	<name>Smart Campus Web Application</name>
-	<description>This module provides the server side of the project called Smart Campus at the University of Debrecen.</description>
-	<inceptionYear>2017</inceptionYear>
+    <name>Smart Campus Web Application</name>
+    <description>This module provides the server side of the project called Smart Campus at the University of Debrecen.</description>
+    <inceptionYear>2017</inceptionYear>
 
-	<developers>
-		<developer>
-			<id>Nandi</id>
-			<name>Nándor Holozsnyák</name>
-			<email>holi60@gmail.com</email>
-			<organization>University of Debrecen</organization>
-			<roles>
-				<role>Student</role>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<!-- add yourself -->
-	</developers>
+    <developers>
+        <developer>
+            <id>Nandi</id>
+            <name>Nándor Holozsnyák</name>
+            <email>holi60@gmail.com</email>
+            <organization>University of Debrecen</organization>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <!-- add yourself -->
+    </developers>
 
-	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
-	</ciManagement>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
+    </ciManagement>
 
-	<issueManagement>
-		<system>Trello (private)</system>
-		<url>https://trello.com/smartcampus7</url>
-	</issueManagement>
+    <issueManagement>
+        <system>Trello (private)</system>
+        <url>https://trello.com/smartcampus7</url>
+    </issueManagement>
+
 
 	<scm>
-		<url>https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
 		<connection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</connection>
+		<url>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</url>
+		<developerConnection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</developerConnection>
+		<tag>HEAD</tag>
 	</scm>
-
+	
 	<modules>
 		<module>smart-campus-shared</module>
 		<module>smart-campus-persistence</module>
@@ -61,8 +63,9 @@
 		<maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
 		<maven.pmd.plugin.version>3.7</maven.pmd.plugin.version>
 		<maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
+        <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
 		<com.puppycrawl.tools.version>7.5.1</com.puppycrawl.tools.version>
-
+        <jacoco.maven.plugin.version>0.7.9</jacoco.maven.plugin.version>
 		<java.version>1.8</java.version>
 		<rulesets.xml.location>${project.basedir}/../config/rules/rulesets.xml</rulesets.xml.location>
 		<checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
@@ -74,66 +77,72 @@
 		<servlet.api.version>2.5</servlet.api.version>
 		<resteasy.version>3.0.2.Final</resteasy.version>
         <ical4j.version>0.9.20</ical4j.version>
+        <wildfly.maven.plugin.version>1.1.0.Alpha11</wildfly.maven.plugin.version>
 	</properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>javax.ws.rs</groupId>
-				<artifactId>javax.ws.rs-api</artifactId>
-				<version>${jaxrs.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>${servlet.api.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-persistence</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-service-api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-service-impl</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-webservice-api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-webservice-impl</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-shared</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${jaxrs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-service-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-webservice-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-webservice-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-client</artifactId>
-				<version>${resteasy.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-client</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ical4j</groupId>
+                <artifactId>ical4j</artifactId>
+                <version>${ical4j.version}</version>
+            </dependency>
 
 			<!-- SMACK XMPP API -->
 			<dependency>
@@ -161,138 +170,256 @@
 				<artifactId>smack-extensions</artifactId>
 				<version>${smack.version}</version>
 			</dependency>
-      <dependency>
-      <groupId>ical4j</groupId>
-      <artifactId>ical4j</artifactId>
-      <version>${ical4j.version}</version>
-    </dependency>
-		</dependencies>
-	</dependencyManagement>
+        </dependencies>
+    </dependencyManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven.compiler.plugin.version}</version>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-pmd-plugin</artifactId>
-					<version>${maven.pmd.plugin.version}</version>
-					<configuration>
-						<rulesets>
-							<ruleset>${rulesets.xml.location}</ruleset>
-						</rulesets>
-						<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-						<includeTests>true</includeTests>
-						<printFailingErrors>true</printFailingErrors>
-						<failOnViolation>true</failOnViolation>
-						<linkXRef>false</linkXRef>
-					</configuration>
-					<executions>
-						<execution>
-							<id>pmd-check</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>check</goal>
-								<goal>pmd</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>${maven.checkstyle.plugin.version}</version>
-					<dependencies>
-						<dependency>
-							<groupId>com.puppycrawl.tools</groupId>
-							<artifactId>checkstyle</artifactId>
-							<version>${com.puppycrawl.tools.version}</version>
-						</dependency>
-					</dependencies>
-					<executions>
-						<execution>
-							<id>checkstyle-check</id>
-							<phase>verify</phase>
-							<configuration>
-								<configLocation>${checkstyle.xml.location}</configLocation>
-								<encoding>${project.build.sourceEncoding}</encoding>
-								<includeTestSourceDirectory>true</includeTestSourceDirectory>
-								<consoleOutput>true</consoleOutput>
-								<logViolationsToConsole>true</logViolationsToConsole>
-								<failOnViolation>true</failOnViolation>
-								<failsOnError>true</failsOnError>
-								<linkXRef>false</linkXRef>
-							</configuration>
-							<goals>
-								<goal>check</goal>
-								<goal>checkstyle</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven.pmd.plugin.version}</version>
+                    <configuration>
+                        <rulesets>
+                            <ruleset>${rulesets.xml.location}</ruleset>
+                        </rulesets>
+                        <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+                        <includeTests>true</includeTests>
+                        <printFailingErrors>true</printFailingErrors>
+                        <failOnViolation>true</failOnViolation>
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pmd-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                                <goal>pmd</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven.checkstyle.plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${com.puppycrawl.tools.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>checkstyle-check</id>
+                            <phase>verify</phase>
+                            <configuration>
+                                <configLocation>${checkstyle.xml.location}</configLocation>
+                                <encoding>${project.build.sourceEncoding}</encoding>
+                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                                <consoleOutput>true</consoleOutput>
+                                <logViolationsToConsole>true</logViolationsToConsole>
+                                <failOnViolation>true</failOnViolation>
+                                <failsOnError>true</failsOnError>
+                                <linkXRef>false</linkXRef>
+                            </configuration>
+                            <goals>
+                                <goal>check</goal>
+                                <goal>checkstyle</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <argLine>${surefireArgLine}</argLine>
+                        <excludes>
+                            <exclude>**/*IntegrationTest.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <configuration>
+                        <includes>
+                            <include>**/*IntegrationTest.java</include>
+                        </includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                            <configuration>
+                                <argLine>${failsafeArgLine}</argLine>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.maven.plugin.version}</version>
+                    <configuration>
+                        <destFile>${project.artifactId}/target/jacoco.exec</destFile>
+                        <dataFile>${project.artifactId}/target/jacoco.exec</dataFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <propertyName>jacocoArgLine</propertyName>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>check</id>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <rule>
+                                        <element>CLASS</element>
+                                        <limits>
+                                            <limit>
+                                                <counter>LINE</counter>
+                                                <value>COVEREDRATIO</value>
+                                                <minimum>0.80</minimum>
+                                            </limit>
+                                            <limit>
+                                                <counter>BRANCH</counter>
+                                                <value>COVEREDRATIO</value>
+                                                <minimum>0.80</minimum>
+                                            </limit>
+                                        </limits>
+                                        <excludes>
+                                            <exclude>hu.unideb.smartcampus.shared.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.persistence.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.service.api.domain.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.service.api.config.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.service.api.exception.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.service.api.*</exclude><!--Removable-->
+                                            <exclude>hu.unideb.smartcampus.webservice.api.config.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.webservice.api.ejabberd.request.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.webservice.api.ejabberd.*</exclude><!--Removable-->
+                                            <exclude>hu.unideb.smartcampus.webservice.api.provider.*</exclude><!--Removable-->
+                                            <exclude>hu.unideb.smartcampus.webservice.api.validator.*</exclude><!--Removable-->
+                                            <exclude>hu.unideb.smartcampus.webservice.api.xmpp.*</exclude><!--Removable-->
+                                            <exclude>hu.unideb.smartcampus.web.config.*</exclude>
+                                            <exclude>hu.unideb.smartcampus.web.controller.*</exclude><!--Removable-->
+                                        </excludes>
+                                    </rule>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>${wildfly.maven.plugin.version}</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven.release.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.wildfly.plugins</groupId>
-				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>1.1.0.Alpha11</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.wildfly.plugins</groupId>
+              <artifactId>wildfly-maven-plugin</artifactId>
+              <configuration>
+                <skip>true</skip>
+              </configuration>
+            </plugin>
+           <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+           </plugin>
+        </plugins>
 
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-	</build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 
-	<profiles>
+    <profiles>
 		<profile>
 			<id>with-wildfly</id>
 			<modules>
