@@ -9,33 +9,37 @@
 
     <artifactId>smart-campus-service-impl</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>hu.unideb</groupId>
-            <artifactId>smart-campus-persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hu.unideb</groupId>
-            <artifactId>smart-campus-service-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hu.unideb</groupId>
-            <artifactId>smart-campus-shared</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-            <classifier>tests</classifier>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>hu.unideb</groupId>
-            <artifactId>smart-campus-webservice-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>hu.unideb</groupId>
+			<artifactId>smart-campus-persistence</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>hu.unideb</groupId>
+			<artifactId>smart-campus-service-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>hu.unideb</groupId>
+			<artifactId>smart-campus-shared</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+			<classifier>tests</classifier>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-webservice-api</artifactId>
+				<scope>provided</scope>
+		</dependency>
+		<dependency>
+		  <groupId>ical4j</groupId>
+		  <artifactId>ical4j</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>
