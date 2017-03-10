@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.ExampleResponseWrapper;
-import hu.unideb.smartcampus.service.api.request.service.ExampleRequestServiceImpl;
 import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 

@@ -17,26 +17,59 @@ import hu.unideb.smartcampus.service.api.domain.response.wrapper.SignUpForConsul
 import hu.unideb.smartcampus.shared.requestmessages.SignUpForConsultingHourRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
+
 /**
  * Test for {@link SignUpForConsultingHourRequestServiceImpl}.
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings({"PMD.UnusedPrivateField"})
 public class SignUpForConsultingHourRequestServiceImplTest {
 
+  /**
+   * Consulting date date.
+   */
+  private static final String CONSULTING_DATE_DATE = "Friday 10-12";
+
+  /**
+   * User's username.
+   */
+  private static final String TEST_USER = "TestUser";
+
+  /**
+   * Consulting date id.
+   */
   private static final long CONSULTING_DATE_ID = 1L;
 
+  /**
+   * User id.
+   */
   private static final long USER_ID = 2L;
 
+  /**
+   * User does not exists response status.
+   */
   private static final String USER_DOES_NOT_EXISTS = "User does not exists.";
 
+  /**
+   * No consulting date exists response status.
+   */
   private static final String NO_CONSULTING_DATE_EXISTS = "No consulting date exists.";
 
+  /**
+   * OK status.
+   */
   private static final String OK = "OK";
 
-  private static final UserEntity USER_ENTITY = UserEntity.builder().username("TestUser").build();
+  /**
+   * User entity.
+   */
+  private static final UserEntity USER_ENTITY = UserEntity.builder().username(TEST_USER).build();
 
+  /**
+   * Consulting date entity.
+   */
   private static final ConsultingDateEntity CONSULTING_DATE_ENTITY =
-      ConsultingDateEntity.builder().date("Friday 10-12").build();
+      ConsultingDateEntity.builder().date(CONSULTING_DATE_DATE).build();
 
   /**
    * Service impl.
