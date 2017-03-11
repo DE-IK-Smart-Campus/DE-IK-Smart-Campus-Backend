@@ -1,9 +1,12 @@
 # DE-IK SMART-CAMPUS
 
-[![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
+Build status: [![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/731cfa78c7f84c0ea2c3e40b364ae4b6)](https://www.codacy.com/app/holi60/DE-IK-Smart-Campus-Web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web&amp;utm_campaign=Badge_Grade)
+Code quality: [![Codacy Badge](https://api.codacy.com/project/badge/Grade/731cfa78c7f84c0ea2c3e40b364ae4b6)](https://www.codacy.com/app/holi60/DE-IK-Smart-Campus-Web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web&amp;utm_campaign=Badge_Grade)
 
+Release: [![GitHub release](https://img.shields.io/github/release/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg)]()
+
+## Configuration
 First configure your settings.xml in your .m2 folder with this profile, you can find an example in config/maven folder.
 
 
