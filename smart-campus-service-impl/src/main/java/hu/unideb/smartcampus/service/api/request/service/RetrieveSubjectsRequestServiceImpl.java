@@ -52,7 +52,7 @@ public class RetrieveSubjectsRequestServiceImpl
   public SubjectRetrievalResponseWrapper getResponse(Object object) {
     RetrieveSubjectsRequest msg = (RetrieveSubjectsRequest) object;
     LOGGER.info("Retrieving user ({}) subjects.", msg.getUserId());
-    Set<SubjectEntity> subjects = userRepositoy.getSubjectsByUserId(msg.getUserId());
+    Set<SubjectEntity> subjects = userRepositoy.getSubjectsByUsername(msg.getUserId());
     List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
 
     return SubjectRetrievalResponseWrapper.builder().messageType(RETRIEVE_SUBJECTS_RESPONSE)
@@ -65,7 +65,7 @@ public class RetrieveSubjectsRequestServiceImpl
       Set<InstructorEntity> instructorSet =
           instructorRepository.getInstructorsBySubjectId(subjectEntity.getId());
       List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
-      result.add(SubjectWrapper.builder().subjectName(subjectEntity.getName())
+      result.add(SubjectWrapper.builder().name(subjectEntity.getName())
           .instructors(instructors).build());
     }
     return result;

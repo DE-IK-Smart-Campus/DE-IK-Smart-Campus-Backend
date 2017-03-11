@@ -15,9 +15,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -74,7 +74,7 @@ public class UserEntity extends BaseEntity<Long> {
   /**
    * Actual semester subjects.
    */
-  @OneToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"))
   private Set<SubjectEntity> actualSubjects;

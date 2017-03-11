@@ -43,7 +43,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   /**
    * User id.
    */
-  private static final long USER_ID = 2L;
+  private static final String USER_ID = "TestUser";
 
   /**
    * User does not exists response status.
@@ -109,7 +109,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
         .duration("10 minutes").reason("Discuss something important").build();
 
     // when
-    Mockito.when(userRepository.findOne(USER_ID)).thenReturn(USER_ENTITY);
+    Mockito.when(userRepository.findByUsername(USER_ID)).thenReturn(USER_ENTITY);
     Mockito.when(consultingDateRepository.findOne(CONSULTING_DATE_ID))
         .thenReturn(CONSULTING_DATE_ENTITY);
 
@@ -131,7 +131,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
         .duration("10 minutes").reason("Discuss something important").build();
 
     // when
-    Mockito.when(userRepository.findOne(USER_ID)).thenReturn(USER_ENTITY);
+    Mockito.when(userRepository.findByUsername(USER_ID)).thenReturn(USER_ENTITY);
     Mockito.when(consultingDateRepository.findOne(CONSULTING_DATE_ID)).thenReturn(null);
 
     // then
@@ -151,7 +151,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
         .duration("10 minutes").reason("Discuss something important").build();
 
     // when
-    Mockito.when(userRepository.findOne(USER_ID)).thenReturn(null);
+    Mockito.when(userRepository.findByUsername(USER_ID)).thenReturn(null);
     Mockito.when(consultingDateRepository.findOne(CONSULTING_DATE_ID))
         .thenReturn(CONSULTING_DATE_ENTITY);
 

@@ -45,6 +45,7 @@ public class ConsultingDateEntity extends BaseEntity<Long> {
   /**
    * Sum of students.
    */
+  @Column(columnDefinition = "Decimal(10,2) default '0'")
   private Integer sum;
 
   /**

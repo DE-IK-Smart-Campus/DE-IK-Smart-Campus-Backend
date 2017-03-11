@@ -14,9 +14,9 @@ import lombok.EqualsAndHashCode;
 public class SignUpForConsultingHourRequest extends BaseRequest {
 
   /**
-   * User's id.
+   * User's JID.
    */
-  private Long userId;
+  private String userId;
 
   /**
    * Consulting hour id.
@@ -45,7 +45,7 @@ public class SignUpForConsultingHourRequest extends BaseRequest {
    */
   @Builder
   public SignUpForConsultingHourRequest(final String messageType, final Long consultingHourId,
-      final String reason, final String duration, final Long userId) {
+      final String reason, final String duration, final String userId) {
     super(messageType);
     this.consultingHourId = consultingHourId;
     this.reason = reason;

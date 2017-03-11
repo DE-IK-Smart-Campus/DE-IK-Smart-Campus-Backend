@@ -17,7 +17,7 @@ public class SubjectWrapper {
   /**
    * Subject name.
    */
-  private String subjectName;
+  private String name;
 
   /**
    * Teachers.
@@ -28,8 +28,8 @@ public class SubjectWrapper {
    * Constructs SubjectWrapper.
    */
   @Builder
-  public SubjectWrapper(final String subjectName, final List<InstructorWrapper> instructors) {
-    this.subjectName = subjectName;
+  public SubjectWrapper(final String name, final List<InstructorWrapper> instructors) {
+    this.name = name;
     this.instructors = instructors;
   }
 }

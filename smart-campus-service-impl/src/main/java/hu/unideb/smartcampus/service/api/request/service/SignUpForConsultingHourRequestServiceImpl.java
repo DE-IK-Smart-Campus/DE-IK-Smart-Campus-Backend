@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,12 +29,15 @@ public class SignUpForConsultingHourRequestServiceImpl
     implements MessageProcessingClass<SignUpForConsultingHourWrapper> {
 
   public static final String BEAN_NAME = "signUpForConsultingHourRequestServiceImpl";
-  
+
   private static final String USER_DOES_NOT_EXISTS = "User does not exists.";
 
   private static final String NO_CONSULTING_DATE_EXISTS = "No consulting date exists.";
 
   private static final String OK = "OK";
+
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(SignUpForConsultingHourRequestServiceImpl.class);
 
   @Autowired
   private UserRepository userRepository;
@@ -54,7 +59,7 @@ public class SignUpForConsultingHourRequestServiceImpl
     String status = NO_CONSULTING_DATE_EXISTS;
     if (dateEntity != null) {
       status = USER_DOES_NOT_EXISTS;
-      userEntity = userRepository.findOne(msg.getUserId());
+      userEntity = userRepository.findByUsername(msg.getUserId());
       if (userEntity != null) {
         incrementAndSaveConsultingSignUp(msg, dateEntity, userEntity);
         status = OK;
@@ -67,6 +72,8 @@ public class SignUpForConsultingHourRequestServiceImpl
 
   private void incrementAndSaveConsultingSignUp(SignUpForConsultingHourRequest msg,
       ConsultingDateEntity dateEntity, UserEntity userEntity) {
+    LOGGER.info("Signing up user ({}) for consulting hour ({}).", msg.getUserId(),
+        dateEntity.getDateInString());
     incrementSum(dateEntity);
     consultingDateRepository.save(dateEntity);
     userConsultingDateRepository
