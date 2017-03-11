@@ -1,8 +1,9 @@
 package hu.unideb.smartcampus.service.api.xmpp.impl;
 
+import javax.annotation.Resource;
+
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.webservice.api.xmpp.XmppClientConfigurationService;
@@ -13,19 +14,19 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
   /**
    * XMPP host.
    */
-  @Value("${smartcampus.xmpp.host}")
+  @Resource(lookup = "java:global/smartcampus.xmpp.host")
   private String host;
 
   /**
    * XMPP service.
    */
-  @Value("${smartcampus.xmpp.service}")
+  @Resource(lookup = "java:global/smartcampus.xmpp.service")
   private String service;
 
   /**
    * XMPP port.
    */
-  @Value("${smartcampus.xmpp.port}")
+  @Resource(lookup = "java:global/smartcampus.xmpp.port")
   private Integer port;
 
   @Override

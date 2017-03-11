@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hu.unideb</groupId>
     <artifactId>smart-campus</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -42,40 +41,44 @@
         <url>https://trello.com/smartcampus7</url>
     </issueManagement>
 
-    <scm>
-        <url>https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
-        <connection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</connection>
-    </scm>
 
-    <modules>
-        <module>smart-campus-shared</module>
-        <module>smart-campus-persistence</module>
-        <module>smart-campus-service-api</module>
-        <module>smart-campus-service-impl</module>
-        <module>smart-campus-webservice-api</module>
-        <module>smart-campus-webservice-impl</module>
-        <module>smart-campus-web</module>
-    </modules>
+	<scm>
+		<connection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</connection>
+		<url>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</url>
+		<developerConnection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	
+	<modules>
+		<module>smart-campus-shared</module>
+		<module>smart-campus-persistence</module>
+		<module>smart-campus-service-api</module>
+		<module>smart-campus-service-impl</module>
+		<module>smart-campus-webservice-api</module>
+		<module>smart-campus-webservice-impl</module>
+		<module>smart-campus-web</module>
+	</modules>
 
-    <properties>
-        <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
-        <maven.pmd.plugin.version>3.7</maven.pmd.plugin.version>
-        <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
+	<properties>
+		<maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
+		<maven.pmd.plugin.version>3.7</maven.pmd.plugin.version>
+		<maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
+        <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
+		<com.puppycrawl.tools.version>7.5.1</com.puppycrawl.tools.version>
         <jacoco.maven.plugin.version>0.7.9</jacoco.maven.plugin.version>
-        <com.puppycrawl.tools.version>7.5.1</com.puppycrawl.tools.version>
-
-        <java.version>1.8</java.version>
-        <rulesets.xml.location>${project.basedir}/../config/rules/rulesets.xml</rulesets.xml.location>
-        <checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
-        <version.wildfly>10.1.0.Final</version.wildfly>
-        <smack.version>4.1.9</smack.version>
-        <jaxrs.version>2.0.1</jaxrs.version>
-        <guava.version>21.0</guava.version>
-        <jersey.common.version>2.25.1</jersey.common.version>
-        <servlet.api.version>2.5</servlet.api.version>
-        <resteasy.version>3.0.2.Final</resteasy.version>
+		<java.version>1.8</java.version>
+		<rulesets.xml.location>${project.basedir}/../config/rules/rulesets.xml</rulesets.xml.location>
+		<checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
+		<version.wildfly>10.1.0.Final</version.wildfly>
+		<smack.version>4.1.9</smack.version>
+		<jaxrs.version>2.0.1</jaxrs.version>
+		<guava.version>21.0</guava.version>
+		<jersey.common.version>2.25.1</jersey.common.version>
+		<servlet.api.version>2.5</servlet.api.version>
+		<resteasy.version>3.0.2.Final</resteasy.version>
+        <ical4j.version>0.9.20</ical4j.version>
         <wildfly.maven.plugin.version>1.1.0.Alpha11</wildfly.maven.plugin.version>
-    </properties>
+	</properties>
 
     <dependencyManagement>
         <dependencies>
@@ -135,33 +138,38 @@
                 <artifactId>resteasy-client</artifactId>
                 <version>${resteasy.version}</version>
             </dependency>
+            <dependency>
+                <groupId>ical4j</groupId>
+                <artifactId>ical4j</artifactId>
+                <version>${ical4j.version}</version>
+            </dependency>
 
-            <!-- SMACK XMPP API -->
-            <dependency>
-                <groupId>org.igniterealtime.smack</groupId>
-                <artifactId>smack-core</artifactId>
-                <version>${smack.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.igniterealtime.smack</groupId>
-                <artifactId>smack-im</artifactId>
-                <version>${smack.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.igniterealtime.smack</groupId>
-                <artifactId>smack-tcp</artifactId>
-                <version>${smack.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.igniterealtime.smack</groupId>
-                <artifactId>smack-java7</artifactId>
-                <version>${smack.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.igniterealtime.smack</groupId>
-                <artifactId>smack-extensions</artifactId>
-                <version>${smack.version}</version>
-            </dependency>
+			<!-- SMACK XMPP API -->
+			<dependency>
+				<groupId>org.igniterealtime.smack</groupId>
+				<artifactId>smack-core</artifactId>
+				<version>${smack.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.igniterealtime.smack</groupId>
+				<artifactId>smack-im</artifactId>
+				<version>${smack.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.igniterealtime.smack</groupId>
+				<artifactId>smack-tcp</artifactId>
+				<version>${smack.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.igniterealtime.smack</groupId>
+				<artifactId>smack-java7</artifactId>
+				<version>${smack.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.igniterealtime.smack</groupId>
+				<artifactId>smack-extensions</artifactId>
+				<version>${smack.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -325,21 +333,17 @@
                                         </limits>
                                         <excludes>
                                             <exclude>hu.unideb.smartcampus.shared.*</exclude>
-
                                             <exclude>hu.unideb.smartcampus.persistence.*</exclude>
-
                                             <exclude>hu.unideb.smartcampus.service.api.domain.*</exclude>
                                             <exclude>hu.unideb.smartcampus.service.api.config.*</exclude>
                                             <exclude>hu.unideb.smartcampus.service.api.exception.*</exclude>
                                             <exclude>hu.unideb.smartcampus.service.api.*</exclude><!--Removable-->
-
                                             <exclude>hu.unideb.smartcampus.webservice.api.config.*</exclude>
                                             <exclude>hu.unideb.smartcampus.webservice.api.ejabberd.request.*</exclude>
                                             <exclude>hu.unideb.smartcampus.webservice.api.ejabberd.*</exclude><!--Removable-->
                                             <exclude>hu.unideb.smartcampus.webservice.api.provider.*</exclude><!--Removable-->
                                             <exclude>hu.unideb.smartcampus.webservice.api.validator.*</exclude><!--Removable-->
                                             <exclude>hu.unideb.smartcampus.webservice.api.xmpp.*</exclude><!--Removable-->
-
                                             <exclude>hu.unideb.smartcampus.web.config.*</exclude>
                                             <exclude>hu.unideb.smartcampus.web.controller.*</exclude><!--Removable-->
                                         </excludes>
@@ -356,6 +360,11 @@
                     <configuration>
                         <skip>true</skip>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven.release.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -389,6 +398,17 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+              <groupId>org.wildfly.plugins</groupId>
+              <artifactId>wildfly-maven-plugin</artifactId>
+              <configuration>
+                <skip>true</skip>
+              </configuration>
+            </plugin>
+           <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+           </plugin>
         </plugins>
 
         <resources>
@@ -400,12 +420,60 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>with-wildfly</id>
-            <modules>
-                <module>smart-campus-wildfly</module>
-            </modules>
-        </profile>
-    </profiles>
+		<profile>
+			<id>with-wildfly</id>
+			<modules>
+				<module>smart-campus-wildfly</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<smartcampus.ejabberd.api.host>http://smartcampus</smartcampus.ejabberd.api.host>
+				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
+				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
+				<smartcampus.xmpp.mucservice>conference.smartcampus</smartcampus.xmpp.mucservice>
+				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
+				<smartcampus.xmpp.host>smartcampus</smartcampus.xmpp.host>
+				<smartcampus.xmpp.domain>smartcampus</smartcampus.xmpp.domain>
+				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
+				<smartcampus.xmpp.service>smartcampus</smartcampus.xmpp.service>
+				<smartcampus.default.user>smartcampus</smartcampus.default.user>
+				<smartcampus.default.password>admin</smartcampus.default.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<smartcampus.ejabberd.api.host>http://wt2.inf.unideb.hu</smartcampus.ejabberd.api.host>
+				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
+				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
+				<smartcampus.xmpp.mucservice>conference.wt2.inf.unideb.hu</smartcampus.xmpp.mucservice>
+				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
+				<smartcampus.xmpp.host>wt2.inf.unideb.hu</smartcampus.xmpp.host>
+				<smartcampus.xmpp.domain>wt2.inf.unideb.hu</smartcampus.xmpp.domain>
+				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
+				<smartcampus.xmpp.service>wt2.inf.unideb.hu</smartcampus.xmpp.service>
+				<smartcampus.default.user>smartcampus</smartcampus.default.user>
+				<smartcampus.default.password>admin</smartcampus.default.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>master</id>
+			<properties>
+				<smartcampus.ejabberd.api.host>http://wt1.inf.unideb.hu</smartcampus.ejabberd.api.host>
+				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
+				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
+				<smartcampus.xmpp.mucservice>conference.wt1.inf.unideb.hu</smartcampus.xmpp.mucservice>
+				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
+				<smartcampus.xmpp.host>wt1.inf.unideb.hu</smartcampus.xmpp.host>
+				<smartcampus.xmpp.domain>wt1.inf.unideb.hu</smartcampus.xmpp.domain>
+				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
+				<smartcampus.xmpp.service>wt1.inf.unideb.hu</smartcampus.xmpp.service>
+				<smartcampus.default.user>smartcampus</smartcampus.default.user>
+				<smartcampus.default.password>admin</smartcampus.default.password>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>

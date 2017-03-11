@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api.xmpp.impl;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
@@ -13,7 +14,6 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -35,13 +35,13 @@ public class DefaultUserImpl implements DefaultUser {
   /**
    * Default smart campus user's username.
    */
-  @Value("${smartcampus.default.user}")
+  @Resource(lookup = "java:global/smartcampus.default.user")
   private String user;
 
   /**
    * Default smart campus user's password.
    */
-  @Value("${smartcampus.default.password}")
+  @Resource(lookup = "java:global/smartcampus.default.password")
   private String password;
 
   /**
