@@ -1,5 +1,8 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -11,10 +14,13 @@ import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
+import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectRetrievalResponseWrapper;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.InstructorWrapper;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.SubjectWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
@@ -23,8 +29,42 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
  * Test for {@link RetrieveSubjectsRequestServiceImplTest}.
  */
 @RunWith(MockitoJUnitRunner.class)
-@SuppressWarnings({"PMD.UnusedPrivateField","PMD.UnusedLocalVariable"})
+@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.UnusedLocalVariable"})
 public class RetrieveSubjectsRequestServiceImplTest {
+
+  /**
+   * IE instructor name.
+   */
+  private static final String IE_INSTRUCTOR_NAME = "IE instructor";
+
+  /**
+   * IE instructor wrapper.
+   */
+  private static final InstructorWrapper IE_INSTRUCTOR_WRAPPER =
+      InstructorWrapper.builder().name(IE_INSTRUCTOR_NAME).build();
+
+  /**
+   * AI instructor name.
+   */
+  private static final String AI_INSTRUCTOR_NAME = "AI instructor";
+
+  /**
+   * AI instructor wrapper.
+   */
+  private static final InstructorWrapper AI_INSTRCUTOR_WRAPPER =
+      InstructorWrapper.builder().name(AI_INSTRUCTOR_NAME).build();
+
+  /**
+   * AI instructor.
+   */
+  private static final InstructorEntity AI_INSTRUCTOR =
+      InstructorEntity.builder().name(AI_INSTRUCTOR_NAME).build();
+
+  /**
+   * IE instructor.
+   */
+  private static final InstructorEntity IE_INSTRUCTOR =
+      InstructorEntity.builder().name(IE_INSTRUCTOR_NAME).build();
 
   /**
    * AI ID.
@@ -53,38 +93,36 @@ public class RetrieveSubjectsRequestServiceImplTest {
   private static final String IE = "IE";
 
   /**
+   * Response wrapper with instructors.
+   */
+  private static final List<SubjectWrapper> RESPONSE_WRAPPER = Arrays.asList(
+      SubjectWrapper.builder().name(AI).instructors(Arrays.asList(AI_INSTRCUTOR_WRAPPER)).build(),
+      SubjectWrapper.builder().name(IE).instructors(Arrays.asList(IE_INSTRUCTOR_WRAPPER)).build());
+
+  /**
+   * Response wrapper without instructors.
+   */
+  private static final List<SubjectWrapper> RESPONSE_WRAPPER_WITHOUTH_INSTRUCTORS =
+      Arrays.asList(SubjectWrapper.builder().name(AI).instructors(Collections.emptyList()).build(),
+          SubjectWrapper.builder().name(IE).instructors(Collections.emptyList()).build());
+
+
+  /**
    * IE subject.
    */
   private static final SubjectEntity IE_SUBJECT =
       SubjectEntity.builder().id(SUBJECT_ID_IE).name(IE).build();
 
   /**
-   * Consulting date date.
-   */
-  private static final String CONSULTING_DATE_DATE = "Friday 10-12";
-
-  /**
-   * User's username.
-   */
-  private static final String TEST_USER = "TestUser";
-
-  /**
-   * Consulting date id.
-   */
-  private static final long CONSULTING_DATE_ID = 1L;
-
-  /**
    * User id.
    */
   private static final String USER_ID = "TestUser";
 
-
   /**
-   * Consulting date entity.
+   * Message request.
    */
-  private static final ConsultingDateEntity CONSULTING_DATE_ENTITY =
-      ConsultingDateEntity.builder().date(CONSULTING_DATE_DATE).build();
-
+  private static final RetrieveSubjectsRequest MESSAGE_REQUEST = RetrieveSubjectsRequest.builder()
+      .userId(USER_ID).messageType(RequestMessagesConstants.RETRIEVE_SUBJECTS_REQUEST).build();
 
   /**
    * Subjects.
@@ -109,23 +147,59 @@ public class RetrieveSubjectsRequestServiceImplTest {
   @Mock
   private InstructorRepository instructorRepository;
 
-
   /**
-   * Test get response with exsisting date entity.
+   * Test get response with user with subjects.
    */
   @Test
-  public void getResponseWithNotNullDateEntityShouldReturnOkResponse() {
+  public void getResponseWhenUserHasSubjectsAndReturnValidResponseWrapper() {
     // given
-    RetrieveSubjectsRequest request = RetrieveSubjectsRequest.builder().userId(USER_ID)
-        .messageType(RequestMessagesConstants.RETRIEVE_SUBJECTS_REQUEST).build();
 
     // when
     Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(SUBJECTS);
+    Mockito.when(instructorRepository.getInstructorsBySubjectId(SUBJECT_ID_IE))
+        .thenReturn(Sets.newSet(IE_INSTRUCTOR));
+    Mockito.when(instructorRepository.getInstructorsBySubjectId(SUBJECT_ID_AI))
+        .thenReturn(Sets.newSet(AI_INSTRUCTOR));
     // then
-    // SubjectRetrievalResponseWrapper response = service.getResponse(request);
+    SubjectRetrievalResponseWrapper response = service.getResponse(MESSAGE_REQUEST);
 
-    // Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
-    // response.getMessageType());
-    Assert.assertTrue(true);
+    Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
+        response.getMessageType());
+    Assert.assertEquals(RESPONSE_WRAPPER, response.getSubjects());
+  }
+
+  /**
+   * Test get response with user with no subjects.
+   */
+  @Test
+  public void getResponseWhenUserHasNoSubjectsAndReturnValidResponseWrapper() {
+    // given
+
+    // when
+    Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(null);
+    // then
+    SubjectRetrievalResponseWrapper response = service.getResponse(MESSAGE_REQUEST);
+
+    Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
+        response.getMessageType());
+    Assert.assertEquals(Collections.emptyList(), response.getSubjects());
+  }
+
+  /**
+   * Test get response subject without instructor.
+   */
+  @Test
+  public void getResponseWhenSubjectHasNoInstructorShouldReturnValidResponseWrapper() {
+    // given
+
+    // when
+    Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(SUBJECTS);
+
+    // then
+    SubjectRetrievalResponseWrapper response = service.getResponse(MESSAGE_REQUEST);
+
+    Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
+        response.getMessageType());
+    Assert.assertEquals(RESPONSE_WRAPPER_WITHOUTH_INSTRUCTORS, response.getSubjects());
   }
 }

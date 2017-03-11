@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api.request.service;
 import static hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,28 +55,35 @@ public class RetrieveSubjectsRequestServiceImpl
     LOGGER.info("Retrieving user ({}) subjects.", msg.getUserId());
     Set<SubjectEntity> subjects = userRepositoy.getSubjectsByUsername(msg.getUserId());
     List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
-
     return SubjectRetrievalResponseWrapper.builder().messageType(RETRIEVE_SUBJECTS_RESPONSE)
         .subjects(subjectsWrapper).build();
   }
 
   private List<SubjectWrapper> createSubjectsWrapper(Set<SubjectEntity> subjects) {
     List<SubjectWrapper> result = new ArrayList<>();
-    for (SubjectEntity subjectEntity : subjects) {
-      Set<InstructorEntity> instructorSet =
-          instructorRepository.getInstructorsBySubjectId(subjectEntity.getId());
-      List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
-      result.add(SubjectWrapper.builder().name(subjectEntity.getName())
-          .instructors(instructors).build());
+    if (subjects != null) {
+      for (SubjectEntity subjectEntity : subjects) {
+        Set<InstructorEntity> instructorSet =
+            instructorRepository.getInstructorsBySubjectId(subjectEntity.getId());
+        List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
+        result.add(SubjectWrapper.builder().name(subjectEntity.getName()).instructors(instructors)
+            .build());
+      }
     }
     return result;
   }
 
   private List<InstructorWrapper> convertEntitiesToWrapper(Set<InstructorEntity> instructorSet) {
+    if (instructorSet == null) {
+      return Collections.emptyList();
+    }
     return instructorSet.stream().map(this::toInstructorWrapper).collect(Collectors.toList());
   }
 
   private InstructorWrapper toInstructorWrapper(InstructorEntity entity) {
+    if (entity == null) {
+      return InstructorWrapper.builder().build();
+    }
     return InstructorWrapper.builder().name(entity.getName()).instructorId(entity.getId()).build();
   }
 

@@ -70,7 +70,7 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
 
   private ConsultingDateEntity createMondayConsultingDate() {
     return ConsultingDateEntity.builder().id(CONSULTING_DATE_MONDAY_ID).date(CONSULTING_DATE_MONDAY)
-        .fromToDate(getMonday()).build();
+        .sum(0).fromToDate(getMonday()).build();
   }
 
   private FromToDateEmbeddedEntity getMonday() {
@@ -79,7 +79,7 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
 
   private ConsultingDateEntity createFridayConsultingDate() {
     return ConsultingDateEntity.builder().id(CONSULTING_DATE_FRIDAY_ID).date(CONSULTING_DATE_FRIDAY)
-        .fromToDate(getFriday()).build();
+        .sum(0).fromToDate(getFriday()).build();
   }
 
   private FromToDateEmbeddedEntity getFriday() {
