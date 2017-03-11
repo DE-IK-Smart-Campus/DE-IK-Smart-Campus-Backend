@@ -46,6 +46,24 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   private static final String USER_ID = "TestUser";
 
   /**
+   * Example duration.
+   */
+  private static final String EXAMPLE_DURATION = "10 minutes";
+
+  /**
+   * Example reason.
+   */
+  private static final String EXAMPLE_REASON = "Discuss something important";
+
+  /**
+   * Example reqeust.
+   */
+  private static final SignUpForConsultingHourRequest EXAMPLE_REQUEST =
+      SignUpForConsultingHourRequest.builder().consultingHourId(CONSULTING_DATE_ID).userId(USER_ID)
+          .messageType(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_REQUEST)
+          .duration(EXAMPLE_DURATION).reason(EXAMPLE_REASON).build();
+
+  /**
    * User does not exists response status.
    */
   private static final String USER_DOES_NOT_EXISTS = "User does not exists.";
@@ -65,11 +83,6 @@ public class SignUpForConsultingHourRequestServiceImplTest {
    */
   private static final UserEntity USER_ENTITY = UserEntity.builder().username(TEST_USER).build();
 
-  /**
-   * Consulting date entity.
-   */
-  private static final ConsultingDateEntity CONSULTING_DATE_ENTITY =
-      ConsultingDateEntity.builder().date(CONSULTING_DATE_DATE).build();
 
   /**
    * Service impl.
@@ -103,20 +116,17 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   @Test
   public void getResponseWithNotNullDateEntityShouldReturnOkResponse() {
     // given
-    SignUpForConsultingHourRequest request = SignUpForConsultingHourRequest.builder()
-        .consultingHourId(CONSULTING_DATE_ID).userId(USER_ID)
-        .messageType(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_REQUEST)
-        .duration("10 minutes").reason("Discuss something important").build();
+    ConsultingDateEntity consultingDateEntity = createConsultingDateEntity();
 
     // when
     Mockito.when(userRepository.findByUsername(USER_ID)).thenReturn(USER_ENTITY);
     Mockito.when(consultingDateRepository.findOne(CONSULTING_DATE_ID))
-        .thenReturn(CONSULTING_DATE_ENTITY);
+        .thenReturn(consultingDateEntity);
 
     // then
-    SignUpForConsultingHourWrapper response = service.getResponse(request);
+    SignUpForConsultingHourWrapper response = service.getResponse(EXAMPLE_REQUEST);
     Assert.assertEquals(OK, response.getStatus());
-    Assert.assertEquals(Integer.valueOf(1), CONSULTING_DATE_ENTITY.getSum());
+    Assert.assertEquals(Integer.valueOf(1), consultingDateEntity.getSum());
   }
 
   /**
@@ -125,17 +135,13 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   @Test
   public void getResponseWithNullDateEntityShouldReturnErrorResponse() {
     // given
-    SignUpForConsultingHourRequest request = SignUpForConsultingHourRequest.builder()
-        .consultingHourId(CONSULTING_DATE_ID).userId(USER_ID)
-        .messageType(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_REQUEST)
-        .duration("10 minutes").reason("Discuss something important").build();
 
     // when
     Mockito.when(userRepository.findByUsername(USER_ID)).thenReturn(USER_ENTITY);
     Mockito.when(consultingDateRepository.findOne(CONSULTING_DATE_ID)).thenReturn(null);
 
     // then
-    SignUpForConsultingHourWrapper response = service.getResponse(request);
+    SignUpForConsultingHourWrapper response = service.getResponse(EXAMPLE_REQUEST);
     Assert.assertEquals(NO_CONSULTING_DATE_EXISTS, response.getStatus());
   }
 
@@ -145,19 +151,21 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   @Test
   public void getResponseWithNullUserEntityShouldReturnErrorResponse() {
     // given
-    SignUpForConsultingHourRequest request = SignUpForConsultingHourRequest.builder()
-        .consultingHourId(CONSULTING_DATE_ID).userId(USER_ID)
-        .messageType(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_REQUEST)
-        .duration("10 minutes").reason("Discuss something important").build();
+    ConsultingDateEntity consultingDateEntity = createConsultingDateEntity();
 
     // when
     Mockito.when(userRepository.findByUsername(USER_ID)).thenReturn(null);
     Mockito.when(consultingDateRepository.findOne(CONSULTING_DATE_ID))
-        .thenReturn(CONSULTING_DATE_ENTITY);
+        .thenReturn(consultingDateEntity);
 
     // then
-    SignUpForConsultingHourWrapper response = service.getResponse(request);
+    SignUpForConsultingHourWrapper response = service.getResponse(EXAMPLE_REQUEST);
     Assert.assertEquals(USER_DOES_NOT_EXISTS, response.getStatus());
+  }
+
+
+  private static ConsultingDateEntity createConsultingDateEntity() {
+    return ConsultingDateEntity.builder().date(CONSULTING_DATE_DATE).build();
   }
 
 
