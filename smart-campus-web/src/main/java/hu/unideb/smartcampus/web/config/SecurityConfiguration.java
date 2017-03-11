@@ -30,8 +30,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated()
-        .and().httpBasic().and().rememberMe();
+    http.csrf().disable().authorizeRequests() // TODO Remove
+        .antMatchers("/", "/home")
+        .permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .httpBasic()
+        .and()
+        .rememberMe();
     // @formatter:on
   }
 
@@ -63,6 +70,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             + ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_PORT)),
         ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_BASE_DN));
   }
-
-
 }

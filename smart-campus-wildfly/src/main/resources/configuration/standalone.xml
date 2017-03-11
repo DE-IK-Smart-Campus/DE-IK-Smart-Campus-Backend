@@ -156,9 +156,26 @@
                         <password>sa</password>
                     </security>
                 </datasource>
+                <datasource jta="true" jndi-name="java:jboss/datasources/SmartCampusMySql" pool-name="SmartCampusMySql" enabled="true" use-ccm="true">
+                    <connection-url>@mysql.connection.url@</connection-url>
+                    <driver-class>com.mysql.jdbc.Driver</driver-class>
+                    <driver>mysql</driver>
+                    <security>
+                        <user-name>@mysql.username@</user-name>
+                        <password>@mysql.password@</password>
+                    </security>
+                    <validation>
+                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"/>
+                        <background-validation>true</background-validation>
+                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"/>
+                    </validation>
+                </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    </driver>
+                    <driver name="mysql" module="com.mysql">
+                        <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
                     </driver>
                 </drivers>
             </datasources>
