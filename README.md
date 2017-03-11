@@ -13,6 +13,13 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 				    <mysql.connection.url>jdbc:mysql://smartcampus:3306/smartcampus</mysql.connection.url>
 				    <mysql.username>nandi</mysql.username>
 				    <mysql.password>mysql</mysql.password>
+			        <ldap.host></ldap.host>
+			        <ldap.port></ldap.port>
+			        <ldap.basedn></ldap.basedn>
+			        <ldap.passwordattribute></ldap.passwordattribute>
+			        <ldap.userpattern></ldap.userpattern>
+			        <ldap.groupsearchbase></ldap.groupsearchbase>
+			        <ldap.groupfilter></ldap.groupfilter>
 			    </properties>
 		    </profile>
 	</profiles>
@@ -69,3 +76,11 @@ Test data:
 |  palu  |  password  |
 |  butikai  |  password  |
 |  gabai  |  password  |
+
+Running tests:
+
+You must have Selenium webdriver and Protractor installed!
+
+First you must start the webdriver-manager with `webdriver-manager start`.
+ 
+Then in another console you must go to `/smart-campus-web/src/test/protractor` and run `protractor protractor.conf.js`.

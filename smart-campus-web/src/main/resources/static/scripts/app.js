@@ -2,7 +2,8 @@
 
 angular.module('app', [
     'ui.router',
-    'ngAnimate'
+    'ngAnimate',
+    'ui.bootstrap'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -35,7 +36,8 @@ angular.module('app', [
             .state('calendar', {
                 url: '/calendar',
                 parent: 'dashboard',
-                templateUrl: 'views/dashboard/calendar.html'
+                templateUrl: 'views/dashboard/calendar.html',
+                controller: 'CalendarCtrl'
             })
             .state('consultingHours', {
                 url: '/consulting-hours',
@@ -58,4 +60,9 @@ angular.module('app', [
                 templateUrl: 'views/dashboard/about-us.html'
             });
 
-    });
+    }).directive('showSidebarButton', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'directives/show-sidebar.html'
+    };
+});
