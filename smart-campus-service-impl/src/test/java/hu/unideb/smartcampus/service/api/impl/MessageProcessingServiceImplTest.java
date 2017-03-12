@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
 
@@ -26,6 +25,7 @@ import hu.unideb.smartcampus.service.api.request.service.ExampleRequestServiceIm
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;
+import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
 
 /**
@@ -53,12 +53,14 @@ public class MessageProcessingServiceImplTest {
   /**
    * Example service implementation.
    */
-  private ExampleRequestServiceImpl exampleService = new ExampleRequestServiceImpl();
+  @Mock
+  private ExampleRequestServiceImpl exampleService;
 
   /**
    * Mock of object mapper.
    */
-  private ObjectMapper objectMapper = Mockito.mock(ObjectMapper.class);
+  @Mock
+  private ObjectMapper objectMapper;
 
   /**
    * Mock of message process context.
@@ -91,7 +93,11 @@ public class MessageProcessingServiceImplTest {
     given(objectMapper.readValue(EXAMPLE_ESCAPED_JSON, BaseRequestType.class)).willReturn(
         ExampleRequest.builder().example(EXAMPLE_STRING).messageType(EXAMPLE_MESSAGE_TYPE).build());
     given(appContext.getBean(ExampleRequestServiceImpl.BEAN_NAME)).willReturn(exampleService);
-
+    given(exampleService.getResponse(ExampleRequest.builder()
+        .messageType(RequestMessagesConstants.EXAMPLE_REQUEST).example(EXAMPLE_STRING).build()))
+            .willReturn(ExampleResponseWrapper.builder()
+                .messageType(RequestMessagesConstants.EXAMPLE_RESPONSE).example(EXAMPLE_STRING)
+                .build());
     // then
     BaseWrapper processMessage = messageProcessingService.processMessage(EXAMPLE_ESCAPED_JSON);
 
