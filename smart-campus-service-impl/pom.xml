@@ -73,6 +73,10 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-bosh</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

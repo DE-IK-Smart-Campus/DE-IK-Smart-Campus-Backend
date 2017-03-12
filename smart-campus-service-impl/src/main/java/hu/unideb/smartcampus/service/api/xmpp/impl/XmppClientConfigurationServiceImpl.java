@@ -3,13 +3,25 @@ package hu.unideb.smartcampus.service.api.xmpp.impl;
 import javax.annotation.Resource;
 
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
+import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.webservice.api.xmpp.XmppClientConfigurationService;
+import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 
+/**
+ * XMPP Client configuration service where we can configure clients to default TCP and BOSH.
+ *
+ */
 @Service
 public class XmppClientConfigurationServiceImpl implements XmppClientConfigurationService {
+
+  private static final String HTTP_BIND = "/http-bind/";
+
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(XmppClientConfigurationServiceImpl.class);
 
   /**
    * XMPP host.
@@ -24,17 +36,44 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
   private String service;
 
   /**
-   * XMPP port.
+   * XMPP TCP port.
    */
-  @Resource(lookup = "java:global/smartcampus.xmpp.port")
-  private Integer port;
+  @Resource(lookup = "java:global/smartcampus.xmpp.tcp.port")
+  private Integer tcpPort;
+
+  /**
+   * XMPP BOSH port.
+   */
+  @Resource(lookup = "java:global/smartcampus.xmpp.bosh.port")
+  private Integer boshPort;
 
   @Override
-  public XMPPTCPConnectionConfiguration getConfigurationByUsernameAndPassword(String username,
+  public BOSHConfiguration getBoshConfigurationByUserNameAndPassword(String username,
       String password) {
-    return XMPPTCPConnectionConfiguration.builder().setHost(host).setServiceName(service)
-        .setPort(port).setSecurityMode(SecurityMode.disabled).setDebuggerEnabled(true)
-        .setUsernameAndPassword(username, password).build();
+    LOGGER.info("Creating BOSH configuration to host:{} on port:{}", host, boshPort);
+    return BOSHConfiguration.builder()
+        .setHost(host)
+        .setServiceName(service)
+        .setFile(HTTP_BIND)
+        .setPort(boshPort)
+        .setSecurityMode(SecurityMode.disabled)
+        .setDebuggerEnabled(true)
+        .setUsernameAndPassword(username, password)
+        .build();
+  }
+
+  @Override
+  public XMPPTCPConnectionConfiguration getXmppConfigurationByUserNameAndPassword(String username,
+      String password) {
+    LOGGER.info("Creating XMPP configuration to host:{} on port:{}", host, tcpPort);
+    return XMPPTCPConnectionConfiguration.builder()
+        .setHost(host)
+        .setServiceName(service)
+        .setPort(tcpPort)
+        .setSecurityMode(SecurityMode.disabled)
+        .setDebuggerEnabled(true)
+        .setUsernameAndPassword(username, password)
+        .build();
   }
 
 }

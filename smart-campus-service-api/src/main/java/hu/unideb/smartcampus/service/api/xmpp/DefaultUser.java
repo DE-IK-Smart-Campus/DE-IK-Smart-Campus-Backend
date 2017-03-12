@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.webservice.api.xmpp;
+package hu.unideb.smartcampus.service.api.xmpp;
 
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
