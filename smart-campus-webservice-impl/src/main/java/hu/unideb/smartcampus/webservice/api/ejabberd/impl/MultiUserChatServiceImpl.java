@@ -49,7 +49,7 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
   /**
    * XMPP nodes.
    */
-  @Resource(lookup = "java:global/smartcampus.xmpp.nodes}")
+  @Resource(lookup = "java:global/smartcampus.xmpp.nodes")
   private String nodes;
 
   @Autowired
