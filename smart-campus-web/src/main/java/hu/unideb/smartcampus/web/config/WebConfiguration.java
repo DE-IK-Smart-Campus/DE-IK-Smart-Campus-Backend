@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import hu.unideb.smartcampus.service.api.config.ServiceConfiguration;
@@ -16,7 +15,6 @@ import hu.unideb.smartcampus.webservice.api.config.WebServiceConfiguration;
 @Configuration
 @Import({ServiceConfiguration.class, WebServiceConfiguration.class})
 @ComponentScan("hu.unideb.smartcampus.web.controller")
-@PropertySource("classpath:ldap.properties")
 public class WebConfiguration {
 
 
