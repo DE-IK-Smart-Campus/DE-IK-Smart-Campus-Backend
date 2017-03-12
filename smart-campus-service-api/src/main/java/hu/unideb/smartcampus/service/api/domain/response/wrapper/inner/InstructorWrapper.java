@@ -2,25 +2,23 @@ package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Instructor wrapper.
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class InstructorWrapper {
 
   /**
    * Instructor's id.
    */
-  private Long instructorId;
+  private final Long instructorId;
 
   /**
    * Instructor's name.
    */
-  private String name;
+  private final String name;
 
   /**
    * Constructs an InstructorWrapper instance.

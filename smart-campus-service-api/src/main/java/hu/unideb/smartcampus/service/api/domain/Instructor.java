@@ -17,17 +17,17 @@ public class Instructor extends BaseObject<Long> {
   /**
    * Name of the instructor.
    */
-  private String name;
+  private final String name;
 
   /**
    * Instructor's consulting hours.
    */
-  private Set<ConsultingDate> consultingDates;
+  private final Set<ConsultingDate> consultingDates;
 
   /**
    * Subjects of the instructor.
    */
-  private Set<Subject> subjects;
+  private final Set<Subject> subjects;
 
   /**
    * Constructs instructor entity.

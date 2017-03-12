@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class MessageProcessingServiceImpl implements MessageProcessingService {
    * Constructs a MessageProcessingServiceImpl instance with injected dependencies.
    *
    */
+  @Autowired
   public MessageProcessingServiceImpl(ObjectMapper objectMapper, MessageProcessContext context,
       ApplicationContext appContext) {
     this.objectMapper = objectMapper;

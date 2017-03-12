@@ -1,6 +1,5 @@
 package hu.unideb.smartcampus.service.api.context;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Maps;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
@@ -49,8 +50,7 @@ public class MessageProcessContextImpl implements MessageProcessContext {
    */
   public Map<Class<? extends BaseRequestType>, String> getMessageServices() {
     if (requestProcessServices == null) {
-      requestProcessServices =
-          new HashMap<Class<? extends BaseRequestType>, String>();
+      requestProcessServices = Maps.newHashMap();
       for (Object clazz : classes) {
         requestProcessServices.put(((MessageProcessingClass) clazz).getSupportedClass(),
             ((MessageProcessingClass) clazz).getBeanName());

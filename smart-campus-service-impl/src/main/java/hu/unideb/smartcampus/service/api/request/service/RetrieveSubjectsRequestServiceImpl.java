@@ -62,13 +62,13 @@ public class RetrieveSubjectsRequestServiceImpl
   private List<SubjectWrapper> createSubjectsWrapper(Set<SubjectEntity> subjects) {
     List<SubjectWrapper> result = new ArrayList<>();
     if (subjects != null) {
-      for (SubjectEntity subjectEntity : subjects) {
+      subjects.stream().forEach(subjectEntity -> {
         Set<InstructorEntity> instructorSet =
             instructorRepository.getInstructorsBySubjectId(subjectEntity.getId());
         List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
         result.add(SubjectWrapper.builder().name(subjectEntity.getName()).instructors(instructors)
             .build());
-      }
+      });
     }
     return result;
   }

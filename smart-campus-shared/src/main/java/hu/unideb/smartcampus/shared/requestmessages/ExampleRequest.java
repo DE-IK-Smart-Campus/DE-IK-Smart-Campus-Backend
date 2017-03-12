@@ -2,14 +2,12 @@ package hu.unideb.smartcampus.shared.requestmessages;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Example message.
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class ExampleRequest extends BaseRequest {
 
   /**
@@ -20,14 +18,7 @@ public class ExampleRequest extends BaseRequest {
   /**
    * Example field.
    */
-  private String example;
-
-  /**
-   * Constructor for Jackson.
-   */
-  public ExampleRequest() {
-    super(MESSAGE_TYPE);
-  }
+  private final String example;
 
   /**
    * Constructs an example request.

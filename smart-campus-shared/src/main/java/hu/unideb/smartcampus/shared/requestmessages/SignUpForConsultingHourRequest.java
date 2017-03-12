@@ -1,44 +1,34 @@
 package hu.unideb.smartcampus.shared.requestmessages;
 
-import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Sign up for consulting hour request.
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class SignUpForConsultingHourRequest extends BaseRequest {
 
   /**
    * User's JID.
    */
-  private String userId;
+  private final String userId;
 
   /**
    * Consulting hour id.
    */
-  private Long consultingHourId;
+  private final Long consultingHourId;
 
   /**
    * Reason of consulting.
    */
-  private String reason;
+  private final String reason;
 
   /**
    * Duration of consulting.
    */
-  private String duration;
-
-  /**
-   * Constructor for Jackson.
-   */
-  public SignUpForConsultingHourRequest() {
-    super(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_REQUEST);
-  }
+  private final String duration;
 
   /**
    * Constructs a SignUpForConsultingHourRequest instance.

@@ -1,11 +1,11 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
@@ -44,11 +44,9 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
    * {@inheritDoc}.
    */
   @Override
+  @Transactional(readOnly = true)
   public Set<Subject> getSubjectsByUserId(Long id) {
     Set<SubjectEntity> subjects = userRepository.getSubjectsByUserId(id);
-    if (subjects == null) {
-      return Collections.emptySet();
-    }
     return subjects.stream().map(converter::convert).collect(Collectors.toSet());
   }
 

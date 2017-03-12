@@ -13,39 +13,39 @@ public class DateHelper {
   /**
    * Year.
    */
-  private Integer year;
+  private final Integer year;
 
   /**
    * Month.
    */
-  private Integer month;
+  private final Integer month;
 
   /**
    * Day.
    */
-  private Integer day;
+  private final Integer day;
 
   /**
    * Hour.
    */
-  private Integer hour;
+  private final Integer hour;
 
   /**
    * Minute.
    */
-  private Integer minute;
+  private final Integer minute;
 
   /**
    * Second.
    */
-  private Integer second;
+  private final Integer second;
 
   /**
    * Constructs a DateHelper instance.
    */
   @Builder
-  public DateHelper(Integer year, Integer month, Integer day, Integer hour, Integer minute,
-      Integer second) {
+  public DateHelper(final Integer year, final Integer month, final Integer day, final Integer hour,
+      final Integer minute, final Integer second) {
     this.year = year;
     this.month = month;
     this.day = day;

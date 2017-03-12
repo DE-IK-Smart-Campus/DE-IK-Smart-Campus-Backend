@@ -24,7 +24,7 @@ import lombok.ToString;
 public class SubjectEntity extends BaseEntity<Long> {
 
   /**
-   * Name of the instructor.
+   * Name of the subject.
    */
   private String name;
 

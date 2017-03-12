@@ -9,6 +9,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
@@ -17,7 +19,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import hu.unideb.smartcampus.service.api.MessageProcessingService;
 import hu.unideb.smartcampus.service.api.context.MessageProcessContext;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.ExampleResponseWrapper;
@@ -62,18 +63,20 @@ public class MessageProcessingServiceImplTest {
   /**
    * Mock of message process context.
    */
-  private MessageProcessContext context = Mockito.mock(MessageProcessContext.class);
+  @Mock
+  private MessageProcessContext context;
 
   /**
    * Mock of application context.
    */
-  private ApplicationContext appContext = Mockito.mock(ApplicationContext.class);
+  @Mock
+  private ApplicationContext appContext;
 
   /**
    * Message process service.
    */
-  private MessageProcessingService messageProcessingService =
-      new MessageProcessingServiceImpl(objectMapper, context, appContext);
+  @InjectMocks
+  private MessageProcessingServiceImpl messageProcessingService;
 
   /**
    * Test process messaging method with an example request.

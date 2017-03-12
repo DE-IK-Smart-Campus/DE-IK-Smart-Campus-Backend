@@ -23,7 +23,7 @@ import lombok.ToString;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 @Entity
 @Table(name = TABLE_NAME_USER_CONSULTING_DATE)
@@ -32,12 +32,14 @@ public class UserConsultingDateEntity extends BaseEntity<Long> {
   /**
    * User.
    */
+  @NotNull
   @OneToOne(fetch = FetchType.LAZY)
   private UserEntity user;
 
   /**
    * Consulting date.
    */
+  @NotNull
   @OneToOne(fetch = FetchType.LAZY)
   private ConsultingDateEntity consultingDate;
 

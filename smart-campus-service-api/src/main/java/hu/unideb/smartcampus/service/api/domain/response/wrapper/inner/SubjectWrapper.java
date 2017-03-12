@@ -4,25 +4,23 @@ import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Wrapper for result of Retrieve Subjects.
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class SubjectWrapper {
 
   /**
    * Subject name.
    */
-  private String name;
+  private final String name;
 
   /**
    * Teachers.
    */
-  private List<InstructorWrapper> instructors;
+  private final List<InstructorWrapper> instructors;
 
   /**
    * Constructs SubjectWrapper.

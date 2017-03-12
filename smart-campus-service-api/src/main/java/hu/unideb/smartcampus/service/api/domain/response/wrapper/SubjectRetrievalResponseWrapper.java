@@ -5,20 +5,18 @@ import java.util.List;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.SubjectWrapper;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Wrapper for result of Retrieve Subjects.
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class SubjectRetrievalResponseWrapper extends BaseWrapper {
 
   /**
    * Wrapped subjects in set.
    */
-  private List<SubjectWrapper> subjects;
+  private final List<SubjectWrapper> subjects;
 
   /**
    * Constructs a wrapper for response.

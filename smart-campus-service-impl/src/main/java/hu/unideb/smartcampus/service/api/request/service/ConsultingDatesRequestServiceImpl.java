@@ -13,7 +13,7 @@ import hu.unideb.smartcampus.shared.requestmessages.ConsultingDatesRequest;
  * Service for retrivie...
  *
  */
-@Service("consultingDatesRequestServiceImpl")
+@Service(ConsultingDatesRequestServiceImpl.BEAN_NAME)
 @Transactional(propagation = Propagation.REQUIRED)
 public class ConsultingDatesRequestServiceImpl implements MessageProcessingClass<BaseWrapper> {
 

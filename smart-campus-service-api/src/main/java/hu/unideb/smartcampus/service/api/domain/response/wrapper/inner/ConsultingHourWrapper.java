@@ -2,29 +2,27 @@ package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Consulting hour wrapper.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class ConsultingHourWrapper {
 
   /**
    * Consulting hour id.
    */
-  private Long consultingHourId;
+  private final Long consultingHourId;
 
   /**
    * From to date.
    */
-  private FromToDateWrapper fromToDates;
+  private final FromToDateWrapper fromToDates;
 
   /**
    * Sum of reserved studenst.
    */
-  private Integer reservedSum;
+  private final Integer reservedSum;
 
   /**
    * Constructs a ConsultingHourWrapper.

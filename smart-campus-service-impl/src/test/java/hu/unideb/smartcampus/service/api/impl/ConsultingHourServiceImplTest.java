@@ -4,7 +4,6 @@ import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTIO
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 import java.util.Collections;
 import java.util.Set;
@@ -12,6 +11,9 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -25,6 +27,7 @@ import hu.unideb.smartcampus.service.api.domain.Subject;
  * Test for {@link ConsultingHourService}.
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings({"PMD.UnusedPrivateField"})
 public class ConsultingHourServiceImplTest {
 
   /**
@@ -56,19 +59,20 @@ public class ConsultingHourServiceImplTest {
   /**
    * UserRepository mock.
    */
-  private final UserRepository userRepository = mock(UserRepository.class);
+  @Mock
+  private UserRepository userRepository;
 
   /**
    * SubjectEntityToSubjectConverter implementation.
    */
-  private final SubjectEntityToSubjectConverter conversionService =
-      new SubjectEntityToSubjectConverter();
+  @Spy
+  private SubjectEntityToSubjectConverter conversionService;
 
   /**
    * UserService with UserRepository and ConversionService mocks.
    */
-  private final ConsultingHourServiceImpl consultingHoursService =
-      new ConsultingHourServiceImpl(this.userRepository, this.conversionService);
+  @InjectMocks
+  private ConsultingHourServiceImpl consultingHoursService;
 
   /**
    * Test subject list is empty.
@@ -79,22 +83,6 @@ public class ConsultingHourServiceImplTest {
 
     // when
     given(userRepository.getSubjectsByUserId(1L)).willReturn(Collections.emptySet());
-
-    // then
-    Set<Subject> subjects = consultingHoursService.getSubjectsByUserId(1L);
-
-    Assert.assertTrue(subjects.isEmpty());
-  }
-
-  /**
-   * Test service should return empty list on null db result.
-   */
-  @Test
-  public void getSubjectsByUserIdShouldReturnEmptySetOnNull() {
-    // given
-
-    // when
-    given(userRepository.getSubjectsByUserId(1L)).willReturn(null);
 
     // then
     Set<Subject> subjects = consultingHoursService.getSubjectsByUserId(1L);

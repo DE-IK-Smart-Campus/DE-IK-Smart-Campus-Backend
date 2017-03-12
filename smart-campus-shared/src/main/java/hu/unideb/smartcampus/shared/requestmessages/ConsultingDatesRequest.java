@@ -2,20 +2,18 @@ package hu.unideb.smartcampus.shared.requestmessages;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * A message type.
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class ConsultingDatesRequest extends BaseRequest {
 
   /**
    * Name.
    */
-  private String name;
+  private final String name;
 
   /**
    * Constructs an instance.

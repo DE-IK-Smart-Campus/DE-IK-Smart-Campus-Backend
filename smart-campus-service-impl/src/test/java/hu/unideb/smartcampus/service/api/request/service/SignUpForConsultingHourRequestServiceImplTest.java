@@ -84,12 +84,15 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   private static final UserEntity USER_ENTITY = UserEntity.builder().username(TEST_USER).build();
 
 
+  private static ConsultingDateEntity createConsultingDateEntity() {
+    return ConsultingDateEntity.builder().date(CONSULTING_DATE_DATE).build();
+  }
+  
   /**
    * Service impl.
    */
   @InjectMocks
-  private SignUpForConsultingHourRequestServiceImpl service =
-      new SignUpForConsultingHourRequestServiceImpl();
+  private SignUpForConsultingHourRequestServiceImpl service;
 
   /**
    * User repository mock.
@@ -103,12 +106,12 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   @Mock
   private ConsultingDateRepository consultingDateRepository;
 
+
   /**
    * User consulting date repository mock.
    */
   @Mock
   private UserConsultingDateRepository userConsultingDateRepository;
-
 
   /**
    * Test get response with exsisting date entity.
@@ -145,6 +148,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
     Assert.assertEquals(NO_CONSULTING_DATE_EXISTS, response.getStatus());
   }
 
+
   /**
    * Test get response with non-exsisting user.
    */
@@ -161,11 +165,6 @@ public class SignUpForConsultingHourRequestServiceImplTest {
     // then
     SignUpForConsultingHourWrapper response = service.getResponse(EXAMPLE_REQUEST);
     Assert.assertEquals(USER_DOES_NOT_EXISTS, response.getStatus());
-  }
-
-
-  private static ConsultingDateEntity createConsultingDateEntity() {
-    return ConsultingDateEntity.builder().date(CONSULTING_DATE_DATE).build();
   }
 
 

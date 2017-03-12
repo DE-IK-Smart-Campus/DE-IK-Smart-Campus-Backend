@@ -4,14 +4,12 @@ import java.io.Serializable;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Consulting hour from - to interval in Long.
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class FromToDateWrapper implements Serializable {
 
   /**
@@ -22,12 +20,12 @@ public class FromToDateWrapper implements Serializable {
   /**
    * From date in long.
    */
-  private Long from;
+  private final Long from;
 
   /**
    * To date in long.
    */
-  private Long to;
+  private final Long to;
 
   /**
    * Constructs a FromToDate instance.

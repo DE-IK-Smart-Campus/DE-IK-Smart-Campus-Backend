@@ -133,7 +133,7 @@ public class RetrieveSubjectsRequestServiceImplTest {
    * Service impl.
    */
   @InjectMocks
-  private RetrieveSubjectsRequestServiceImpl service = new RetrieveSubjectsRequestServiceImpl();
+  private RetrieveSubjectsRequestServiceImpl service;
 
   /**
    * Consulting date repository mock.
@@ -148,24 +148,21 @@ public class RetrieveSubjectsRequestServiceImplTest {
   private InstructorRepository instructorRepository;
 
   /**
-   * Test get response with user with subjects.
+   * Test get response subject without instructor.
    */
   @Test
-  public void getResponseWhenUserHasSubjectsAndReturnValidResponseWrapper() {
+  public void getResponseWhenSubjectHasNoInstructorShouldReturnValidResponseWrapper() {
     // given
 
     // when
     Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(SUBJECTS);
-    Mockito.when(instructorRepository.getInstructorsBySubjectId(SUBJECT_ID_IE))
-        .thenReturn(Sets.newSet(IE_INSTRUCTOR));
-    Mockito.when(instructorRepository.getInstructorsBySubjectId(SUBJECT_ID_AI))
-        .thenReturn(Sets.newSet(AI_INSTRUCTOR));
+
     // then
     SubjectRetrievalResponseWrapper response = service.getResponse(MESSAGE_REQUEST);
 
     Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
         response.getMessageType());
-    Assert.assertEquals(RESPONSE_WRAPPER, response.getSubjects());
+    Assert.assertEquals(RESPONSE_WRAPPER_WITHOUTH_INSTRUCTORS, response.getSubjects());
   }
 
   /**
@@ -186,20 +183,23 @@ public class RetrieveSubjectsRequestServiceImplTest {
   }
 
   /**
-   * Test get response subject without instructor.
+   * Test get response with user with subjects.
    */
   @Test
-  public void getResponseWhenSubjectHasNoInstructorShouldReturnValidResponseWrapper() {
+  public void getResponseWhenUserHasSubjectsAndReturnValidResponseWrapper() {
     // given
 
     // when
     Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(SUBJECTS);
-
+    Mockito.when(instructorRepository.getInstructorsBySubjectId(SUBJECT_ID_IE))
+        .thenReturn(Sets.newSet(IE_INSTRUCTOR));
+    Mockito.when(instructorRepository.getInstructorsBySubjectId(SUBJECT_ID_AI))
+        .thenReturn(Sets.newSet(AI_INSTRUCTOR));
     // then
     SubjectRetrievalResponseWrapper response = service.getResponse(MESSAGE_REQUEST);
 
     Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
         response.getMessageType());
-    Assert.assertEquals(RESPONSE_WRAPPER_WITHOUTH_INSTRUCTORS, response.getSubjects());
+    Assert.assertEquals(RESPONSE_WRAPPER, response.getSubjects());
   }
 }

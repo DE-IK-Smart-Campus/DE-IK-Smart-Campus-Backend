@@ -5,8 +5,6 @@ import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
@@ -15,11 +13,10 @@ import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
  * Instructor repository.
  */
 @Repository
-@Transactional(propagation = Propagation.SUPPORTS)
 public interface InstructorRepository extends JpaRepository<InstructorEntity, Long> {
 
   /**
-   * Find user by name.
+   * Find instructor by name.
    */
   InstructorEntity findByName(String name);
 

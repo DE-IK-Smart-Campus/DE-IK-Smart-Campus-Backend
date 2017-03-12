@@ -45,8 +45,7 @@ public class RetrieveInsturctorConsultingHoursServiceImplTest {
    * Service impl.
    */
   @InjectMocks
-  private RetrieveInstructorsConsultingHoursRequestServiceImpl service =
-      new RetrieveInstructorsConsultingHoursRequestServiceImpl();
+  private RetrieveInstructorsConsultingHoursRequestServiceImpl service;
 
   /**
    * Instructor repository.
@@ -65,24 +64,6 @@ public class RetrieveInsturctorConsultingHoursServiceImplTest {
    */
   private ConsultingDateEntity mondayConsultingDate = createMondayConsultingDate();
 
-
-  private ConsultingDateEntity createMondayConsultingDate() {
-    return ConsultingDateEntity.builder().id(CONSULTING_DATE_MONDAY_ID).date(CONSULTING_DATE_MONDAY)
-        .fromToDate(getMonday()).build();
-  }
-
-  private FromToDateEmbeddedEntity getMonday() {
-    return FromToDateUtil.createEntity(MONDAY_START_DATE, MONDAY_END_DATE);
-  }
-
-  private ConsultingDateEntity createFridayConsultingDate() {
-    return ConsultingDateEntity.builder().id(CONSULTING_DATE_FRIDAY_ID).date(CONSULTING_DATE_FRIDAY)
-        .fromToDate(getFriday()).build();
-  }
-
-  private FromToDateEmbeddedEntity getFriday() {
-    return FromToDateUtil.createEntity(FRIDAY_START_DATE, FRIDAY_END_DATE);
-  }
 
   /**
    * Test get response.
@@ -111,6 +92,24 @@ public class RetrieveInsturctorConsultingHoursServiceImplTest {
     Assert.assertEquals(RequestMessagesConstants.RETRIEVE_CONSULTING_HOURS_RESPONSE,
         response.getMessageType());
 
+  }
+
+  private ConsultingDateEntity createFridayConsultingDate() {
+    return ConsultingDateEntity.builder().id(CONSULTING_DATE_FRIDAY_ID).date(CONSULTING_DATE_FRIDAY)
+        .fromToDate(getFriday()).build();
+  }
+
+  private ConsultingDateEntity createMondayConsultingDate() {
+    return ConsultingDateEntity.builder().id(CONSULTING_DATE_MONDAY_ID).date(CONSULTING_DATE_MONDAY)
+        .fromToDate(getMonday()).build();
+  }
+
+  private FromToDateEmbeddedEntity getFriday() {
+    return FromToDateUtil.createEntity(FRIDAY_START_DATE, FRIDAY_END_DATE);
+  }
+
+  private FromToDateEmbeddedEntity getMonday() {
+    return FromToDateUtil.createEntity(MONDAY_START_DATE, MONDAY_END_DATE);
   }
 
 }

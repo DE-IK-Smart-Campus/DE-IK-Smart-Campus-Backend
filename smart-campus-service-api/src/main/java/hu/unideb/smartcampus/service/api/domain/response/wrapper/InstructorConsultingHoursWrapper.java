@@ -5,19 +5,17 @@ import java.util.List;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.ConsultingHourWrapper;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Instructor consulting hours wrapper.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class InstructorConsultingHoursWrapper extends BaseWrapper {
 
   /**
    * Consulting hours.
    */
-  private List<ConsultingHourWrapper> consultingHours;
+  private final List<ConsultingHourWrapper> consultingHours;
 
   /**
    * Constructs a InstructorConsultingHoursWrapper instance.

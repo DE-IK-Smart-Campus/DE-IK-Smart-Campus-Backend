@@ -8,16 +8,26 @@ import lombok.Data;
  * kind of real Exception thrown while the XMPP message are being processed.
  */
 @Data
-@Builder
 public class ChatResponseException {
 
   /**
    * Exception message.
    */
-  private String message;
+  private final String message;
 
   /**
    * Exception's class in string.
    */
-  private String exceptionType;
+  private final String exceptionType;
+
+  /**
+   * Constructs a ChatResponseException instance.
+   */
+  @Builder
+  public ChatResponseException(String message, String exceptionType) {
+    this.message = message;
+    this.exceptionType = exceptionType;
+  }
+  
+  
 }

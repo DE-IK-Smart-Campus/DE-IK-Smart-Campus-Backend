@@ -5,10 +5,10 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -17,18 +17,19 @@ import lombok.NoArgsConstructor;
 @Data
 @Embeddable
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 public class FromToDateEmbeddedEntity {
 
   /**
    * From date.
    */
+  @NotNull
   @Column(name = "START_DATE")
   private Timestamp fromDate;
 
   /**
    * To date.
    */
+  @NotNull
   @Column(name = "END_DATE")
   private Timestamp toDate;
 
