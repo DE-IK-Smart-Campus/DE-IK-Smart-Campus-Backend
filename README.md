@@ -17,28 +17,28 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 				    <activeByDefault>true</activeByDefault>
 			    </activation>
 			    <properties>
-				<mysql.connection.url></mysql.connection.url>
-				<mysql.username></mysql.username>
-				<mysql.password></mysql.password>
-				<smartcampus.ejabberd.api.host></smartcampus.ejabberd.api.host>
-				<smartcampus.ejabberd.api.port></smartcampus.ejabberd.api.port>
-				<smartcampus.ejabberd.api.endpoint></smartcampus.ejabberd.api.endpoint>
-				<smartcampus.xmpp.mucservice></smartcampus.xmpp.mucservice>
-				<smartcampus.xmpp.nodes></smartcampus.xmpp.nodes>
-				<smartcampus.xmpp.host></smartcampus.xmpp.host>
-				<smartcampus.xmpp.domain></smartcampus.xmpp.domain>
-				<smartcampus.xmpp.tcp.port></smartcampus.xmpp.tcp.port>
-				<smartcampus.xmpp.bosh.port></smartcampus.xmpp.bosh.port>
-				<smartcampus.xmpp.service></smartcampus.xmpp.service>
-				<smartcampus.default.user></smartcampus.default.user>
-				<smartcampus.default.password></smartcampus.default.password>
-				<ldap.host></ldap.host>
-				<ldap.port></ldap.port>
-				<ldap.basedn></ldap.basedn>
-				<ldap.passwordattribute></ldap.passwordattribute>
-				<ldap.userpattern></ldap.userpattern>
-				<ldap.groupsearchbase></ldap.groupsearchbase>
-				<ldap.groupfilter></ldap.groupfilter>
+					<mysql.connection.url></mysql.connection.url>
+					<mysql.username></mysql.username>
+					<mysql.password></mysql.password>
+					<smartcampus.ejabberd.api.host></smartcampus.ejabberd.api.host>
+					<smartcampus.ejabberd.api.port></smartcampus.ejabberd.api.port>
+					<smartcampus.ejabberd.api.endpoint></smartcampus.ejabberd.api.endpoint>
+					<smartcampus.xmpp.mucservice></smartcampus.xmpp.mucservice>
+					<smartcampus.xmpp.nodes></smartcampus.xmpp.nodes>
+					<smartcampus.xmpp.host></smartcampus.xmpp.host>
+					<smartcampus.xmpp.domain></smartcampus.xmpp.domain>
+					<smartcampus.xmpp.tcp.port></smartcampus.xmpp.tcp.port>
+					<smartcampus.xmpp.bosh.port></smartcampus.xmpp.bosh.port>
+					<smartcampus.xmpp.service></smartcampus.xmpp.service>
+					<smartcampus.default.user></smartcampus.default.user>
+					<smartcampus.default.password></smartcampus.default.password>
+					<ldap.host></ldap.host>
+					<ldap.port></ldap.port>
+					<ldap.basedn></ldap.basedn>
+					<ldap.passwordattribute></ldap.passwordattribute>
+					<ldap.userpattern></ldap.userpattern>
+					<ldap.groupsearchbase></ldap.groupsearchbase>
+					<ldap.groupfilter></ldap.groupfilter>
 			    </properties>
 		    </profile>
 	</profiles>
