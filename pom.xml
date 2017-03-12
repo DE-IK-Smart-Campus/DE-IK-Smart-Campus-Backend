@@ -5,7 +5,7 @@
     <groupId>hu.unideb</groupId>
     <artifactId>smart-campus</artifactId>
     <packaging>pom</packaging>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
