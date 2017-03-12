@@ -11,9 +11,13 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.util.Set;
+
 import org.junit.Test;
+import org.mockito.internal.util.collections.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.shared.enumeration.Role;
 
@@ -23,14 +27,16 @@ import hu.unideb.smartcampus.shared.enumeration.Role;
 public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTestHelper {
 
   /**
+   * Sample subject.
+   */
+  private final SubjectEntity sampleSubject = SubjectEntity.builder().id(1L).name("AI").build();
+
+  /**
    * Admin user.
    */
-  private final UserEntity adminUser = UserEntity.builder()
-      .id(USER_ID_ADMIN)
-      .username(USERNAME_ADMIN)
-      .password(PASSWORD_ADMIN)
-      .role(Role.ADMIN)
-      .build();
+  private final UserEntity adminUser =
+      UserEntity.builder().id(USER_ID_ADMIN).username(USERNAME_ADMIN).password(PASSWORD_ADMIN)
+          .actualSubjects(Sets.newSet(sampleSubject)).role(Role.ADMIN).build();
 
   /**
    * UserRepository.
@@ -80,5 +86,35 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
     // Then
     assertThat(ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE, result, notNullValue());
     assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, result, equalTo(adminUser));
+  }
+
+  /**
+   * Test get subject's by user's username.
+   */
+  @Test
+  public void getSubjectsByUsernameShouldReturnNonEmptySet() {
+    // Given
+
+    // When
+    final Set<SubjectEntity> result = this.userRepository.getSubjectsByUsername(USERNAME_ADMIN);
+
+    // Then
+    assertThat(ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE, result, notNullValue());
+    assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, result, equalTo(Sets.newSet(sampleSubject)));
+  }
+
+  /**
+   * Test get subject's by user id.
+   */
+  @Test
+  public void getSubjectsByIdShouldReturnNonEmptySet() {
+    // Given
+
+    // When
+    final Set<SubjectEntity> result = this.userRepository.getSubjectsByUserId(USER_ID_ADMIN);
+
+    // Then
+    assertThat(ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE, result, notNullValue());
+    assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, result, equalTo(Sets.newSet(sampleSubject)));
   }
 }

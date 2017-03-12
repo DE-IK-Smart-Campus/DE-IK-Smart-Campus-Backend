@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.webservice.api.xmpp.impl;
+package hu.unideb.smartcampus.service.api.xmpp.impl;
 
 import javax.annotation.Resource;
 
