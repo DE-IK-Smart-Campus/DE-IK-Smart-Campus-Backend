@@ -67,6 +67,7 @@
         <dependency>
             <groupId>ical4j</groupId>
             <artifactId>ical4j</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
