@@ -36,7 +36,7 @@ public class ClientProviderImpl implements ClientProvider {
    * Ejabberd REST API port.
    */
   @Resource(lookup = "java:global/smartcampus.ejabberd.api.port")
-  private Integer port;
+  private String port;
 
   /**
    * Ejabberd REST API endpoint.
