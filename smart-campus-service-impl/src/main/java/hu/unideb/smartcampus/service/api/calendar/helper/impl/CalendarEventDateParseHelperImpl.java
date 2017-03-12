@@ -2,6 +2,7 @@ package hu.unideb.smartcampus.service.api.calendar.helper.impl;
 
 import net.fortuna.ical4j.model.component.VEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class CalendarEventDateParseHelperImpl implements CalendarEventDateParseH
    */
   @Override
   public LocalDateTime getStartDateTimeFromEvent(final VEvent vEvent) {
+    validateVEventByStartDate(vEvent);
     return LocalDateTime.ofInstant(Instant.ofEpochMilli(vEvent.getStartDate().getDate().getTime()),
         ZoneId.systemDefault());
   }
@@ -28,7 +30,22 @@ public class CalendarEventDateParseHelperImpl implements CalendarEventDateParseH
    */
   @Override
   public LocalDateTime getEndDateTimeFromEvent(final VEvent vEvent) {
+    validateVEventByEndDate(vEvent);
     return  LocalDateTime.ofInstant(Instant.ofEpochMilli(vEvent.getEndDate(true).getDate().getTime()),
         ZoneId.systemDefault());
+  }
+
+  private void validateVEventByStartDate(final VEvent vEvent) {
+    Assert.notNull(vEvent);
+    Assert.notNull(vEvent.getStartDate());
+    Assert.notNull(vEvent.getStartDate().getDate());
+    Assert.notNull(vEvent.getStartDate().getDate().getTime());
+  }
+
+  private void validateVEventByEndDate(final VEvent vEvent) {
+    Assert.notNull(vEvent);
+    Assert.notNull(vEvent.getEndDate());
+    Assert.notNull(vEvent.getEndDate().getDate());
+    Assert.notNull(vEvent.getEndDate().getDate().getTime());
   }
 }
