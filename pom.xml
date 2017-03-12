@@ -7,40 +7,39 @@
     <packaging>pom</packaging>
     <version>1.2-SNAPSHOT</version>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
-    </parent>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.1.RELEASE</version>
+	</parent>
 
-    <name>Smart Campus Web Application</name>
-    <description>This module provides the server side of the project called Smart Campus at the University of Debrecen.</description>
-    <inceptionYear>2017</inceptionYear>
+	<name>Smart Campus Web Application</name>
+	<description>This module provides the server side of the project called Smart Campus at the University of Debrecen.</description>
+	<inceptionYear>2017</inceptionYear>
 
-    <developers>
-        <developer>
-            <id>Nandi</id>
-            <name>Nándor Holozsnyák</name>
-            <email>holi60@gmail.com</email>
-            <organization>University of Debrecen</organization>
-            <roles>
-                <role>Student</role>
-                <role>Developer</role>
-            </roles>
-        </developer>
-        <!-- add yourself -->
-    </developers>
+	<developers>
+		<developer>
+			<id>Nandi</id>
+			<name>Nándor Holozsnyák</name>
+			<email>holi60@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<!-- add yourself -->
+	</developers>
 
-    <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
-    </ciManagement>
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web</url>
+	</ciManagement>
 
-    <issueManagement>
-        <system>Trello (private)</system>
-        <url>https://trello.com/smartcampus7</url>
-    </issueManagement>
-
+	<issueManagement>
+		<system>Trello (private)</system>
+		<url>https://trello.com/smartcampus7</url>
+	</issueManagement>
 
 	<scm>
 		<connection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</connection>
@@ -48,7 +47,7 @@
 		<developerConnection>scm:git:https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-	
+    
 	<modules>
 		<module>smart-campus-shared</module>
 		<module>smart-campus-persistence</module>
@@ -71,6 +70,7 @@
 		<checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
 		<version.wildfly>10.1.0.Final</version.wildfly>
 		<smack.version>4.1.9</smack.version>
+        <smack.bosh.version>4.2.0-rc3</smack.bosh.version>
 		<jaxrs.version>2.0.1</jaxrs.version>
 		<guava.version>21.0</guava.version>
 		<jersey.common.version>2.25.1</jersey.common.version>
@@ -80,58 +80,58 @@
         <wildfly.maven.plugin.version>1.1.0.Alpha11</wildfly.maven.plugin.version>
 	</properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>javax.ws.rs</groupId>
-                <artifactId>javax.ws.rs-api</artifactId>
-                <version>${jaxrs.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>${servlet.api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.unideb</groupId>
-                <artifactId>smart-campus-persistence</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.unideb</groupId>
-                <artifactId>smart-campus-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.unideb</groupId>
-                <artifactId>smart-campus-service-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.unideb</groupId>
-                <artifactId>smart-campus-webservice-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.unideb</groupId>
-                <artifactId>smart-campus-webservice-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.unideb</groupId>
-                <artifactId>smart-campus-web</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.unideb</groupId>
-                <artifactId>smart-campus-shared</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${jaxrs.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet.api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-persistence</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-service-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-service-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-webservice-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-webservice-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.unideb</groupId>
+				<artifactId>smart-campus-shared</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
@@ -170,20 +170,25 @@
 				<artifactId>smack-extensions</artifactId>
 				<version>${smack.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.igniterealtime.smack</groupId>
+				<artifactId>smack-bosh</artifactId>
+				<version>${smack.bosh.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
     <build>
         <pluginManagement>
@@ -436,54 +441,6 @@
 			<modules>
 				<module>smart-campus-wildfly</module>
 			</modules>
-		</profile>
-		<profile>
-			<id>local</id>
-			<properties>
-				<smartcampus.ejabberd.api.host>http://smartcampus</smartcampus.ejabberd.api.host>
-				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
-				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
-				<smartcampus.xmpp.mucservice>conference.smartcampus</smartcampus.xmpp.mucservice>
-				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
-				<smartcampus.xmpp.host>smartcampus</smartcampus.xmpp.host>
-				<smartcampus.xmpp.domain>smartcampus</smartcampus.xmpp.domain>
-				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
-				<smartcampus.xmpp.service>smartcampus</smartcampus.xmpp.service>
-				<smartcampus.default.user>smartcampus</smartcampus.default.user>
-				<smartcampus.default.password>admin</smartcampus.default.password>
-			</properties>
-		</profile>
-		<profile>
-			<id>test</id>
-			<properties>
-				<smartcampus.ejabberd.api.host>http://wt2.inf.unideb.hu</smartcampus.ejabberd.api.host>
-				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
-				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
-				<smartcampus.xmpp.mucservice>conference.wt2.inf.unideb.hu</smartcampus.xmpp.mucservice>
-				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
-				<smartcampus.xmpp.host>wt2.inf.unideb.hu</smartcampus.xmpp.host>
-				<smartcampus.xmpp.domain>wt2.inf.unideb.hu</smartcampus.xmpp.domain>
-				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
-				<smartcampus.xmpp.service>wt2.inf.unideb.hu</smartcampus.xmpp.service>
-				<smartcampus.default.user>smartcampus</smartcampus.default.user>
-				<smartcampus.default.password>admin</smartcampus.default.password>
-			</properties>
-		</profile>
-		<profile>
-			<id>master</id>
-			<properties>
-				<smartcampus.ejabberd.api.host>http://wt1.inf.unideb.hu</smartcampus.ejabberd.api.host>
-				<smartcampus.ejabberd.api.port>5280</smartcampus.ejabberd.api.port>
-				<smartcampus.ejabberd.api.endpoint>api</smartcampus.ejabberd.api.endpoint>
-				<smartcampus.xmpp.mucservice>conference.wt1.inf.unideb.hu</smartcampus.xmpp.mucservice>
-				<smartcampus.xmpp.nodes>ejabberd@localhost</smartcampus.xmpp.nodes>
-				<smartcampus.xmpp.host>wt1.inf.unideb.hu</smartcampus.xmpp.host>
-				<smartcampus.xmpp.domain>wt1.inf.unideb.hu</smartcampus.xmpp.domain>
-				<smartcampus.xmpp.port>5222</smartcampus.xmpp.port>
-				<smartcampus.xmpp.service>wt1.inf.unideb.hu</smartcampus.xmpp.service>
-				<smartcampus.default.user>smartcampus</smartcampus.default.user>
-				<smartcampus.default.password>admin</smartcampus.default.password>
-			</properties>
 		</profile>
 	</profiles>
 

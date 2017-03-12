@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>smart-campus</artifactId>
         <groupId>hu.unideb</groupId>
@@ -9,37 +10,73 @@
 
     <artifactId>smart-campus-service-impl</artifactId>
 
-	<dependencies>
-		<dependency>
-			<groupId>hu.unideb</groupId>
-			<artifactId>smart-campus-persistence</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>hu.unideb</groupId>
-			<artifactId>smart-campus-service-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>hu.unideb</groupId>
-			<artifactId>smart-campus-shared</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-			<classifier>tests</classifier>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-				<groupId>hu.unideb</groupId>
-				<artifactId>smart-campus-webservice-api</artifactId>
-				<scope>provided</scope>
-		</dependency>
-		<dependency>
-		  <groupId>ical4j</groupId>
-		  <artifactId>ical4j</artifactId>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>hu.unideb</groupId>
+            <artifactId>smart-campus-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>hu.unideb</groupId>
+            <artifactId>smart-campus-service-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-im</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-tcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-java7</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-extensions</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>hu.unideb</groupId>
+            <artifactId>smart-campus-shared</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+            <classifier>tests</classifier>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>hu.unideb</groupId>
+            <artifactId>smart-campus-webservice-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>ical4j</groupId>
+            <artifactId>ical4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-bosh</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
