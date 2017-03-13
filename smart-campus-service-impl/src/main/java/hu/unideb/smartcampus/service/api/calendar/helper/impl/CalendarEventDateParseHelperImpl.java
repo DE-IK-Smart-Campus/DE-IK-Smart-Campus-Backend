@@ -37,15 +37,11 @@ public class CalendarEventDateParseHelperImpl implements CalendarEventDateParseH
 
   private void validateVEventByStartDate(final VEvent vEvent) {
     Assert.notNull(vEvent);
-    Assert.notNull(vEvent.getStartDate());
     Assert.notNull(vEvent.getStartDate().getDate());
-    Assert.notNull(vEvent.getStartDate().getDate().getTime());
   }
 
   private void validateVEventByEndDate(final VEvent vEvent) {
     Assert.notNull(vEvent);
-    Assert.notNull(vEvent.getEndDate());
     Assert.notNull(vEvent.getEndDate().getDate());
-    Assert.notNull(vEvent.getEndDate().getDate().getTime());
   }
 }
