@@ -86,6 +86,9 @@
 				<configuration>
 					<jbossHome>${jboss.home}</jbossHome>
 					<skip>false</skip>
+                    <javaOpts> 
+                        <javaOpt>-agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=y</javaOpt> 
+                    </javaOpts>
 				</configuration>
 			</plugin>
 	        <plugin>
