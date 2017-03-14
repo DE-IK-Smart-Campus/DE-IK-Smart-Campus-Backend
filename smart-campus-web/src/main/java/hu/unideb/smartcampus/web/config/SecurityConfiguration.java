@@ -11,13 +11,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
+import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import hu.unideb.smartcampus.web.config.security.LdapConfigurationPropertyProvider;
 import hu.unideb.smartcampus.web.config.security.LdapProperties;
+import hu.unideb.smartcampus.web.config.security.SmartCampusLogoutSuccessHandler;
+import hu.unideb.smartcampus.web.config.security.SmartCampusSynchronizingContextMapper;
 
 @Configuration
 @EnableWebSecurity
-@SuppressWarnings({"PMD.SignatureDeclareThrowsException","checkstyle:indentation"})
+@SuppressWarnings({"PMD.SignatureDeclareThrowsException", "checkstyle:indentation"})
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private static final String COLON = ":";
@@ -31,14 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http.csrf().disable().authorizeRequests() // TODO Remove
-        .antMatchers("/", "/home")
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .httpBasic()
-        .and()
-        .rememberMe();
+        .antMatchers("/", "/home").permitAll().anyRequest().authenticated().and().httpBasic().and()
+        .rememberMe().and().logout().logoutSuccessHandler(logoutSuccessHandler());
     // @formatter:on
   }
 
@@ -55,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .contextSource(contextSource()).passwordCompare()
         .passwordEncoder(new LdapShaPasswordEncoder())
         .passwordAttribute(ldapConfigurationPropertyProvider
-            .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME));
+            .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME))
+        .and().userDetailsContextMapper(userDetailsContextMapper());
   }
 
   /**
@@ -69,5 +68,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             + COLON
             + ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_PORT)),
         ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_BASE_DN));
+  }
+
+  /**
+   * UserDetailsContextMapper of the sercurity.
+   * 
+   * @return the UserDetailsContextMapper of the security configuration
+   */
+  @Bean
+  public UserDetailsContextMapper userDetailsContextMapper() {
+    return new SmartCampusSynchronizingContextMapper();
+  }
+
+  /**
+   * LogoutSuccessHandler to log out from Ejabberd.
+   * 
+   * @return the LogoutSuccessHandler
+   */
+  @Bean
+  public LogoutSuccessHandler logoutSuccessHandler() {
+    return new SmartCampusLogoutSuccessHandler();
   }
 }
