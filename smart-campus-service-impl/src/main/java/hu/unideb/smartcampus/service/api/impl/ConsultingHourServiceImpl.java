@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.ConsultingHourService;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.converter.todomain.SubjectEntityToSubjectConverter;
-import hu.unideb.smartcampus.service.api.domain.Subject;
 
 /**
  * Consulting hours service.
@@ -45,8 +45,8 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
    */
   @Override
   @Transactional(readOnly = true)
-  public Set<Subject> getSubjectsByUserId(Long id) {
-    Set<SubjectEntity> subjects = userRepository.getSubjectsByUserId(id);
+  public Set<SubjectDetails> getSubjectsByUserId(Long id) {
+    Set<SubjectDetailsEntity> subjects = userRepository.getSubjectsByUserId(id);
     return subjects.stream().map(converter::convert).collect(Collectors.toSet());
   }
 

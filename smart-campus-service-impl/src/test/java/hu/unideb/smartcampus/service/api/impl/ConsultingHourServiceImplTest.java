@@ -17,11 +17,11 @@ import org.mockito.Spy;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.ConsultingHourService;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.converter.todomain.SubjectEntityToSubjectConverter;
-import hu.unideb.smartcampus.service.api.domain.Subject;
 
 /**
  * Test for {@link ConsultingHourService}.
@@ -31,30 +31,30 @@ import hu.unideb.smartcampus.service.api.domain.Subject;
 public class ConsultingHourServiceImplTest {
 
   /**
-   * Subject name.
+   * SubjectEvent name.
    */
   private static final String AI = "AI";
 
   /**
    * Result subject.
    */
-  private static final Subject SUBJECT_DOMAIN = Subject.builder().name(AI).build();
+  private static final SubjectDetails SUBJECT_DOMAIN = SubjectDetails.builder().subjectName(AI).build();
 
   /**
    * Expected set of subjects.
    */
-  private static final Set<Subject> EXPECTED_DOMAIN_SET = Sets.newSet(SUBJECT_DOMAIN);
+  private static final Set<SubjectDetails> EXPECTED_DOMAIN_SET = Sets.newSet(SUBJECT_DOMAIN);
 
   /**
-   * Subject entity.
+   * SubjectEvent entity.
    */
-  private static final SubjectEntity SUBJECT_ENTITY =
-      SubjectEntity.builder().id(1L).name(AI).build();
+  private static final SubjectDetailsEntity SUBJECT_ENTITY =
+      SubjectDetailsEntity.builder().id(1L).subjectName(AI).build();
 
   /**
    * Set of entities.
    */
-  private static final Set<SubjectEntity> RESULT_ENTITY_SET = Sets.newSet(SUBJECT_ENTITY);
+  private static final Set<SubjectDetailsEntity> RESULT_ENTITY_SET = Sets.newSet(SUBJECT_ENTITY);
 
   /**
    * UserRepository mock.
@@ -85,7 +85,7 @@ public class ConsultingHourServiceImplTest {
     given(userRepository.getSubjectsByUserId(1L)).willReturn(Collections.emptySet());
 
     // then
-    Set<Subject> subjects = consultingHoursService.getSubjectsByUserId(1L);
+    Set<SubjectDetails> subjects = consultingHoursService.getSubjectsByUserId(1L);
 
     Assert.assertTrue(subjects.isEmpty());
   }
@@ -102,7 +102,7 @@ public class ConsultingHourServiceImplTest {
     given(userRepository.getSubjectsByUserId(1L)).willReturn(RESULT_ENTITY_SET);
 
     // then
-    Set<Subject> subjects = consultingHoursService.getSubjectsByUserId(1L);
+    Set<SubjectDetails> subjects = consultingHoursService.getSubjectsByUserId(1L);
 
     assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, subjects, equalTo(EXPECTED_DOMAIN_SET));
   }

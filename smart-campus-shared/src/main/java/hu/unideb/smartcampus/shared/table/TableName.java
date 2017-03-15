@@ -33,4 +33,6 @@ public final class TableName {
    * Subject table.
    */
   public static final String TABLE_NAME_SUBJECT = "subject";
+
+  public static final String TABLE_NAME_SUBJECT_DETAILS = "subject_details";
 }

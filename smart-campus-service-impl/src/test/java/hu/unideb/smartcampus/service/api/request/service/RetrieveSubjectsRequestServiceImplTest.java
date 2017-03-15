@@ -15,7 +15,7 @@ import org.mockito.internal.util.collections.Sets;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectRetrievalResponseWrapper;
@@ -79,8 +79,8 @@ public class RetrieveSubjectsRequestServiceImplTest {
   /**
    * AI subject.
    */
-  private static final SubjectEntity AI_SUBJECT =
-      SubjectEntity.builder().id(SUBJECT_ID_AI).name(AI).build();
+  private static final SubjectDetailsEntity AI_SUBJECT =
+      SubjectDetailsEntity.builder().id(SUBJECT_ID_AI).subjectName(AI).build();
 
   /**
    * IE ID.
@@ -110,8 +110,8 @@ public class RetrieveSubjectsRequestServiceImplTest {
   /**
    * IE subject.
    */
-  private static final SubjectEntity IE_SUBJECT =
-      SubjectEntity.builder().id(SUBJECT_ID_IE).name(IE).build();
+  private static final SubjectDetailsEntity IE_SUBJECT =
+      SubjectDetailsEntity.builder().id(SUBJECT_ID_IE).subjectName(IE).build();
 
   /**
    * User id.
@@ -127,7 +127,7 @@ public class RetrieveSubjectsRequestServiceImplTest {
   /**
    * Subjects.
    */
-  private static final Set<SubjectEntity> SUBJECTS = Sets.newSet(AI_SUBJECT, IE_SUBJECT);
+  private static final Set<SubjectDetailsEntity> SUBJECTS = Sets.newSet(AI_SUBJECT, IE_SUBJECT);
 
   /**
    * Service impl.

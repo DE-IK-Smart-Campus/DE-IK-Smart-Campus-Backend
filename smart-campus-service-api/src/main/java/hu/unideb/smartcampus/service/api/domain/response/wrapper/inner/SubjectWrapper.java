@@ -13,7 +13,7 @@ import lombok.Data;
 public class SubjectWrapper {
 
   /**
-   * Subject name.
+   * SubjectEvent name.
    */
   private final String name;
 
