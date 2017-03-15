@@ -1,8 +1,8 @@
 package hu.unideb.smartcampus.service.api.xmpp;
 
 import org.jivesoftware.smack.SmackException.NotConnectedException;
-import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatMessageListener;
+import org.jivesoftware.smack.chat2.Chat;
 import org.jivesoftware.smack.packet.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +72,7 @@ public class SmartCampusChatMessageListener implements ChatMessageListener {
 
   private void sendMessage(Chat chat, String msg) {
     try {
-      chat.sendMessage(msg);
+      chat.se(msg);
     } catch (NotConnectedException e) {
       LOGGER.error("Error on sending response to client.", e);
     }
