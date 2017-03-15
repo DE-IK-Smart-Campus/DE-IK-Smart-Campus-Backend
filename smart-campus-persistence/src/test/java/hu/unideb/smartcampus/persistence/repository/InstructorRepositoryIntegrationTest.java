@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.util.FromToDateUtil;
 
 /**
@@ -41,8 +41,8 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
   /**
    * Sample subject.
    */
-  private static final SubjectEntity SAMPLE_SUBJECT =
-      SubjectEntity.builder().id(SUBJECT_ID).name(SUBJECT_NAME).build();
+  private static final SubjectDetailsEntity SAMPLE_SUBJECT =
+      SubjectDetailsEntity.builder().id(SUBJECT_ID).subjectName(SUBJECT_NAME).build();
 
   /**
    * Friday consulting date entity.

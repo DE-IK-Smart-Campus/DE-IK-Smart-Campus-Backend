@@ -76,15 +76,14 @@ public class UserEntity extends BaseEntity<Long> {
    */
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"))
-  private Set<SubjectEntity> actualSubjects;
+      inverseJoinColumns = @JoinColumn(name = "subject_details_id", referencedColumnName = "id"))
+  private Set<SubjectDetailsEntity> actualSubjects;
 
   /**
    * Builder pattern for creating user.
    */
   @Builder
-  public UserEntity(final Long id, final String username, final String password, final Role role,
-      final Set<SubjectEntity> actualSubjects) {
+  public UserEntity(final Long id, final String username, final String password, final Role role, final Set<SubjectDetailsEntity> actualSubjects) {
     super(id);
     this.username = username;
     this.password = password;

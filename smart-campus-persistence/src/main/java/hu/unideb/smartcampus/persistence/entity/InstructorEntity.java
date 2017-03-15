@@ -37,7 +37,7 @@ import lombok.ToString;
     @NamedQuery(name = "InstructorEntity.getInstructorConsultingHoursByInstructorName",
         query = "SELECT instr.consultingDates FROM InstructorEntity instr WHERE instr.name = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectName",
-        query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.name = ?1"),
+        query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.subjectName = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectId",
         query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.id = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorConsultingDatesByIdAndGivenDate",
@@ -65,15 +65,15 @@ public class InstructorEntity extends BaseEntity<Long> {
    */
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(joinColumns = @JoinColumn(name = "instructor_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"))
-  private Set<SubjectEntity> subjects;
+      inverseJoinColumns = @JoinColumn(name = "subject_details_id", referencedColumnName = "id"))
+  private Set<SubjectDetailsEntity> subjects;
 
   /**
    * Constructs instructor entity.
    */
   @Builder
   public InstructorEntity(final Long id, final String name,
-      final Set<ConsultingDateEntity> consultingDates, final Set<SubjectEntity> subjects) {
+      final Set<ConsultingDateEntity> consultingDates, final Set<SubjectDetailsEntity> subjects) {
     super(id);
     this.name = name;
     this.consultingDates = consultingDates;

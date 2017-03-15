@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.mockito.internal.util.collections.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.shared.enumeration.Role;
 
@@ -29,7 +29,7 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
   /**
    * Sample subject.
    */
-  private final SubjectEntity sampleSubject = SubjectEntity.builder().id(1L).name("AI").build();
+  private final SubjectDetailsEntity sampleSubject = SubjectDetailsEntity.builder().id(1L).subjectName("AI").build();
 
   /**
    * Admin user.
@@ -96,7 +96,7 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
     // Given
 
     // When
-    final Set<SubjectEntity> result = this.userRepository.getSubjectsByUsername(USERNAME_ADMIN);
+    final Set<SubjectDetailsEntity> result = this.userRepository.getSubjectsByUsername(USERNAME_ADMIN);
 
     // Then
     assertThat(ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE, result, notNullValue());
@@ -111,7 +111,7 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
     // Given
 
     // When
-    final Set<SubjectEntity> result = this.userRepository.getSubjectsByUserId(USER_ID_ADMIN);
+    final Set<SubjectDetailsEntity> result = this.userRepository.getSubjectsByUserId(USER_ID_ADMIN);
 
     // Then
     assertThat(ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE, result, notNullValue());
