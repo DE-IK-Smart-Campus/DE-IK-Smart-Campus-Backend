@@ -12,10 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import hu.unideb.smartcampus.web.config.security.LdapConfigurationPropertyProvider;
 import hu.unideb.smartcampus.web.config.security.LdapProperties;
+import hu.unideb.smartcampus.web.config.security.SmartCampusAuthenticationSuccessHandler;
 import hu.unideb.smartcampus.web.config.security.SmartCampusLogoutSuccessHandler;
 import hu.unideb.smartcampus.web.config.security.SmartCampusSynchronizingContextMapper;
 
@@ -34,9 +36,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.csrf().disable().authorizeRequests() // TODO Remove
-        .antMatchers("/", "/index").permitAll().anyRequest().authenticated().and().httpBasic().and()
-        .rememberMe().and().logout().logoutSuccessHandler(logoutSuccessHandler());
+    http.csrf().disable().formLogin().loginProcessingUrl("/login").usernameParameter("username")
+        .passwordParameter("password").loginPage("/index").defaultSuccessUrl("/dashboard",true)
+        .successHandler(authenticationSuccessHandler());
     // @formatter:on
   }
 
@@ -88,5 +90,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   public LogoutSuccessHandler logoutSuccessHandler() {
     return new SmartCampusLogoutSuccessHandler();
+  }
+
+  /**
+   * AuthenticationSuccessHandler.
+   * 
+   * @return AuthenticationSuccessHandler
+   */
+  @Bean
+  public AuthenticationSuccessHandler authenticationSuccessHandler() {
+    return new SmartCampusAuthenticationSuccessHandler();
   }
 }
