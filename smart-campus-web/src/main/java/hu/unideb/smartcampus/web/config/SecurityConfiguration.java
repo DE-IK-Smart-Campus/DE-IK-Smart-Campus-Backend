@@ -11,9 +11,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
+import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import hu.unideb.smartcampus.web.config.security.LdapConfigurationPropertyProvider;
 import hu.unideb.smartcampus.web.config.security.LdapProperties;
+import hu.unideb.smartcampus.web.config.security.SmartCampusLogoutSuccessHandler;
+import hu.unideb.smartcampus.web.config.security.SmartCampusSynchronizingContextMapper;
 
 @Configuration
 @EnableWebSecurity
@@ -30,10 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http
-        .authorizeRequests()
-        .antMatchers("/index").permitAll()
-        .antMatchers("/secure/**").authenticated();
+    http.csrf().disable().authorizeRequests() // TODO Remove
+        .antMatchers("/", "/index").permitAll().anyRequest().authenticated().and().httpBasic().and()
+        .rememberMe().and().logout().logoutSuccessHandler(logoutSuccessHandler());
     // @formatter:on
   }
 
@@ -50,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .contextSource(contextSource()).passwordCompare()
         .passwordEncoder(new LdapShaPasswordEncoder())
         .passwordAttribute(ldapConfigurationPropertyProvider
-            .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME));
+            .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME))
+        .and().userDetailsContextMapper(userDetailsContextMapper());
   }
 
   /**
@@ -66,5 +70,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_BASE_DN));
   }
 
+  /**
+   * UserDetailsContextMapper of the sercurity.
+   *
+   * @return the UserDetailsContextMapper of the security configuration
+   */
+  @Bean
+  public UserDetailsContextMapper userDetailsContextMapper() {
+    return new SmartCampusSynchronizingContextMapper();
+  }
 
+  /**
+   * LogoutSuccessHandler to log out from Ejabberd.
+   *
+   * @return the LogoutSuccessHandler
+   */
+  @Bean
+  public LogoutSuccessHandler logoutSuccessHandler() {
+    return new SmartCampusLogoutSuccessHandler();
+  }
 }

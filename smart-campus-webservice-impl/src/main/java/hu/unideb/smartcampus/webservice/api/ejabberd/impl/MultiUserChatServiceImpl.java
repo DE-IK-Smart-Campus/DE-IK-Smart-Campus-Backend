@@ -8,12 +8,12 @@ import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER
 
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.webservice.api.ejabberd.MultiUserChatService;
@@ -37,19 +37,19 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
   /**
    * XMPP server host.
    */
-  @Value("${smartcampus.xmpp.host}")
+  @Resource(lookup = "java:global/smartcampus.xmpp.host")
   private String host;
 
   /**
    * XMPP Multi user chat (MUC) service.
    */
-  @Value("${smartcampus.xmpp.mucservice}")
+  @Resource(lookup = "java:global/smartcampus.xmpp.mucservice")
   private String service;
 
   /**
    * XMPP nodes.
    */
-  @Value("${smartcampus.xmpp.nodes}")
+  @Resource(lookup = "java:global/smartcampus.xmpp.nodes")
   private String nodes;
 
   @Autowired

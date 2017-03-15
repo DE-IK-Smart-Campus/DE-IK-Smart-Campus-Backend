@@ -1,9 +1,8 @@
 package hu.unideb.smartcampus.webservice.api.provider.impl;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import java.io.IOException;
 
+import javax.annotation.Resource;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.ClientRequestContext;
@@ -12,6 +11,8 @@ import javax.ws.rs.client.WebTarget;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import hu.unideb.smartcampus.webservice.api.provider.ClientProvider;
 
 /**
@@ -28,19 +29,19 @@ public class ClientProviderImpl implements ClientProvider {
   /**
    * Ejabberd REST API host.
    */
-  @Value("${smartcampus.ejabberd.api.host}")
+  @Resource(lookup = "java:global/smartcampus.ejabberd.api.host")
   private String host;
 
   /**
    * Ejabberd REST API port.
    */
-  @Value("${smartcampus.ejabberd.api.port}")
-  private Integer port;
+  @Resource(lookup = "java:global/smartcampus.ejabberd.api.port")
+  private String port;
 
   /**
    * Ejabberd REST API endpoint.
    */
-  @Value("${smartcampus.ejabberd.api.endpoint}")
+  @Resource(lookup = "java:global/smartcampus.ejabberd.api.endpoint")
   private String endpoint;
 
   /**

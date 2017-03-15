@@ -22,4 +22,101 @@ values (7, 'butikai', '$2y$10$BmS0lp1oV25PsKlA5AyXaeSDUeOGBMlxvWIoLghH.l3Au4Tdn2
 
 insert into user (id, username, password, role)
 values (8, 'gabai', '$2y$10$.D6nvZNahkSXVSRLHrtI5u0RERS6rdBqwMH/uja1Yi7DVfiHukzjm', 'USER');
+
+insert into user (id, username, password, role)
+values (9, 'testuser', '$2y$10$.D6nvZNahkSXVSRLHrtI5u0RERS6rdBqwMH/uja1Yi7DVfiHukzjm', 'USER');
+
+insert into user (id, username, password, role)
+values (10, 'smartcampus', '$2y$10$.D6nvZNahkSXVSRLHrtI5u0RERS6rdBqwMH/uja1Yi7DVfiHukzjm', 'USER');
 ----------------------------------------------------------------------------------------------------
+
+-- instructors
+insert into instructor (id, name)
+values (1, 'instructor');
+
+insert into instructor (id, name)
+values (2, 'Dr. Gál Zoltán');
+
+insert into instructor (id, name)
+values (3, 'Dr. Szilágyi Szabolcs');
+
+insert into instructor (id, name)
+values (4, 'Vas Ádám');
+
+insert into instructor (id, name)
+values (5, 'Dr. Jeszenszky Péter');
+
+-------------------------------
+
+insert into consulting_date (id, date, START_DATE, END_DATE)
+
+values (1, 'Friday 14-16',STR_TO_DATE('2017/03/17 14:00:00', '%Y/%c/%d %T'),STR_TO_DATE('2017/03/17 16:00:00', '%Y/%c/%d %T'));
+
+insert into consulting_date (id, date, START_DATE, END_DATE)
+values (2, 'Monday 08-10',STR_TO_DATE('2017/03/14 8:00:00', '%Y/%c/%d %T'),STR_TO_DATE('2017/03/14 10:00:00', '%Y/%c/%d %T'));
+
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (1, 1);
+
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (1, 2);
+
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (2, 1);
+
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (3, 1);
+
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (4, 1);
+
+-- subjects
+insert into subject(id,name) values (1,'AI');
+
+insert into subject(id,name) values (2,'Mesterséges intelligencia alapjai');
+
+insert into subject(id,name) values (3,'Hálózati architektúrák és protokollok');
+
+insert into subject(id,name) values (4,'Az internet eszközei és szolgáltatásai');
+
+---------------------------------------------------------------------------------
+
+--instructor to subject
+insert into instructor_subjects(instructor_id,subject_id)
+values (1, 1);
+
+insert into instructor_subjects(instructor_id,subject_id)
+values (2, 3);
+
+insert into instructor_subjects(instructor_id,subject_id)
+values (3, 3);
+
+insert into instructor_subjects(instructor_id,subject_id)
+values (4, 3);
+
+insert into instructor_subjects(instructor_id,subject_id)
+values (5, 4);
+--------------------------------------------------------
+
+-- User actual subjects
+insert into user_actual_subjects(user_id,subject_id)
+values (1, 1);
+
+insert into user_actual_subjects(user_id,subject_id)
+values (2, 2);
+
+insert into user_actual_subjects(user_id,subject_id)
+values (2, 3);
+
+insert into user_actual_subjects(user_id,subject_id)
+values (2, 4);
+
+-- Filtikai
+insert into user_actual_subjects(user_id,subject_id)
+values (9, 2);
+
+insert into user_actual_subjects(user_id,subject_id)
+values (9, 3);
+
+insert into user_actual_subjects(user_id,subject_id)
+values (9, 4);
