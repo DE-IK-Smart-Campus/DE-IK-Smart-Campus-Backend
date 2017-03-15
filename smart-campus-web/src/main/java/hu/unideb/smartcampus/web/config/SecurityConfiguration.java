@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http.csrf().disable().authorizeRequests() // TODO Remove
-        .antMatchers("/", "/home").permitAll().anyRequest().authenticated().and().httpBasic().and()
+        .antMatchers("/", "/index").permitAll().anyRequest().authenticated().and().httpBasic().and()
         .rememberMe().and().logout().logoutSuccessHandler(logoutSuccessHandler());
     // @formatter:on
   }
@@ -72,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   /**
    * UserDetailsContextMapper of the sercurity.
-   * 
+   *
    * @return the UserDetailsContextMapper of the security configuration
    */
   @Bean
@@ -82,7 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   /**
    * LogoutSuccessHandler to log out from Ejabberd.
-   * 
+   *
    * @return the LogoutSuccessHandler
    */
   @Bean
