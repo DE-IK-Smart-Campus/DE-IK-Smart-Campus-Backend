@@ -13,8 +13,6 @@ public class SubjectDetails {
 
   private final String subjectName;
 
-  private final String roomLocation;
-
   private final List<String> teacherNames;
 
   private final SubjectType subjectType;

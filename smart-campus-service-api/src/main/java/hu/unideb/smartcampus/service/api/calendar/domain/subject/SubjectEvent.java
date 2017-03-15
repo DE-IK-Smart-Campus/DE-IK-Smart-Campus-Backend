@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * Subject.
+ * SubjectEvent.
  */
 @Data
 @Builder
-public class Subject {
+public class SubjectEvent {
 
   private final SubjectDetails subjectDetails;
 
-  private final List<AppointmentTime> appointmentTimes;
+  private final List<AppointmentDetails> appointmentDetailsList;
 }

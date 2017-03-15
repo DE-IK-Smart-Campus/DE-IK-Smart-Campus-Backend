@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * AppointmentTime.
+ * AppointmentDetails.
  */
 @Data
 @Builder
-public class AppointmentTime {
+public class AppointmentDetails {
 
   private final LocalDateTime startDate;
 
   private final LocalDateTime endDate;
+
+  private final String roomLocation;
 }
