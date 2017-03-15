@@ -17,7 +17,7 @@ import hu.unideb.smartcampus.web.config.security.LdapProperties;
 
 @Configuration
 @EnableWebSecurity
-@SuppressWarnings({"PMD.SignatureDeclareThrowsException","checkstyle:indentation"})
+@SuppressWarnings({"PMD.SignatureDeclareThrowsException", "checkstyle:indentation"})
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private static final String COLON = ":";
@@ -30,8 +30,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated()
-        .and().httpBasic().and().rememberMe();
+    http
+        .authorizeRequests()
+        .antMatchers("/index").permitAll()
+        .antMatchers("/secure/**").authenticated();
     // @formatter:on
   }
 
