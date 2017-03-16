@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>SmartCampus</title>
+  <meta charset="utf-8"/>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
+</head>
+<body>
+<div class="dashboard-page">
+  <div class="container-fluid">
+    <div class="row">
+      <!--
+      TODO fix sidebarToggle
+      <div ng-show="sidebarToggle">
+      -->
+      <div class="col-sm-3 col-md-2 sidebar">
+        <div class="text-center">
+          <!--
+          TODO fix sidebarToggle
+          <a ng-click="hideSidebar()" class="btn btn-white btn-outline btn-rounded">Hide sidebar</a>
+          -->
+          <h1>SmartCampus</h1>
+          <!-- TODO rewrite when authentication is working -->
+          <h4>Logged in with</h4>
+          <p>[NEPTUN-CODE]</p>
+          <a ui-sref="login" class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+        </div>
+
+        <!--
+        TODO fix sidebar
+        <ul class="nav nav-sidebar">
+          <li ng-class="{active: $state.includes('home')}"><a ui-sref="home">Home</a></li>
+          <li ng-class="{active: $state.includes('calendar')}"><a ui-sref="calendar">Calendar</a></li>
+          <li ng-class="{active: $state.includes('consultingHours')}"><a ui-sref="consultingHours">Consulting hours</a></li>
+          <li ng-class="{active: $state.includes('chat')}"><a ui-sref="chat">Chat</a></li>
+          <li ng-class="{active: $state.includes('other')}"><a ui-sref="other">Other</a></li>
+          <li ng-class="{active: $state.includes('aboutUs')}"><a ui-sref="aboutUs">About us</a></li>
+        </ul>
+        -->
+      </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div th:replace="fragments/home-frag :: home-frag"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
