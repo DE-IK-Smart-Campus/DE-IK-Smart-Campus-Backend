@@ -24,23 +24,26 @@
           <!-- TODO rewrite when authentication is working -->
           <h4>Logged in with</h4>
           <p>[NEPTUN-CODE]</p>
-          <a ui-sref="login" class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+          <a class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
         </div>
 
-        <!--
-        TODO fix sidebar
         <ul class="nav nav-sidebar">
-          <li ng-class="{active: $state.includes('home')}"><a ui-sref="home">Home</a></li>
-          <li ng-class="{active: $state.includes('calendar')}"><a ui-sref="calendar">Calendar</a></li>
-          <li ng-class="{active: $state.includes('consultingHours')}"><a ui-sref="consultingHours">Consulting hours</a></li>
-          <li ng-class="{active: $state.includes('chat')}"><a ui-sref="chat">Chat</a></li>
-          <li ng-class="{active: $state.includes('other')}"><a ui-sref="other">Other</a></li>
-          <li ng-class="{active: $state.includes('aboutUs')}"><a ui-sref="aboutUs">About us</a></li>
+          <th:block th:each="tab : ${tabs}">
+            <li th:class="__${currentTab == tab}__ ? 'active' : ''"><a th:href="@{/dashboard/__${tab}__}" th:text="${tab}"></a></li>
+          </th:block>
+          <!--
+          <li th:class="${currentTab} == 'home' ? 'active' : ''"><a th:href="@{/dashboard/switchToHome}">Home</a></li>
+          <li th:class="${currentTab} == 'calendar' ? 'active' : ''"><a th:href="@{/dashboard/switchToCalendar}">Calendar</a></li>
+          <li th:class="${currentTab} == 'consulting-hours' ? 'active' : ''"><a th:action="switchToConsultingHours">Consulting hours</a></li>
+          <li th:class="${currentTab} == 'chat' ? 'active' : ''"><a th:action="switchToChat">Chat</a></li>
+          <li th:class="${currentTab} == 'other' ? 'active' : ''"><a th:action="switchToOther">Other</a></li>
+          <li th:class="${currentTab} == 'about-us' ? 'active' : ''"><a th:action="SwitchToAboutUs">About us</a></li>
+          -->
         </ul>
-        -->
+
       </div>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <div th:replace="fragments/home-frag :: home-frag"></div>
+        <div th:replace="fragments/__${currentTab}____${'-frag'}__ :: __${currentTab}__"></div>
       </div>
     </div>
   </div>
