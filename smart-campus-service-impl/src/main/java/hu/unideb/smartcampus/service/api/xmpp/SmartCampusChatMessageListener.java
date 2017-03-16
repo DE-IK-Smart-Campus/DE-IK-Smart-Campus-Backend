@@ -1,9 +1,10 @@
 package hu.unideb.smartcampus.service.api.xmpp;
 
 import org.jivesoftware.smack.SmackException.NotConnectedException;
-import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.chat2.Chat;
+import org.jivesoftware.smack.chat2.IncomingChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
+import org.jxmpp.jid.EntityBareJid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import hu.unideb.smartcampus.xmpp.exception.ChatResponseException;
  *
  */
 @Component
-public class SmartCampusChatMessageListener implements ChatMessageListener {
+public class SmartCampusChatMessageListener implements IncomingChatMessageListener {
 
   private static final Logger LOGGER =
       LoggerFactory.getLogger(SmartCampusChatMessageListener.class);
@@ -37,7 +38,7 @@ public class SmartCampusChatMessageListener implements ChatMessageListener {
    * {@inheritDoc}.
    */
   @Override
-  public void processMessage(Chat chat, Message message) {
+  public void newIncomingMessage(EntityBareJid from, Message message, Chat chat) {
     String body = message.getBody();
     if (body != null) {
       BaseWrapper processMessage = null;
@@ -72,10 +73,11 @@ public class SmartCampusChatMessageListener implements ChatMessageListener {
 
   private void sendMessage(Chat chat, String msg) {
     try {
-      chat.se(msg);
-    } catch (NotConnectedException e) {
+      chat.send(msg);
+    } catch (NotConnectedException | InterruptedException e) {
       LOGGER.error("Error on sending response to client.", e);
     }
   }
+
 
 }
