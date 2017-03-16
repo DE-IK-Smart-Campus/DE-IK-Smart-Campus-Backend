@@ -4,12 +4,14 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * From to date domain.
  *
  */
 @Data
+@NoArgsConstructor
 public class FromToDate {
 
   /**

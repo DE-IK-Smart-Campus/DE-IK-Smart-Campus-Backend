@@ -1,6 +1,9 @@
-package hu.unideb.smartcampus.service.api.domain.util;
+package hu.unideb.smartcampus.shared.officehour;
 
 import java.time.DayOfWeek;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +13,7 @@ import lombok.Data;
  *
  */
 @Data
+@JsonDeserialize(builder = OfficeHour.OfficeHourBuilder.class)
 public class OfficeHour {
 
   /**
@@ -35,6 +39,15 @@ public class OfficeHour {
     this.day = day;
     this.from = from;
     this.to = to;
+  }
+
+  /**
+   * Builder.
+   *
+   */
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class OfficeHourBuilder {
+
   }
 
 

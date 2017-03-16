@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -13,8 +14,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHour;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHourIntervall;
+import hu.unideb.smartcampus.shared.officehour.OfficeHour;
+import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
 
 /**
  * Testing office hour generator service.
@@ -78,8 +79,9 @@ public class OfficeHourGeneratorServiceImplTest {
    */
   private static OfficeHourIntervall buildIntervall(int fromYear, int fromMonth, int fromDay,
       int toYear, int toMonth, int toDay) {
-    return OfficeHourIntervall.builder().fromDate(LocalDate.of(fromYear, fromMonth, fromDay))
-        .toDate(LocalDate.of(toYear, toMonth, toDay)).build();
+    return OfficeHourIntervall.builder()
+        .fromDate(Timestamp.valueOf(LocalDate.of(fromYear, fromMonth, fromDay).atStartOfDay()))
+        .toDate(Timestamp.valueOf(LocalDate.of(toYear, toMonth, toDay).atStartOfDay())).build();
   }
 
   /**

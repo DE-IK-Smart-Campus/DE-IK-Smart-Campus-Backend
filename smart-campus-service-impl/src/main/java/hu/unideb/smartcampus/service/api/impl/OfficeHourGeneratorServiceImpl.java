@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ import org.springframework.stereotype.Service;
 import hu.unideb.smartcampus.service.api.OfficeHourGeneratorService;
 import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
 import hu.unideb.smartcampus.service.api.domain.FromToDate;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHour;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHourIntervall;
+import hu.unideb.smartcampus.shared.officehour.OfficeHour;
+import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
 
 /**
  * Office hour generator service impl.
@@ -26,6 +27,8 @@ import hu.unideb.smartcampus.service.api.domain.util.OfficeHourIntervall;
  */
 @Service
 public class OfficeHourGeneratorServiceImpl implements OfficeHourGeneratorService {
+
+  private static final String HUNGARIAN_ZONE_ID = "UTC+1";
 
   private static final char WHITESPACE = ' ';
 
@@ -45,13 +48,13 @@ public class OfficeHourGeneratorServiceImpl implements OfficeHourGeneratorServic
     LOGGER.debug("Generator service creating new consulting dates in intervall {} - {}",
         intervall.getFromDate(), intervall.getToDate());
     List<ConsultingDate> consultingDates = new ArrayList<>();
-    LocalDate fromDate = intervall.getFromDate();
-    LocalDate toDate = intervall.getToDate();
+    LocalDate fromDate = intervall.getFromDate().toLocalDateTime().toLocalDate();
+    LocalDate toDate = intervall.getToDate().toLocalDateTime().toLocalDate();
     while (toDate.isAfter(fromDate)) {
       consultingDates.addAll(generateNextOfficeHours(officeHours, fromDate));
       fromDate = fromDate.plusWeeks(1);
     }
-    LOGGER.debug("{} consulting date(s) generated.",consultingDates.size());
+    LOGGER.debug("{} consulting date(s) generated.", consultingDates.size());
     return consultingDates;
   }
 
@@ -97,7 +100,7 @@ public class OfficeHourGeneratorServiceImpl implements OfficeHourGeneratorServic
   }
 
   private Timestamp getTimestamp(LocalDateTime time) {
-    return Timestamp.valueOf(time);
+    return new Timestamp(time.atZone(ZoneId.of(HUNGARIAN_ZONE_ID)).toEpochSecond() * 1000);
   }
 
 }

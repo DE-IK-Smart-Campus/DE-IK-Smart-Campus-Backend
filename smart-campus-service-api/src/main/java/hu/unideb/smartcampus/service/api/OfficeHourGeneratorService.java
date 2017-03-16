@@ -3,8 +3,8 @@ package hu.unideb.smartcampus.service.api;
 import java.util.List;
 
 import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHour;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHourIntervall;
+import hu.unideb.smartcampus.shared.officehour.OfficeHour;
+import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
 
 /**
  * Service which generates office hours.

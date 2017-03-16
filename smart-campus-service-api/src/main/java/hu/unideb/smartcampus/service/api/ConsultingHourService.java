@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import hu.unideb.smartcampus.service.api.domain.Subject;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHour;
-import hu.unideb.smartcampus.service.api.domain.util.OfficeHourIntervall;
+import hu.unideb.smartcampus.shared.officehour.OfficeHour;
+import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
 
 /**
  * Consulting hour service.
