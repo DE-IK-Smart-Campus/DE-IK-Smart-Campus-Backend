@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>SmartCampus</title>
+  <meta charset="utf-8"/>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
+</head>
+<body>
+<div class="dashboard-page">
+  <div class="container-fluid">
+    <div class="row">
+      <!--
+      TODO fix sidebarToggle
+      <div ng-show="sidebarToggle">
+      -->
+      <div class="col-sm-3 col-md-2 sidebar">
+        <div class="text-center">
+          <!--
+          TODO fix sidebarToggle
+          <a ng-click="hideSidebar()" class="btn btn-white btn-outline btn-rounded">Hide sidebar</a>
+          -->
+          <h1>SmartCampus</h1>
+          <!-- TODO rewrite when authentication is working -->
+          <h4>Logged in with</h4>
+          <p>[NEPTUN-CODE]</p>
+          <a class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+        </div>
+
+        <ul class="nav nav-sidebar">
+          <th:block th:each="tab : ${tabs}">
+            <li th:class="__${currentTab == tab}__ ? 'active' : ''"><a th:href="@{/dashboard/__${tab}__}" th:text="${tab}"></a></li>
+          </th:block>
+          <!--
+          <li th:class="${currentTab} == 'home' ? 'active' : ''"><a th:href="@{/dashboard/switchToHome}">Home</a></li>
+          <li th:class="${currentTab} == 'calendar' ? 'active' : ''"><a th:href="@{/dashboard/switchToCalendar}">Calendar</a></li>
+          <li th:class="${currentTab} == 'consulting-hours' ? 'active' : ''"><a th:action="switchToConsultingHours">Consulting hours</a></li>
+          <li th:class="${currentTab} == 'chat' ? 'active' : ''"><a th:action="switchToChat">Chat</a></li>
+          <li th:class="${currentTab} == 'other' ? 'active' : ''"><a th:action="switchToOther">Other</a></li>
+          <li th:class="${currentTab} == 'about-us' ? 'active' : ''"><a th:action="SwitchToAboutUs">About us</a></li>
+          -->
+        </ul>
+
+      </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div th:replace="fragments/__${currentTab + '-frag'}__ :: __${currentTab + '-frag'}__"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
