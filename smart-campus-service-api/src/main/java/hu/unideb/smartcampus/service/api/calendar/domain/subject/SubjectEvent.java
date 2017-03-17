@@ -13,5 +13,7 @@ public class SubjectEvent {
 
   private final SubjectDetails subjectDetails;
 
-  private final List<AppointmentDetails> appointmentDetailsList;
+  private final String roomLocation;
+
+  private final List<AppointmentTime> appointmentTimeList;
 }
