@@ -22,7 +22,7 @@ public interface ConsultingHourService {
   /**
    * Generate office hours for instructor.
    */
-  void generateOfficeHoursForInstructor(Long instructorId, List<OfficeHour> officeHours,
+  Integer generateOfficeHoursForInstructor(Long instructorId, List<OfficeHour> officeHours,
       OfficeHourIntervall intervall);
 
 }

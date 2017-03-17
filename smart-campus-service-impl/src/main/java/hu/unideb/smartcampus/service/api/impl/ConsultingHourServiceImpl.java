@@ -96,7 +96,7 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
    * {@inheritDoc}.
    */
   @Override
-  public void generateOfficeHoursForInstructor(final Long instructorId,
+  public Integer generateOfficeHoursForInstructor(final Long instructorId,
       final List<OfficeHour> officeHours, final OfficeHourIntervall intervall) {
     LOGGER.info("Creating office hours for instructor with ID:{}.", instructorId);
     InstructorEntity instructorEntity = instructorRepository.findOne(instructorId);
@@ -111,6 +111,7 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
 
     LOGGER.info("Saving instructor.");
     instructorRepository.save(instructorEntity);
+    return newDates.size();
   }
 
   private List<ConsultingDateEntity> convert(List<ConsultingDate> generatedOfficeHours) {
