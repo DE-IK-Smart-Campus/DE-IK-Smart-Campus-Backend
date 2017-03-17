@@ -31,8 +31,7 @@ public class IntegrationCredentialProviderRestController {
   @GetMapping(path = "/retrieveUserData", produces = MediaType.APPLICATION_JSON_VALUE)
   public PublicUser retrieveUserFromContext() {
     SmartCampusUserDetails auth = retrieveAuthentication();
-    PublicUser user = convertToPublic(auth);
-    return user;
+    return convertToPublic(auth);
   }
 
   private PublicUser convertToPublic(SmartCampusUserDetails auth) {

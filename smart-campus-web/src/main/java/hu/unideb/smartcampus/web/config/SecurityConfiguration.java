@@ -44,12 +44,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login").usernameParameter("username")
-        .passwordParameter("password").and().exceptionHandling()
+    http.csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login")
+        .usernameParameter("username").passwordParameter("password").and().exceptionHandling()
         .authenticationEntryPoint(authenticationEntryPoint());
 
     http.httpBasic();
     // @formatter:on
+  }
+
+  @Override
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.ldapAuthentication()
+        .userDnPatterns(
+            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_USERPATTERN))
+        .groupSearchBase(
+            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_GROUP_SERACH_BASE))
+        .groupSearchFilter(
+            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_GROUP_FILTER))
+        .contextSource(contextSource()).passwordCompare()
+        .passwordEncoder(new LdapShaPasswordEncoder())
+        .passwordAttribute(ldapConfigurationPropertyProvider
+            .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME))
+        .and().userDetailsContextMapper(userDetailsContextMapper());
   }
 
   /**
@@ -76,22 +92,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
 
-  @Override
-  public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.ldapAuthentication()
-        .userDnPatterns(
-            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_USERPATTERN))
-        .groupSearchBase(
-            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_GROUP_SERACH_BASE))
-        .groupSearchFilter(
-            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_GROUP_FILTER))
-        .contextSource(contextSource()).passwordCompare()
-        .passwordEncoder(new LdapShaPasswordEncoder())
-        .passwordAttribute(ldapConfigurationPropertyProvider
-            .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME))
-        .and().userDetailsContextMapper(userDetailsContextMapper());
-  }
 
+  /**
+   * TODO.
+   */
   @Bean
   public AuthenticationEntryPoint authenticationEntryPoint() {
     DelegatingAuthenticationEntryPoint delegatingAuthenticationEntryPoint =
