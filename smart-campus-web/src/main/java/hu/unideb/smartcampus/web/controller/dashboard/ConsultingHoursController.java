@@ -36,7 +36,6 @@ public class ConsultingHoursController {
     final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_VIEW);
     final SubjectRetrievalResponseWrapper mock = mockSubjectRetrievalResponseWrapper();
     modelAndView.addObject(SUBJECT_RETRIEVAL_RESPONSE_MODEL_OBJECT_NAME, mock);
-    System.out.println(mock);
     return modelAndView;
   }
 
