@@ -7,5 +7,5 @@ import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 
 public interface SubjectDetailsRepository extends JpaRepository<SubjectDetailsEntity, Long> {
 
-  SubjectDetailsEntity findBySubjectName(String subjectName);
+  SubjectDetailsEntity findBySubjectDetailsPrimaryKeySubjectName(String subjectName);
 }
