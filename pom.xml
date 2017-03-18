@@ -203,7 +203,7 @@
 			<dependency>
 				<groupId>org.igniterealtime.smack</groupId>
 				<artifactId>smack-bosh</artifactId>
-				<version>${smack.bosh.version}</version>
+				<version>${smack.version}</version>
 			</dependency>
         </dependencies>
     </dependencyManagement>

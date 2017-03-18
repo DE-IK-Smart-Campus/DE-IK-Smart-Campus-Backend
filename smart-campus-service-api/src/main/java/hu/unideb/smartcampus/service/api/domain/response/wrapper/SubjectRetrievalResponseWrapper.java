@@ -1,7 +1,7 @@
 package hu.unideb.smartcampus.service.api.domain.response.wrapper;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.SubjectWrapper;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,13 @@ public class SubjectRetrievalResponseWrapper extends BaseWrapper {
    * Wrapped subjects in set.
    */
   private final List<SubjectWrapper> subjects;
+
+  /**
+   * Default.
+   */
+  public SubjectRetrievalResponseWrapper() {
+    this.subjects = new ArrayList<>();
+  }
 
   /**
    * Constructs a wrapper for response.
