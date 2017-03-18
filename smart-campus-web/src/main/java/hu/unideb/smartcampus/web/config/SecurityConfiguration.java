@@ -15,14 +15,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import hu.unideb.smartcampus.web.config.security.LdapConfigurationPropertyProvider;
 import hu.unideb.smartcampus.web.config.security.LdapProperties;
 import hu.unideb.smartcampus.web.config.security.SmartCampusApiRequestMatcher;
+import hu.unideb.smartcampus.web.config.security.SmartCampusAuthenticationSuccessHandler;
+import hu.unideb.smartcampus.web.config.security.SmartCampusLogoutSuccessHandler;
 import hu.unideb.smartcampus.web.config.security.SmartCampusSynchronizingContextMapper;
 
 /**
@@ -45,8 +49,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http.csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login")
-        .usernameParameter("username").passwordParameter("password").and().exceptionHandling()
-        .authenticationEntryPoint(authenticationEntryPoint());
+        .usernameParameter("username").passwordParameter("password").successHandler(authenticationSuccessHandler()).and().exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPoint()).and().logout().logoutSuccessHandler(logoutSuccessHandler()).logoutUrl("/logout");
 
     http.httpBasic();
     // @formatter:on
@@ -143,6 +147,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   public AuthenticationEntryPoint formEntryPoint() {
     return new LoginUrlAuthenticationEntryPoint("/login");
+  }
+  
+  /**
+   * TODO.
+   * 
+   */
+  @Bean
+  public AuthenticationSuccessHandler authenticationSuccessHandler() {
+    return new SmartCampusAuthenticationSuccessHandler();
+  }
+
+  /**
+   * TODO.
+   * 
+   */
+  @Bean
+  public LogoutSuccessHandler logoutSuccessHandler() {
+    return new SmartCampusLogoutSuccessHandler();
   }
 
 }
