@@ -21,14 +21,15 @@
         <div class="jumbotron">
           <div class="container">
             <h1>Consulting hours</h1>
-            <p>Proin non tortor mauris. Sed et nulla neque. Phasellus ac pharetra est. Nullam porta commodo est, et commodo arcu placerat sed.
-               Praesent vel
-               enim libero. Donec vitae augue quam. Vestibulum congue ornare viverra. Quisque nec volutpat mi. Sed augue turpis, tincidunt in pulvinar
-               id,
-               ullamcorper nec quam. Integer quis tincidunt urna. Duis et orci sed nisi iaculis ullamcorper sed a erat. Nullam luctus eget dolor id
-               pulvinar. Etiam id lectus ut sem rutrum auctor vel eget ligula. Suspendisse tempor lorem non augue vulputate, ut pellentesque libero
-               euismod.
-               Aenean odio velit, ullamcorper eu justo in, mollis rutrum elit. Fusce a nulla non nisi convallis varius.</p>
+            <div th:each="subject : ${subjectRetrievalResponse.subjects}">
+              <h2 th:text="${subject.name}"></h2>
+              <div th:each="instructor : ${subject.instructors}">
+                <!--
+                TODO set proper link
+                -->
+                <a href="nothing" th:text="${instructor.name}"></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
