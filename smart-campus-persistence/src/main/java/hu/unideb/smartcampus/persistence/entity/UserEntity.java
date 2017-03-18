@@ -7,7 +7,6 @@ import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUM
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_USER;
 
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,7 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import hu.unideb.smartcampus.shared.enumeration.Role;
 import lombok.Builder;
 import lombok.Data;
@@ -40,11 +38,7 @@ import lombok.ToString;
 @Entity
 @Table(name = TABLE_NAME_USER,
     uniqueConstraints = @UniqueConstraint(columnNames = COLUMN_NAME_USERNAME))
-@NamedQueries({
-    @NamedQuery(name = "UserEntity.getSubjectsByUsername",
-        query = "SELECT u.actualSubjects FROM UserEntity u WHERE u.username = ?1"),
-    @NamedQuery(name = "UserEntity.getSubjectsByUserId",
-        query = "SELECT u.actualSubjects FROM UserEntity u WHERE u.id = ?1")})
+@NamedQueries({@NamedQuery(name = "UserEntity.getSubjectsByUsername", query = "SELECT u.actualSubjects FROM UserEntity u WHERE u.username = ?1")})
 public class UserEntity extends BaseEntity<Long> {
 
   /**
@@ -75,8 +69,10 @@ public class UserEntity extends BaseEntity<Long> {
    * Actual semester subjects.
    */
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "subject_details_id", referencedColumnName = "id"))
+  @JoinTable(name="user_subject_details_relation", joinColumns= @JoinColumn(name="user_id", referencedColumnName="id"),
+      inverseJoinColumns = {
+      @JoinColumn(name="subject_type", referencedColumnName="subject_type"), @JoinColumn(name="subject_name", referencedColumnName="subject_name")
+  })
   private Set<SubjectDetailsEntity> actualSubjects;
 
   /**
