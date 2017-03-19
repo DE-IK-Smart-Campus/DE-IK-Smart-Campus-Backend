@@ -9,12 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
@@ -32,13 +29,18 @@ import lombok.ToString;
 @Table(name = TABLE_NAME_SUBJECT_EVENT_DETAILS)
 public class SubjectEventEntity extends BaseEntity<Long> {
 
+  private static final long serialVersionUID = 7503249866427740799L;
+
   @NotNull
   @Column(name = "room_location")
   private String roomLocation;
 
   @NotNull
-  @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-  @JoinColumns({@JoinColumn(name = "subject_details_name", referencedColumnName = "subject_name"), @JoinColumn(name = "subject_details_type", referencedColumnName = "subject_type")})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+  @JoinColumns({
+      @JoinColumn(name = "subject_details_name", referencedColumnName = "subject_name"),
+      @JoinColumn(name = "subject_details_type", referencedColumnName = "subject_type")
+  })
   private SubjectDetailsEntity subjectDetailsEntity;
 
   @NotNull
