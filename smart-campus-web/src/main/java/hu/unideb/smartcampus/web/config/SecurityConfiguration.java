@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
@@ -23,6 +24,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import hu.unideb.smartcampus.web.config.security.LdapConfigurationPropertyProvider;
 import hu.unideb.smartcampus.web.config.security.LdapProperties;
 import hu.unideb.smartcampus.web.config.security.SmartCampusApiRequestMatcher;
+import hu.unideb.smartcampus.web.config.security.SmartCampusAuthenticationSuccessHandler;
 import hu.unideb.smartcampus.web.config.security.SmartCampusSynchronizingContextMapper;
 
 /**
@@ -45,7 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http.csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login")
-        .usernameParameter("username").passwordParameter("password").and().exceptionHandling()
+        .successHandler(authenticationSuccessHandler()).usernameParameter("username")
+        .passwordParameter("password").and().exceptionHandling()
         .authenticationEntryPoint(authenticationEntryPoint());
 
     http.httpBasic();
@@ -94,7 +97,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
   /**
-   * TODO.
+   * The delegating authentication entry point of the application. This purpose to decide witch entry point is to be used per request.
+   * 
+   * @return The delegating entry point of the application.
    */
   @Bean
   public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -105,8 +110,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * The entry points of the application.
    * 
+   * @return the entry points of the application
    */
   @Bean
   public LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> delegatedEntryPoints() {
@@ -116,8 +122,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * The request matcher for the entry point of the api.
    * 
+   * @return the request matcher of the api endpoints
    */
   @Bean
   public RequestMatcher apiRequestMatcher() {
@@ -125,8 +132,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * Entry point of the api.
    * 
+   * @return the authentication entry point of the api
    */
   @Bean
   public AuthenticationEntryPoint apiEntryPoint() {
@@ -137,12 +145,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * Entry point of the web ui.
    * 
+   * @return the authentication entry point of the web ui
    */
   @Bean
   public AuthenticationEntryPoint formEntryPoint() {
     return new LoginUrlAuthenticationEntryPoint("/login");
   }
 
+  /**
+   * Authentication success handler.
+   * 
+   * @return AuthenticationSuccessHandler
+   */
+  @Bean
+  public AuthenticationSuccessHandler authenticationSuccessHandler() {
+    return new SmartCampusAuthenticationSuccessHandler();
+  }
 }
