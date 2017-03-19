@@ -17,6 +17,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
+import hu.unideb.smartcampus.service.api.xmpp.TestIqManager;
 import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
@@ -47,6 +48,8 @@ public class EjabberdUserImpl implements EjabberdUser {
   @Autowired
   private XmppClientConfigurationService connectionConfigurationService;
 
+  private Object testIqManager;
+
   @PreDestroy
   public void preDestroy() {
     LOGGER.info("Logging out user on session destroy.");
@@ -61,8 +64,14 @@ public class EjabberdUserImpl implements EjabberdUser {
     LOGGER.info("Logging in user {}", username);
     if (connection == null) {
       initConnection(username, password);
+      initIqHandler();
     }
     LOGGER.info("Login succesfull.");
+  }
+
+  private void initIqHandler() {
+    testIqManager = TestIqManager.getInstanceFor(connection);
+    LOGGER.info("{}", testIqManager.toString());
   }
 
   /**

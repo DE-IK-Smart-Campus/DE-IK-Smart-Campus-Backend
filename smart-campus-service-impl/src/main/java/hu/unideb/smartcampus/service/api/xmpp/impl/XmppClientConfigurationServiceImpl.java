@@ -18,6 +18,8 @@ import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 @Service
 public class XmppClientConfigurationServiceImpl implements XmppClientConfigurationService {
 
+  private static final String RESOURCE = "Smartcampus";
+
   private static final String HTTP_BIND = "/http-bind/";
 
   private static final Logger LOGGER =
@@ -56,6 +58,7 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
         .setServiceName(service)
         .setFile(HTTP_BIND)
         .setPort(boshPort)
+        .setResource(RESOURCE)
         .setSecurityMode(SecurityMode.disabled)
         .setDebuggerEnabled(true)
         .setUsernameAndPassword(username, password)
@@ -70,6 +73,7 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
         .setHost(host)
         .setServiceName(service)
         .setPort(tcpPort)
+        .setResource(RESOURCE)
         .setSecurityMode(SecurityMode.disabled)
         .setDebuggerEnabled(true)
         .setUsernameAndPassword(username, password)
