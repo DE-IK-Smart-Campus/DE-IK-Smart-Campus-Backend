@@ -23,7 +23,7 @@ import hu.unideb.smartcampus.service.api.exception.RegistrationFailedException;
 public class SmartCampusSynchronizingContextMapper extends LdapUserDetailsMapper {
 
   private static final Logger LOGGER =
-      LoggerFactory.getLogger(SmartCampusSynchronizingAuthenticationSuccessHandler.class);
+      LoggerFactory.getLogger(SmartCampusSynchronizingContextMapper.class);
 
   @Autowired
   private UserService userService;
