@@ -39,15 +39,15 @@ public class InstructorToInstructorEntityConverter implements Converter<Instruct
         .build();
   }
 
-  private List<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(final Set<SubjectDetails> subjectDetailsSet) {
+  private Set<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(final Set<SubjectDetails> subjectDetailsSet) {
     return subjectDetailsSet == null ? null : subjectDetailsSet.parallelStream()
         .map(subjectDetails -> conversionService.convert(subjectDetails, SubjectDetailsEntity.class))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
-  private List<ConsultingDateEntity> convertConsultingDateSetToConsultingDateEntitySet(final Set<ConsultingDate> consultingDateSet) {
+  private Set<ConsultingDateEntity> convertConsultingDateSetToConsultingDateEntitySet(final Set<ConsultingDate> consultingDateSet) {
     return consultingDateSet == null ? null : consultingDateSet.parallelStream()
         .map(consultingDate -> conversionService.convert(consultingDate, ConsultingDateEntity.class))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 }

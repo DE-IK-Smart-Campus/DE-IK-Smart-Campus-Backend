@@ -45,7 +45,7 @@ public class SubjectEventToSubjectEventEntityConverter implements Converter<Subj
   }
 
   private List<AppointmentTimeEntity> convertAppointmentTimeListToAppointmentTimeEntityList(final List<AppointmentTime> appointmentTimeList) {
-    return appointmentTimeList == null ? Lists.newArrayList() : appointmentTimeList.parallelStream()
+    return appointmentTimeList == null ? null : appointmentTimeList.parallelStream()
         .map(appointmentTime -> conversionService.convert(appointmentTime, AppointmentTimeEntity.class))
         .collect(Collectors.toList());
   }
