@@ -17,4 +17,22 @@ public interface XmppUserService {
    */
   void createUser(String username, String password) throws XmppException;
   
+  
+  /**
+   *  Checks if a user exists at the XMPP server.
+   * 
+   * @param username the username of the user
+   * @return {@code true} if the user exists {@false otherwise}
+   * @throws XmppException if the XMPP server not responded as expected
+   */
+  boolean userExists(String username)throws XmppException;
+
+  /**
+   * Changes the password of a user.
+   * 
+   * @param username the username of the user
+   * @param password the new password of the user
+   * @throws XmppException if the XMPP server not responded as expected
+   */
+  void changePassword(String username,String password) throws XmppException;
 }
