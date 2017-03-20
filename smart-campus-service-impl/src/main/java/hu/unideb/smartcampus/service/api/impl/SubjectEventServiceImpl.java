@@ -6,14 +6,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.repository.SubjectEventRepository;
 import hu.unideb.smartcampus.service.api.SubjectDetailsService;
 import hu.unideb.smartcampus.service.api.SubjectEventService;
+import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
+import hu.unideb.smartcampus.service.api.domain.User;
+import hu.unideb.smartcampus.service.api.exception.UserNotFoundException;
 
 @Service
 public class SubjectEventServiceImpl implements SubjectEventService {
@@ -30,6 +37,29 @@ public class SubjectEventServiceImpl implements SubjectEventService {
     this.subjectEventRepository = subjectEventRepository;
     this.subjectDetailsService = subjectDetailsService;
     this.conversionService = conversionService;
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectEvent> getAllSubjectEventByUserId(final Long userId) {
+    final List<SubjectDetails> subjectDetailsList = subjectDetailsService.getAllSubjectDetailsByUserId(userId);
+    return getAllSubjectEventBySubjectDetails(subjectDetailsList);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectEvent> getAllSubjectEventBySubjectDetails(final List<SubjectDetails> subjectDetailsList) {
+    Assert.notNull(subjectDetailsList);
+
+    final Set<SubjectDetailsEntity> subjectDetailsEntities = subjectDetailsList.parallelStream()
+        .map(subjectDetails -> conversionService.convert(subjectDetails, SubjectDetailsEntity.class))
+        .collect(Collectors.toSet());
+
+    final List<SubjectEventEntity> subjectEventEntities = subjectEventRepository.findAllBySubjectDetailsEntityIn(subjectDetailsEntities);
+
+    return subjectEventEntities.parallelStream()
+        .map(subjectEventEntity -> conversionService.convert(subjectEventEntity, SubjectEvent.class))
+        .collect(Collectors.toList());
   }
 
   @Transactional

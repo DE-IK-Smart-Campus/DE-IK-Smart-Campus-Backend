@@ -10,7 +10,10 @@ import java.util.List;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.repository.SubjectDetailsRepository;
 import hu.unideb.smartcampus.service.api.SubjectDetailsService;
+import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.service.api.domain.User;
+import hu.unideb.smartcampus.service.api.exception.UserNotFoundException;
 
 
 @Service
@@ -18,12 +21,24 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
 
   private final SubjectDetailsRepository subjectDetailsRepository;
 
+  private final UserService userService;
+
   private final ConversionService conversionService;
 
   @Autowired
-  public SubjectDetailsServiceImpl(final SubjectDetailsRepository subjectDetailsRepository, final ConversionService conversionService) {
+  public SubjectDetailsServiceImpl(final SubjectDetailsRepository subjectDetailsRepository, final UserService userService,
+                                   final ConversionService conversionService) {
     this.subjectDetailsRepository = subjectDetailsRepository;
+    this.userService = userService;
     this.conversionService = conversionService;
+  }
+
+  @Transactional
+  @Override
+  public List<SubjectDetails> getAllSubjectDetailsByUserId(final Long userId) {
+    final User user = userService.getById(userId).orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+
+    return user.getSubjectDetailsSet();
   }
 
   @Transactional
