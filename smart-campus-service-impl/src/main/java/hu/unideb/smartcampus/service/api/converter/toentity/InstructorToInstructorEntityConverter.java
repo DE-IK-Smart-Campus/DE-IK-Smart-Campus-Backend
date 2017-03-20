@@ -18,11 +18,15 @@ import hu.unideb.smartcampus.service.api.domain.Instructor;
 @Component
 public class InstructorToInstructorEntityConverter implements Converter<Instructor, InstructorEntity> {
 
-  private final ConversionService conversionService;
+  private final Converter<SubjectDetails, SubjectDetailsEntity> subjectDetailsConverter;
+
+  private final Converter<ConsultingDate, ConsultingDateEntity> consultingDateConverter;
 
   @Autowired
-  public InstructorToInstructorEntityConverter(final ConversionService conversionService) {
-    this.conversionService = conversionService;
+  public InstructorToInstructorEntityConverter(final Converter<SubjectDetails, SubjectDetailsEntity> subjectDetailsConverter,
+                                               final Converter<ConsultingDate, ConsultingDateEntity> consultingDateConverter) {
+    this.subjectDetailsConverter = subjectDetailsConverter;
+    this.consultingDateConverter = consultingDateConverter;
   }
 
   @Override
@@ -41,13 +45,13 @@ public class InstructorToInstructorEntityConverter implements Converter<Instruct
 
   private Set<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(final Set<SubjectDetails> subjectDetailsSet) {
     return subjectDetailsSet == null ? null : subjectDetailsSet.parallelStream()
-        .map(subjectDetails -> conversionService.convert(subjectDetails, SubjectDetailsEntity.class))
+        .map(subjectDetails -> subjectDetailsConverter.convert(subjectDetails))
         .collect(Collectors.toSet());
   }
 
   private Set<ConsultingDateEntity> convertConsultingDateSetToConsultingDateEntitySet(final Set<ConsultingDate> consultingDateSet) {
     return consultingDateSet == null ? null : consultingDateSet.parallelStream()
-        .map(consultingDate -> conversionService.convert(consultingDate, ConsultingDateEntity.class))
+        .map(consultingDate -> consultingDateConverter.convert(consultingDate))
         .collect(Collectors.toSet());
   }
 }

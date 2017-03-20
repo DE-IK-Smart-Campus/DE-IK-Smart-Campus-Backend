@@ -1,7 +1,5 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
-import com.google.common.collect.Lists;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
@@ -19,11 +17,15 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 @Component
 public class SubjectEventToSubjectEventEntityConverter implements Converter<SubjectEvent, SubjectEventEntity> {
 
-  private final ConversionService conversionService;
+  private final Converter<SubjectDetails, SubjectDetailsEntity> subjectDetailsConverter;
+
+  private final Converter<AppointmentTime, AppointmentTimeEntity> appointmentTimeConverter;
 
   @Autowired
-  public SubjectEventToSubjectEventEntityConverter(final ConversionService conversionService) {
-    this.conversionService = conversionService;
+  public SubjectEventToSubjectEventEntityConverter(final Converter<SubjectDetails, SubjectDetailsEntity> subjectDetailsConverter,
+                                                   final Converter<AppointmentTime, AppointmentTimeEntity> appointmentTimeConverter) {
+    this.subjectDetailsConverter = subjectDetailsConverter;
+    this.appointmentTimeConverter = appointmentTimeConverter;
   }
 
   @Override
@@ -41,12 +43,12 @@ public class SubjectEventToSubjectEventEntityConverter implements Converter<Subj
   }
 
   private SubjectDetailsEntity convertSubjectDetailsToSubjectDetailsEntity(final SubjectDetails subjectDetails) {
-    return conversionService.convert(subjectDetails, SubjectDetailsEntity.class);
+    return subjectDetailsConverter.convert(subjectDetails);
   }
 
   private List<AppointmentTimeEntity> convertAppointmentTimeListToAppointmentTimeEntityList(final List<AppointmentTime> appointmentTimeList) {
     return appointmentTimeList == null ? null : appointmentTimeList.parallelStream()
-        .map(appointmentTime -> conversionService.convert(appointmentTime, AppointmentTimeEntity.class))
+        .map(appointmentTime -> appointmentTimeConverter.convert(appointmentTime))
         .collect(Collectors.toList());
   }
 }
