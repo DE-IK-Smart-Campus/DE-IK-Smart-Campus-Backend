@@ -6,6 +6,7 @@ import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUM
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_USERNAME;
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_USER;
 
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -73,13 +74,13 @@ public class UserEntity extends BaseEntity<Long> {
       inverseJoinColumns = {
       @JoinColumn(name="subject_type", referencedColumnName="subject_type"), @JoinColumn(name="subject_name", referencedColumnName="subject_name")
   })
-  private Set<SubjectDetailsEntity> actualSubjects;
+  private List<SubjectDetailsEntity> actualSubjects;
 
   /**
    * Builder pattern for creating user.
    */
   @Builder
-  public UserEntity(final Long id, final String username, final String password, final Role role, final Set<SubjectDetailsEntity> actualSubjects) {
+  public UserEntity(final Long id, final String username, final String password, final Role role, final List<SubjectDetailsEntity> actualSubjects) {
     super(id);
     this.username = username;
     this.password = password;
