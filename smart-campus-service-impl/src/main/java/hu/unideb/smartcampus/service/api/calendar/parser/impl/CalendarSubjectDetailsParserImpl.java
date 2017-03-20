@@ -39,7 +39,7 @@ public class CalendarSubjectDetailsParserImpl implements CalendarSubjectDetailsP
     return SubjectDetails.builder()
         .subjectName(this.parseSubjectName(matcher))
         .subjectType(this.parseSubjectType(matcher))
-        .teacherNames(this.parseTeacherNames(matcher))
+        //.instructors(this.parseTeacherNames(matcher))
         .build();
   }
 

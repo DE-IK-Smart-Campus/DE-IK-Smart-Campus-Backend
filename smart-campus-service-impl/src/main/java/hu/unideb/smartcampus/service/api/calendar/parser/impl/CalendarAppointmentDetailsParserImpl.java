@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentDetails;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentTime;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarAppointmentDetailsParser;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarLocalDateTimeParser;
 
@@ -22,12 +22,11 @@ public class CalendarAppointmentDetailsParserImpl implements CalendarAppointment
   }
 
   @Override
-  public AppointmentDetails parseAppointmentDetails(final VEvent vEvent) {
+  public AppointmentTime parseAppointmentDetails(final VEvent vEvent) {
     validateVEventByLocation(vEvent);
-    return AppointmentDetails.builder()
-        .startDate(this.calendarLocalDateTimeParser.parseStartLocalDateTime(vEvent))
-        .endDate(this.calendarLocalDateTimeParser.parseEndLocalDateTime(vEvent))
-        .roomLocation(vEvent.getLocation().getValue())
+    return AppointmentTime.builder()
+        .startDateTime(this.calendarLocalDateTimeParser.parseStartLocalDateTime(vEvent))
+        .endDateTime(this.calendarLocalDateTimeParser.parseEndLocalDateTime(vEvent))
         .build();
   }
 
