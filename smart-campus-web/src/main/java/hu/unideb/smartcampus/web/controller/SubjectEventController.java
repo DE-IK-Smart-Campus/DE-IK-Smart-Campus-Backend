@@ -37,7 +37,7 @@ public class SubjectEventController {
     subjectEventService.save(result);
 
     final User user = userService.getByUsername(principal.getName()).get();
-    user.getSubjectDetailsSet().addAll(result.parallelStream().map(subjectEvent -> subjectEvent.getSubjectDetails()).collect(Collectors.toList()));
+    user.getSubjectDetailsList().addAll(result.parallelStream().map(subjectEvent -> subjectEvent.getSubjectDetails()).collect(Collectors.toList()));
 
     userService.save(user);
     return ResponseEntity.noContent().build();
