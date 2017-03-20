@@ -53,7 +53,9 @@ values (1, 1);
 
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (1, 2);
+
 -- subjects
+/*
 insert into subject_details(id,subject_name,subject_type) values (1,'AI', 'LABORATORY');
 
 insert into subject_details(id,subject_name, subject_type) values (2,'Mesterséges intelligencia alapjai', 'LABORATORY');
@@ -61,11 +63,11 @@ insert into subject_details(id,subject_name, subject_type) values (2,'Mesterség
 insert into subject_details(id,subject_name, subject_type) values (3,'Hálózati architektúrák és protokollok', 'LECTURE');
 
 insert into subject_details(id,subject_name, subject_type) values (4,'Az internet eszközei és szolgáltatásai', 'LECTURE');
-
+*/
 ---------------------------------------------------------------------------------
 
 --instructor to subject
-insert into instructor_subjects(instructor_id,subject_details_id)
+/*insert into instructor_subjects(instructor_id,subject_details_id)
 values (1, 1);
 
 insert into instructor_subjects(instructor_id,subject_details_id)
@@ -78,11 +80,11 @@ insert into instructor_subjects(instructor_id,subject_details_id)
 values (4, 3);
 
 insert into instructor_subjects(instructor_id,subject_details_id)
-values (5, 4);
+values (5, 4);*/
 --------------------------------------------------------
 
 -- User actual subjects
-insert into user_actual_subjects(user_id,subject_details_id)
+/*insert into user_actual_subjects(user_id,subject_details_id)
 values (1, 1);
 
 insert into user_actual_subjects(user_id,subject_details_id)
@@ -92,4 +94,4 @@ insert into user_actual_subjects(user_id,subject_details_id)
 values (2, 3);
 
 insert into user_actual_subjects(user_id,subject_details_id)
-values (2, 4);
+values (2, 4);*/
