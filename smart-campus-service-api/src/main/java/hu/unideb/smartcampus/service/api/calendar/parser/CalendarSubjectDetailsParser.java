@@ -10,5 +10,8 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
  */
 public interface CalendarSubjectDetailsParser {
 
+  /**
+   * Parse subject details.
+   */
   SubjectDetails parseSubjectDetails(VEvent vEvent) throws UnparsableCalendarEventSummaryException;
 }

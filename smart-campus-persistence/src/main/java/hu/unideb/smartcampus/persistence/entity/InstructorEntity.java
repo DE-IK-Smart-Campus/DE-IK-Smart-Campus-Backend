@@ -4,22 +4,17 @@ import static hu.unideb.smartcampus.shared.table.ColumnName.InstructorColumnName
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_INSTRUCTOR;
 
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,7 +23,6 @@ import lombok.ToString;
 
 /**
  * Instructor entity.
- *
  */
 @Data
 @NoArgsConstructor
@@ -65,23 +59,24 @@ public class InstructorEntity extends BaseEntity<Long> {
    * Subjects of the instructor.
    */
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name="instructor_subject_details", joinColumns= @JoinColumn(name="instructor_id", referencedColumnName="id"),
+  @JoinTable(name = "instructor_subject_details", joinColumns = @JoinColumn(name = "instructor_id", referencedColumnName = "id"),
       inverseJoinColumns = {
-      @JoinColumn(name="subject_type", referencedColumnName="subject_type"), @JoinColumn(name="subject_name", referencedColumnName="subject_name")
-  })
+          @JoinColumn(name = "subject_type", referencedColumnName = "subject_type"),
+          @JoinColumn(name = "subject_name", referencedColumnName = "subject_name")
+      })
   private Set<SubjectDetailsEntity> subjects;
 
   /**
    * Constructs instructor entity.
    */
   @Builder
-  public InstructorEntity(final Long id, final String name, final Set<ConsultingDateEntity> consultingDates, final Set<SubjectDetailsEntity> subjects) {
+  public InstructorEntity(final Long id, final String name, final Set<ConsultingDateEntity> consultingDates,
+                          final Set<SubjectDetailsEntity> subjects) {
     super(id);
     this.name = name;
     this.consultingDates = consultingDates;
     this.subjects = subjects;
   }
-
 
 
 }

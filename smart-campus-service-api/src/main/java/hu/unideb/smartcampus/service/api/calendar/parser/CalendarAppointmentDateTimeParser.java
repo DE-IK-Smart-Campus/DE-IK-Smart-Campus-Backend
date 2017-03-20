@@ -7,7 +7,10 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentTime
 /**
  * Calendar appointment details parser.
  */
-public interface CalendarAppointmentDetailsParser {
+public interface CalendarAppointmentDateTimeParser {
 
-  AppointmentTime parseAppointmentDetails(VEvent vEvent);
+  /**
+   * Parse appointment date time.
+   */
+  AppointmentTime parseAppointmentDateTime(VEvent vEvent);
 }

@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
@@ -16,11 +14,8 @@ import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.repository.SubjectEventRepository;
 import hu.unideb.smartcampus.service.api.SubjectDetailsService;
 import hu.unideb.smartcampus.service.api.SubjectEventService;
-import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
-import hu.unideb.smartcampus.service.api.domain.User;
-import hu.unideb.smartcampus.service.api.exception.UserNotFoundException;
 
 @Service
 public class SubjectEventServiceImpl implements SubjectEventService {

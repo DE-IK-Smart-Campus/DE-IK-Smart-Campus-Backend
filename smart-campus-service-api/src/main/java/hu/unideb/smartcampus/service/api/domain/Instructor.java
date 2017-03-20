@@ -1,7 +1,6 @@
 package hu.unideb.smartcampus.service.api.domain;
 
 import java.util.Set;
-
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +8,6 @@ import lombok.ToString;
 
 /**
  * Instructor.
- *
  */
 @Data
 @ToString(callSuper = true)

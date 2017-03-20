@@ -21,6 +21,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
+/**
+ * Subject event entity.
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -31,25 +34,37 @@ public class SubjectEventEntity extends BaseEntity<Long> {
 
   private static final long serialVersionUID = 7503249866427740799L;
 
+  /**
+   * Room location.
+   */
   @NotNull
   @Column(name = "room_location")
   private String roomLocation;
 
+  /**
+   * Subject details entity.
+   */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
   @JoinColumns({
       @JoinColumn(name = "subject_details_name", referencedColumnName = "subject_name"),
-      @JoinColumn(name = "subject_details_type", referencedColumnName = "subject_type")
-  })
+      @JoinColumn(name = "subject_details_type", referencedColumnName = "subject_type")})
   private SubjectDetailsEntity subjectDetailsEntity;
 
+  /**
+   * Appointment times.
+   */
   @NotNull
   @ElementCollection
   @CollectionTable(name = "subject_event_appointment", joinColumns = @JoinColumn(name = "subject_event_id", referencedColumnName = "id"))
   private List<AppointmentTimeEntity> appointmentTimes;
 
+  /**
+   * Builder.
+   */
   @Builder
-  public SubjectEventEntity(final Long id, final String roomLocation, final SubjectDetailsEntity subjectDetailsEntity, final List<AppointmentTimeEntity> appointmentTimes) {
+  public SubjectEventEntity(final Long id, final String roomLocation, final SubjectDetailsEntity subjectDetailsEntity,
+                            final List<AppointmentTimeEntity> appointmentTimes) {
     super(id);
     this.roomLocation = roomLocation;
     this.subjectDetailsEntity = subjectDetailsEntity;

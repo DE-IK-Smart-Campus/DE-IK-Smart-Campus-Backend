@@ -7,7 +7,6 @@ import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUM
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_USER;
 
 import java.util.List;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -70,10 +69,11 @@ public class UserEntity extends BaseEntity<Long> {
    * Actual semester subjects.
    */
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name="user_subject_details_relation", joinColumns= @JoinColumn(name="user_id", referencedColumnName="id"),
+  @JoinTable(name = "user_subject_details_relation", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = {
-      @JoinColumn(name="subject_type", referencedColumnName="subject_type"), @JoinColumn(name="subject_name", referencedColumnName="subject_name")
-  })
+          @JoinColumn(name = "subject_type", referencedColumnName = "subject_type"),
+          @JoinColumn(name = "subject_name", referencedColumnName = "subject_name")
+      })
   private List<SubjectDetailsEntity> actualSubjects;
 
   /**

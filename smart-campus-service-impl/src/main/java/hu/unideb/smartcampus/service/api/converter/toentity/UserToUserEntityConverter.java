@@ -33,7 +33,7 @@ public class UserToUserEntityConverter implements Converter<User, UserEntity> {
         .username(user.getUsername())
         .password(user.getPassword())
         .role(user.getRole())
-        .actualSubjects(convertSubjectDetailsSetToSubjectDetailsEntitySet(user.getSubjectDetailsSet()))
+        .actualSubjects(convertSubjectDetailsSetToSubjectDetailsEntitySet(user.getSubjectDetailsList()))
         .build();
   }
 

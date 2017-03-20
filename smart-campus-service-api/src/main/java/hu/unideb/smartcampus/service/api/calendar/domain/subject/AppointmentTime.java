@@ -11,7 +11,13 @@ import lombok.Data;
 @Builder
 public class AppointmentTime {
 
+  /**
+   * Start date time.
+   */
   private final LocalDateTime startDateTime;
 
+  /**
+   * End date time.
+   */
   private final LocalDateTime endDateTime;
 }

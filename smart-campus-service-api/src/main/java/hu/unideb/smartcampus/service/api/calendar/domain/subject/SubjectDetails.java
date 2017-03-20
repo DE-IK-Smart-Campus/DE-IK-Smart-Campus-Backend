@@ -10,7 +10,13 @@ import lombok.Data;
 @Builder
 public class SubjectDetails {
 
+  /**
+   * Subject name.
+   */
   private final String subjectName;
 
+  /**
+   * Subject type.
+   */
   private final SubjectType subjectType;
 }

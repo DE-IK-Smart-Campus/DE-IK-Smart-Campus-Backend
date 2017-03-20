@@ -12,9 +12,15 @@ public enum SubjectType {
   PRACTICE('G'),
   OTHER('O');
 
+  /**
+   * Subject type code.
+   */
   @Getter
   private final char subjectTypeCode;
 
+  /**
+   * Constructor.
+   */
   SubjectType(final char subjectTypeCode) {
     this.subjectTypeCode = subjectTypeCode;
   }

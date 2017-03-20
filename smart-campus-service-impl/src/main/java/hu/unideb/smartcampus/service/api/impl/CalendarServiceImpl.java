@@ -1,7 +1,6 @@
 package hu.unideb.smartcampus.service.api.impl;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.ParserException;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import hu.unideb.smartcampus.service.api.CalendarEventType;
 import hu.unideb.smartcampus.service.api.CalendarService;
@@ -24,7 +22,7 @@ import hu.unideb.smartcampus.service.api.UnparsableCalendarEventSummaryException
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentTime;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
-import hu.unideb.smartcampus.service.api.calendar.parser.CalendarAppointmentDetailsParser;
+import hu.unideb.smartcampus.service.api.calendar.parser.CalendarAppointmentDateTimeParser;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarSubjectDetailsParser;
 import hu.unideb.smartcampus.service.api.exception.InputParseException;
 import hu.unideb.smartcampus.webservice.api.factory.HttpRequestType;
@@ -39,7 +37,7 @@ public class CalendarServiceImpl implements CalendarService {
   private HttpResponseProvider httpResponseProvider;
 
   @Autowired
-  private CalendarAppointmentDetailsParser calendarAppointmentDetailsParser;
+  private CalendarAppointmentDateTimeParser calendarAppointmentDateTimeParser;
 
   @Autowired
   private CalendarSubjectDetailsParser calendarSubjectDetailsParser;
@@ -60,7 +58,7 @@ public class CalendarServiceImpl implements CalendarService {
           try {
             if (CalendarEventType.matches(event.getSummary().getValue()) == CalendarEventType.TIMETABLE) {
               final SubjectDetails subjectDetails = this.calendarSubjectDetailsParser.parseSubjectDetails(event);
-              final AppointmentTime appointmentTime = this.calendarAppointmentDetailsParser.parseAppointmentDetails(event);
+              final AppointmentTime appointmentTime = this.calendarAppointmentDateTimeParser.parseAppointmentDateTime(event);
 
               subjectBuilderListPopulator(subjectEvents, SubjectEvent.builder()
                   .subjectDetails(subjectDetails)

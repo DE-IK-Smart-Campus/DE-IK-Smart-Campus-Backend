@@ -8,6 +8,9 @@ import hu.unideb.smartcampus.service.api.domain.User;
  */
 public interface UserService {
 
+  /**
+   * Get by id.
+   */
   Optional<User> getById(Long id);
 
   /**

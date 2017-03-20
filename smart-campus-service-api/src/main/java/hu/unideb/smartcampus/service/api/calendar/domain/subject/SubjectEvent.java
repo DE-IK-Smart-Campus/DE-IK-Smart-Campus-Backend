@@ -13,14 +13,27 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(exclude = "appointmentTimeList")
 public class SubjectEvent extends BaseObject<Long> {
 
+  /**
+   * Subject details.
+   */
   private final SubjectDetails subjectDetails;
 
+  /**
+   * Room location.
+   */
   private final String roomLocation;
 
+  /**
+   * Appointment time list.
+   */
   private final List<AppointmentTime> appointmentTimeList;
 
+  /**
+   * Builder.
+   */
   @Builder
-  public SubjectEvent(final Long id, final SubjectDetails subjectDetails, final String roomLocation, final List<AppointmentTime> appointmentTimeList) {
+  public SubjectEvent(final Long id, final SubjectDetails subjectDetails, final String roomLocation,
+                      final List<AppointmentTime> appointmentTimeList) {
     super(id);
     this.subjectDetails = subjectDetails;
     this.roomLocation = roomLocation;

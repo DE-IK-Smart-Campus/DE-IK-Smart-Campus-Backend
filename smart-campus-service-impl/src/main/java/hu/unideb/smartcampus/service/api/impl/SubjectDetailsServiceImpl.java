@@ -38,7 +38,7 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
   public List<SubjectDetails> getAllSubjectDetailsByUserId(final Long userId) {
     final User user = userService.getById(userId).orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
-    return user.getSubjectDetailsSet();
+    return user.getSubjectDetailsList();
   }
 
   @Transactional
