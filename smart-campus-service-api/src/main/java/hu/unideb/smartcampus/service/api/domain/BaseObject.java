@@ -10,7 +10,7 @@ import lombok.Data;
  * @param <T> the type of the id.
  */
 @Data
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class BaseObject<T> {
 
   /**
