@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.service.api.filter.TestIqFilter;
+import hu.unideb.smartcampus.service.api.iqprovider.SubjectIqProvider;
 import hu.unideb.smartcampus.service.api.iqprovider.TestIqProvider;
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
 import hu.unideb.smartcampus.service.api.xmpp.TestIqManager;
@@ -31,6 +32,7 @@ import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
+import hu.unideb.smartcampus.shared.iq.SubjectsIq;
 import hu.unideb.smartcampus.shared.iq.TestIq;
 import hu.unideb.smartcampus.shared.iq.TestIq.Thing;
 
@@ -97,6 +99,8 @@ public class DefaultUserImpl implements DefaultUser {
   private void registerCustomIQs() {
     ProviderManager.addIQProvider("test", "http://inf.unideb.hu/smartcampus/test",
         new TestIqProvider());
+    ProviderManager.addIQProvider(SubjectsIq.ELEMENT, SubjectsIq.NAMESPACE,
+        new SubjectIqProvider());
     testIqManager = TestIqManager.getInstanceFor(connection);
     LOGGER.info("{}", testIqManager.toString());
   }
@@ -164,6 +168,16 @@ public class DefaultUserImpl implements DefaultUser {
   @Override
   public XMPPTCPConnection getConnection() {
     return connection;
+  }
+
+
+  @Override
+  public void reconnect() {
+    if (connection != null) {
+      connection.disconnect();
+      connection = null;
+    }
+    init();
   }
 
 }

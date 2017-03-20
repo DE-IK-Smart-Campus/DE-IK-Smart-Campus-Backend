@@ -6,9 +6,13 @@ import javax.annotation.PreDestroy;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.SmackException.NotConnectedException;
+import org.jivesoftware.smack.StanzaListener;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
+import org.jivesoftware.smack.filter.StanzaFilter;
+import org.jivesoftware.smack.packet.Stanza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +21,14 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
+import hu.unideb.smartcampus.service.api.xmpp.SubjectsManager;
+import hu.unideb.smartcampus.service.api.xmpp.SubjectsManagerFactory;
 import hu.unideb.smartcampus.service.api.xmpp.TestIqManager;
 import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
+import hu.unideb.smartcampus.shared.iq.SubjectsIq;
 
 /**
  * Session scoped service for XMPP connection.
@@ -50,6 +57,11 @@ public class EjabberdUserImpl implements EjabberdUser {
 
   private Object testIqManager;
 
+  @Autowired
+  private SubjectsManagerFactory subjectsManagerFactory;
+
+  private SubjectsManager subjectsManager;
+
   @PreDestroy
   public void preDestroy() {
     LOGGER.info("Logging out user on session destroy.");
@@ -71,7 +83,23 @@ public class EjabberdUserImpl implements EjabberdUser {
 
   private void initIqHandler() {
     testIqManager = TestIqManager.getInstanceFor(connection);
+    subjectsManager = subjectsManagerFactory.registerConnectionSubjectManager(connection);
+    LOGGER.info("Subject manager:{}",subjectsManager);
     LOGGER.info("{}", testIqManager.toString());
+    connection.addSyncStanzaListener(new StanzaListener() {
+
+      @Override
+      public void processPacket(Stanza packet) throws NotConnectedException {
+        SubjectsIq iq = (SubjectsIq) packet;
+        LOGGER.info("IQ:", iq);
+      }
+    }, new StanzaFilter() {
+
+      @Override
+      public boolean accept(Stanza stanza) {
+        return stanza instanceof SubjectsIq;
+      }
+    });
   }
 
   /**

@@ -21,5 +21,10 @@ public interface DefaultUser {
    * @return default smartcampus user's active connection.
    */
   XMPPTCPConnection getConnection();
+  
+  /**
+   * Reconnect.
+   */
+  void reconnect();
 
 }
