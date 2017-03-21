@@ -173,14 +173,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   public LogoutSuccessHandler logoutSuccessHandler() {
     return new SmartCampusLogoutSuccessHandler();
   }
-
-  /**
-   * Authentication success handler.
-   * 
-   * @return AuthenticationSuccessHandler
-   */
-  @Bean
-  public AuthenticationSuccessHandler authenticationSuccessHandler() {
-    return new SmartCampusAuthenticationSuccessHandler();
-  }
 }
