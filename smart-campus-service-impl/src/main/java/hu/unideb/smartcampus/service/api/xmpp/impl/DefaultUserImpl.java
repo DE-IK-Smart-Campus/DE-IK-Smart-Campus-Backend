@@ -1,19 +1,14 @@
 package hu.unideb.smartcampus.service.api.xmpp.impl;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.SmackException.NotConnectedException;
-import org.jivesoftware.smack.StanzaListener;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.chat.ChatManagerListener;
-import org.jivesoftware.smack.packet.IQ;
-import org.jivesoftware.smack.packet.Stanza;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
@@ -23,18 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import hu.unideb.smartcampus.service.api.filter.TestIqFilter;
 import hu.unideb.smartcampus.service.api.iqprovider.SubjectIqProvider;
-import hu.unideb.smartcampus.service.api.iqprovider.TestIqProvider;
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
-import hu.unideb.smartcampus.service.api.xmpp.TestIqManager;
+import hu.unideb.smartcampus.service.api.xmpp.SubjectsManagerFactory;
 import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.shared.iq.SubjectsIq;
-import hu.unideb.smartcampus.shared.iq.TestIq;
-import hu.unideb.smartcampus.shared.iq.TestIq.Thing;
 
 /**
  * Default user implementation, smartcampus@HOST.
@@ -77,7 +68,8 @@ public class DefaultUserImpl implements DefaultUser {
   @Autowired
   private ChatManagerListener chatManagerListener;
 
-  private TestIqManager testIqManager;
+  @Autowired
+  private SubjectsManagerFactory subjectsManagerFactory;
 
   /**
    * Init after class.
@@ -97,27 +89,14 @@ public class DefaultUserImpl implements DefaultUser {
 
 
   private void registerCustomIQs() {
-    ProviderManager.addIQProvider("test", "http://inf.unideb.hu/smartcampus/test",
-        new TestIqProvider());
     ProviderManager.addIQProvider(SubjectsIq.ELEMENT, SubjectsIq.NAMESPACE,
         new SubjectIqProvider());
-    testIqManager = TestIqManager.getInstanceFor(connection);
-    LOGGER.info("{}", testIqManager.toString());
   }
 
 
   private void registerDefaultListener() {
-    TestIq reply = new TestIq("IamSmartCampus", Arrays.asList(new Thing("hopsz", "Thingy")));
-    connection.addSyncStanzaListener(new StanzaListener() {
-      @Override
-      public void processPacket(Stanza packet) throws NotConnectedException {
-        LOGGER.info("Get a TestIQ.");
-        reply.setType(IQ.Type.result);
-        reply.setStanzaId(packet.getStanzaId());
-        reply.setFrom(packet.getTo());
-        reply.setTo(packet.getFrom());
-      }
-    }, new TestIqFilter());
+    subjectsManagerFactory.registerConnectionSubjectManager(connection);
+    // empty
   }
 
   private void initConnection(String username, String password) throws XmppException {

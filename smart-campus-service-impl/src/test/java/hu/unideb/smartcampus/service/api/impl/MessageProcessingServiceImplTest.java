@@ -19,10 +19,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hu.unideb.smartcampus.service.api.context.MessageProcessContext;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.ExampleResponseWrapper;
 import hu.unideb.smartcampus.service.api.request.service.ExampleRequestServiceImpl;
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
+import hu.unideb.smartcampus.shared.iq.wrapper.BaseWrapper;
+import hu.unideb.smartcampus.shared.iq.wrapper.ExampleResponseWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;

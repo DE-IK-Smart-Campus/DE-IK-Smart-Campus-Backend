@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.service.api;
 
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
+import hu.unideb.smartcampus.shared.iq.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 
 /**

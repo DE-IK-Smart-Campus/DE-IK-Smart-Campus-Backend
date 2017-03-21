@@ -6,9 +6,14 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.jivesoftware.smack.packet.ExtensionElement;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Subject Iq.
@@ -32,6 +37,7 @@ import org.jivesoftware.smack.packet.ExtensionElement;
  * </p>
  * 
  */
+@Data
 @XmlRootElement(name = SubjectsIq.ELEMENT, namespace = SubjectsIq.NAMESPACE)
 @XmlAccessorType(XmlAccessType.NONE)
 public class SubjectsIq extends AbstractSmartCampusIq {
@@ -39,25 +45,49 @@ public class SubjectsIq extends AbstractSmartCampusIq {
   /**
    * Subject class.
    */
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
   @XmlRootElement(name = "subject")
   @XmlAccessorType(XmlAccessType.FIELD)
   public static class Subject {
 
     /**
-     * Thing name.
+     * Subject name.
      */
     @XmlElement(name = "name")
     private String subjectName;
 
-    public Subject() {
-      // needed.
-    }
+    /**
+     * Subject name.
+     */
+    @XmlElementWrapper
+    @XmlElement(name = "instructor")
+    private List<Instructor> instructors;
 
     /**
-     * Constructs a Subject instance.
+     * Instrcutor representing class.
+     *
      */
-    public Subject(String thingName) {
-      this.subjectName = thingName;
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @XmlRootElement(name = "instructor")
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class Instructor {
+
+      /**
+       * Instructor's id.
+       */
+      @XmlElement(name = "instructorId")
+      private Long instructorId;
+
+      /**
+       * Instructor's name.
+       */
+      @XmlElement(name = "name")
+      private String name;
+
     }
 
   }
@@ -81,7 +111,8 @@ public class SubjectsIq extends AbstractSmartCampusIq {
   /**
    * Things to good to have.
    */
-  @XmlElement(name = "subjects")
+  @XmlElementWrapper
+  @XmlElement(name = "subject")
   private List<Subject> subjects;
 
   /**
@@ -99,23 +130,6 @@ public class SubjectsIq extends AbstractSmartCampusIq {
     super(ELEMENT, NAMESPACE);
     this.student = user;
     this.subjects = things;
-  }
-
-  public String getStudent() {
-    return student;
-  }
-
-  public List<Subject> getSubjects() {
-    return subjects;
-  }
-
-  public void setStudent(String student) {
-    this.student = student;
-  }
-
-
-  public void setSubjects(List<Subject> subjects) {
-    this.subjects = subjects;
   }
 
   @Override

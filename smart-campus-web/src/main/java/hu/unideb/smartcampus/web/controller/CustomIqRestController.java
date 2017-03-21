@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
+import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
+import org.jivesoftware.smack.StanzaListener;
 import org.jivesoftware.smack.packet.IQ.Type;
+import org.jivesoftware.smack.packet.Stanza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +78,7 @@ public class CustomIqRestController {
     }
     return body;
   }
-  
+
   /**
    * Sample endpoint.
    * 
@@ -83,20 +86,23 @@ public class CustomIqRestController {
    */
   @GetMapping(path = "/subjects")
   public ResponseEntity<String> sendSubjectRetrieval(@RequestParam(name = "user") String user) {
-    ResponseEntity<String> body = ResponseEntity.ok().body("OK");
+    String result = "OK";
+    SubjectListener listener = new SubjectListener();
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
       SubjectsIq iq = new SubjectsIq();
       iq.setType(Type.get);
       iq.setFrom(connection.getUser());
-      iq.setTo(connection.getUser());
+      iq.setTo("smartcampus@smartcampus/Smartcampus");
       iq.setStudent(user);
-      connection.sendStanza(iq);
+      PacketCollector collector = connection.createPacketCollectorAndSend(iq);
+      SubjectsIq resultIq = collector.nextResultBlockForever();
+      result = resultIq.toString();
     } catch (NotConnectedException e) {
       LOGGER.error("Error while sending IQ", e);
       ResponseEntity.badRequest().body(e.getCause().getMessage());
     }
-    return body;
+    return ResponseEntity.ok().body(result);
   }
 
   /**
@@ -109,5 +115,29 @@ public class CustomIqRestController {
     ResponseEntity<String> body = ResponseEntity.ok().body("OK");
     defaultUser.reconnect();
     return body;
+  }
+
+
+  /**
+   * Listener.
+   *
+   */
+  public class SubjectListener implements StanzaListener {
+
+    private String result;
+
+    @Override
+    public void processPacket(Stanza packet) throws NotConnectedException {
+      SubjectsIq iq = (SubjectsIq) packet;
+      result = iq.toString();
+    }
+
+    public String getResult() {
+      return result;
+    }
+
+    public void setResult(String result) {
+      this.result = result;
+    }
   }
 }
