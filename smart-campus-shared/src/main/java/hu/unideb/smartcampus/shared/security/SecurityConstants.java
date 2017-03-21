@@ -15,5 +15,15 @@ public class SecurityConstants {
    * The path of the user registering endpoint.
    */
   public static final String REGISTER_USER = "/register";
+  
+  /**
+   * The path of the user account check service.
+   */
+  public static final String CHECK_ACCOUNT = "/check_account";
+
+  /**
+   * The path of the password change service.
+   */
+  public static final String CHANGE_PASSWORD = "/change_password";
 
 }

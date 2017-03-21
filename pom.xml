@@ -18,19 +18,49 @@
     <description>This module provides the server side of the project called Smart Campus at the University of Debrecen.</description>
     <inceptionYear>2017</inceptionYear>
 
-    <developers>
-        <developer>
-            <id>Nandi</id>
-            <name>Nándor Holozsnyák</name>
-            <email>holi60@gmail.com</email>
-            <organization>University of Debrecen</organization>
-            <roles>
-                <role>Student</role>
+	<developers>
+		<developer>
+			<id>Nandi</id>
+			<name>Nándor Holozsnyák</name>
+			<email>holi60@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>Gabor</id>
+			<name>Gabor Ivanyi-Nagy</name>
+			<email>gabilampard@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>Atka</id>
+			<name>Attila Fekete</name>
+			<email>atkavagyok@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
                 <role>Developer</role>
-            </roles>
-        </developer>
-        <!-- add yourself -->
-    </developers>
+			</roles>
+		</developer>
+		<developer>
+			<id>kfnorbi</id>
+			<name>Norbert Kovács-Ferenc</name>
+			<email>kfnorbi@gmail.com</email>
+			<organization>University of Debrecen</organization>
+			<roles>
+				<role>Student</role>
+                <role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
 
     <ciManagement>
         <system>Travis CI</system>
@@ -71,8 +101,7 @@
         <rulesets.xml.location>${project.basedir}/../config/rules/rulesets.xml</rulesets.xml.location>
         <checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
         <version.wildfly>10.1.0.Final</version.wildfly>
-        <smack.version>4.1.9</smack.version>
-        <smack.bosh.version>4.2.0-rc3</smack.bosh.version>
+        <smack.version>4.2.0</smack.version>
         <jaxrs.version>2.0.1</jaxrs.version>
         <guava.version>21.0</guava.version>
         <jersey.common.version>2.25.1</jersey.common.version>
@@ -182,6 +211,11 @@
             <dependency>
                 <groupId>org.igniterealtime.smack</groupId>
                 <artifactId>smack-bosh</artifactId>
+                <version>${smack.version}</version>
+            </dependency>
+              <dependency>
+                <groupId>org.igniterealtime.smack</groupId>
+                <artifactId>smack-experimental</artifactId>
                 <version>${smack.version}</version>
             </dependency>
             <dependency>
