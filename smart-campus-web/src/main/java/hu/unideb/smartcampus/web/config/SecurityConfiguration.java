@@ -49,8 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http.csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login")
-        .usernameParameter("username").passwordParameter("password").successHandler(authenticationSuccessHandler()).and().exceptionHandling()
-        .authenticationEntryPoint(authenticationEntryPoint()).and().logout().logoutSuccessHandler(logoutSuccessHandler()).logoutUrl("/logout");
+        .successHandler(authenticationSuccessHandler()).usernameParameter("username")
+        .passwordParameter("password").and().exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPoint());
 
     http.httpBasic();
     // @formatter:on
@@ -98,7 +99,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
   /**
-   * TODO.
+   * The delegating authentication entry point of the application. This purpose to decide witch entry point is to be used per request.
+   * 
+   * @return The delegating entry point of the application.
    */
   @Bean
   public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -109,8 +112,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * The entry points of the application.
    * 
+   * @return the entry points of the application
    */
   @Bean
   public LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> delegatedEntryPoints() {
@@ -120,8 +124,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * The request matcher for the entry point of the api.
    * 
+   * @return the request matcher of the api endpoints
    */
   @Bean
   public RequestMatcher apiRequestMatcher() {
@@ -129,8 +134,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * Entry point of the api.
    * 
+   * @return the authentication entry point of the api
    */
   @Bean
   public AuthenticationEntryPoint apiEntryPoint() {
@@ -141,8 +147,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * TODO.
+   * Entry point of the web ui.
    * 
+   * @return the authentication entry point of the web ui
    */
   @Bean
   public AuthenticationEntryPoint formEntryPoint() {
@@ -166,5 +173,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   public LogoutSuccessHandler logoutSuccessHandler() {
     return new SmartCampusLogoutSuccessHandler();
   }
-
 }
