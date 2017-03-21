@@ -7,9 +7,7 @@ import java.util.List;
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
-import org.jivesoftware.smack.StanzaListener;
 import org.jivesoftware.smack.packet.IQ.Type;
-import org.jivesoftware.smack.packet.Stanza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
-import hu.unideb.smartcampus.shared.iq.SubjectsIq;
+import hu.unideb.smartcampus.shared.iq.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.TestIq;
 import hu.unideb.smartcampus.shared.iq.TestIq.Thing;
 
@@ -30,6 +29,12 @@ import hu.unideb.smartcampus.shared.iq.TestIq.Thing;
  */
 @RestController
 public class CustomIqRestController {
+
+  /**
+   * Smartcampus user JID.
+   */
+  private static final String SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS =
+      "smartcampus@smartcampus/Smartcampus";
 
   /**
    * Logger.
@@ -68,7 +73,7 @@ public class CustomIqRestController {
       List<Thing> things =
           Arrays.asList(new Thing("Uj IQ provider", "Smart campus appra a legjobb"));
       TestIq packet = new TestIq("smartcampus@smartcampus", things);
-      packet.setTo("smartcampus@smartcampus/Smartcampus");
+      packet.setTo(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS);
       packet.setType(Type.set);
       packet.setFrom(connection.getUser());
       connection.sendStanza(packet);
@@ -87,16 +92,40 @@ public class CustomIqRestController {
   @GetMapping(path = "/subjects")
   public ResponseEntity<String> sendSubjectRetrieval(@RequestParam(name = "user") String user) {
     String result = "OK";
-    SubjectListener listener = new SubjectListener();
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
-      SubjectsIq iq = new SubjectsIq();
+      SubjectsIqRequest iq = new SubjectsIqRequest();
       iq.setType(Type.get);
       iq.setFrom(connection.getUser());
-      iq.setTo("smartcampus@smartcampus/Smartcampus");
+      iq.setTo(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS);
       iq.setStudent(user);
       PacketCollector collector = connection.createPacketCollectorAndSend(iq);
-      SubjectsIq resultIq = collector.nextResultBlockForever();
+      SubjectsIqRequest resultIq = collector.nextResultBlockForever();
+      result = resultIq.toString();
+    } catch (NotConnectedException e) {
+      LOGGER.error("Error while sending IQ", e);
+      ResponseEntity.badRequest().body(e.getCause().getMessage());
+    }
+    return ResponseEntity.ok().body(result);
+  }
+
+  /**
+   * Sample endpoint.
+   * 
+   * @return {@link ResponseEntity}
+   */
+  @GetMapping(path = "/consulting")
+  public ResponseEntity<String> getInstrcutorConsultingDate(@RequestParam(name = "id") String id) {
+    String result = "OK";
+    try {
+      AbstractXMPPConnection connection = ejabberdUser.getConnection();
+      InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest();
+      iq.setType(Type.get);
+      iq.setFrom(connection.getUser());
+      iq.setTo(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS);
+      iq.setInstructorId(id);
+      PacketCollector collector = connection.createPacketCollectorAndSend(iq);
+      InstructorConsultingDatesIqRequest resultIq = collector.nextResultBlockForever();
       result = resultIq.toString();
     } catch (NotConnectedException e) {
       LOGGER.error("Error while sending IQ", e);
@@ -117,27 +146,4 @@ public class CustomIqRestController {
     return body;
   }
 
-
-  /**
-   * Listener.
-   *
-   */
-  public class SubjectListener implements StanzaListener {
-
-    private String result;
-
-    @Override
-    public void processPacket(Stanza packet) throws NotConnectedException {
-      SubjectsIq iq = (SubjectsIq) packet;
-      result = iq.toString();
-    }
-
-    public String getResult() {
-      return result;
-    }
-
-    public void setResult(String result) {
-      this.result = result;
-    }
-  }
 }

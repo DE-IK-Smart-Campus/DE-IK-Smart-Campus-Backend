@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.xmpp.handler.SubjectIqRequestHandler;
+import hu.unideb.smartcampus.service.api.xmpp.handler.SubjectRequestIqRequestHandler;
 
 /**
  * Subjects manager factory.
@@ -28,7 +28,7 @@ public final class SubjectsManagerFactory {
    * Subject handler.
    */
   @Autowired
-  private SubjectIqRequestHandler handler;
+  private SubjectRequestIqRequestHandler handler;
 
   /**
    * Logger.

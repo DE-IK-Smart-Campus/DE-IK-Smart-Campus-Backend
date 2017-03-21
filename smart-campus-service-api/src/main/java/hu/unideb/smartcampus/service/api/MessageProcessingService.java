@@ -1,7 +1,7 @@
 package hu.unideb.smartcampus.service.api;
 
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
-import hu.unideb.smartcampus.shared.iq.wrapper.BaseWrapper;
+import hu.unideb.smartcampus.shared.wrapper.BaseWrapper;
 
 /**
  * Incoming message processing service, it should be injected to DefaultUser.

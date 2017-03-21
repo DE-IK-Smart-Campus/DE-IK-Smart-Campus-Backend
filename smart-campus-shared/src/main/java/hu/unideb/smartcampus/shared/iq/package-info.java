@@ -1,4 +1,4 @@
-@XmlSchema(namespace = hu.unideb.smartcampus.shared.iq.SubjectsIq.NAMESPACE,
+@XmlSchema(namespace = AbstractSmartCampusIq.BASE_NAMESPACE,
     elementFormDefault = XmlNsForm.QUALIFIED)
 
 package hu.unideb.smartcampus.shared.iq;

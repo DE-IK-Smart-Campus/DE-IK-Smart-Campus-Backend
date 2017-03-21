@@ -22,7 +22,7 @@ import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.shared.iq.SubjectsIq;
+import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
 
 /**
  * Session scoped service for XMPP connection.
@@ -70,7 +70,7 @@ public class EjabberdUserImpl implements EjabberdUser {
   }
 
   private void initFeatures() {
-    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(SubjectsIq.ELEMENT);
+    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(SubjectsIqRequest.ELEMENT);
   }
 
   private void initIqHandler() {

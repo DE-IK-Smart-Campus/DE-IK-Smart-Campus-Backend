@@ -19,11 +19,12 @@ import org.jivesoftware.smack.util.LazyStringBuilder;
 
 /**
  * Base IQ for Smartcampus Application.
- *
  */
 @SuppressWarnings({"checkstyle:abbreviationaswordinname", "PMD"})
 @XmlAccessorType(XmlAccessType.NONE)
 public abstract class AbstractSmartCampusIq extends IQ {
+
+  public static final String BASE_NAMESPACE = "http://inf.unideb.hu/smartcampus/";
 
   private static final String APOSTROPHE = "'";
 
@@ -45,8 +46,8 @@ public abstract class AbstractSmartCampusIq extends IQ {
   /**
    * Base IQ constructor.
    */
-  public AbstractSmartCampusIq(String element, String namespace) {
-    super(element, namespace);
+  public AbstractSmartCampusIq(String element) {
+    super(element, BASE_NAMESPACE);
     super.setStanzaId(UUID.randomUUID().toString());
   }
 
@@ -71,7 +72,7 @@ public abstract class AbstractSmartCampusIq extends IQ {
     StringWriter writer = new StringWriter();
     JAXBContext context;
     try {
-      context = JAXBContext.newInstance(SubjectsIq.class);
+      context = JAXBContext.newInstance(getIqClass());
       Marshaller jaxbMarshaller = context.createMarshaller();
       jaxbMarshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
       jaxbMarshaller.marshal(element, writer);
@@ -85,8 +86,8 @@ public abstract class AbstractSmartCampusIq extends IQ {
     String result = writer.toString();
     result = result.replaceAll(NS2_AFTER, EMPTY);
     result = result.replaceAll(NS2_BEFORE, EMPTY);
-    result = result.replaceAll(getClosingTag(), EMPTY);
-    return result.replaceAll(QUOTATION_MARKS, APOSTROPHE);
+    result = result.replaceAll(QUOTATION_MARKS, APOSTROPHE);
+    return result.replaceAll(getClosingTag(), EMPTY);
   }
 
   private String getClosingTag() {
@@ -94,14 +95,12 @@ public abstract class AbstractSmartCampusIq extends IQ {
   }
 
   private JAXBElement<? extends AbstractSmartCampusIq> getRealInstance() {
-    return new JAXBElement<>(new QName(getNamespace(), getElement()), getIqClass(), getInstance());
+    return new JAXBElement<>(new QName(BASE_NAMESPACE, getElement()), getIqClass(), getInstance());
   }
 
   protected abstract Object getInstance();
 
   protected abstract String getElement();
-
-  protected abstract String getNamespace();
 
   private void resetBuilder(IQChildElementXmlStringBuilder xml) {
     Field f;

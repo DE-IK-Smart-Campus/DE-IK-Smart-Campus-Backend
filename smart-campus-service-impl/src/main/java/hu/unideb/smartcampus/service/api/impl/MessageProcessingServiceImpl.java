@@ -14,8 +14,8 @@ import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.MessageProcessingService;
 import hu.unideb.smartcampus.service.api.context.MessageProcessContext;
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
-import hu.unideb.smartcampus.shared.iq.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
+import hu.unideb.smartcampus.shared.wrapper.BaseWrapper;
 
 /**
  * Implementation of the message processing service.

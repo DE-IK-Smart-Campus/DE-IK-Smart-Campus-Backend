@@ -3,9 +3,9 @@ package hu.unideb.smartcampus.service.api.request.service;
 import org.junit.Assert;
 import org.junit.Test;
 
-import hu.unideb.smartcampus.shared.iq.wrapper.ExampleResponseWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.ExampleRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import hu.unideb.smartcampus.shared.wrapper.ExampleResponseWrapper;
 
 /**
  * Example test for testing request services.

@@ -14,10 +14,10 @@ import hu.unideb.smartcampus.persistence.repository.ConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.shared.iq.wrapper.SignUpForConsultingHourWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.SignUpForConsultingHourRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import hu.unideb.smartcampus.shared.wrapper.SignUpForConsultingHourWrapper;
 
 /**
  * Processing signing up for consulting hours.

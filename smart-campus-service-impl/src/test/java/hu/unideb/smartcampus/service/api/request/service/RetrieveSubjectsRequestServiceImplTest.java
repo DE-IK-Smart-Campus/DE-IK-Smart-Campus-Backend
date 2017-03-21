@@ -18,11 +18,11 @@ import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
-import hu.unideb.smartcampus.shared.iq.wrapper.SubjectRetrievalResponseWrapper;
-import hu.unideb.smartcampus.shared.iq.wrapper.inner.InstructorWrapper;
-import hu.unideb.smartcampus.shared.iq.wrapper.inner.SubjectWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 
 
 /**

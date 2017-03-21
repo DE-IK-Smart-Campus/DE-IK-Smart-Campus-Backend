@@ -40,8 +40,11 @@
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-core</artifactId>
         </dependency>
-    </dependencies>
-
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+        </dependency>
+     </dependencies>
     <build>
         <plugins>
             <plugin>

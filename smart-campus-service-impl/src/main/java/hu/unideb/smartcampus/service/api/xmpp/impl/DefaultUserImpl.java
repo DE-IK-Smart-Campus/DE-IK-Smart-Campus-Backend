@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.chat.ChatManager;
-import org.jivesoftware.smack.chat.ChatManagerListener;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
@@ -18,14 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import hu.unideb.smartcampus.service.api.iqprovider.SubjectIqProvider;
+import hu.unideb.smartcampus.service.api.iqprovider.InstructorConsultingDateIqProvider;
+import hu.unideb.smartcampus.service.api.iqprovider.SubjectRequestIqProvider;
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
-import hu.unideb.smartcampus.service.api.xmpp.SubjectsManagerFactory;
+import hu.unideb.smartcampus.service.api.xmpp.FeatureInjectorService;
 import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.shared.iq.SubjectsIq;
+import hu.unideb.smartcampus.shared.iq.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
 
 /**
  * Default user implementation, smartcampus@HOST.
@@ -57,19 +58,11 @@ public class DefaultUserImpl implements DefaultUser {
    */
   private XMPPTCPConnection connection;
 
-  /**
-   * XMPP server chat manager for default user.
-   */
-  private ChatManager chatManager;
-
   @Autowired
   private XmppClientConfigurationService connectionConfigurationService;
 
   @Autowired
-  private ChatManagerListener chatManagerListener;
-
-  @Autowired
-  private SubjectsManagerFactory subjectsManagerFactory;
+  private FeatureInjectorService featureInjectorService;
 
   /**
    * Init after class.
@@ -79,7 +72,7 @@ public class DefaultUserImpl implements DefaultUser {
     LOGGER.info("Starting default smart campus user...");
     try {
       initConnection(user, password);
-      registerDefaultListener();
+      registerFeatures();
       registerCustomIQs();
       LOGGER.info("Default user is ready to accept messages.");
     } catch (XmppException e) {
@@ -89,14 +82,15 @@ public class DefaultUserImpl implements DefaultUser {
 
 
   private void registerCustomIQs() {
-    ProviderManager.addIQProvider(SubjectsIq.ELEMENT, SubjectsIq.NAMESPACE,
-        new SubjectIqProvider());
+    ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, AbstractSmartCampusIq.BASE_NAMESPACE,
+        new SubjectRequestIqProvider());
+    ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
+        AbstractSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
   }
 
 
-  private void registerDefaultListener() {
-    subjectsManagerFactory.registerConnectionSubjectManager(connection);
-    // empty
+  private void registerFeatures() {
+    featureInjectorService.registerFeaturesForConnection(connection);
   }
 
   private void initConnection(String username, String password) throws XmppException {
@@ -105,14 +99,7 @@ public class DefaultUserImpl implements DefaultUser {
     connection = new XMPPTCPConnection(conf);
     connect();
     doLogin();
-    initChatManager();
   }
-
-  private void initChatManager() {
-    chatManager = ChatManager.getInstanceFor(connection);
-    chatManager.addChatListener(chatManagerListener);
-  }
-
 
   private void connect() throws ConnectionException {
     try {
