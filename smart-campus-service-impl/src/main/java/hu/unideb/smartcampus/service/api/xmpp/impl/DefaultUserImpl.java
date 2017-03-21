@@ -5,12 +5,11 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
+import javax.xml.bind.JAXBException;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.provider.ProviderManager;
-import org.jivesoftware.smack.chat2.ChatManager;
-import org.jivesoftware.smack.chat2.IncomingChatMessageListener;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.slf4j.Logger;
@@ -73,7 +72,6 @@ public class DefaultUserImpl implements DefaultUser {
    */
   @PostConstruct
   public void init() {
-    initSmack();
     LOGGER.info("Starting default smart campus user...");
     try {
       initConnection(user, password);
@@ -86,10 +84,14 @@ public class DefaultUserImpl implements DefaultUser {
   }
 
   private void registerCustomIQs() {
-    ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, AbstractSmartCampusIq.BASE_NAMESPACE,
-        new SubjectRequestIqProvider());
-    ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
-        AbstractSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
+    try {
+      ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, AbstractSmartCampusIq.BASE_NAMESPACE,
+          new SubjectRequestIqProvider());
+      ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
+          AbstractSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
+    } catch (JAXBException e) {
+      LOGGER.error("Unable to register custom IQ's please check the log for more information.", e);
+    }
   }
 
 
@@ -121,14 +123,6 @@ public class DefaultUserImpl implements DefaultUser {
       LOGGER.error("User could not log in.", e);
       throw new LoginException("Error on logging in to Ejabberd server.", e);
     }
-  }
-
-  /**
-   * {@inheritDoc}.
-   */
-  @Override
-  public void receiveMessage(String message) {
-    throw new UnsupportedOperationException("Empty method yet.");
   }
 
 

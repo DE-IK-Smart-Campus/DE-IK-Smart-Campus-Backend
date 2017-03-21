@@ -11,12 +11,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Instructor consulting hours wrapper.
  */
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @XmlRootElement(name = InstructorConsultingDatesIqRequest.ELEMENT,
     namespace = AbstractSmartCampusIq.BASE_NAMESPACE)
 @XmlAccessorType(XmlAccessType.NONE)

@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
+import javax.xml.bind.JAXBException;
+
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 
 /**
@@ -11,8 +13,10 @@ public class InstructorConsultingDateIqProvider
 
   /**
    * Constructor for provider.
+   * 
+   * @throws JAXBException on any error.
    */
-  public InstructorConsultingDateIqProvider() {
+  public InstructorConsultingDateIqProvider() throws JAXBException {
     super();
     // do not delete it, it should init the super class jaxb content.
   }

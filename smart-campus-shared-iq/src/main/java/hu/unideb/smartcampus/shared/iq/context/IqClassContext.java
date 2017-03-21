@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.reflections.Reflections;
 
 import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.ObjectFactory;
 
 /**
  * IQ class context holder.
@@ -39,7 +40,9 @@ public final class IqClassContext {
 
   private static Class[] convertToClasses(Set<Class<? extends AbstractSmartCampusIq>> allClasses) {
     List<Class<? extends AbstractSmartCampusIq>> classList = convertToList(allClasses);
-    return classList.toArray(new Class[classList.size()]);
+    Class[] classes = classList.toArray(new Class[classList.size() + 1]);
+    classes[classList.size()] = ObjectFactory.class;
+    return classes;
   }
 
   private static List<Class<? extends AbstractSmartCampusIq>> convertToList(

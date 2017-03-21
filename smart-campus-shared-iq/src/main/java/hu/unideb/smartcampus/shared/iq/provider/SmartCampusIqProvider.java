@@ -28,14 +28,11 @@ public class SmartCampusIqProvider<T extends AbstractSmartCampusIq> extends IQPr
 
   /**
    * Constructs a SmartCampusIqProvider instance.
+   * @throws JAXBException on any error.
    */
-  public SmartCampusIqProvider() {
-    try {
-      jaxbContext = JAXBContext.newInstance(IqClassContext.getIqClasses());
-      unmarshaller = new PullUnmarshaller(jaxbContext);
-    } catch (JAXBException e) {
-      LOGGER.error("Error on creating JAXBContext.", e);
-    }
+  public SmartCampusIqProvider() throws JAXBException {
+    jaxbContext = JAXBContext.newInstance(IqClassContext.getIqClasses());
+    unmarshaller = new PullUnmarshaller(jaxbContext);
   }
 
 

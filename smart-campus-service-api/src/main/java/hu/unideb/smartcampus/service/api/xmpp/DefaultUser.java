@@ -9,13 +9,6 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 public interface DefaultUser {
 
   /**
-   * Default user receive message.s
-   *
-   * @param message the received message.
-   */
-  void receiveMessage(String message);
-
-  /**
    * Get default smartcampus user's connection.
    *
    * @return default smartcampus user's active connection.

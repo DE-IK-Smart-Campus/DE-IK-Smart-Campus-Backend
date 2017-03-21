@@ -16,7 +16,9 @@ import org.jivesoftware.smack.packet.ExtensionElement;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smack.util.LazyStringBuilder;
+import org.jxmpp.jid.Jid;
 
+import hu.unideb.smartcampus.shared.iq.context.IqClassContext;
 import hu.unideb.smartcampus.shared.iq.factory.ExtensionElementFactory;
 
 /**
@@ -34,9 +36,9 @@ public abstract class AbstractSmartCampusIq extends IQ {
 
   private static final String QUOTATION_MARKS = "\"";
 
-  private static final String NS2_BEFORE = ":ns2";
+  private static final String NS0_BEFORE = ":ns0";
 
-  private static final String NS2_AFTER = "ns2:";
+  private static final String NS0_AFTER = "ns0:";
 
   /**
    * Base IQ constructor.
@@ -76,20 +78,21 @@ public abstract class AbstractSmartCampusIq extends IQ {
     StringWriter writer = new StringWriter();
     JAXBContext context;
     try {
-      context = JAXBContext.newInstance(getIqClass());
+      context = JAXBContext.newInstance(IqClassContext.getIqClasses());
       Marshaller jaxbMarshaller = context.createMarshaller();
       jaxbMarshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
       jaxbMarshaller.marshal(element, writer);
     } catch (JAXBException e) {
       // ERROR
+      return "";
     }
     return replaceXmlBlacklistedItems(writer);
   }
 
   private String replaceXmlBlacklistedItems(StringWriter writer) {
     String result = writer.toString();
-    result = result.replaceAll(NS2_AFTER, EMPTY);
-    result = result.replaceAll(NS2_BEFORE, EMPTY);
+    result = result.replaceAll(NS0_AFTER, EMPTY);
+    result = result.replaceAll(NS0_BEFORE, EMPTY);
     result = result.replaceAll(QUOTATION_MARKS, APOSTROPHE);
     return result.replaceAll(getClosingTag(), EMPTY);
   }
@@ -134,17 +137,17 @@ public abstract class AbstractSmartCampusIq extends IQ {
   /**
    * Get To.
    */
-  public String getTo() {
+  public Jid getTo() {
     return super.getTo();
   }
 
   /**
    * Get From.
    */
-  public String getFrom() {
+  public Jid getFrom() {
     return super.getFrom();
   }
-
+  
   /**
    * Get Error.
    */

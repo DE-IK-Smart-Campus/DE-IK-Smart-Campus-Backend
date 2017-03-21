@@ -10,12 +10,16 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Subject Iq.
  */
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @XmlRootElement(name = SubjectsIqRequest.ELEMENT, namespace = AbstractSmartCampusIq.BASE_NAMESPACE)
 @XmlAccessorType(XmlAccessType.NONE)
 public class SubjectsIqRequest extends AbstractSmartCampusIq {
@@ -69,4 +73,10 @@ public class SubjectsIqRequest extends AbstractSmartCampusIq {
   protected Class<? extends AbstractSmartCampusIq> getIqClass() {
     return this.getClass();
   }
+
+  public String toXml() {
+    return "SubjectsIqRequest [student=" + student + ", subjects=" + subjects + "]";
+  }
+  
+  
 }
