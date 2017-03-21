@@ -18,6 +18,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -25,6 +26,7 @@ import hu.unideb.smartcampus.web.config.security.LdapConfigurationPropertyProvid
 import hu.unideb.smartcampus.web.config.security.LdapProperties;
 import hu.unideb.smartcampus.web.config.security.SmartCampusApiRequestMatcher;
 import hu.unideb.smartcampus.web.config.security.SmartCampusAuthenticationSuccessHandler;
+import hu.unideb.smartcampus.web.config.security.SmartCampusLogoutSuccessHandler;
 import hu.unideb.smartcampus.web.config.security.SmartCampusSynchronizingContextMapper;
 
 /**
@@ -152,6 +154,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   public AuthenticationEntryPoint formEntryPoint() {
     return new LoginUrlAuthenticationEntryPoint("/login");
+  }
+  
+  /**
+   * TODO.
+   * 
+   */
+  @Bean
+  public AuthenticationSuccessHandler authenticationSuccessHandler() {
+    return new SmartCampusAuthenticationSuccessHandler();
+  }
+
+  /**
+   * TODO.
+   * 
+   */
+  @Bean
+  public LogoutSuccessHandler logoutSuccessHandler() {
+    return new SmartCampusLogoutSuccessHandler();
   }
 
   /**
