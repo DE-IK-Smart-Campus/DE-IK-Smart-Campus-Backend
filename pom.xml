@@ -57,6 +57,7 @@
         <module>smart-campus-webservice-api</module>
         <module>smart-campus-webservice-impl</module>
         <module>smart-campus-web</module>
+        <module>smart-campus-shared-iq</module>
     </modules>
 
     <properties>
@@ -133,6 +134,11 @@
             <dependency>
                 <groupId>hu.unideb</groupId>
                 <artifactId>smart-campus-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-shared-iq</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

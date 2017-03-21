@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.iqprovider;
+package hu.unideb.smartcampus.shared.iq.provider;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import hu.unideb.smartcampus.shared.iq.AbstractSmartCampusIq;
-import hu.unideb.smartcampus.shared.iq.IqClassContext;
+import hu.unideb.smartcampus.shared.iq.context.IqClassContext;
+import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
 
 /**
  * Base class for every IQ provider class in the Smart campus application.

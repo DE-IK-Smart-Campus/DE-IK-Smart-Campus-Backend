@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingHoursRequestServiceImpl;
-import hu.unideb.smartcampus.shared.iq.AbstractSmartCampusIq;
-import hu.unideb.smartcampus.shared.iq.ConsultingDateIqElement;
-import hu.unideb.smartcampus.shared.iq.FromToDateIqElement;
-import hu.unideb.smartcampus.shared.iq.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
+import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
 import hu.unideb.smartcampus.shared.wrapper.InstructorConsultingHoursWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.ConsultingDateWrapper;

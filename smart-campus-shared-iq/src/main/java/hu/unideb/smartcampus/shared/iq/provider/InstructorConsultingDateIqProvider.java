@@ -1,6 +1,6 @@
-package hu.unideb.smartcampus.service.api.iqprovider;
+package hu.unideb.smartcampus.shared.iq.provider;
 
-import hu.unideb.smartcampus.shared.iq.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 
 /**
  * Instructor consulting date IQ provider.

@@ -16,17 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import hu.unideb.smartcampus.service.api.iqprovider.InstructorConsultingDateIqProvider;
-import hu.unideb.smartcampus.service.api.iqprovider.SubjectRequestIqProvider;
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
 import hu.unideb.smartcampus.service.api.xmpp.FeatureInjectorService;
 import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.shared.iq.AbstractSmartCampusIq;
-import hu.unideb.smartcampus.shared.iq.InstructorConsultingDatesIqRequest;
-import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.provider.InstructorConsultingDateIqProvider;
+import hu.unideb.smartcampus.shared.iq.provider.SubjectRequestIqProvider;
+import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
  * Default user implementation, smartcampus@HOST.

@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.shared.iq;
+package hu.unideb.smartcampus.shared.iq.request.element;
 
 import java.io.Serializable;
 

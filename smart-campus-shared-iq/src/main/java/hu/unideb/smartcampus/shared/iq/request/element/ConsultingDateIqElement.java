@@ -1,4 +1,6 @@
-package hu.unideb.smartcampus.shared.iq;
+package hu.unideb.smartcampus.shared.iq.request.element;
+
+import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,7 +18,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @XmlRootElement(name = "consultingDate")
 @XmlAccessorType(XmlAccessType.NONE)
-public class ConsultingDateIqElement {
+public class ConsultingDateIqElement implements Serializable {
+
+  /**
+   * UID.
+   */
+  private static final long serialVersionUID = -2873216923468627648L;
 
   /**
    * Consulting date id.

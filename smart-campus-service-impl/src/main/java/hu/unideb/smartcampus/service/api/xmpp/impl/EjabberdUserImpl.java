@@ -22,7 +22,7 @@ import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
  * Session scoped service for XMPP connection.

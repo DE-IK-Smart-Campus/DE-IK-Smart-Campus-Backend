@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.shared.iq;
+package hu.unideb.smartcampus.shared.iq.context;
 
 import java.util.List;
 import java.util.Set;
@@ -6,19 +6,17 @@ import java.util.stream.Collectors;
 
 import org.reflections.Reflections;
 
+import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+
 /**
  * IQ class context holder.
  */
 public final class IqClassContext {
 
-  private IqClassContext() {
-    // for PMD
-  }
-  
   /**
    * Context path.
    */
-  private static final String CONTEXT_PATH = "hu.unideb.smartcampus.shared.iq";
+  private static final String CONTEXT_PATH = "hu.unideb.smartcampus.shared.iq.request";
 
   /**
    * IQ classes.
@@ -30,11 +28,13 @@ public final class IqClassContext {
     IQ_CLASSES = convertToClasses(allClasses);
   }
 
-  private static Set<Class<? extends AbstractSmartCampusIq>> getAllClasses() {
-    Reflections reflections = new Reflections(CONTEXT_PATH);
-    Set<Class<? extends AbstractSmartCampusIq>> allClasses =
-        reflections.getSubTypesOf(AbstractSmartCampusIq.class);
-    return allClasses;
+  /**
+   * Get IQ classes.
+   * 
+   * @return IQ classes.
+   */
+  public static Class[] getIqClasses() {
+    return IQ_CLASSES.clone();
   }
 
   private static Class[] convertToClasses(Set<Class<? extends AbstractSmartCampusIq>> allClasses) {
@@ -47,13 +47,13 @@ public final class IqClassContext {
     return allClasses.stream().collect(Collectors.toList());
   }
 
-  /**
-   * Get IQ classes.
-   * 
-   * @return IQ classes.
-   */
-  public static Class[] getIqClasses() {
-    return IQ_CLASSES.clone();
+  private static Set<Class<? extends AbstractSmartCampusIq>> getAllClasses() {
+    Reflections reflections = new Reflections(CONTEXT_PATH);
+    return reflections.getSubTypesOf(AbstractSmartCampusIq.class);
+  }
+
+  private IqClassContext() {
+    // for PMD
   }
 
 }

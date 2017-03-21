@@ -5,7 +5,8 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.iqrequest.AbstractIqRequestHandler;
 import org.jivesoftware.smackx.disco.ServiceDiscoveryManager;
 
-import hu.unideb.smartcampus.shared.iq.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+
 
 /**
  * Subject IQ manager.

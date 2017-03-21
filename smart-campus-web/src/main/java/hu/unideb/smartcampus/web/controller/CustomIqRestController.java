@@ -1,9 +1,6 @@
 package hu.unideb.smartcampus.web.controller;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
@@ -18,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
-import hu.unideb.smartcampus.shared.iq.InstructorConsultingDatesIqRequest;
-import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
-import hu.unideb.smartcampus.shared.iq.TestIq;
-import hu.unideb.smartcampus.shared.iq.TestIq.Thing;
+import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 
 /**
@@ -58,30 +53,6 @@ public class CustomIqRestController {
   public CustomIqRestController(final EjabberdUser sampleService, final DefaultUser defaultUser) {
     this.ejabberdUser = sampleService;
     this.defaultUser = defaultUser;
-  }
-
-  /**
-   * Sample endpoint.
-   * 
-   * @return {@link ResponseEntity}
-   */
-  @GetMapping(path = "/sendIq")
-  public ResponseEntity<String> sendIq() {
-    ResponseEntity<String> body = ResponseEntity.ok().body("OK");
-    try {
-      AbstractXMPPConnection connection = ejabberdUser.getConnection();
-      List<Thing> things =
-          Arrays.asList(new Thing("Uj IQ provider", "Smart campus appra a legjobb"));
-      TestIq packet = new TestIq("smartcampus@smartcampus", things);
-      packet.setTo(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS);
-      packet.setType(Type.set);
-      packet.setFrom(connection.getUser());
-      connection.sendStanza(packet);
-    } catch (NotConnectedException e) {
-      LOGGER.error("Error while sending IQ", e);
-      ResponseEntity.badRequest().body(e.getCause().getMessage());
-    }
-    return body;
   }
 
   /**

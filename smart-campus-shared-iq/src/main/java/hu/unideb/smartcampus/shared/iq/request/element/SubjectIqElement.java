@@ -1,5 +1,6 @@
-package hu.unideb.smartcampus.shared.iq;
+package hu.unideb.smartcampus.shared.iq.request.element;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,7 +20,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @XmlRootElement(name = "subject")
 @XmlAccessorType(XmlAccessType.NONE)
-public class SubjectIqElement {
+public class SubjectIqElement implements Serializable {
+
+  /**
+   * UID.
+   */
+  private static final long serialVersionUID = 6717626218636857093L;
 
   /**
    * Subject name.

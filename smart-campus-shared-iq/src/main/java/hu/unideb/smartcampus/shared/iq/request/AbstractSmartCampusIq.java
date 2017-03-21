@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.shared.iq;
+package hu.unideb.smartcampus.shared.iq.request;
 
 import java.io.StringWriter;
 import java.lang.reflect.Field;
@@ -16,6 +16,8 @@ import org.jivesoftware.smack.packet.ExtensionElement;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smack.util.LazyStringBuilder;
+
+import hu.unideb.smartcampus.shared.iq.factory.ExtensionElementFactory;
 
 /**
  * Base IQ for Smartcampus Application.
@@ -66,7 +68,9 @@ public abstract class AbstractSmartCampusIq extends IQ {
     return new IQChildElementXmlStringBuilder(getExtension());
   }
 
-  protected abstract ExtensionElement getExtension();
+  protected ExtensionElement getExtension() {
+    return ExtensionElementFactory.getExtensionByElementName(getElement());
+  }
 
   private String createXml(JAXBElement<? extends AbstractSmartCampusIq> element) {
     StringWriter writer = new StringWriter();

@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.shared.iq;
+package hu.unideb.smartcampus.shared.iq.request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jivesoftware.smack.packet.ExtensionElement;
-
+import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import lombok.Builder;
 import lombok.Data;
 
@@ -59,11 +58,6 @@ public class InstructorConsultingDatesIqRequest extends AbstractSmartCampusIq {
   }
 
   @Override
-  protected ExtensionElement getExtension() {
-    return new InstructorConsultingDatesExtension();
-  }
-
-  @Override
   protected Object getInstance() {
     return this;
   }
@@ -76,28 +70,6 @@ public class InstructorConsultingDatesIqRequest extends AbstractSmartCampusIq {
   @Override
   protected Class getIqClass() {
     return this.getClass();
-  }
-
-  /**
-   * Class extension.
-   */
-  private class InstructorConsultingDatesExtension implements ExtensionElement {
-
-    @Override
-    public String getElementName() {
-      return InstructorConsultingDatesIqRequest.ELEMENT;
-    }
-
-    @Override
-    public CharSequence toXML() {
-      return "";
-    }
-
-    @Override
-    public String getNamespace() {
-      return AbstractSmartCampusIq.BASE_NAMESPACE;
-    }
-
   }
 
 }

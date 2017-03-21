@@ -1,6 +1,6 @@
-package hu.unideb.smartcampus.service.api.iqprovider;
+package hu.unideb.smartcampus.shared.iq.provider;
 
-import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
  * Subjects provider.

@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.shared.iq.AbstractSmartCampusIq;
-import hu.unideb.smartcampus.shared.iq.InstructorIqElement;
-import hu.unideb.smartcampus.shared.iq.SubjectIqElement;
-import hu.unideb.smartcampus.shared.iq.SubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
+import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
 import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
