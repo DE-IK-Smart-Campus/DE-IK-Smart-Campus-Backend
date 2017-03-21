@@ -59,7 +59,7 @@ public class EjabberdUserImpl implements EjabberdUser {
   @Override
   public void login(String username, String password) throws XmppException {
     LOGGER.info("Logging in user {}", username);
-    if (connection == null) {
+    if (connection == null || !connection.isAuthenticated()) {
       initConnection(username, password);
     }
     LOGGER.info("Login succesfull.");
@@ -87,32 +87,45 @@ public class EjabberdUserImpl implements EjabberdUser {
 
   private void disconnectAndClearConnection() {
     connection.disconnect();
-    connection = null;
+    resetConnection();
   }
 
   private void initConnection(String username, String password) throws XmppException {
-    BOSHConfiguration conf = connectionConfigurationService
+    final BOSHConfiguration conf = connectionConfigurationService
         .getBoshConfigurationByUserNameAndPassword(username, password);
     connection = new XMPPBOSHConnection(conf);
     connect();
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      LOGGER.error("Thread sleeping was not working.");
+    }
     doLogin();
   }
 
   private void connect() throws ConnectionException {
     try {
       connection.connect();
-    } catch (SmackException | IOException | XMPPException e) {
+      LOGGER.info("Connected:{}", connection.isConnected());
+    } catch (SmackException | IOException | XMPPException | InterruptedException e) {
+      resetConnection();
       LOGGER.error("Connection could not been established.", e);
       throw new ConnectionException("Error on connection to Ejabberd server.", e);
     }
   }
 
+  private void resetConnection() {
+    connection = null;
+  }
+
   private void doLogin() throws LoginException {
     try {
       connection.login();
-    } catch (XMPPException | SmackException | IOException e) {
+    } catch (XMPPException | SmackException | IOException | InterruptedException e) {
+      resetConnection();
       LOGGER.error("User could not log in.", e);
       throw new LoginException("Error on logging in to Ejabberd server.", e);
     }
   }
+
 }
