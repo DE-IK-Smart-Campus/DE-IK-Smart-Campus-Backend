@@ -3,6 +3,8 @@ package hu.unideb.smartcampus.service.api.xmpp;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 
+import hu.unideb.smartcampus.shared.exception.XmppException;
+
 /**
  * XMPP client configuration service.
  *
@@ -15,7 +17,8 @@ public interface XmppClientConfigurationService {
    * @param password password
    * @return XMPPTCPConnection configuration.
    */
-  BOSHConfiguration getBoshConfigurationByUserNameAndPassword(String username, String password);
+  BOSHConfiguration getBoshConfigurationByUserNameAndPassword(String username, String password)
+      throws XmppException;
 
   /**
    * Creates XMPP TCP client configuration.
@@ -25,5 +28,5 @@ public interface XmppClientConfigurationService {
    * @return XMPPTCPConnection configuration.
    */
   XMPPTCPConnectionConfiguration getXmppConfigurationByUserNameAndPassword(String username,
-      String password);
+      String password) throws XmppException;
 }

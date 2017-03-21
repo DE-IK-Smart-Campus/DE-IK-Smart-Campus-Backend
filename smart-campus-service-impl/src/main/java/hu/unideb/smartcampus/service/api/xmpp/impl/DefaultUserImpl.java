@@ -3,12 +3,13 @@ package hu.unideb.smartcampus.service.api.xmpp.impl;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.chat.ChatManager;
-import org.jivesoftware.smack.chat.ChatManagerListener;
+import org.jivesoftware.smack.chat2.ChatManager;
+import org.jivesoftware.smack.chat2.IncomingChatMessageListener;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.slf4j.Logger;
@@ -62,13 +63,14 @@ public class DefaultUserImpl implements DefaultUser {
   private XmppClientConfigurationService connectionConfigurationService;
 
   @Autowired
-  private ChatManagerListener chatManagerListener;
+  private IncomingChatMessageListener incomingChatManagerListener;
 
   /**
    * Init after class.
    */
   @PostConstruct
   public void init() {
+    initSmack();
     LOGGER.info("Starting default smart campus user...");
     try {
       initConnection(user, password);
@@ -77,6 +79,11 @@ public class DefaultUserImpl implements DefaultUser {
     } catch (XmppException e) {
       LOGGER.error("Error while logging in default user.", e);
     }
+  }
+
+
+  private void initSmack() {
+    // empty
   }
 
 
@@ -95,14 +102,14 @@ public class DefaultUserImpl implements DefaultUser {
 
   private void initChatManager() {
     chatManager = ChatManager.getInstanceFor(connection);
-    chatManager.addChatListener(chatManagerListener);
+    chatManager.addIncomingListener(incomingChatManagerListener);
   }
 
 
   private void connect() throws ConnectionException {
     try {
       connection.connect();
-    } catch (SmackException | IOException | XMPPException e) {
+    } catch (SmackException | IOException | XMPPException | InterruptedException e) {
       LOGGER.error("Connection could not been established.", e);
       throw new ConnectionException("Error on connection to Ejabberd server.", e);
     }
@@ -111,7 +118,7 @@ public class DefaultUserImpl implements DefaultUser {
   private void doLogin() throws LoginException {
     try {
       connection.login();
-    } catch (XMPPException | SmackException | IOException e) {
+    } catch (XMPPException | SmackException | IOException | InterruptedException e) {
       LOGGER.error("User could not log in.", e);
       throw new LoginException("Error on logging in to Ejabberd server.", e);
     }
@@ -132,6 +139,23 @@ public class DefaultUserImpl implements DefaultUser {
   @Override
   public XMPPTCPConnection getConnection() {
     return connection;
+  }
+
+  @PreDestroy
+  public void preDestroy() {
+    disconnectAndResetConnection();
+  }
+
+  private void disconnectAndResetConnection() {
+    if (connection != null) {
+      connection.disconnect();
+    }
+    resetConnection();
+  }
+
+
+  private void resetConnection() {
+    connection = null;
   }
 
 }
