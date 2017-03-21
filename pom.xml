@@ -99,7 +99,7 @@
         <rulesets.xml.location>${project.basedir}/../config/rules/rulesets.xml</rulesets.xml.location>
         <checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
         <version.wildfly>10.1.0.Final</version.wildfly>
-        <smack.version>4.1.9</smack.version>
+        <smack.version>4.2.0</smack.version>
         <smack.bosh.version>4.2.0-rc3</smack.bosh.version>
         <jaxrs.version>2.0.1</jaxrs.version>
         <guava.version>21.0</guava.version>
@@ -210,6 +210,11 @@
                 <groupId>org.igniterealtime.jbosh</groupId>
                 <artifactId>jbosh</artifactId>
                 <version>${jbosh.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.igniterealtime.smack</groupId>
+                <artifactId>smack-experimental</artifactId>
+                <version>${smack.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

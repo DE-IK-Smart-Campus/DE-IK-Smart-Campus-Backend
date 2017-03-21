@@ -15,8 +15,6 @@ import hu.unideb.smartcampus.service.api.UserRegistrationService;
 import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.service.api.exception.RegistrationFailedException;
-import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
-import hu.unideb.smartcampus.shared.exception.XmppException;
 
 /**
  * Synchronizes and logs in the user across all modules.
@@ -28,13 +26,10 @@ public class SmartCampusSynchronizingContextMapper extends LdapUserDetailsMapper
       LoggerFactory.getLogger(SmartCampusSynchronizingContextMapper.class);
 
   @Autowired
-  private UserRegistrationService userRegistrationService;
-
-  @Autowired
   private UserService userService;
 
   @Autowired
-  private EjabberdUser ejabberdUser;
+  private UserRegistrationService userRegistrationService;
 
   @Override
   public UserDetails mapUserFromContext(DirContextOperations ctx, String username,
@@ -49,22 +44,14 @@ public class SmartCampusSynchronizingContextMapper extends LdapUserDetailsMapper
       }
     }
 
-    final User user = userService.getByUsername(username).get();
-
-    try {
-      ejabberdUser.login(user.getUsername(), user.getPassword());
-    } catch (XmppException e) {
-      throw new SmartCampusFullLoginFailedException(e);
-    }
-
     final UserDetails userDetails = super.mapUserFromContext(ctx, username, authorities);
-    return new SmartCampusUserDetails(userDetails, user);
+    Optional<User> user = userService.getByUsername(username);
+    return new SmartCampusUserDetails(userDetails, user.isPresent() ? user.get() : null);
   }
 
 
   protected boolean userRegistrationRequired(String username) {
-    Optional<User> user = userService.getByUsername(username);
-    return !user.isPresent();
+    return !userService.getByUsername(username).isPresent();
   }
 
 }

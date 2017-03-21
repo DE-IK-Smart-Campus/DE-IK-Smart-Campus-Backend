@@ -5,7 +5,7 @@ package hu.unideb.smartcampus.shared.exception;
  *
  *
  */
-public class XmppException extends Exception {
+public class XmppException extends SmartCampusException {
 
   private static final long serialVersionUID = 1L;
 

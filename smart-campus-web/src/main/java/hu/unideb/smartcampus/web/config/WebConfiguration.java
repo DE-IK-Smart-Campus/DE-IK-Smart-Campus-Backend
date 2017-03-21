@@ -14,7 +14,7 @@ import hu.unideb.smartcampus.webservice.api.config.WebServiceConfiguration;
  */
 @Configuration
 @Import({ServiceConfiguration.class, WebServiceConfiguration.class})
-@ComponentScan("hu.unideb.smartcampus.web.controller")
+@ComponentScan("hu.unideb.smartcampus.web")
 public class WebConfiguration {
 
 
