@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.web;
+package hu.unideb.smartcampus.web.controller;
 
 import org.junit.Before;
 import org.springframework.test.web.servlet.MockMvc;

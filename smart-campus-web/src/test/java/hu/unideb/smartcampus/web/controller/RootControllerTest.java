@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.web;
+package hu.unideb.smartcampus.web.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import hu.unideb.smartcampus.web.controller.RootController;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RootControllerTest extends AbstractControllerTest {
