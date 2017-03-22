@@ -1,13 +1,9 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import static org.junit.Assert.assertTrue;
-
-
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -17,32 +13,23 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.repository.ConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
-import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.ConsultingHourService;
 import hu.unideb.smartcampus.service.api.OfficeHourGeneratorService;
-import hu.unideb.smartcampus.service.api.converter.todomain.SubjectEntityToSubjectConverter;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.converter.toentity.ConsultingDateToConsultingDateEntityConverter;
 import hu.unideb.smartcampus.service.api.converter.toentity.FromToDateToFromToDateEntityConverter;
 import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
 import hu.unideb.smartcampus.service.api.domain.FromToDate;
-import hu.unideb.smartcampus.service.api.domain.Subject;
 import hu.unideb.smartcampus.shared.officehour.OfficeHour;
 import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import hu.unideb.smartcampus.service.api.ConsultingHourService;
 
 
 /**

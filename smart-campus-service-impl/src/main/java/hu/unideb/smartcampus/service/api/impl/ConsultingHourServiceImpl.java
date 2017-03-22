@@ -2,34 +2,25 @@ package hu.unideb.smartcampus.service.api.impl;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
 import hu.unideb.smartcampus.persistence.repository.ConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.ConsultingHourService;
 import hu.unideb.smartcampus.service.api.OfficeHourGeneratorService;
-import hu.unideb.smartcampus.service.api.converter.todomain.SubjectEntityToSubjectConverter;
+import hu.unideb.smartcampus.service.api.converter.todomain.SubjectDetailsEntityToSubjectDetailsConverter;
 import hu.unideb.smartcampus.service.api.converter.toentity.ConsultingDateToConsultingDateEntityConverter;
 import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
-import hu.unideb.smartcampus.service.api.domain.Subject;
 import hu.unideb.smartcampus.shared.officehour.OfficeHour;
 import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
-
-import hu.unideb.smartcampus.persistence.repository.UserRepository;
-import hu.unideb.smartcampus.service.api.ConsultingHourService;
-import hu.unideb.smartcampus.service.api.converter.todomain.SubjectDetailsEntityToSubjectDetailsConverter;
 
 
 /**
@@ -89,15 +80,6 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
     this.officeHourGeneratorService = officeHourGeneratorService;
   }
   
-  /**
-   * {@inheritDoc}.
-   */
-  @Override
-  @Transactional(readOnly = true)
-  public Set<Subject> getSubjectsByUserId(final Long id) {
-    Set<SubjectEntity> subjects = userRepository.getSubjectsByUserId(id);
-    return subjects.stream().map(converter::convert).collect(Collectors.toSet());
-  }
 
   /**
    * {@inheritDoc}.
