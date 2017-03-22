@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api.domain;
 import static hu.unideb.smartcampus.shared.exclusion.FieldExclusion.EXCLUDE_PASSWORD;
 
 import java.util.List;
+
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.shared.enumeration.Role;
 import lombok.Builder;

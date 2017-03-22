@@ -7,6 +7,7 @@ import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUM
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_USER;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import hu.unideb.smartcampus.shared.enumeration.Role;
 import lombok.Builder;
 import lombok.Data;
