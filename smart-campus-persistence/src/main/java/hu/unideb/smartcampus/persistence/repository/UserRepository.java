@@ -5,7 +5,7 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 
 /**
@@ -22,10 +22,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
   /**
    * Get actual subjects by username.
    */
-  Set<SubjectEntity> getSubjectsByUsername(String username);
-
-  /**
-   * Get actual subjects by id.
-   */
-  Set<SubjectEntity> getSubjectsByUserId(Long id);
+  Set<SubjectDetailsEntity> getSubjectsByUsername(String username);
 }

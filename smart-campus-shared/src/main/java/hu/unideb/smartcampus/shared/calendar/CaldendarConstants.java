@@ -23,11 +23,6 @@ public class CaldendarConstants {
   public static final String CLASS_NAME = "className";
 
   /**
-   * Group name for lecture code.
-   */
-  public static final String LECTURE_CODE = "lectureCode";
-
-  /**
    * Group name for class code.
    */
   public static final String CLASS_CODE = "classCode";

@@ -13,14 +13,27 @@ public class ConsultingDate {
   /**
    * Date of the consulting hours.
    */
-  private final String date;
+  private String dateInString;
+
+  /**
+   * From to date entity.
+   */
+  private FromToDate fromToDate;
+
+  /**
+   * Sum of students.
+   */
+  private Integer sum;
 
   /**
    * Constructs consulting date.
    */
   @Builder
-  public ConsultingDate(final String date) {
-    this.date = date;
+  public ConsultingDate(final String date, final FromToDate fromToDate, final Integer sum) {
+    this.dateInString = date;
+    this.fromToDate = fromToDate;
+    this.sum = sum;
   }
+
 
 }

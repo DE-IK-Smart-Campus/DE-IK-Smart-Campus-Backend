@@ -14,12 +14,12 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.InstructorConsultingHoursWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.ConsultingHourWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.FromToDateWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import hu.unideb.smartcampus.shared.wrapper.InstructorConsultingHoursWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.ConsultingDateWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.FromToDateWrapper;
 
 /**
  * Retrieve instructor consulting dates service.
@@ -49,7 +49,7 @@ public class RetrieveInstructorsConsultingHoursRequestServiceImpl
     Set<ConsultingDateEntity> consultingDates = instructorRepository
         .getInstructorConsultingDatesByIdAndGivenDate(instructorId, from.getTime(), to.getTime());
 
-    List<ConsultingHourWrapper> consultingHours = extractConsultingHour(consultingDates);
+    List<ConsultingDateWrapper> consultingHours = extractConsultingHour(consultingDates);
 
     InstructorConsultingHoursWrapper result =
         InstructorConsultingHoursWrapper.builder().consultingHours(consultingHours)
@@ -59,13 +59,13 @@ public class RetrieveInstructorsConsultingHoursRequestServiceImpl
   }
 
 
-  private List<ConsultingHourWrapper> extractConsultingHour(
+  private List<ConsultingDateWrapper> extractConsultingHour(
       Set<ConsultingDateEntity> consultingDates) {
     return consultingDates.stream().map(this::consultingDateToWrapper).collect(Collectors.toList());
   }
 
-  private ConsultingHourWrapper consultingDateToWrapper(ConsultingDateEntity entity) {
-    return ConsultingHourWrapper.builder().consultingHourId(entity.getId())
+  private ConsultingDateWrapper consultingDateToWrapper(ConsultingDateEntity entity) {
+    return ConsultingDateWrapper.builder().consultingHourId(entity.getId())
         .fromToDates(convertToWrapperFromToDate(entity.getFromToDate()))
         .reservedSum(entity.getSum()).build();
   }

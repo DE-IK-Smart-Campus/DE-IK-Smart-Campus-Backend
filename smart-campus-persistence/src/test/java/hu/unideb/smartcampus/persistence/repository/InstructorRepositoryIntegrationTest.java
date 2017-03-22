@@ -13,7 +13,6 @@ import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_END_DATE;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_START_DATE;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.NAME;
-import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.SUBJECT_ID;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.SUBJECT_NAME;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.util.FromToDateUtil;
 
 /**
@@ -41,8 +40,8 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
   /**
    * Sample subject.
    */
-  private static final SubjectEntity SAMPLE_SUBJECT =
-      SubjectEntity.builder().id(SUBJECT_ID).name(SUBJECT_NAME).build();
+  private static final SubjectDetailsEntity SAMPLE_SUBJECT =
+      SubjectDetailsEntity.builder().subjectName(SUBJECT_NAME).subjectType("LABORATORY").build();
 
   /**
    * Friday consulting date entity.

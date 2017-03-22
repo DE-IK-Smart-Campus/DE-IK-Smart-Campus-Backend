@@ -86,6 +86,7 @@
         <module>smart-campus-webservice-api</module>
         <module>smart-campus-webservice-impl</module>
         <module>smart-campus-web</module>
+        <module>smart-campus-shared-iq</module>
     </modules>
 
     <properties>
@@ -100,14 +101,16 @@
         <checkstyle.xml.location>config/checkstyle/checkstyle.xml</checkstyle.xml.location>
         <version.wildfly>10.1.0.Final</version.wildfly>
         <smack.version>4.2.0</smack.version>
-        <smack.bosh.version>4.2.0-rc3</smack.bosh.version>
+        <jbosh.version>0.9.0</jbosh.version>
         <jaxrs.version>2.0.1</jaxrs.version>
         <guava.version>21.0</guava.version>
         <jersey.common.version>2.25.1</jersey.common.version>
         <servlet.api.version>2.5</servlet.api.version>
         <resteasy.version>3.0.2.Final</resteasy.version>
         <ical4j.version>0.9.20</ical4j.version>
-        <jbosh.version>0.8.0</jbosh.version>
+        <jaxb.version>2.2.11</jaxb.version>
+        <moxy.version>2.6.4</moxy.version>
+        <reflections.version>0.9.11</reflections.version>
         <wildfly.maven.plugin.version>1.1.0.Alpha11</wildfly.maven.plugin.version>
     </properties>
 
@@ -163,7 +166,11 @@
                 <artifactId>smart-campus-shared</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>hu.unideb</groupId>
+                <artifactId>smart-campus-shared-iq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-client</artifactId>
@@ -216,6 +223,32 @@
                 <artifactId>smack-experimental</artifactId>
                 <version>${smack.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.igniterealtime.jbosh</groupId>
+                <artifactId>jbosh</artifactId>
+                <version>${jbosh.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>org.eclipse.persistence.moxy</artifactId>
+                <version>${moxy.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -257,7 +290,7 @@
                         <failOnViolation>true</failOnViolation>
                         <linkXRef>false</linkXRef>
                     </configuration>
-                    <executions>
+                    <!--<executions>
                         <execution>
                             <id>pmd-check</id>
                             <phase>verify</phase>
@@ -266,7 +299,7 @@
                                 <goal>pmd</goal>
                             </goals>
                         </execution>
-                    </executions>
+                    </executions>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -279,7 +312,7 @@
                             <version>${com.puppycrawl.tools.version}</version>
                         </dependency>
                     </dependencies>
-                    <executions>
+                    <!--<executions>
                         <execution>
                             <id>checkstyle-check</id>
                             <phase>verify</phase>
@@ -299,6 +332,9 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <excludes> **/PullUnmarshaller.java</excludes>
+                    </configuration>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

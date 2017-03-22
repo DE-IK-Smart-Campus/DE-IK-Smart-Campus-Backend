@@ -9,6 +9,11 @@ import hu.unideb.smartcampus.service.api.domain.User;
 public interface UserService {
 
   /**
+   * Get by id.
+   */
+  Optional<User> getById(Long id);
+
+  /**
    * Retrieves {@link User} in {@link Optional}.
    */
   Optional<User> getByUsername(String username);

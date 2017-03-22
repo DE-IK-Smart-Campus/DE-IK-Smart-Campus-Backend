@@ -9,6 +9,7 @@ import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
+import org.jivesoftware.smackx.disco.ServiceDiscoveryManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
+import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
  * Session scoped service for XMPP connection.
@@ -61,8 +63,18 @@ public class EjabberdUserImpl implements EjabberdUser {
     LOGGER.info("Logging in user {}", username);
     if (connection == null || !connection.isAuthenticated()) {
       initConnection(username, password);
+      initFeatures();
+      initIqHandler();
     }
     LOGGER.info("Login succesfull.");
+  }
+
+  private void initFeatures() {
+    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(SubjectsIqRequest.ELEMENT);
+  }
+
+  private void initIqHandler() {
+    // empty
   }
 
   /**

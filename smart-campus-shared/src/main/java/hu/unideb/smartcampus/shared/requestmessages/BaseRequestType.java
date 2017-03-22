@@ -20,7 +20,9 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
     @JsonSubTypes.Type(value = RetrieveInstructorConsultingHours.class,
         name = RequestMessagesConstants.RETRIEVE_CONSULTING_HOURS),
     @JsonSubTypes.Type(value = SignUpForConsultingHourRequest.class,
-        name = RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_REQUEST)})
+        name = RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_REQUEST),
+    @JsonSubTypes.Type(value = CreateOfficeHoursRequest.class,
+        name = RequestMessagesConstants.CREATE_CONSULTING_DATES_REQUEST)})
 public interface BaseRequestType {
 
 }
