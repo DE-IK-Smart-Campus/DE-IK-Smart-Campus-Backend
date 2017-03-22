@@ -22,6 +22,11 @@
 			<groupId>org.igniterealtime.smack</groupId>
 			<artifactId>smack-bosh</artifactId>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>ical4j</groupId>
+            <artifactId>ical4j</artifactId>
+			<scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>
