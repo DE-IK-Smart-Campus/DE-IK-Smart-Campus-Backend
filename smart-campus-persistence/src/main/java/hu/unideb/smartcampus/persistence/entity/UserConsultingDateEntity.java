@@ -60,8 +60,9 @@ public class UserConsultingDateEntity extends BaseEntity<Long> {
    * Constructs a UserConsultingDateEntity entity.
    */
   @Builder
-  public UserConsultingDateEntity(final UserEntity user, final ConsultingDateEntity consultingDate,
+  public UserConsultingDateEntity(final Long id, final UserEntity user, final ConsultingDateEntity consultingDate,
       final String reason, final String duration) {
+    super(id);
     this.user = user;
     this.consultingDate = consultingDate;
     this.reason = reason;

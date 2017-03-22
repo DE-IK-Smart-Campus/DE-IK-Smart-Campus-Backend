@@ -1,9 +1,10 @@
 package hu.unideb.smartcampus.service.api;
 
-import java.util.Set;
 
-import hu.unideb.smartcampus.service.api.domain.Subject;
+import java.util.List;
 
+import hu.unideb.smartcampus.shared.officehour.OfficeHour;
+import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
 /**
  * Consulting hour service.
  *
@@ -11,9 +12,8 @@ import hu.unideb.smartcampus.service.api.domain.Subject;
 public interface ConsultingHourService {
 
   /**
-   * Get subjects by user id.
-   *
+   * Generate office hours for instructor.
    */
-  Set<Subject> getSubjectsByUserId(Long id);
-
+  Integer generateOfficeHoursForInstructor(Long instructorId, List<OfficeHour> officeHours,
+      OfficeHourIntervall intervall);
 }

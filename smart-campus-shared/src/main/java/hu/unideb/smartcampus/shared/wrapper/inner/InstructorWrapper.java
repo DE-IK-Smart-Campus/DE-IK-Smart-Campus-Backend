@@ -21,6 +21,14 @@ public class InstructorWrapper {
   private final String name;
 
   /**
+   * Todo.
+   */
+  public InstructorWrapper() {
+    this.instructorId = 0L;
+    this.name = "";
+  }
+
+  /**
    * Constructs an InstructorWrapper instance.
    */
   @Builder

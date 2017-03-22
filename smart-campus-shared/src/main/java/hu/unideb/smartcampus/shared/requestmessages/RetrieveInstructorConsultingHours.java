@@ -1,5 +1,8 @@
 package hu.unideb.smartcampus.shared.requestmessages;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,6 +11,8 @@ import lombok.Data;
  *
  */
 @Data
+@JsonDeserialize(builder = RetrieveInstructorConsultingHours.RetrieveInstructorConsultingHoursBuilder.class)
+@JsonPOJOBuilder(withPrefix = "")
 public class RetrieveInstructorConsultingHours extends BaseRequest {
 
   /**
@@ -22,5 +27,13 @@ public class RetrieveInstructorConsultingHours extends BaseRequest {
   public RetrieveInstructorConsultingHours(final String messageType, final Long instructorId) {
     super(messageType);
     this.instructorId = instructorId;
+  }
+  
+  /**
+   * Builder.
+   *
+   */
+  @JsonPOJOBuilder(withPrefix = "")
+  public static final class RetrieveInstructorConsultingHoursBuilder {
   }
 }

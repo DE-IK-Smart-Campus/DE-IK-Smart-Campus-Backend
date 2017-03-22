@@ -37,9 +37,17 @@ public class UserServiceImpl implements UserService {
     this.conversionService = conversionService;
   }
 
+  @Override
+  public Optional<User> getById(final Long id) {
+    Assert.notNull(id);
+
+    return Optional.ofNullable(conversionService.convert(userRepository.findOne(id), User.class));
+  }
+
   /**
    * {@inheritDoc}.
    */
+  @Transactional(readOnly = true)
   @Override
   public Optional<User> getByUsername(final String username) {
     Assert.notNull(username);

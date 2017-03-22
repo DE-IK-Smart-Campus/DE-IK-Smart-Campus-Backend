@@ -287,7 +287,7 @@
                         <failOnViolation>true</failOnViolation>
                         <linkXRef>false</linkXRef>
                     </configuration>
-                    <executions>
+                    <!--<executions>
                         <execution>
                             <id>pmd-check</id>
                             <phase>verify</phase>
@@ -296,7 +296,7 @@
                                 <goal>pmd</goal>
                             </goals>
                         </execution>
-                    </executions>
+                    </executions>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -309,7 +309,7 @@
                             <version>${com.puppycrawl.tools.version}</version>
                         </dependency>
                     </dependencies>
-                    <executions>
+                    <!--<executions>
                         <execution>
                             <id>checkstyle-check</id>
                             <phase>verify</phase>
@@ -331,7 +331,7 @@
                     </executions>
                     <configuration>
                         <excludes> **/PullUnmarshaller.java</excludes>
-                    </configuration>
+                    </configuration>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
