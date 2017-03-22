@@ -71,7 +71,8 @@ insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (4, 1);
 
 -- subjects
-/*insert into subject_details(subject_name,subject_type) values ('AI', 'LABORATORY');
+
+insert into subject_details(subject_name,subject_type) values ('AI', 'LABORATORY');
 
 insert into subject_details(subject_name, subject_type) values ('Mesterséges intelligencia alapjai', 'LABORATORY');
 
@@ -82,43 +83,31 @@ insert into subject_details(subject_name, subject_type) values ('Az internet esz
 ---------------------------------------------------------------------------------
 
 --instructor to subject
+insert into instructor_subject_details(instructor_id,subject_name, subject_type)
+values (1, 'AI', 'LABORATORY');
 
-/*insert into instructor_subjects(instructor_id,subject_details_id)
-values (1, 1);
+insert into instructor_subject_details(instructor_id,subject_name, subject_type)
+values (2, 'Hálózati architektúrák és protokollok', 'LECTURE');
 
-insert into instructor_subjects(instructor_id,subject_details_id)
-values (2, 3);
+insert into instructor_subject_details(instructor_id,subject_name, subject_type)
+values (3, 'Hálózati architektúrák és protokollok', 'LECTURE');
 
-insert into instructor_subjects(instructor_id,subject_details_id)
-values (3, 3);
+insert into instructor_subject_details(instructor_id,subject_name, subject_type)
+values (4, 'Hálózati architektúrák és protokollok', 'LECTURE');
 
-insert into instructor_subjects(instructor_id,subject_details_id)
-values (4, 3);
-
-insert into instructor_subjects(instructor_id,subject_details_id)
-values (5, 4);
+insert into instructor_subject_details(instructor_id,subject_name, subject_type)
+values (5, 'Az internet eszközei és szolgáltatásai', 'LECTURE');
 --------------------------------------------------------
 
 -- User actual subjects
-insert into user_actual_subjects(user_id,subject_details_id)
-values (1, 1);
+insert into user_subject_details_relation(user_id,subject_name, subject_type)
+values (1, 'AI', 'LABORATORY');
 
-insert into user_actual_subjects(user_id,subject_details_id)
-values (2, 2);
+insert into user_subject_details_relation(user_id,subject_name, subject_type)
+values (2, 'Mesterséges intelligencia alapjai', 'LABORATORY');
 
-insert into user_actual_subjects(user_id,subject_details_id)
-values (2, 3);
+insert into user_subject_details_relation(user_id,subject_name, subject_type)
+values (2, 'Hálózati architektúrák és protokollok', 'LECTURE');
 
-insert into user_actual_subjects(user_id,subject_details_id)
-values (2, 4);
-
--- Filtikai
-insert into user_actual_subjects(user_id,subject_details_id)
-values (9, 2);
-
-insert into user_actual_subjects(user_id,subject_details_id)
-values (9, 3);
-
-insert into user_actual_subjects(user_id,subject_details_id)
-values (9, 4);
-*/
+insert into user_subject_details_relation(user_id,subject_name, subject_type)
+values (2, 'Az internet eszközei és szolgáltatásai', 'LECTURE');

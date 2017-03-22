@@ -60,15 +60,15 @@ public class RetrieveSubjectsRequestServiceImpl
 
   private List<SubjectWrapper> createSubjectsWrapper(Set<SubjectDetailsEntity> subjects) {
     List<SubjectWrapper> result = new ArrayList<>();
-/*    if (subjects != null) {
+    if (subjects != null) {
       subjects.stream().forEach(subjectEntity -> {
         Set<InstructorEntity> instructorSet =
-            instructorRepository.getInstructorsBySubjectId(subjectEntity.getId());
+            instructorRepository.getInstructorsBySubjectName(subjectEntity.getSubjectName());
         List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
-        result.add(SubjectWrapper.builder().name(subjectEntity.getSubjectName()).instructors(instructors)
-            .build());
+        result.add(SubjectWrapper.builder().name(subjectEntity.getSubjectName())
+            .instructors(instructors).build());
       });
-    }*/
+    }
     return result;
   }
 
