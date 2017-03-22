@@ -3,7 +3,7 @@ package hu.unideb.smartcampus.web.listener;
 import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatManagerListener;
 
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectRetrievalResponseWrapper;
+import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
 
 public class ConsultingHoursChatManagerListener implements ChatManagerListener {
 

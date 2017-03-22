@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,11 +10,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Collections;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectRetrievalResponseWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
 
 
 /**

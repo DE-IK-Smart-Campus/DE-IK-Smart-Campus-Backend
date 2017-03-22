@@ -1,8 +1,8 @@
-package hu.unideb.smartcampus.service.api.domain.response.wrapper;
+package hu.unideb.smartcampus.shared.wrapper;
 
 import java.util.List;
 
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.ConsultingHourWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.ConsultingDateWrapper;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,14 +15,14 @@ public class InstructorConsultingHoursWrapper extends BaseWrapper {
   /**
    * Consulting hours.
    */
-  private final List<ConsultingHourWrapper> consultingHours;
+  private final List<ConsultingDateWrapper> consultingHours;
 
   /**
    * Constructs a InstructorConsultingHoursWrapper instance.
    */
   @Builder
   public InstructorConsultingHoursWrapper(final String messageType,
-      final List<ConsultingHourWrapper> consultingHours) {
+      final List<ConsultingDateWrapper> consultingHours) {
     super(messageType);
     this.consultingHours = consultingHours;
   }

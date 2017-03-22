@@ -1,13 +1,15 @@
 package hu.unideb.smartcampus.web.listener;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
 import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectRetrievalResponseWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
 
 public class ConsultingHoursChatMessageListener implements ChatMessageListener {
 

@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
+package hu.unideb.smartcampus.shared.wrapper.inner;
 
 import java.io.Serializable;
 

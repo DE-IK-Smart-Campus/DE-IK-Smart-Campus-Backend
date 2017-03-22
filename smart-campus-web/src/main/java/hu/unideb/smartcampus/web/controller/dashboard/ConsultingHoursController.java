@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.web.controller.dashboard;
 
+import java.util.Arrays;
+
 import org.jivesoftware.smack.chat.ChatManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectRetrievalResponseWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.InstructorWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.SubjectWrapper;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
+import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 import hu.unideb.smartcampus.web.listener.ConsultingHoursChatManagerListener;
 
 /**

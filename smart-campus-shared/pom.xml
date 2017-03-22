@@ -12,6 +12,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-extensions</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
         </dependency>
@@ -28,8 +36,11 @@
             <artifactId>spring-tx</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>hu.unideb</groupId>
+            <artifactId>smart-campus-shared-iq</artifactId>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

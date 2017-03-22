@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.domain.response.wrapper;
+package hu.unideb.smartcampus.shared.wrapper;
 
 import lombok.Builder;
 import lombok.Data;

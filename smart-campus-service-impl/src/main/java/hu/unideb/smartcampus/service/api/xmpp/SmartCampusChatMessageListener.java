@@ -14,8 +14,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingService;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.shared.exception.ProcessMessageException;
+import hu.unideb.smartcampus.shared.wrapper.BaseWrapper;
 import hu.unideb.smartcampus.xmpp.exception.ChatResponseException;
 
 /**
