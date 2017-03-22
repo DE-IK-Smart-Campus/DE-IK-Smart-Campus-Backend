@@ -1,5 +1,12 @@
-DE-IK SMART-CAMPUS [![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
+# DE-IK SMART-CAMPUS
 
+Build status: [![Build Status](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg?branch=master)](https://travis-ci.org/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web)
+
+Code quality: [![Codacy Badge](https://api.codacy.com/project/badge/Grade/731cfa78c7f84c0ea2c3e40b364ae4b6)](https://www.codacy.com/app/holi60/DE-IK-Smart-Campus-Web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web&amp;utm_campaign=Badge_Grade)
+
+Release: [![GitHub release](https://img.shields.io/github/release/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web.svg)](https://github.com/DE-IK-Smart-Campus/DE-IK-Smart-Campus-Web/releases/latest)
+
+## Configuration
 First configure your settings.xml in your .m2 folder with this profile, you can find an example in config/maven folder.
 
 
@@ -10,16 +17,28 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 				    <activeByDefault>true</activeByDefault>
 			    </activation>
 			    <properties>
-				    <mysql.connection.url>jdbc:mysql://smartcampus:3306/smartcampus</mysql.connection.url>
-				    <mysql.username>nandi</mysql.username>
-				    <mysql.password>mysql</mysql.password>
-			        <ldap.host></ldap.host>
-			        <ldap.port></ldap.port>
-			        <ldap.basedn></ldap.basedn>
-			        <ldap.passwordattribute></ldap.passwordattribute>
-			        <ldap.userpattern></ldap.userpattern>
-			        <ldap.groupsearchbase></ldap.groupsearchbase>
-			        <ldap.groupfilter></ldap.groupfilter>
+					<mysql.connection.url></mysql.connection.url>
+					<mysql.username></mysql.username>
+					<mysql.password></mysql.password>
+					<smartcampus.ejabberd.api.host></smartcampus.ejabberd.api.host>
+					<smartcampus.ejabberd.api.port></smartcampus.ejabberd.api.port>
+					<smartcampus.ejabberd.api.endpoint></smartcampus.ejabberd.api.endpoint>
+					<smartcampus.xmpp.mucservice></smartcampus.xmpp.mucservice>
+					<smartcampus.xmpp.nodes></smartcampus.xmpp.nodes>
+					<smartcampus.xmpp.host></smartcampus.xmpp.host>
+					<smartcampus.xmpp.domain></smartcampus.xmpp.domain>
+					<smartcampus.xmpp.tcp.port></smartcampus.xmpp.tcp.port>
+					<smartcampus.xmpp.bosh.port></smartcampus.xmpp.bosh.port>
+					<smartcampus.xmpp.service></smartcampus.xmpp.service>
+					<smartcampus.default.user></smartcampus.default.user>
+					<smartcampus.default.password></smartcampus.default.password>
+					<ldap.host></ldap.host>
+					<ldap.port></ldap.port>
+					<ldap.basedn></ldap.basedn>
+					<ldap.passwordattribute></ldap.passwordattribute>
+					<ldap.userpattern></ldap.userpattern>
+					<ldap.groupsearchbase></ldap.groupsearchbase>
+					<ldap.groupfilter></ldap.groupfilter>
 			    </properties>
 		    </profile>
 	</profiles>

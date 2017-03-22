@@ -15,15 +15,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.SubjectRetrievalResponseWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.InstructorWrapper;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.inner.SubjectWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
+import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 
 /**
  * Service for retrieve the given user's subjects.
@@ -52,23 +52,23 @@ public class RetrieveSubjectsRequestServiceImpl
   public SubjectRetrievalResponseWrapper getResponse(Object object) {
     RetrieveSubjectsRequest msg = (RetrieveSubjectsRequest) object;
     LOGGER.info("Retrieving user ({}) subjects.", msg.getUserId());
-    Set<SubjectEntity> subjects = userRepositoy.getSubjectsByUsername(msg.getUserId());
+    Set<SubjectDetailsEntity> subjects = userRepositoy.getSubjectsByUsername(msg.getUserId());
     List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
     return SubjectRetrievalResponseWrapper.builder().messageType(RETRIEVE_SUBJECTS_RESPONSE)
         .subjects(subjectsWrapper).build();
   }
 
-  private List<SubjectWrapper> createSubjectsWrapper(Set<SubjectEntity> subjects) {
+  private List<SubjectWrapper> createSubjectsWrapper(Set<SubjectDetailsEntity> subjects) {
     List<SubjectWrapper> result = new ArrayList<>();
-    if (subjects != null) {
+/*    if (subjects != null) {
       subjects.stream().forEach(subjectEntity -> {
         Set<InstructorEntity> instructorSet =
             instructorRepository.getInstructorsBySubjectId(subjectEntity.getId());
         List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
-        result.add(SubjectWrapper.builder().name(subjectEntity.getName()).instructors(instructors)
+        result.add(SubjectWrapper.builder().name(subjectEntity.getSubjectName()).instructors(instructors)
             .build());
       });
-    }
+    }*/
     return result;
   }
 

@@ -1,5 +1,8 @@
 package hu.unideb.smartcampus.shared.requestmessages;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,12 +11,9 @@ import lombok.Data;
  *
  */
 @Data
+@JsonDeserialize(builder = ExampleRequest.ExampleRequestBuilder.class)
 public class ExampleRequest extends BaseRequest {
 
-  /**
-   * Message type.
-   */
-  private static final String MESSAGE_TYPE = "ExampleProcessMessage";
 
   /**
    * Example field.
@@ -27,6 +27,14 @@ public class ExampleRequest extends BaseRequest {
   public ExampleRequest(final String messageType, final String example) {
     super(messageType);
     this.example = example;
+  }
+  
+  /**
+   * Builder.
+   *
+   */
+  @JsonPOJOBuilder(withPrefix = "")
+  public static final class ExampleRequestBuilder {
   }
 
 

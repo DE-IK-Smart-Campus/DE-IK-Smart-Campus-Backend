@@ -25,9 +25,9 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.util.FromToDateUtil;
-import hu.unideb.smartcampus.service.api.domain.response.wrapper.InstructorConsultingHoursWrapper;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import hu.unideb.smartcampus.shared.wrapper.InstructorConsultingHoursWrapper;
 
 /**
  * Test for {@link RetrieveInstructorsConsultingHoursRequestServiceImpl}.

@@ -53,5 +53,17 @@ public class RequestMessagesConstants {
    */
   public static final String SIGN_UP_FOR_CONSULTING_HOUR_RESPONSE =
       "SignUpForConsultingHourProcessMessageResponse";
+  
+  /**
+   * SignUpForConsultingHourRequest message type.
+   */
+  public static final String CREATE_CONSULTING_DATES_REQUEST =
+      "CreateConsultingDatesProcessMessageRequest";
+
+  /**
+   * SubjectRetrievalResponseWrapper response message type.
+   */
+  public static final String CREATE_CONSULTING_DATES_RESPONSE =
+      "CreateConsultingDatesProcessMessageResponse";
 
 }
