@@ -1,12 +1,104 @@
 <configuration>
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-			</pattern>
-		</encoder>
-	</appender>
 
-	<root level="debug">
-		<appender-ref ref="STDOUT" />
-	</root>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="xmppCommunication" class="ch.qos.logback.core.FileAppender">
+        <file>xmpp-communication.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}[%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.jivesoftware">
+        <level value="info" />
+        <appender-ref ref="xmppCommunication" />
+    </logger>
+    
+    <logger name="org.igniterealtime">
+        <level value="info" />
+        <appender-ref ref="xmppCommunication" />
+    </logger>
+
+    <appender name="smartCampus" class="ch.qos.logback.core.FileAppender">
+        <file>smart-campus.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}[%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="hu.unideb.smartcampus">
+        <level value="debug" />
+        <appender-ref ref="smartCampus" />
+    </logger>
+
+    <appender name="persistence" class="ch.qos.logback.core.FileAppender">
+        <file>smart-campus-persistence.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}[%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="hu.unideb.smartcampus.persistence">
+        <level value="debug" />
+        <appender-ref ref="persistence" />
+    </logger>
+
+    <appender name="service" class="ch.qos.logback.core.FileAppender">
+        <file>smart-campus-service.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}[%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="hu.unideb.smartcampus.service">
+        <level value="debug" />
+        <appender-ref ref="service" />
+    </logger>
+
+    <appender name="webservice" class="ch.qos.logback.core.FileAppender">
+        <file>smart-campus-webservice.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}[%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="hu.unideb.smartcampus.webservice">
+        <level value="debug" />
+        <appender-ref ref="webservice" />
+    </logger>
+
+    <appender name="web" class="ch.qos.logback.core.FileAppender">
+        <file>smart-campus-web.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}[%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="hu.unideb.smartcampus.web">
+        <level value="debug" />
+        <appender-ref ref="web" />
+    </logger>
+    
+    
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
 </configuration>
