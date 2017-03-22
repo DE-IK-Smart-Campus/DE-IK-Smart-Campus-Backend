@@ -26,7 +26,7 @@ import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.shared.iq.provider.InstructorConsultingDateIqProvider;
 import hu.unideb.smartcampus.shared.iq.provider.SubjectRequestIqProvider;
-import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
@@ -85,10 +85,10 @@ public class DefaultUserImpl implements DefaultUser {
 
   private void registerCustomIQs() {
     try {
-      ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, AbstractSmartCampusIq.BASE_NAMESPACE,
+      ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE,
           new SubjectRequestIqProvider());
       ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
-          AbstractSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
+          BaseSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
     } catch (JAXBException e) {
       LOGGER.error("Unable to register custom IQ's please check the log for more information.", e);
     }

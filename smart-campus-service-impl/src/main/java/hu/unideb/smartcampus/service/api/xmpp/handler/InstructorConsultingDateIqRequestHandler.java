@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingHoursRequestServiceImpl;
-import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;
@@ -35,7 +35,7 @@ public class InstructorConsultingDateIqRequestHandler extends AbstractSmartCampu
    * Ctor.
    */
   public InstructorConsultingDateIqRequestHandler() {
-    super(InstructorConsultingDatesIqRequest.ELEMENT, AbstractSmartCampusIq.BASE_NAMESPACE,
+    super(InstructorConsultingDatesIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE,
         Type.get, Mode.sync);
   }
 
