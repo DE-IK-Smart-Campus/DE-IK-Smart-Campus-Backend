@@ -12,14 +12,14 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import hu.unideb.smartcampus.shared.iq.context.IqClassContext;
-import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 
 /**
  * Base class for every IQ provider class in the Smart campus application.
  *
  */
 @SuppressWarnings({"PMD"})
-public class SmartCampusIqProvider<T extends AbstractSmartCampusIq> extends IQProvider<T> {
+public class SmartCampusIqProvider<T extends BaseSmartCampusIq> extends IQProvider<T> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SmartCampusIqProvider.class);
 

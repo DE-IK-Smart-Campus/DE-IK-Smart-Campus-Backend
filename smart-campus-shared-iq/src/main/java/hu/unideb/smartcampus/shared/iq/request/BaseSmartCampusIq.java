@@ -26,7 +26,7 @@ import hu.unideb.smartcampus.shared.iq.factory.ExtensionElementFactory;
  */
 @SuppressWarnings({"checkstyle:abbreviationaswordinname", "PMD"})
 @XmlAccessorType(XmlAccessType.NONE)
-public abstract class AbstractSmartCampusIq extends IQ {
+public class BaseSmartCampusIq extends IQ {
 
   public static final String BASE_NAMESPACE = "http://inf.unideb.hu/smartcampus/";
 
@@ -41,16 +41,23 @@ public abstract class AbstractSmartCampusIq extends IQ {
   private static final String NS0_AFTER = "ns0:";
 
   /**
+   * Default constructor.
+   */
+  public BaseSmartCampusIq() {
+    super("base", BASE_NAMESPACE);
+  }
+
+  /**
    * Base IQ constructor.
    */
-  public AbstractSmartCampusIq(IQ iq) {
+  public BaseSmartCampusIq(IQ iq) {
     super(iq);
   }
 
   /**
    * Base IQ constructor.
    */
-  public AbstractSmartCampusIq(String element) {
+  public BaseSmartCampusIq(String element) {
     super(element, BASE_NAMESPACE);
     super.setStanzaId(UUID.randomUUID().toString());
   }
@@ -59,7 +66,7 @@ public abstract class AbstractSmartCampusIq extends IQ {
   public IQChildElementXmlStringBuilder getIQChildElementBuilder(
       IQChildElementXmlStringBuilder xml) {
     IQChildElementXmlStringBuilder moddedXml = createEmptyXmlBuilder();
-    JAXBElement<? extends AbstractSmartCampusIq> element = getRealInstance();
+    JAXBElement<? extends IQ> element = getRealInstance();
     String resultXml = createXml(element);
     resetBuilder(moddedXml);
     moddedXml.append(resultXml);
@@ -74,7 +81,7 @@ public abstract class AbstractSmartCampusIq extends IQ {
     return ExtensionElementFactory.getExtensionByElementName(getElement());
   }
 
-  private String createXml(JAXBElement<? extends AbstractSmartCampusIq> element) {
+  private String createXml(JAXBElement<? extends IQ> element) {
     StringWriter writer = new StringWriter();
     JAXBContext context;
     try {
@@ -101,13 +108,18 @@ public abstract class AbstractSmartCampusIq extends IQ {
     return "</" + getExtension().getElementName() + ">";
   }
 
-  private JAXBElement<? extends AbstractSmartCampusIq> getRealInstance() {
-    return new JAXBElement<>(new QName(BASE_NAMESPACE, getElement()), getIqClass(), getInstance());
+  private JAXBElement<BaseSmartCampusIq> getRealInstance() {
+    return new JAXBElement<BaseSmartCampusIq>(new QName(BASE_NAMESPACE, getElement()), getIqClass(),
+        getInstance());
   }
 
-  protected abstract Object getInstance();
+  protected BaseSmartCampusIq getInstance() {
+    return null;
+  }
 
-  protected abstract String getElement();
+  protected String getElement() {
+    return "";
+  }
 
   private void resetBuilder(IQChildElementXmlStringBuilder xml) {
     Field f;
@@ -147,7 +159,7 @@ public abstract class AbstractSmartCampusIq extends IQ {
   public Jid getFrom() {
     return super.getFrom();
   }
-  
+
   /**
    * Get Error.
    */
@@ -165,6 +177,8 @@ public abstract class AbstractSmartCampusIq extends IQ {
   /**
    * Get Iq class.
    */
-  protected abstract Class getIqClass();
+  protected Class getIqClass() {
+    return this.getClass();
+  }
 
 }
