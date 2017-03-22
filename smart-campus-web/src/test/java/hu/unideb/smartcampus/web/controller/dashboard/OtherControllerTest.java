@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.web.controller;
+package hu.unideb.smartcampus.web.controller.dashboard;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
@@ -10,10 +10,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hu.unideb.smartcampus.web.controller.dashboard.OtherController;
+import hu.unideb.smartcampus.web.controller.AbstractControllerTest;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OtherControllerTest extends AbstractControllerTest{
+public class OtherControllerTest extends AbstractControllerTest {
   private static final String REQUEST_URL_DASHBOARD_OTHER = "/dashboard/other";
   private static final String VIEW_NAME_DASHBOARD_OTHER = "dashboard/other";
 

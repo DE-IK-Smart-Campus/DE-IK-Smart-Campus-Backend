@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.web.controller;
+package hu.unideb.smartcampus.web.controller.dashboard;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import hu.unideb.smartcampus.web.controller.AbstractControllerTest;
 import hu.unideb.smartcampus.web.controller.dashboard.HomeController;
 
 @RunWith(MockitoJUnitRunner.class)
