@@ -521,14 +521,4 @@
             </resource>
         </resources>
     </build>
-
-    <profiles>
-        <profile>
-            <id>with-wildfly</id>
-            <modules>
-                <module>smart-campus-wildfly</module>
-            </modules>
-        </profile>
-    </profiles>
-
 </project>

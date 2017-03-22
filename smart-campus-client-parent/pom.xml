@@ -288,7 +288,7 @@
         <profile>
             <id>with-wildfly</id>
             <modules>
-                <module>smart-campus-wildfly</module>
+                <module>smart-campus-client-wildfly</module>
             </modules>
         </profile>
     </profiles>

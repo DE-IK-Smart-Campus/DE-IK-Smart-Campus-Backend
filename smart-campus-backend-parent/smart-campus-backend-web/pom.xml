@@ -10,7 +10,7 @@
 	<artifactId>smart-campus-backend-web</artifactId>
   
 	<properties>
-		<jboss.home>${project.parent.basedir}/../smart-campus-wildfly/target/wildfly-10.1.0.Final</jboss.home>
+		<jboss.home>${project.parent.basedir}/smart-campus-backend-wildfly/target/wildfly-10.1.0.Final</jboss.home>
 	</properties>
   
 	<dependencies>
@@ -70,7 +70,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>smartcampus-web</finalName>
+		<finalName>smartcampus-backend</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -86,9 +86,9 @@
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>1.1.0.Alpha11</version>
 				<configuration>
 					<jbossHome>${jboss.home}</jbossHome>
+                    <port>9991</port>
 					<skip>false</skip>
 				</configuration>
 			</plugin>

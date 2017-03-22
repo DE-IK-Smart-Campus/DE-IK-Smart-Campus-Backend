@@ -529,7 +529,7 @@
     </interfaces>
 
     <socket-binding-group name="standard-sockets"
-        default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
+        default-interface="public" port-offset="${jboss.socket.binding.port-offset:1}">
         <socket-binding name="management-http" interface="management"
             port="${jboss.management.http.port:9990}" />
         <socket-binding name="management-https"

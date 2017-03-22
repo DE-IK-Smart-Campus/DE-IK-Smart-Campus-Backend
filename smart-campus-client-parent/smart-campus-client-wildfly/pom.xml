@@ -2,14 +2,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>hu.unideb</groupId>
-		<artifactId>smart-campus</artifactId>
+		<artifactId>smart-campus-client-parent</artifactId>
 		<version>1.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>smart-campus-wildfly</artifactId>
-	<name>SmartCampus Wildfly Module</name>
+	<artifactId>smart-campus-client-wildfly</artifactId>
+	<name>SmartCampus Client Wildfly Module</name>
 
 	<properties>
-		<smart.campus.wildfly.configuration>smart-campus-wildfly</smart.campus.wildfly.configuration>
+		<smart.campus.wildfly.configuration>smart-campus-client-wildfly</smart.campus.wildfly.configuration>
 	</properties>
 
 	<build>
@@ -60,11 +60,6 @@
 							<filtering>true</filtering>
 							<directory>src/main/resources/configuration</directory>
 							<targetPath>standalone/configuration</targetPath>
-						</resource>
-						<resource>
-							<filtering>false</filtering>
-							<directory>src/main/resources/modules</directory>
-							<targetPath>modules</targetPath>
 						</resource>
 					</resources>
 				</configuration>

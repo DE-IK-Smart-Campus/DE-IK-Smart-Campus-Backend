@@ -291,7 +291,7 @@
         <profile>
             <id>with-wildfly</id>
             <modules>
-                <module>smart-campus-wildfly</module>
+                <module>smart-campus-backend-wildfly</module>
             </modules>
         </profile>
     </profiles>
