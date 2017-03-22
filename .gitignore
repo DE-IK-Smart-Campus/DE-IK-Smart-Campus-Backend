@@ -6,3 +6,9 @@ logs/
 .project
 .settings
 .classpath
+
+smart-campus-persistence/src/main/java/hu/unideb/smartcampus/persistence/entity/AppointmentTimeEntity\.java
+
+smart-campus-persistence/src/main/java/hu/unideb/smartcampus/persistence/entity/SubjectDetailsEntity\.java
+
+smart-campus-service-api/src/main/java/hu/unideb/smartcampus/service/api/SubjectService\.java

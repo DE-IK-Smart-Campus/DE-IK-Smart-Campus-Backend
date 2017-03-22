@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>SmartCampus</title>
+  <meta charset="utf-8"/>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
+</head>
+<body>
+<div class="dashboard-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div th:replace="fragments/dashboard-frag :: dashboard-frag"></div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <!--
+        TODO fix show sidebar button
+        <show-sidebar-button></show-sidebar-button>
+        -->
+        <h2>About us</h2>
+        <div class="jumbotron">
+          <div class="container">
+            <h1>About us</h1>
+            <p>Sed non neque arcu. Maecenas vel scelerisque tortor. Aliquam commodo turpis eu nulla condimentum elementum. Pellentesque libero erat,
+               tincidunt at consectetur id, lacinia nec tortor. Nam condimentum neque dui, sit amet aliquam ante lobortis a. Vivamus in odio velit.
+               Sed quis
+               eros est. Sed eget rhoncus massa, eget dictum enim. Maecenas aliquet dui enim, sit amet pretium ante hendrerit at. Donec tincidunt
+               nulla nec
+               urna tempor vehicula.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

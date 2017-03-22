@@ -1,8 +1,9 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import com.google.common.collect.Lists;
+
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.ParserException;
-import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.component.VEvent;
 import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
@@ -12,14 +13,17 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import hu.unideb.smartcampus.service.api.CaledarEventSummary;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import hu.unideb.smartcampus.service.api.CalendarEventType;
 import hu.unideb.smartcampus.service.api.CalendarService;
-import hu.unideb.smartcampus.service.api.CalendarSummaryParser;
 import hu.unideb.smartcampus.service.api.UnparsableCalendarEventSummaryException;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentTime;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
+import hu.unideb.smartcampus.service.api.calendar.parser.CalendarAppointmentDateTimeParser;
+import hu.unideb.smartcampus.service.api.calendar.parser.CalendarSubjectDetailsParser;
 import hu.unideb.smartcampus.service.api.exception.InputParseException;
 import hu.unideb.smartcampus.webservice.api.factory.HttpRequestType;
 import hu.unideb.smartcampus.webservice.api.provider.HttpResponseProvider;
@@ -33,49 +37,59 @@ public class CalendarServiceImpl implements CalendarService {
   private HttpResponseProvider httpResponseProvider;
 
   @Autowired
-  private CalendarSummaryParser calendarSummaryParser;
+  private CalendarAppointmentDateTimeParser calendarAppointmentDateTimeParser;
+
+  @Autowired
+  private CalendarSubjectDetailsParser calendarSubjectDetailsParser;
 
   @Override
-  public void downloadCalendar(String urlToParse) throws InputParseException {
+  public List<SubjectEvent> downloadCalendar(String urlToParse) throws InputParseException {
 
     HttpResponse httpResponse;
     try {
-      httpResponse =
-          httpResponseProvider.sendHttpRequest(urlToParse, HttpRequestType.HTTP_REQUEST_GET);
-    } catch (IOException e) {
+      httpResponse = httpResponseProvider.sendHttpRequest(urlToParse, HttpRequestType.HTTP_REQUEST_GET);
+    } catch (final IOException e) {
       throw new InputParseException(e);
     }
-
-
-    try (InputStream is = httpResponse.getEntity().getContent()) {
-      CalendarBuilder calendarBuilder = new CalendarBuilder();
-      Calendar calendar;
-      calendar = calendarBuilder.build(is);
-      for (Object prop : calendar.getComponents()) {
-        if (prop instanceof VEvent) {
-          VEvent event = (VEvent) prop;
+    final LinkedList<SubjectEvent> subjectEvents = Lists.newLinkedList();
+    try (final InputStream is = httpResponse.getEntity().getContent()) {
+      for (Object prop : new CalendarBuilder().build(is).getComponents()) {
+          final VEvent event = (VEvent) prop;
           try {
-            final String eventSummary = event.getSummary().getValue();
-            if (CalendarEventType.matches(eventSummary) == CalendarEventType.TIMETABLE) {
-              CaledarEventSummary summary = calendarSummaryParser.parseSummary(eventSummary);
-              LocalDateTime startDate =  LocalDateTime.ofInstant(Instant.ofEpochMilli(event.getStartDate().getDate().getTime()),
-                  ZoneId.systemDefault());
-              LocalDateTime endDate =  LocalDateTime.ofInstant(Instant.ofEpochMilli(event.getEndDate(true).getDate().getTime()), ZoneId
-                  .systemDefault());
+            if (CalendarEventType.matches(event.getSummary().getValue()) == CalendarEventType.TIMETABLE) {
+              final SubjectDetails subjectDetails = this.calendarSubjectDetailsParser.parseSubjectDetails(event);
+              final AppointmentTime appointmentTime = this.calendarAppointmentDateTimeParser.parseAppointmentDateTime(event);
 
-              LOGGER.info(summary.toString());
-              LOGGER.info("Start date: {}", startDate);
-              LOGGER.info("End date: {}", endDate);
+              subjectBuilderListPopulator(subjectEvents, SubjectEvent.builder()
+                  .subjectDetails(subjectDetails)
+                  .roomLocation(event.getLocation().getValue())
+                  .appointmentTimeList(Lists.newArrayList())
+                  .build(),
+                  appointmentTime);
             }
           } catch (UnparsableCalendarEventSummaryException e) {
             throw new InputParseException(e);
           }
-        }
       }
-    } catch (IOException | ParserException e) {
+    } catch (final IOException | ParserException e) {
       throw new InputParseException(e);
     }
+    LOGGER.info("============================================================\n\n\n");
+    LOGGER.info("value: {}", subjectEvents);
+    return subjectEvents;
+  }
 
+  private void subjectBuilderListPopulator(final LinkedList<SubjectEvent> subjectEvents, final SubjectEvent subjectEvent, final AppointmentTime appointmentTime) {
+    final Optional<SubjectEvent> subjectEventOptional = subjectEvents.parallelStream()
+        .filter(actualSubjectEvent -> actualSubjectEvent.equals(subjectEvent))
+        .findFirst();
+
+    if (subjectEventOptional.isPresent()) {
+      subjectEventOptional.get().getAppointmentTimeList().add(appointmentTime);
+    } else {
+      subjectEvent.getAppointmentTimeList().add(appointmentTime);
+      subjectEvents.add(subjectEvent);
+    }
   }
 
 }

@@ -7,9 +7,10 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
@@ -25,6 +26,11 @@ import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
 import hu.unideb.smartcampus.service.api.domain.Subject;
 import hu.unideb.smartcampus.shared.officehour.OfficeHour;
 import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
+
+import hu.unideb.smartcampus.persistence.repository.UserRepository;
+import hu.unideb.smartcampus.service.api.ConsultingHourService;
+import hu.unideb.smartcampus.service.api.converter.todomain.SubjectDetailsEntityToSubjectDetailsConverter;
+
 
 /**
  * Consulting hours service.
@@ -58,8 +64,8 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
   /**
    * Entity to domain converter.
    */
-  private final SubjectEntityToSubjectConverter subjectConverter;
-
+   private final SubjectDetailsEntityToSubjectDetailsConverter converter;
+  
   /**
    * Consulting date domain to entity.
    */
@@ -70,18 +76,19 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
    */
   @Autowired
   public ConsultingHourServiceImpl(UserRepository userRepository,
-      SubjectEntityToSubjectConverter subjectConverter, InstructorRepository instructorRepository,
+      InstructorRepository instructorRepository,
       ConsultingDateRepository consultingDateRepository,
       OfficeHourGeneratorService officeHourGeneratorService,
-      ConsultingDateToConsultingDateEntityConverter consultingDateConverter) {
+      ConsultingDateToConsultingDateEntityConverter consultingDateConverter,
+      SubjectDetailsEntityToSubjectDetailsConverter converter) {
     this.userRepository = userRepository;
-    this.subjectConverter = subjectConverter;
+    this.converter = converter;
     this.instructorRepository = instructorRepository;
     this.consultingDateConverter = consultingDateConverter;
     this.consultingDateRepository = consultingDateRepository;
     this.officeHourGeneratorService = officeHourGeneratorService;
   }
-
+  
   /**
    * {@inheritDoc}.
    */
@@ -89,7 +96,7 @@ public class ConsultingHourServiceImpl implements ConsultingHourService {
   @Transactional(readOnly = true)
   public Set<Subject> getSubjectsByUserId(final Long id) {
     Set<SubjectEntity> subjects = userRepository.getSubjectsByUserId(id);
-    return subjects.stream().map(subjectConverter::convert).collect(Collectors.toSet());
+    return subjects.stream().map(converter::convert).collect(Collectors.toSet());
   }
 
   /**
