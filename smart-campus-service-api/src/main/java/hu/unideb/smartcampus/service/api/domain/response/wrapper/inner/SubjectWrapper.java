@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.domain.response.wrapper.inner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Builder;
@@ -21,6 +22,14 @@ public class SubjectWrapper {
    * Teachers.
    */
   private final List<InstructorWrapper> instructors;
+
+  /**
+   * Todo.
+   */
+  public SubjectWrapper() {
+    this.name = "";
+    this.instructors = new ArrayList<>();
+  }
 
   /**
    * Constructs SubjectWrapper.
