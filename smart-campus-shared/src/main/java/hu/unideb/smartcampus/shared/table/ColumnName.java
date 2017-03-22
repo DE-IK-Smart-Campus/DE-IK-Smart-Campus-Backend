@@ -41,6 +41,11 @@ public class ColumnName {
      * Name column.
      */
     public static final String COLUMN_NAME_NAME = "name";
+    
+    /**
+     * Room column.
+     */
+    public static final String COLUMN_NAME_ROOM = "room";
 
   }
 

@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.persistence.entity;
 
 import static hu.unideb.smartcampus.shared.table.ColumnName.InstructorColumnName.COLUMN_NAME_NAME;
+import static hu.unideb.smartcampus.shared.table.ColumnName.InstructorColumnName.COLUMN_NAME_ROOM;
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_INSTRUCTOR;
 
 import java.util.Set;
@@ -67,15 +68,24 @@ public class InstructorEntity extends BaseEntity<Long> {
   private Set<SubjectDetailsEntity> subjects;
 
   /**
+   * Instructor's room.
+   */
+  @Size(min = 2, max = 128)
+  @Column(name = COLUMN_NAME_ROOM)
+  private String room;
+
+  /**
    * Constructs instructor entity.
    */
   @Builder
-  public InstructorEntity(final Long id, final String name, final Set<ConsultingDateEntity> consultingDates,
-                          final Set<SubjectDetailsEntity> subjects) {
+  public InstructorEntity(final Long id, final String name,
+      final Set<ConsultingDateEntity> consultingDates, final Set<SubjectDetailsEntity> subjects,
+      final String room) {
     super(id);
     this.name = name;
     this.consultingDates = consultingDates;
     this.subjects = subjects;
+    this.room = room;
   }
 
 
