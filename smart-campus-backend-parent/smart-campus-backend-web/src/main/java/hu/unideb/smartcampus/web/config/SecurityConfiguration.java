@@ -48,11 +48,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login")
-        .successHandler(authenticationSuccessHandler()).usernameParameter("username")
-        .passwordParameter("password").and().exceptionHandling()
-        .authenticationEntryPoint(authenticationEntryPoint());
-
     http.httpBasic();
     // @formatter:on
   }
@@ -96,81 +91,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_BASE_DN));
   }
 
-
-
-  /**
-   * The delegating authentication entry point of the application. This purpose to decide witch entry point is to be used per request.
-   * 
-   * @return The delegating entry point of the application.
-   */
-  @Bean
-  public AuthenticationEntryPoint authenticationEntryPoint() {
-    DelegatingAuthenticationEntryPoint delegatingAuthenticationEntryPoint =
-        new DelegatingAuthenticationEntryPoint(delegatedEntryPoints());
-    delegatingAuthenticationEntryPoint.setDefaultEntryPoint(formEntryPoint());
-    return delegatingAuthenticationEntryPoint;
-  }
-
-  /**
-   * The entry points of the application.
-   * 
-   * @return the entry points of the application
-   */
-  @Bean
-  public LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> delegatedEntryPoints() {
-    LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entrypoints = new LinkedHashMap<>();
-    entrypoints.put(apiRequestMatcher(), apiEntryPoint());
-    return entrypoints;
-  }
-
-  /**
-   * The request matcher for the entry point of the api.
-   * 
-   * @return the request matcher of the api endpoints
-   */
-  @Bean
-  public RequestMatcher apiRequestMatcher() {
-    return new SmartCampusApiRequestMatcher("/integration");
-  }
-
-  /**
-   * Entry point of the api.
-   * 
-   * @return the authentication entry point of the api
-   */
-  @Bean
-  public AuthenticationEntryPoint apiEntryPoint() {
-    BasicAuthenticationEntryPoint basicAuthenticationEntryPoint =
-        new BasicAuthenticationEntryPoint();
-    basicAuthenticationEntryPoint.setRealmName("API");
-    return basicAuthenticationEntryPoint;
-  }
-
-  /**
-   * Entry point of the web ui.
-   * 
-   * @return the authentication entry point of the web ui
-   */
-  @Bean
-  public AuthenticationEntryPoint formEntryPoint() {
-    return new LoginUrlAuthenticationEntryPoint("/login");
-  }
-  
-  /**
-   * TODO.
-   * 
-   */
-  @Bean
-  public AuthenticationSuccessHandler authenticationSuccessHandler() {
-    return new SmartCampusAuthenticationSuccessHandler();
-  }
-
-  /**
-   * TODO.
-   * 
-   */
-  @Bean
-  public LogoutSuccessHandler logoutSuccessHandler() {
-    return new SmartCampusLogoutSuccessHandler();
-  }
 }

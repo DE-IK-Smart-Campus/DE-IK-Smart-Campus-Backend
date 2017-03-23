@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 
@@ -27,7 +26,7 @@ public class SmartCampusAuthenticationSuccessHandler implements AuthenticationSu
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException, ServletException {
-    final User user = getUserFromAuthentication(authentication);
+    final SmartCampusUserDetails user = getUserFromAuthentication(authentication);
     try {
       ejabberdUser.login(user.getUsername(), user.getPassword());
     } catch (XmppException e) {
@@ -35,8 +34,8 @@ public class SmartCampusAuthenticationSuccessHandler implements AuthenticationSu
     }
   }
 
-  private User getUserFromAuthentication(Authentication authentication) {
-    return ((SmartCampusUserDetails) authentication.getPrincipal()).getUser();
+  private SmartCampusUserDetails getUserFromAuthentication(Authentication authentication) {
+    return ((SmartCampusUserDetails) authentication.getPrincipal());
   }
 
 }

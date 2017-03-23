@@ -20,7 +20,7 @@ public class LdapConfigurationPropertyProvider {
   /**
    * Logger.
    */
-  private static final Logger LOGGER = LoggerFactory.getLogger(LdapConfigurationProperties.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LdapConfigurationPropertyProvider.class);
 
   /**
    * Property container.

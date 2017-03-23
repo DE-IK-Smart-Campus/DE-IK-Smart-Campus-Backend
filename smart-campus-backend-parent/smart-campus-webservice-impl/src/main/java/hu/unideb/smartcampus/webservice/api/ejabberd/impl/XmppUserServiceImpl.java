@@ -1,8 +1,8 @@
 package hu.unideb.smartcampus.webservice.api.ejabberd.impl;
 
-import static hu.unideb.smartcampus.shared.security.SecurityConstants.REGISTER_USER;
-import static hu.unideb.smartcampus.shared.security.SecurityConstants.CHECK_ACCOUNT;
-import static hu.unideb.smartcampus.shared.security.SecurityConstants.CHANGE_PASSWORD;
+import static hu.unideb.smartcampus.shared.security.EjabberdSecurityConstants.REGISTER_USER;
+import static hu.unideb.smartcampus.shared.security.EjabberdSecurityConstants.CHECK_ACCOUNT;
+import static hu.unideb.smartcampus.shared.security.EjabberdSecurityConstants.CHANGE_PASSWORD;
 
 import javax.ws.rs.core.Response;
 

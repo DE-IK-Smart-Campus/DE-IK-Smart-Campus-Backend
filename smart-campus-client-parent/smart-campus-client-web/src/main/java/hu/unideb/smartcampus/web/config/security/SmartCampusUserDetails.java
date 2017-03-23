@@ -1,66 +1,59 @@
 package hu.unideb.smartcampus.web.config.security;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import hu.unideb.smartcampus.service.api.domain.User;
+import lombok.Builder;
+import lombok.Data;
 
+@Data
 public class SmartCampusUserDetails implements UserDetails {
 
-  private UserDetails userDetails;
+  private String username;
 
-  private User user;
+  private List<GrantedAuthority> roles;
 
-  public SmartCampusUserDetails(UserDetails userDetails, User user) {
-    this.userDetails = userDetails;
-    this.user = user;
+  private String xmppPassword;
+
+  @Builder
+  public SmartCampusUserDetails(String username, List<GrantedAuthority> roles, String xmppPassword) {
+    super();
+    this.username = username;
+    this.roles = roles;
+    this.xmppPassword = xmppPassword;
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return userDetails.getAuthorities();
+    return roles;
   }
 
   @Override
   public String getPassword() {
-    return userDetails.getPassword();
-  }
-
-  @Override
-  public String getUsername() {
-    return userDetails.getUsername();
+    return xmppPassword;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return userDetails.isAccountNonExpired();
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return userDetails.isAccountNonLocked();
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return userDetails.isCredentialsNonExpired();
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return userDetails.isEnabled();
+    return true;
   }
-
-  /**
-   * Returns the persisted User in the database.
-   * 
-   * @return the user persisted logged in
-   */
-  public User getUser() {
-    return user;
-  }
-
 
 }

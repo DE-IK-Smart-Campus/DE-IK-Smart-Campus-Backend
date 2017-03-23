@@ -376,6 +376,12 @@
                     value="@ldap.passwordattribute@" />
                 <simple name="java:global/ldap.groupfilter"
                     value="@ldap.groupfilter@" />
+                <simple name="java:global/backend.host"
+                    value="@backend.host@" />
+                <simple name="java:global/backend.port"
+                    value="@backend.port@" />
+                <simple name="java:global/backend.context"
+                    value="@backend.context@" />
             </bindings>
             <remote-naming />
         </subsystem>

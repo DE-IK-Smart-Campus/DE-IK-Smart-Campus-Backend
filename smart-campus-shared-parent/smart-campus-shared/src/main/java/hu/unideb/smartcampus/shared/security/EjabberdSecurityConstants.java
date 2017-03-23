@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SecurityConstants {
+public class EjabberdSecurityConstants {
 
   /**
    * The path of the user registering endpoint.

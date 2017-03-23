@@ -2,6 +2,8 @@ package hu.unideb.smartcampus.web.restcontroller;
 
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +25,9 @@ import hu.unideb.smartcampus.web.domain.PublicUser;
 @PreAuthorize("isAuthenticated()")
 public class IntegrationCredentialProviderRestController {
 
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(IntegrationCredentialProviderRestController.class);
+
   /**
    * Retrieves the credential of the user currently logged in.
    * 
@@ -31,7 +36,9 @@ public class IntegrationCredentialProviderRestController {
   @GetMapping(path = "/retrieveUserData", produces = MediaType.APPLICATION_JSON_VALUE)
   public PublicUser retrieveUserFromContext() {
     SmartCampusUserDetails auth = retrieveAuthentication();
-    return convertToPublic(auth);
+    PublicUser user = convertToPublic(auth);
+    LOGGER.info("Providing user credentials of user:{}", user.getUsername());
+    return user;
   }
 
   private PublicUser convertToPublic(SmartCampusUserDetails auth) {
