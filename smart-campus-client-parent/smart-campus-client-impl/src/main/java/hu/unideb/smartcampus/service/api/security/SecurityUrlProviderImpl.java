@@ -10,8 +10,18 @@ import hu.unideb.smartcampus.shared.security.SmartCampusSecurityConstants;
 @Service
 public class SecurityUrlProviderImpl implements SecurityUrlProvider {
 
+
+  private final SecurityPropertyProvider securityPropertyProvider;
+
+  /**
+   * Constructor.
+   */
   @Autowired
-  private SecurityPropertyProvider securityPropertyProvider;
+  public SecurityUrlProviderImpl(SecurityPropertyProvider securityPropertyProvider) {
+    this.securityPropertyProvider = securityPropertyProvider;
+  }
+
+
 
   @Override
   public String produceUrl() {
