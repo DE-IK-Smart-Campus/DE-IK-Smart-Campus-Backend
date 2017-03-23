@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+        <groupId>hu.unideb</groupId>
+        <artifactId>smart-campus-backend-parent</artifactId>
+		<version>1.3-SNAPSHOT</version>
+    </parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>smart-campus-service-api</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>hu.unideb</groupId>
+			<artifactId>smart-campus-shared</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack-tcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack-bosh</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>ical4j</groupId>
+            <artifactId>ical4j</artifactId>
+			<scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>
