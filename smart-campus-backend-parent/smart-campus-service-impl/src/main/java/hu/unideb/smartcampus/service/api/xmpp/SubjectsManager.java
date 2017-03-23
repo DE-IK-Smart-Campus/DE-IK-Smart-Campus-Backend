@@ -5,7 +5,7 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.iqrequest.AbstractIqRequestHandler;
 import org.jivesoftware.smackx.disco.ServiceDiscoveryManager;
 
-import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 
 
 /**
@@ -19,7 +19,7 @@ public final class SubjectsManager extends Manager {
   SubjectsManager(XMPPConnection connection, AbstractIqRequestHandler handler) {
     super(connection);
     ServiceDiscoveryManager.getInstanceFor(connection)
-        .addFeature(AbstractSmartCampusIq.BASE_NAMESPACE);
+        .addFeature(BaseSmartCampusIq.BASE_NAMESPACE);
     connection.registerIQRequestHandler(handler);
   }
 

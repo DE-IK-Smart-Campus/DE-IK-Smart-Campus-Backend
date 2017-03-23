@@ -20,9 +20,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-@XmlRootElement(name = SubjectsIqRequest.ELEMENT, namespace = AbstractSmartCampusIq.BASE_NAMESPACE)
+@XmlRootElement(name = SubjectsIqRequest.ELEMENT, namespace = BaseSmartCampusIq.BASE_NAMESPACE)
 @XmlAccessorType(XmlAccessType.NONE)
-public class SubjectsIqRequest extends AbstractSmartCampusIq {
+public class SubjectsIqRequest extends BaseSmartCampusIq {
 
   /**
    * Element.
@@ -65,12 +65,12 @@ public class SubjectsIqRequest extends AbstractSmartCampusIq {
   }
 
   @Override
-  protected Object getInstance() {
+  protected BaseSmartCampusIq getInstance() {
     return this;
   }
 
   @Override
-  protected Class<? extends AbstractSmartCampusIq> getIqClass() {
+  protected Class<? extends BaseSmartCampusIq> getIqClass() {
     return this.getClass();
   }
 

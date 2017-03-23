@@ -22,9 +22,9 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @XmlRootElement(name = InstructorConsultingDatesIqRequest.ELEMENT,
-    namespace = AbstractSmartCampusIq.BASE_NAMESPACE)
+    namespace = BaseSmartCampusIq.BASE_NAMESPACE)
 @XmlAccessorType(XmlAccessType.NONE)
-public class InstructorConsultingDatesIqRequest extends AbstractSmartCampusIq {
+public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
 
   /**
    * Element.
@@ -62,7 +62,7 @@ public class InstructorConsultingDatesIqRequest extends AbstractSmartCampusIq {
   }
 
   @Override
-  protected Object getInstance() {
+  protected BaseSmartCampusIq getInstance() {
     return this;
   }
 

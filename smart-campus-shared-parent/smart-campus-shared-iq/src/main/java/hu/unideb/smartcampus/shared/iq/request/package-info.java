@@ -1,7 +1,7 @@
 /**
  * Custom SmartCampus IQs.
  */
-@XmlSchema(namespace = AbstractSmartCampusIq.BASE_NAMESPACE,
+@XmlSchema(namespace = BaseSmartCampusIq.BASE_NAMESPACE,
     elementFormDefault = XmlNsForm.QUALIFIED)
 package hu.unideb.smartcampus.shared.iq.request;
 
