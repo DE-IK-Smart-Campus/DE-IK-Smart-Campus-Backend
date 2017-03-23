@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:instructorConsultingDates xmlns:ns0="http://inf.unideb.hu/smartcampus/">
+   <packetID>d6ec3ca3-020b-4216-b55a-9e053aa1c017</packetID>
+   <stanzaId>d6ec3ca3-020b-4216-b55a-9e053aa1c017</stanzaId>
+   <type>get</type>
+   <ns0:instructorId>1</ns0:instructorId>
+   <ns0:consultingDates>
+      <ns0:consultingDate>
+         <ns0:consultingDateId>2</ns0:consultingDateId>
+         <ns0:fromToDates>
+            <ns0:from>1</ns0:from>
+            <ns0:to>10</ns0:to>
+         </ns0:fromToDates>
+         <ns0:reservedSum>1</ns0:reservedSum>
+      </ns0:consultingDate>
+   </ns0:consultingDates>
+</ns0:instructorConsultingDates>

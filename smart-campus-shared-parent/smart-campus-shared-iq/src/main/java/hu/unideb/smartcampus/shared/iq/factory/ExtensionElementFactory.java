@@ -2,7 +2,7 @@ package hu.unideb.smartcampus.shared.iq.factory;
 
 import org.jivesoftware.smack.packet.ExtensionElement;
 
-import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 
 /**
  * Extension element factory.
@@ -23,7 +23,7 @@ public final class ExtensionElementFactory {
    * @param elementName requested elementname.
    * @return created extension element instance.
    */
-  public static ExtensionElement getExtensionByElementName(String elementName) {
+  public static ExtensionElement getExtensionByElementName(final String elementName) {
     return new ExtensionElement() {
 
       @Override
@@ -38,7 +38,7 @@ public final class ExtensionElementFactory {
 
       @Override
       public String getNamespace() {
-        return AbstractSmartCampusIq.BASE_NAMESPACE;
+        return BaseSmartCampusIq.BASE_NAMESPACE;
       }
     };
   }

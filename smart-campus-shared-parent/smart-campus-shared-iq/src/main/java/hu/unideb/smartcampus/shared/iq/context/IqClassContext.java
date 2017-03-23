@@ -1,12 +1,12 @@
 package hu.unideb.smartcampus.shared.iq.context;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.reflections.Reflections;
 
-import hu.unideb.smartcampus.shared.iq.request.AbstractSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.ObjectFactory;
 
 /**
@@ -25,7 +25,7 @@ public final class IqClassContext {
   private static final Class[] IQ_CLASSES;
 
   static {
-    Set<Class<? extends AbstractSmartCampusIq>> allClasses = getAllClasses();
+    Set<Class<? extends BaseSmartCampusIq>> allClasses = getAllClasses();
     IQ_CLASSES = convertToClasses(allClasses);
   }
 
@@ -38,21 +38,25 @@ public final class IqClassContext {
     return IQ_CLASSES.clone();
   }
 
-  private static Class[] convertToClasses(Set<Class<? extends AbstractSmartCampusIq>> allClasses) {
-    List<Class<? extends AbstractSmartCampusIq>> classList = convertToList(allClasses);
+  private static Class[] convertToClasses(Set<Class<? extends BaseSmartCampusIq>> allClasses) {
+    List<Class<? extends BaseSmartCampusIq>> classList = convertToList(allClasses);
     Class[] classes = classList.toArray(new Class[classList.size() + 1]);
     classes[classList.size()] = ObjectFactory.class;
     return classes;
   }
 
-  private static List<Class<? extends AbstractSmartCampusIq>> convertToList(
-      Set<Class<? extends AbstractSmartCampusIq>> allClasses) {
-    return allClasses.stream().collect(Collectors.toList());
+  private static List<Class<? extends BaseSmartCampusIq>> convertToList(
+      Set<Class<? extends BaseSmartCampusIq>> allClasses) {
+    List<Class<? extends BaseSmartCampusIq>> result = new ArrayList<>();
+    for (Class<? extends BaseSmartCampusIq> clazz : allClasses) {
+      result.add(clazz);
+    }
+    return result;
   }
 
-  private static Set<Class<? extends AbstractSmartCampusIq>> getAllClasses() {
+  private static Set<Class<? extends BaseSmartCampusIq>> getAllClasses() {
     Reflections reflections = new Reflections(CONTEXT_PATH);
-    return reflections.getSubTypesOf(AbstractSmartCampusIq.class);
+    return reflections.getSubTypesOf(BaseSmartCampusIq.class);
   }
 
   private IqClassContext() {
