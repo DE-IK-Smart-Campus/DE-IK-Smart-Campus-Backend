@@ -1,0 +1,101 @@
+package hu.unideb.smartcampus.service.api.request.service;
+
+import static hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
+import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
+import hu.unideb.smartcampus.persistence.repository.UserRepository;
+import hu.unideb.smartcampus.service.api.MessageProcessingClass;
+import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
+import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
+import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
+import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
+
+/**
+ * Service for retrieve the given user's subjects.
+ *
+ */
+@Service(RetrieveSubjectsRequestServiceImpl.BEAN_NAME)
+@Transactional(propagation = Propagation.REQUIRED)
+public class RetrieveSubjectsRequestServiceImpl
+    implements MessageProcessingClass<SubjectRetrievalResponseWrapper> {
+
+  public static final String BEAN_NAME = "retrieveSubjectsRequestServiceImpl";
+
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(RetrieveSubjectsRequestServiceImpl.class);
+
+  @Autowired
+  private UserRepository userRepositoy;
+
+  @Autowired
+  private InstructorRepository instructorRepository;
+
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public SubjectRetrievalResponseWrapper getResponse(Object object) {
+    RetrieveSubjectsRequest msg = (RetrieveSubjectsRequest) object;
+    LOGGER.info("Retrieving user ({}) subjects.", msg.getUserId());
+    Set<SubjectDetailsEntity> subjects = userRepositoy.getSubjectsByUsername(msg.getUserId());
+    List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
+    return SubjectRetrievalResponseWrapper.builder().messageType(RETRIEVE_SUBJECTS_RESPONSE)
+        .subjects(subjectsWrapper).build();
+  }
+
+  private List<SubjectWrapper> createSubjectsWrapper(Set<SubjectDetailsEntity> subjects) {
+    List<SubjectWrapper> result = new ArrayList<>();
+    if (subjects != null) {
+      subjects.stream().forEach(subjectEntity -> {
+        Set<InstructorEntity> instructorSet =
+            instructorRepository.getInstructorsBySubjectName(subjectEntity.getSubjectName());
+        List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
+        result.add(SubjectWrapper.builder().name(subjectEntity.getSubjectName())
+            .instructors(instructors).build());
+      });
+    }
+    return result;
+  }
+
+  private List<InstructorWrapper> convertEntitiesToWrapper(Set<InstructorEntity> instructorSet) {
+    return instructorSet.stream().map(this::toInstructorWrapper).collect(Collectors.toList());
+  }
+
+  private InstructorWrapper toInstructorWrapper(InstructorEntity entity) {
+    return InstructorWrapper.builder().name(entity.getName()).instructorId(entity.getId()).build();
+  }
+
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public Class<? extends BaseRequestType> getSupportedClass() {
+    return RetrieveSubjectsRequest.class;
+  }
+
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public String getBeanName() {
+    return BEAN_NAME;
+  }
+
+
+
+}
