@@ -1,9 +1,6 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -16,9 +13,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-@XmlRootElement(name = SignUpForConsultingDateIqRequest.ELEMENT,
-    namespace = BaseSmartCampusIq.BASE_NAMESPACE)
-@XmlAccessorType(XmlAccessType.NONE)
 public class SignUpForConsultingDateIqRequest extends BaseSmartCampusIq {
 
   /**

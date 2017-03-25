@@ -23,7 +23,10 @@ import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
+import hu.unideb.smartcampus.shared.iq.provider.InstructorConsultingDateIqProvider;
 import hu.unideb.smartcampus.shared.iq.provider.SubjectRequestIqProvider;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
@@ -80,9 +83,11 @@ public class DefaultUserImpl implements DefaultUser {
   }
 
   private void registerCustomIQs() {
-     ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, SubjectsIqRequest.NAMESPACE,
-     new SubjectRequestIqProvider());
-//    ProviderManager.addIQProvider(TestIq.ELEMENT, TestIq.NAMESPACE, new TestIqProvider());
+    ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE,
+        new SubjectRequestIqProvider());
+    ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
+        BaseSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
+    // ProviderManager.addIQProvider(TestIq.ELEMENT, TestIq.NAMESPACE, new TestIqProvider());
   }
 
 

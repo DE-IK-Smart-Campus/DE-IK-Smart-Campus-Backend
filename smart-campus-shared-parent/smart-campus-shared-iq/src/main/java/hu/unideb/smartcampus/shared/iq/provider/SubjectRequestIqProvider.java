@@ -1,5 +1,11 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTOR;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTORID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.NAME;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.STUDENT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.SUBJECT;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,35 +38,35 @@ public class SubjectRequestIqProvider extends IQProvider<SubjectsIqRequest> {
       String tagname = parser.getName();
       switch (eventType) {
         case XmlPullParser.START_TAG:
-          if (tagname.equalsIgnoreCase("student")) {
+          if (tagname.equalsIgnoreCase(STUDENT)) {
 
           }
-          if (tagname.equalsIgnoreCase("subject")) {
+          if (tagname.equalsIgnoreCase(SUBJECT)) {
             subject = new SubjectIqElement();
             instructors = new ArrayList<>();
-            element = "subject";
+            element = SUBJECT;
           }
-          if (tagname.equalsIgnoreCase("instructor")) {
+          if (tagname.equalsIgnoreCase(INSTRUCTOR)) {
             instructor = new InstructorIqElement();
-            element = "instructor";
+            element = INSTRUCTOR;
           }
           break;
         case XmlPullParser.TEXT:
           text = parser.getText();
           break;
         case XmlPullParser.END_TAG:
-          if (tagname.equalsIgnoreCase("subject")) {
+          if (tagname.equalsIgnoreCase(SUBJECT)) {
             subjects.add(subject);
-          } else if (tagname.equalsIgnoreCase("instructor")) {
+          } else if (tagname.equalsIgnoreCase(INSTRUCTOR)) {
             instructors.add(instructor);
             subject.setInstructors(instructors);
-          } else if (tagname.equalsIgnoreCase("name") && element.equals("subject")) {
+          } else if (tagname.equalsIgnoreCase(NAME) && element.equals(SUBJECT)) {
             subject.setSubjectName(text);
-          } else if (tagname.equalsIgnoreCase("name") && element.equals("instructor")) {
+          } else if (tagname.equalsIgnoreCase(NAME) && element.equals(INSTRUCTOR)) {
             instructor.setName(text);
-          } else if (tagname.equalsIgnoreCase("instructorId")) {
+          } else if (tagname.equalsIgnoreCase(INSTRUCTORID)) {
             instructor.setInstructorId(Long.valueOf(text));
-          } else if (tagname.equalsIgnoreCase("student")) {
+          } else if (tagname.equalsIgnoreCase(STUDENT)) {
             student = text;
           } else if (tagname.equals(SubjectsIqRequest.ELEMENT)) {
             done = true;
@@ -72,7 +78,6 @@ public class SubjectRequestIqProvider extends IQProvider<SubjectsIqRequest> {
       }
     }
     SubjectsIqRequest iq = new SubjectsIqRequest(student, subjects);
-    System.out.println("EZ MEGY VISSZA ANYÁDAT:" + iq);
     return iq;
   }
 

@@ -3,8 +3,6 @@ package hu.unideb.smartcampus.shared.iq.request;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jivesoftware.smack.packet.IQ;
-
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
 import lombok.Builder;
@@ -16,17 +14,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SubjectsIqRequest extends IQ {
+public class SubjectsIqRequest extends BaseSmartCampusIq {
 
   /**
    * Element.
    */
   public static final String ELEMENT = "askSubjects";
-  
-  /**
-   * Element.
-   */
-  public static final String NAMESPACE = "http://smartcampus.hu";
 
   /**
    * User.
@@ -42,7 +35,7 @@ public class SubjectsIqRequest extends IQ {
    * Def contrcutros.
    */
   public SubjectsIqRequest() {
-    super(ELEMENT, NAMESPACE);
+    super(ELEMENT);
     subjects = new ArrayList<>();
   }
 
@@ -51,7 +44,7 @@ public class SubjectsIqRequest extends IQ {
    */
   @Builder
   public SubjectsIqRequest(String student, List<SubjectIqElement> subjects) {
-    super(ELEMENT, NAMESPACE);
+    super(ELEMENT);
     this.student = student;
     this.subjects = subjects;
   }
@@ -93,7 +86,7 @@ public class SubjectsIqRequest extends IQ {
   }
 
   @Override
-  protected IQChildElementXmlStringBuilder getIQChildElementBuilder(
+  public IQChildElementXmlStringBuilder getIQChildElementBuilder(
       IQChildElementXmlStringBuilder xml) {
     xml.append(" >");
     xml.append(toXml());

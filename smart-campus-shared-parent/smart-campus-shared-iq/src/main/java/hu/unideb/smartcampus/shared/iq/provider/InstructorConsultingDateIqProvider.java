@@ -1,5 +1,13 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.CONSULTING_DATE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.CONSULTING_DATE_ID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM_TO_DATE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.INSTRUCTORID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.RESERVED_SUM;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.TO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +16,8 @@ import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
-import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;
+import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;;
+
 
 /**
  * Instructor consulting date IQ provider.
@@ -27,15 +36,17 @@ public class InstructorConsultingDateIqProvider
     String text = "";
     String instructorId = "";
     int eventType = parser.getEventType();
-    while (eventType != XmlPullParser.END_DOCUMENT) {
+    boolean done = false;
+    while (!done) {
       String tagname = parser.getName();
+      eventType = parser.next();
       switch (eventType) {
         case XmlPullParser.START_TAG:
-          if (tagname.equalsIgnoreCase("consultingDate")) {
+          if (tagname.equalsIgnoreCase(CONSULTING_DATE)) {
             consultingDate = new ConsultingDateIqElement();
             fromToDate = new FromToDateIqElement();
           }
-          if (tagname.equalsIgnoreCase("fromToDate")) {
+          if (tagname.equalsIgnoreCase(FROM_TO_DATE)) {
             fromToDate = new FromToDateIqElement();
           }
           break;
@@ -43,28 +54,29 @@ public class InstructorConsultingDateIqProvider
           text = parser.getText();
           break;
         case XmlPullParser.END_TAG:
-          if (tagname.equalsIgnoreCase("consultingDate")) {
+          if (tagname.equalsIgnoreCase(CONSULTING_DATE)) {
             consultingHours.add(consultingDate);
-          } else if (tagname.equalsIgnoreCase("consultingDateId")) {
+          } else if (tagname.equalsIgnoreCase(CONSULTING_DATE_ID)) {
             consultingDate.setConsultingDateId(Long.valueOf(text));
-          } else if (tagname.equalsIgnoreCase("from")) {
+          } else if (tagname.equalsIgnoreCase(FROM)) {
             fromToDate.setFrom(Long.valueOf(text));
-          } else if (tagname.equalsIgnoreCase("to")) {
+          } else if (tagname.equalsIgnoreCase(TO)) {
             fromToDate.setTo(Long.valueOf(text));
-          } else if (tagname.equalsIgnoreCase("fromToDate")) {
+          } else if (tagname.equalsIgnoreCase(FROM_TO_DATE)) {
             consultingDate.setFromToDates(fromToDate);
-          } else if (tagname.equalsIgnoreCase("reservedSum")) {
+          } else if (tagname.equalsIgnoreCase(RESERVED_SUM)) {
             reservedSum = Integer.valueOf(text);
             consultingDate.setReservedSum(reservedSum);
-          } else if (tagname.equalsIgnoreCase("instructorId")) {
+          } else if (tagname.equalsIgnoreCase(INSTRUCTORID)) {
             instructorId = text;
+          } else if (tagname.equals(InstructorConsultingDatesIqRequest.ELEMENT)) {
+            done = true;
           }
           break;
 
         default:
           break;
       }
-      eventType = parser.next();
     }
 
     InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest(consultingHours);

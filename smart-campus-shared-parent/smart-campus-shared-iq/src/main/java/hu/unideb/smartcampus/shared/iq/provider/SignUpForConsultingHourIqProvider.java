@@ -1,5 +1,10 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.CONSULTING_HOUR_ID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.DURATION;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.REASON;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.USER_ID;
+
 import org.jivesoftware.smack.provider.IQProvider;
 import org.xmlpull.v1.XmlPullParser;
 
@@ -22,8 +27,10 @@ public class SignUpForConsultingHourIqProvider
       throws Exception {
     String text = "";
     int eventType = parser.getEventType();
-    while (eventType != XmlPullParser.END_DOCUMENT) {
+    boolean done = false;
+    while (!done) {
       String tagname = parser.getName();
+      eventType = parser.next();
       switch (eventType) {
         case XmlPullParser.START_TAG:
           break;
@@ -31,25 +38,24 @@ public class SignUpForConsultingHourIqProvider
           text = parser.getText();
           break;
         case XmlPullParser.END_TAG:
-          if (tagname.equalsIgnoreCase("userId")) {
+          if (tagname.equalsIgnoreCase(USER_ID)) {
             userId = text;
-          } else if (tagname.equalsIgnoreCase("consultingHourId")) {
+          } else if (tagname.equalsIgnoreCase(CONSULTING_HOUR_ID)) {
             consultingHourId = Long.valueOf(text);
-          } else if (tagname.equalsIgnoreCase("reason")) {
+          } else if (tagname.equalsIgnoreCase(REASON)) {
             reason = text;
-          } else if (tagname.equalsIgnoreCase("duration")) {
+          } else if (tagname.equalsIgnoreCase(DURATION)) {
             duration = text;
+          } else if (tagname.equalsIgnoreCase(SignUpForConsultingDateIqRequest.ELEMENT)) {
+            done = true;
           }
           break;
         default:
           break;
       }
-      eventType = parser.next();
     }
 
-    SignUpForConsultingDateIqRequest iq =
-        new SignUpForConsultingDateIqRequest(userId, consultingHourId, reason, duration);
-    return iq;
+    return new SignUpForConsultingDateIqRequest(userId, consultingHourId, reason, duration);
   }
 
 }
