@@ -46,4 +46,16 @@ public class BaseSmartCampusIq extends IQ {
     throw new UnsupportedOperationException("Implement it in subclass.");
   }
 
+  protected String openTag(String tagName) {
+    return "<" + tagName + ">";
+  }
+
+  protected String closeTag(String tagName) {
+    return "</" + tagName + ">";
+  }
+  
+  protected String tag(String tagName, Object value) {
+    return openTag(tagName) + value + closeTag(tagName);
+  }
+
 }

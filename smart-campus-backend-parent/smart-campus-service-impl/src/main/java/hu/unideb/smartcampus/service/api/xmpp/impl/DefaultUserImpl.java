@@ -24,9 +24,11 @@ import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.shared.iq.provider.InstructorConsultingDateIqProvider;
+import hu.unideb.smartcampus.shared.iq.provider.SignUpForConsultingHourIqProvider;
 import hu.unideb.smartcampus.shared.iq.provider.SubjectRequestIqProvider;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
@@ -87,6 +89,8 @@ public class DefaultUserImpl implements DefaultUser {
         new SubjectRequestIqProvider());
     ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
         BaseSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
+    ProviderManager.addIQProvider(SignUpForConsultingDateIqRequest.ELEMENT,
+        BaseSmartCampusIq.BASE_NAMESPACE, new SignUpForConsultingHourIqProvider());
     // ProviderManager.addIQProvider(TestIq.ELEMENT, TestIq.NAMESPACE, new TestIqProvider());
   }
 

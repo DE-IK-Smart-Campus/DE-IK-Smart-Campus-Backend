@@ -1,5 +1,13 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTOR;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTORID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTORS;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.NAME;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.STUDENT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.SUBJECT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.SUBJECTS;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Subject Iq.
+ * Subject IQ request.
  */
 @Getter
 @Setter
@@ -22,17 +30,17 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
   public static final String ELEMENT = "askSubjects";
 
   /**
-   * User.
+   * Student's username.
    */
   private String student;
 
   /**
-   * Things to good to have.
+   * Student's subjects.
    */
   private List<SubjectIqElement> subjects;
 
   /**
-   * Def contrcutros.
+   * Default constructor.
    */
   public SubjectsIqRequest() {
     super(ELEMENT);
@@ -56,32 +64,31 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
   }
 
   private void buildIq(StringBuilder builder) {
-    builder.append("<student>").append(student).append("</student>");
+    builder.append(tag(STUDENT, student));
     buildSubjects(builder);
   }
 
   private void buildSubjects(StringBuilder builder) {
     if (subjects != null || !subjects.isEmpty()) {
-      builder.append("<subjects>");
+      builder.append(openTag(SUBJECTS));
       for (SubjectIqElement subjectIqElement : subjects) {
-        builder.append("<subject>");
-        builder.append("<name>").append(subjectIqElement.getSubjectName()).append("</name>");
-        builder.append("<instructors>");
+        builder.append(openTag(SUBJECT));
+        builder.append(tag(NAME, subjectIqElement.getSubjectName()));
+        builder.append(openTag(INSTRUCTORS));
         buildInstructors(builder, subjectIqElement);
-        builder.append("</instructors>");
-        builder.append("</subject>");
+        builder.append(closeTag(INSTRUCTORS));
+        builder.append(closeTag(SUBJECT));
       }
-      builder.append("</subjects>");
+      builder.append(closeTag(SUBJECTS));
     }
   }
 
   private void buildInstructors(StringBuilder builder, SubjectIqElement subjectIqElement) {
     for (InstructorIqElement instructor : subjectIqElement.getInstructors()) {
-      builder.append("<instructor>");
-      builder.append("<instructorId>").append(instructor.getInstructorId())
-          .append("</instructorId>");
-      builder.append("<name>").append(instructor.getName()).append("</name>");
-      builder.append("</instructor>");
+      builder.append(openTag(INSTRUCTOR));
+      builder.append(tag(INSTRUCTORID, instructor.getInstructorId()));
+      builder.append(tag(NAME, instructor.getName()));
+      builder.append(closeTag(INSTRUCTOR));
     }
   }
 

@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.shared.iq.provider;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.CONSULTING_HOUR_ID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.DURATION;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.REASON;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.RESPONSE_MESSAGE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.USER_ID;
 
 import org.jivesoftware.smack.provider.IQProvider;
@@ -21,6 +22,7 @@ public class SignUpForConsultingHourIqProvider
   private Long consultingHourId;
   private String reason;
   private String duration;
+  private String responseMessage;
 
   @Override
   public SignUpForConsultingDateIqRequest parse(XmlPullParser parser, int initialDepth)
@@ -29,8 +31,8 @@ public class SignUpForConsultingHourIqProvider
     int eventType = parser.getEventType();
     boolean done = false;
     while (!done) {
-      String tagname = parser.getName();
       eventType = parser.next();
+      String tagname = parser.getName();
       switch (eventType) {
         case XmlPullParser.START_TAG:
           break;
@@ -46,6 +48,8 @@ public class SignUpForConsultingHourIqProvider
             reason = text;
           } else if (tagname.equalsIgnoreCase(DURATION)) {
             duration = text;
+          } else if (tagname.equalsIgnoreCase(RESPONSE_MESSAGE)) {
+            responseMessage = text;
           } else if (tagname.equalsIgnoreCase(SignUpForConsultingDateIqRequest.ELEMENT)) {
             done = true;
           }
@@ -55,7 +59,8 @@ public class SignUpForConsultingHourIqProvider
       }
     }
 
-    return new SignUpForConsultingDateIqRequest(userId, consultingHourId, reason, duration);
+    return new SignUpForConsultingDateIqRequest(userId, consultingHourId, reason, duration,responseMessage);
   }
 
 }
+

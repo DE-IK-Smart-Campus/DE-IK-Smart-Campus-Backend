@@ -1,6 +1,10 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import javax.xml.bind.annotation.XmlElement;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.CONSULTING_HOUR_ID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.DURATION;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.REASON;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.RESPONSE_MESSAGE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.USER_ID;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -23,38 +27,40 @@ public class SignUpForConsultingDateIqRequest extends BaseSmartCampusIq {
   /**
    * User's JID.
    */
-  @XmlElement(name = "userId")
   private String userId;
 
   /**
    * Consulting hour id.
    */
-  @XmlElement(name = "consultingHourId")
   private Long consultingHourId;
 
   /**
    * Reason of consulting.
    */
-  @XmlElement(name = "reason")
   private String reason;
 
   /**
    * Duration of consulting.
    */
-  @XmlElement(name = "duration")
   private String duration;
+
+  /**
+   * Response message.
+   */
+  private String responseMessage;
 
   /**
    * Builder.
    */
   @Builder
   public SignUpForConsultingDateIqRequest(String userId, Long consultingHourId, String reason,
-      String duration) {
+      String duration, String responseMessage) {
     super(ELEMENT);
     this.userId = userId;
     this.consultingHourId = consultingHourId;
     this.reason = reason;
     this.duration = duration;
+    this.responseMessage = responseMessage;
   }
 
 
@@ -80,12 +86,13 @@ public class SignUpForConsultingDateIqRequest extends BaseSmartCampusIq {
 
 
   private void buildIq(StringBuilder builder) {
-    builder.append("<signUpForConsultingDate xmlns=\"http://inf.unideb.hu/smartcampus/\">");
-    builder.append("<userId>").append(userId).append("</userId>");
-    builder.append("<consultingHourId>").append(consultingHourId).append("</consultingHourId>");
-    builder.append("<reason>").append(reason).append("</reason>");
-    builder.append("<duration>").append(duration).append("</duration>");
-//    builder.append("</signUpForConsultingDate>");
+    builder.append(">");
+    builder.append(tag(USER_ID, userId));
+    builder.append(tag(CONSULTING_HOUR_ID, consultingHourId));
+    builder.append(tag(REASON, reason));
+    builder.append(tag(DURATION, duration));
+    builder.append(tag(RESPONSE_MESSAGE, responseMessage));
   }
 
 }
+

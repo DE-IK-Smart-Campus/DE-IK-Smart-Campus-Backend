@@ -19,6 +19,11 @@ public class Fields {
     public static final String STUDENT = "student";
 
     /**
+     * Subjects tag.
+     */
+    public static final String SUBJECTS = "subjects";
+
+    /**
      * Subject field.
      */
     public static final String SUBJECT = "subject";
@@ -27,6 +32,11 @@ public class Fields {
      * Instructor field.
      */
     public static final String INSTRUCTOR = "instructor";
+
+    /**
+     * Instructors tag.
+     */
+    public static final String INSTRUCTORS = "instructors";
 
     /**
      * Instructor ID field.
@@ -47,6 +57,11 @@ public class Fields {
      * Consulting date.
      */
     public static final String CONSULTING_DATE = "consultingDate";
+
+    /**
+     * Consulting dates tag.
+     */
+    public static final String CONSULTING_DATES = "consultingDates";
 
     /**
      * Consulting date.
@@ -103,6 +118,11 @@ public class Fields {
      * Duration.
      */
     public static final String DURATION = "duration";
+
+    /**
+     * Response message.
+     */
+    public static final String RESPONSE_MESSAGE = "responseMessage";
 
   }
 

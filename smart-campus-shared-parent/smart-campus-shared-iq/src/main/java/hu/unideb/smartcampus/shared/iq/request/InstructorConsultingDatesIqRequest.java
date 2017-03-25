@@ -1,13 +1,16 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.CONSULTING_DATE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.CONSULTING_DATES;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.CONSULTING_DATE_ID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM_TO_DATE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.INSTRUCTORID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.RESERVED_SUM;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.TO;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import lombok.Builder;
@@ -21,9 +24,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-@XmlRootElement(name = InstructorConsultingDatesIqRequest.ELEMENT,
-    namespace = BaseSmartCampusIq.BASE_NAMESPACE)
-@XmlAccessorType(XmlAccessType.NONE)
 public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
 
   /**
@@ -34,14 +34,11 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
   /**
    * Instructor id.
    */
-  @XmlElement(name = "instructorId")
   private String instructorId;
 
   /**
    * Consulting hours.
    */
-  @XmlElementWrapper
-  @XmlElement(name = "consultingDate")
   private List<ConsultingDateIqElement> consultingDates;
 
   /**
@@ -74,26 +71,22 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
 
   private void buildIq(StringBuilder builder) {
     builder.append(">");
-    builder.append("<instructorId>").append(instructorId).append("</instructorId>");
-    builder.append("<consultingDates>");
+    builder.append(tag(INSTRUCTORID, instructorId));
+    builder.append(openTag(CONSULTING_DATES));
     buildConsultingDate(builder);
-    builder.append("</consultingDates>");
+    builder.append(closeTag(CONSULTING_DATES));
   }
 
   private void buildConsultingDate(StringBuilder builder) {
     for (ConsultingDateIqElement consultingDateIqElement : consultingDates) {
-      builder.append("<consultingDate>");
-      builder.append("<consultingDateId>").append(consultingDateIqElement.getConsultingDateId())
-          .append("</consultingDateId>");
-      builder.append("<fromToDate>");
-      builder.append("<from>").append(consultingDateIqElement.getFromToDates().getFrom())
-          .append("</from>");
-      builder.append("<to>").append(consultingDateIqElement.getFromToDates().getTo())
-          .append("</to>");
-      builder.append("</fromToDate>");
-      builder.append("<reservedSum>").append(consultingDateIqElement.getReservedSum())
-          .append("</reservedSum>");
-      builder.append("</consultingDate>");
+      builder.append(openTag(CONSULTING_DATE));
+      builder.append(tag(CONSULTING_DATE_ID, consultingDateIqElement.getConsultingDateId()));
+      builder.append(openTag(FROM_TO_DATE));
+      builder.append(tag(FROM, consultingDateIqElement.getFromToDates().getFrom()));
+      builder.append(tag(TO, consultingDateIqElement.getFromToDates().getTo()));
+      builder.append(closeTag(FROM_TO_DATE));
+      builder.append(tag(RESERVED_SUM, consultingDateIqElement.getReservedSum()));
+      builder.append(closeTag(CONSULTING_DATE));
     }
   }
 }
