@@ -38,8 +38,8 @@ public class InstructorConsultingDateIqProvider
     int eventType = parser.getEventType();
     boolean done = false;
     while (!done) {
-      String tagname = parser.getName();
       eventType = parser.next();
+      String tagname = parser.getName();
       switch (eventType) {
         case XmlPullParser.START_TAG:
           if (tagname.equalsIgnoreCase(CONSULTING_DATE)) {

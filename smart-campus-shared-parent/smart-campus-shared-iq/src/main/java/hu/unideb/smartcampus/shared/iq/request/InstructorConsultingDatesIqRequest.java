@@ -73,12 +73,11 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
   }
 
   private void buildIq(StringBuilder builder) {
-    builder.append("<instructorConsultingDates xmlns=\"http://inf.unideb.hu/smartcampus/\">");
+    builder.append(">");
     builder.append("<instructorId>").append(instructorId).append("</instructorId>");
     builder.append("<consultingDates>");
     buildConsultingDate(builder);
     builder.append("</consultingDates>");
-    builder.append("</instructorConsultingDates>");
   }
 
   private void buildConsultingDate(StringBuilder builder) {
@@ -94,7 +93,7 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
       builder.append("</fromToDate>");
       builder.append("<reservedSum>").append(consultingDateIqElement.getReservedSum())
           .append("</reservedSum>");
-//      builder.append("</consultingDate>");
+      builder.append("</consultingDate>");
     }
   }
 }
