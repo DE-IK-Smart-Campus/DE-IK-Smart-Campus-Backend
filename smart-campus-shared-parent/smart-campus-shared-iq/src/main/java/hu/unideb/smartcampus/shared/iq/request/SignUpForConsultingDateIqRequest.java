@@ -73,17 +73,25 @@ public class SignUpForConsultingDateIqRequest extends BaseSmartCampusIq {
   }
 
   @Override
-  protected BaseSmartCampusIq getInstance() {
-    return this;
-  }
-
-  @Override
   protected String getElement() {
     return ELEMENT;
   }
 
   @Override
-  protected Class getIqClass() {
-    return this.getClass();
+  protected String toXml() {
+    StringBuilder builder = new StringBuilder();
+    buildIq(builder);
+    return builder.toString();
   }
+
+
+  private void buildIq(StringBuilder builder) {
+    builder.append("<signUpForConsultingDate xmlns=\"http://inf.unideb.hu/smartcampus/\">");
+    builder.append("<userId>").append(userId).append("</userId>");
+    builder.append("<consultingHourId>").append(consultingHourId).append("</consultingHourId>");
+    builder.append("<reason>").append(reason).append("</reason>");
+    builder.append("<duration>").append(duration).append("</duration>");
+//    builder.append("</signUpForConsultingDate>");
+  }
+
 }

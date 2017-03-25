@@ -62,18 +62,39 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
   }
 
   @Override
-  protected BaseSmartCampusIq getInstance() {
-    return this;
-  }
-
-  @Override
   protected String getElement() {
     return ELEMENT;
   }
 
-  @Override
-  protected Class getIqClass() {
-    return this.getClass();
+  protected String toXml() {
+    StringBuilder builder = new StringBuilder();
+    buildIq(builder);
+    return builder.toString();
   }
 
+  private void buildIq(StringBuilder builder) {
+    builder.append("<instructorConsultingDates xmlns=\"http://inf.unideb.hu/smartcampus/\">");
+    builder.append("<instructorId>").append(instructorId).append("</instructorId>");
+    builder.append("<consultingDates>");
+    buildConsultingDate(builder);
+    builder.append("</consultingDates>");
+    builder.append("</instructorConsultingDates>");
+  }
+
+  private void buildConsultingDate(StringBuilder builder) {
+    for (ConsultingDateIqElement consultingDateIqElement : consultingDates) {
+      builder.append("<consultingDate>");
+      builder.append("<consultingDateId>").append(consultingDateIqElement.getConsultingDateId())
+          .append("</consultingDateId>");
+      builder.append("<fromToDate>");
+      builder.append("<from>").append(consultingDateIqElement.getFromToDates().getFrom())
+          .append("</from>");
+      builder.append("<to>").append(consultingDateIqElement.getFromToDates().getTo())
+          .append("</to>");
+      builder.append("</fromToDate>");
+      builder.append("<reservedSum>").append(consultingDateIqElement.getReservedSum())
+          .append("</reservedSum>");
+//      builder.append("</consultingDate>");
+    }
+  }
 }

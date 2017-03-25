@@ -3,15 +3,9 @@ package hu.unideb.smartcampus.shared.iq.request;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,9 +14,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
-@XmlRootElement(name = SubjectsIqRequest.ELEMENT, namespace = BaseSmartCampusIq.BASE_NAMESPACE)
-@XmlAccessorType(XmlAccessType.NONE)
 public class SubjectsIqRequest extends BaseSmartCampusIq {
 
   /**
@@ -33,14 +24,11 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
   /**
    * User.
    */
-  @XmlElement
   private String student;
 
   /**
    * Things to good to have.
    */
-  @XmlElementWrapper
-  @XmlElement(name = "subject")
   private List<SubjectIqElement> subjects;
 
   /**
@@ -67,17 +55,41 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
   }
 
   @Override
-  protected BaseSmartCampusIq getInstance() {
-    return this;
+  protected String toXml() {
+    StringBuilder builder = new StringBuilder();
+    buildIq(builder);
+    return builder.toString();
   }
 
-  @Override
-  protected Class<? extends BaseSmartCampusIq> getIqClass() {
-    return this.getClass();
+  private void buildIq(StringBuilder builder) {
+    builder.append(">");
+    builder.append("<student>").append(student).append("</student>");
+    buildSubjects(builder);
   }
 
-  public String toXml() {
-    return "SubjectsIqRequest [student=" + student + ", subjects=" + subjects + "]";
+  private void buildSubjects(StringBuilder builder) {
+    if (subjects != null || !subjects.isEmpty()) {
+      builder.append("<subjects>");
+      for (SubjectIqElement subjectIqElement : subjects) {
+        builder.append("<subject>");
+        builder.append("<name>").append(subjectIqElement.getSubjectName()).append("</name>");
+        builder.append("<instructors>");
+        buildInstructors(builder, subjectIqElement);
+        builder.append("</instructors>");
+        builder.append("</subject>");
+      }
+      builder.append("</subjects>");
+    }
+  }
+
+  private void buildInstructors(StringBuilder builder, SubjectIqElement subjectIqElement) {
+    for (InstructorIqElement instructor : subjectIqElement.getInstructors()) {
+      builder.append("<instructor>");
+      builder.append("<instructorId>").append(instructor.getInstructorId())
+          .append("</instructorId>");
+      builder.append("<name>").append(instructor.getName()).append("</name>");
+      builder.append("</instructor>");
+    }
   }
 
 
