@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.TestIq;
 
 
 /**
@@ -69,7 +69,8 @@ public class EjabberdUserImpl implements EjabberdUser {
   }
 
   private void initFeatures() {
-    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(SubjectsIqRequest.ELEMENT);
+//    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(SubjectsIqRequest.ELEMENT);
+    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(TestIq.ELEMENT);
   }
 
   private void initIqHandler() {

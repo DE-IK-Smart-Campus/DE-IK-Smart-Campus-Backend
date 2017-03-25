@@ -26,7 +26,9 @@ public class SubjectRequestIqProvider extends IQProvider<SubjectsIqRequest> {
     String element = "";
     int eventType = parser.getEventType();
     String text = "";
-    while (eventType != XmlPullParser.END_DOCUMENT) {
+    boolean done = false;
+    while (!done) {
+      eventType = parser.next();
       String tagname = parser.getName();
       switch (eventType) {
         case XmlPullParser.START_TAG:
@@ -60,15 +62,17 @@ public class SubjectRequestIqProvider extends IQProvider<SubjectsIqRequest> {
             instructor.setInstructorId(Long.valueOf(text));
           } else if (tagname.equalsIgnoreCase("student")) {
             student = text;
+          } else if (tagname.equals(SubjectsIqRequest.ELEMENT)) {
+            done = true;
           }
           break;
 
         default:
           break;
       }
-      eventType = parser.next();
     }
     SubjectsIqRequest iq = new SubjectsIqRequest(student, subjects);
+    System.out.println("EZ MEGY VISSZA ANYÁDAT:" + iq);
     return iq;
   }
 

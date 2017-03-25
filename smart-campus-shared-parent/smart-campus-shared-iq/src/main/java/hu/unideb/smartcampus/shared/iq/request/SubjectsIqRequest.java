@@ -3,6 +3,8 @@ package hu.unideb.smartcampus.shared.iq.request;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jivesoftware.smack.packet.IQ;
+
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
 import lombok.Builder;
@@ -14,12 +16,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SubjectsIqRequest extends BaseSmartCampusIq {
+public class SubjectsIqRequest extends IQ {
 
   /**
    * Element.
    */
   public static final String ELEMENT = "askSubjects";
+  
+  /**
+   * Element.
+   */
+  public static final String NAMESPACE = "http://smartcampus.hu";
 
   /**
    * User.
@@ -35,7 +42,7 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
    * Def contrcutros.
    */
   public SubjectsIqRequest() {
-    super(ELEMENT);
+    super(ELEMENT, NAMESPACE);
     subjects = new ArrayList<>();
   }
 
@@ -44,17 +51,11 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
    */
   @Builder
   public SubjectsIqRequest(String student, List<SubjectIqElement> subjects) {
-    super(ELEMENT);
+    super(ELEMENT, NAMESPACE);
     this.student = student;
     this.subjects = subjects;
   }
 
-  @Override
-  protected String getElement() {
-    return ELEMENT;
-  }
-
-  @Override
   protected String toXml() {
     StringBuilder builder = new StringBuilder();
     buildIq(builder);
@@ -62,7 +63,6 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
   }
 
   private void buildIq(StringBuilder builder) {
-    builder.append(">");
     builder.append("<student>").append(student).append("</student>");
     buildSubjects(builder);
   }
@@ -90,6 +90,14 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
       builder.append("<name>").append(instructor.getName()).append("</name>");
       builder.append("</instructor>");
     }
+  }
+
+  @Override
+  protected IQChildElementXmlStringBuilder getIQChildElementBuilder(
+      IQChildElementXmlStringBuilder xml) {
+    xml.append(" >");
+    xml.append(toXml());
+    return xml;
   }
 
 

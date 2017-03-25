@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
-import javax.xml.bind.JAXBException;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
@@ -24,10 +23,7 @@ import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.shared.iq.provider.InstructorConsultingDateIqProvider;
 import hu.unideb.smartcampus.shared.iq.provider.SubjectRequestIqProvider;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
-import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
@@ -84,14 +80,9 @@ public class DefaultUserImpl implements DefaultUser {
   }
 
   private void registerCustomIQs() {
-    try {
-      ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE,
-          new SubjectRequestIqProvider());
-      ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
-          BaseSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
-    } catch (JAXBException e) {
-      LOGGER.error("Unable to register custom IQ's please check the log for more information.", e);
-    }
+     ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, SubjectsIqRequest.NAMESPACE,
+     new SubjectRequestIqProvider());
+//    ProviderManager.addIQProvider(TestIq.ELEMENT, TestIq.NAMESPACE, new TestIqProvider());
   }
 
 

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
@@ -35,12 +34,12 @@ public class SubjectRequestIqRequestHandler extends AbstractSmartCampusIqRequest
    * Ctor.
    */
   public SubjectRequestIqRequestHandler() {
-    super(SubjectsIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE, Type.get, Mode.sync);
+    super(SubjectsIqRequest.ELEMENT, SubjectsIqRequest.NAMESPACE, Type.get, Mode.sync);
   }
 
   /**
    * Ctor.
-   */
+   */   
   protected SubjectRequestIqRequestHandler(String element, String namespace, Type type, Mode mode) {
     super(element, namespace, type, mode);
   }
