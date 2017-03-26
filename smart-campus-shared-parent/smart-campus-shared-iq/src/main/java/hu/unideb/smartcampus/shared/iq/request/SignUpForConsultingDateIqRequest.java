@@ -73,7 +73,7 @@ public class SignUpForConsultingDateIqRequest extends BaseSmartCampusIq {
   }
 
   @Override
-  protected String getElement() {
+  public String getElement() {
     return ELEMENT;
   }
 

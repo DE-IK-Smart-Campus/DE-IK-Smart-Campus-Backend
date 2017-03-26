@@ -11,9 +11,9 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsulti
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jivesoftware.smack.provider.IQProvider;
 import org.xmlpull.v1.XmlPullParser;
 
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;;
@@ -24,7 +24,7 @@ import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;;
  */
 @SuppressWarnings({"PMD"})
 public class InstructorConsultingDateIqProvider
-    extends IQProvider<InstructorConsultingDatesIqRequest> {
+    extends BaseSmartCampusIqProvider<InstructorConsultingDatesIqRequest> {
 
   @Override
   public InstructorConsultingDatesIqRequest parse(XmlPullParser parser, int initialDepth)
@@ -82,6 +82,11 @@ public class InstructorConsultingDateIqProvider
     InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest(consultingHours);
     iq.setInstructorId(instructorId);
     return iq;
+  }
+
+  @Override
+  public Class<? extends BaseSmartCampusIq> getHandledIq() {
+    return InstructorConsultingDatesIqRequest.class;
   }
 
 }

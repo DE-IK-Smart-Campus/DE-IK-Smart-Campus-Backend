@@ -100,5 +100,8 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
     return xml;
   }
 
-
+  @Override
+  public String getElement() {
+    return ELEMENT;
+  }
 }

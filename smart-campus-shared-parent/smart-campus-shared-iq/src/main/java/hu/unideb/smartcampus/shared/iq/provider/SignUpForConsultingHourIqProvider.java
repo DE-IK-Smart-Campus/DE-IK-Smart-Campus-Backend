@@ -6,9 +6,9 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultin
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.RESPONSE_MESSAGE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultingDateFields.USER_ID;
 
-import org.jivesoftware.smack.provider.IQProvider;
 import org.xmlpull.v1.XmlPullParser;
 
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 
 /**
@@ -16,7 +16,7 @@ import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
  */
 @SuppressWarnings({"PMD"})
 public class SignUpForConsultingHourIqProvider
-    extends IQProvider<SignUpForConsultingDateIqRequest> {
+    extends BaseSmartCampusIqProvider<SignUpForConsultingDateIqRequest> {
 
   private String userId;
   private Long consultingHourId;
@@ -59,8 +59,13 @@ public class SignUpForConsultingHourIqProvider
       }
     }
 
-    return new SignUpForConsultingDateIqRequest(userId, consultingHourId, reason, duration,responseMessage);
+    return new SignUpForConsultingDateIqRequest(userId, consultingHourId, reason, duration,
+        responseMessage);
   }
 
+  @Override
+  public Class<? extends BaseSmartCampusIq> getHandledIq() {
+    return SignUpForConsultingDateIqRequest.class;
+  }
 }
 

@@ -9,9 +9,9 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFi
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jivesoftware.smack.provider.IQProvider;
 import org.xmlpull.v1.XmlPullParser;
 
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
@@ -20,7 +20,7 @@ import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
  * Subjects provider.
  */
 @SuppressWarnings({"PMD"})
-public class SubjectRequestIqProvider extends IQProvider<SubjectsIqRequest> {
+public class SubjectRequestIqProvider extends BaseSmartCampusIqProvider<SubjectsIqRequest> {
 
   @Override
   public SubjectsIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
@@ -79,6 +79,11 @@ public class SubjectRequestIqProvider extends IQProvider<SubjectsIqRequest> {
     }
     SubjectsIqRequest iq = new SubjectsIqRequest(student, subjects);
     return iq;
+  }
+
+  @Override
+  public Class<? extends BaseSmartCampusIq> getHandledIq() {
+    return SubjectsIqRequest.class;
   }
 
 }

@@ -38,7 +38,7 @@ public class BaseSmartCampusIq extends IQ {
     return ExtensionElementFactory.getExtensionByElementName(getElement());
   }
 
-  protected String getElement() {
+  public String getElement() {
     return "";
   }
 
