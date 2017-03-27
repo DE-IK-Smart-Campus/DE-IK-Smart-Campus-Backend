@@ -18,6 +18,9 @@ public class SubjectDetailsToSubjectDetailsEntityConverter implements Converter<
     return SubjectDetailsEntity.builder()
         .subjectName(subjectDetails.getSubjectName())
         .subjectType(subjectDetails.getSubjectType().name())
+        .startPeriod(subjectDetails.getStartPeriod())
+        .endPeriod(subjectDetails.getEndPeriod())
+        .teacherNames(subjectDetails.getTeacherNames())
         .build();
   }
 }

@@ -48,7 +48,9 @@ public class SubjectEventEntity extends BaseEntity<Long> {
   @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
   @JoinColumns({
       @JoinColumn(name = "subject_details_name", referencedColumnName = "subject_name"),
-      @JoinColumn(name = "subject_details_type", referencedColumnName = "subject_type")})
+      @JoinColumn(name = "subject_details_type", referencedColumnName = "subject_type"),
+      @JoinColumn(name = "subject_details_start_period", referencedColumnName = "start_period"),
+      @JoinColumn(name = "subject_details_end_period", referencedColumnName = "end_period")})
   private SubjectDetailsEntity subjectDetailsEntity;
 
   /**
