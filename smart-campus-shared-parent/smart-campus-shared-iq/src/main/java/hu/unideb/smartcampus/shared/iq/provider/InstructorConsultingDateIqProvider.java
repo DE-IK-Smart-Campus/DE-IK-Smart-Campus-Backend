@@ -79,8 +79,7 @@ public class InstructorConsultingDateIqProvider
       }
     }
 
-    InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest(consultingHours);
-    iq.setInstructorId(instructorId);
+    InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest(instructorId,consultingHours);
     return iq;
   }
 
