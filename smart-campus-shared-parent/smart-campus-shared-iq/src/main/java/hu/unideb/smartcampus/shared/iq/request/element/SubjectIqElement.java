@@ -3,12 +3,6 @@ package hu.unideb.smartcampus.shared.iq.request.element;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +12,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@XmlRootElement(name = "subject")
-@XmlAccessorType(XmlAccessType.NONE)
 public class SubjectIqElement implements Serializable {
 
   /**
@@ -30,14 +22,11 @@ public class SubjectIqElement implements Serializable {
   /**
    * Subject name.
    */
-  @XmlElement(name = "name")
   private String subjectName;
 
   /**
    * Subject name.
    */
-  @XmlElementWrapper
-  @XmlElement(name = "instructor")
   private List<InstructorIqElement> instructors;
 
   /**

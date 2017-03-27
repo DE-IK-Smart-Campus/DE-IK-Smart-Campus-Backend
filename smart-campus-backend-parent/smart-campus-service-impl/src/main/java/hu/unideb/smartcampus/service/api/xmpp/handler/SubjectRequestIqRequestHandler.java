@@ -40,7 +40,7 @@ public class SubjectRequestIqRequestHandler extends AbstractSmartCampusIqRequest
 
   /**
    * Ctor.
-   */
+   */   
   protected SubjectRequestIqRequestHandler(String element, String namespace, Type type, Mode mode) {
     super(element, namespace, type, mode);
   }

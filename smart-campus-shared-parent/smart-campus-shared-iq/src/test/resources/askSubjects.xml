@@ -1,35 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ns0:askSubjects xmlns:ns0="http://inf.unideb.hu/smartcampus/">
-   <packetID>cfe3ca24-8cfc-4856-9cff-6a87a86f8524</packetID>
-   <stanzaId>cfe3ca24-8cfc-4856-9cff-6a87a86f8524</stanzaId>
-   <type>get</type>
-   <ns0:student>Emily Stock</ns0:student>
-   <ns0:subjects>
-      <ns0:subject>
-         <ns0:name>AI</ns0:name>
-         <ns0:instructors>
-            <ns0:instructor>
-               <ns0:instructorId>1</ns0:instructorId>
-               <ns0:name>Johny</ns0:name>
-            </ns0:instructor>
-            <ns0:instructor>
-               <ns0:instructorId>2</ns0:instructorId>
-               <ns0:name>Emily</ns0:name>
-            </ns0:instructor>
-         </ns0:instructors>
-      </ns0:subject>
-      <ns0:subject>
-         <ns0:name>IE</ns0:name>
-         <ns0:instructors>
-            <ns0:instructor>
-               <ns0:instructorId>1</ns0:instructorId>
-               <ns0:name>George</ns0:name>
-            </ns0:instructor>
-            <ns0:instructor>
-               <ns0:instructorId>2</ns0:instructorId>
-               <ns0:name>Andre</ns0:name>
-            </ns0:instructor>
-         </ns0:instructors>
-      </ns0:subject>
-   </ns0:subjects>
-</ns0:askSubjects>
+<askSubjects>
+    <student>Emily Stock</student>
+    <subjects>
+        <subject>
+            <name>AI</name>
+            <instructors>
+                <instructor>
+                    <instructorId>1</instructorId>
+                    <name>Johny</name>
+                </instructor>
+                <instructor>
+                    <instructorId>2</instructorId>
+                    <name>Emily</name>
+                </instructor>
+            </instructors>
+        </subject>
+        <subject>
+            <name>IE</name>
+            <instructors>
+                <instructor>
+                    <instructorId>1</instructorId>
+                    <name>George</name>
+                </instructor>
+                <instructor>
+                    <instructorId>2</instructorId>
+                    <name>Andre</name>
+                </instructor>
+            </instructors>
+        </subject>
+    </subjects>
+</askSubjects>
