@@ -34,7 +34,7 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
     this.conversionService = conversionService;
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   @Override
   public List<SubjectDetails> getAllSubjectDetailsByUserId(final Long userId) {
     final User user = userService.getById(userId).orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));

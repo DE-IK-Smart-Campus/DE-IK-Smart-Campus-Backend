@@ -11,10 +11,17 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectType;
 public class SubjectDetailsEntityToSubjectDetailsConverter implements Converter<SubjectDetailsEntity, SubjectDetails> {
 
   @Override
-  public SubjectDetails convert(final SubjectDetailsEntity entity) {
-    return entity == null ? null : SubjectDetails.builder()
-        .subjectName(entity.getSubjectName())
-        .subjectType(SubjectType.valueOf(entity.getSubjectType()))
+  public SubjectDetails convert(final SubjectDetailsEntity subjectDetailsEntity) {
+    return subjectDetailsEntity == null ? null : convertSubjectDetailsEntityToSubjectDetails(subjectDetailsEntity);
+  }
+
+  private SubjectDetails convertSubjectDetailsEntityToSubjectDetails(final SubjectDetailsEntity subjectDetailsEntity) {
+    return SubjectDetails.builder()
+        .subjectName(subjectDetailsEntity.getSubjectName())
+        .subjectType(SubjectType.valueOf(subjectDetailsEntity.getSubjectType()))
+        .startPeriod(subjectDetailsEntity.getStartPeriod())
+        .endPeriod(subjectDetailsEntity.getEndPeriod())
+        .teacherNames(subjectDetailsEntity.getTeacherNames())
         .build();
   }
 }
