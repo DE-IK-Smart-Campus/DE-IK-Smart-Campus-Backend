@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.CalendarService;
+import hu.unideb.smartcampus.service.api.SubjectDetailsService;
 import hu.unideb.smartcampus.service.api.SubjectEventService;
 import hu.unideb.smartcampus.service.api.UserService;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
@@ -25,6 +27,9 @@ public class SubjectEventController {
 
   @Autowired
   private SubjectEventService subjectEventService;
+
+  @Autowired
+  private SubjectDetailsService subjectDetailsService;
 
   @Autowired
   private UserService userService;
@@ -48,5 +53,11 @@ public class SubjectEventController {
   public ResponseEntity<List<SubjectEvent>> getSubjectEventsByUserId(final Principal principal) {
     final User user = userService.getByUsername(principal.getName()).orElse(null);
     return ResponseEntity.ok(subjectEventService.getAllSubjectEventByUserId(user.getId()));
+  }
+
+  @GetMapping(path = "/list/subjectDetails")
+  public ResponseEntity<List<SubjectDetails>> getSubjectDetailsByUserId(final Principal principal) {
+    final User user = userService.getByUsername(principal.getName()).orElse(null);
+    return ResponseEntity.ok(subjectDetailsService.getAllSubjectDetailsByUserId(user.getId()));
   }
 }
