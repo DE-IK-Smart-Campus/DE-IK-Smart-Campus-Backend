@@ -6,9 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.service.api.ConsultingHourService;
-import hu.unideb.smartcampus.service.api.MessageProcessingClass;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.OfficeHourResponseWrapper;
-import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.CreateOfficeHoursRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
@@ -16,10 +14,9 @@ import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesCon
  * Service for retrivie...
  *
  */
-@Service(OfficeHourRequestServiceImpl.BEAN_NAME)
+@Service(OfficeHourCreationRequestServiceImpl.BEAN_NAME)
 @Transactional(propagation = Propagation.REQUIRED)
-public class OfficeHourRequestServiceImpl
-    implements MessageProcessingClass<OfficeHourResponseWrapper> {
+public class OfficeHourCreationRequestServiceImpl implements OfficeHourCreationRequestService {
 
   private static final String OK = "OK";
 
@@ -35,32 +32,12 @@ public class OfficeHourRequestServiceImpl
    * {@inheritDoc}.
    */
   @Override
-  public OfficeHourResponseWrapper getResponse(Object object) {
-    CreateOfficeHoursRequest msg = (CreateOfficeHoursRequest) object;
+  public OfficeHourResponseWrapper createOfficeHourByRequest(CreateOfficeHoursRequest request) {
     Integer generateOfficeHoursForInstructor =
-        consultingHourService.generateOfficeHoursForInstructor(msg.getInstructorId(),
-            msg.getOfficeHours(), msg.getIntervall());
+        consultingHourService.generateOfficeHoursForInstructor(request.getInstructorId(),
+            request.getOfficeHours(), request.getIntervall());
     return OfficeHourResponseWrapper.builder()
         .messageType(RequestMessagesConstants.CREATE_CONSULTING_DATES_RESPONSE).status(OK)
         .numberOfGeneratedHours(generateOfficeHoursForInstructor).build();
   }
-
-  /**
-   * {@inheritDoc}.
-   */
-  @Override
-  public Class<? extends BaseRequestType> getSupportedClass() {
-    return CreateOfficeHoursRequest.class;
-  }
-
-  /**
-   * {@inheritDoc}.
-   */
-  @Override
-  public String getBeanName() {
-    return BEAN_NAME;
-  }
-
-
-
 }

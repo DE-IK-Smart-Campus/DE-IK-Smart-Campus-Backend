@@ -22,10 +22,10 @@ import hu.unideb.smartcampus.shared.requestmessages.CreateOfficeHoursRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
 /**
- * Test for {@link OfficeHourRequestServiceImpl}.
+ * Test for {@link OfficeHourCreationRequestServiceImpl}.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class OfficeHourRequestServiceImplTest {
+public class OfficeHourCreationRequestServiceImplTest {
 
   /**
    * Instructor id.
@@ -64,7 +64,7 @@ public class OfficeHourRequestServiceImplTest {
    * Service.
    */
   @InjectMocks
-  private OfficeHourRequestServiceImpl service;
+  private OfficeHourCreationRequestServiceImpl service;
 
   /**
    * Consulting hour service.
@@ -86,7 +86,7 @@ public class OfficeHourRequestServiceImplTest {
         INTERVALL)).thenReturn(GENERATED_HOURS);
 
     // then
-    OfficeHourResponseWrapper response = service.getResponse(request);
+    OfficeHourResponseWrapper response = service.createOfficeHourByRequest(request);
 
     Assert.assertEquals(GENERATED_HOURS, response.getNumberOfGeneratedHours());
     Assert.assertEquals(RequestMessagesConstants.CREATE_CONSULTING_DATES_RESPONSE,
