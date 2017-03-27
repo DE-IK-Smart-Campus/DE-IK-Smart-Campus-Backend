@@ -45,8 +45,10 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
    * Constructs an InstructorConsultingDatesRequestIq instance.
    */
   @Builder
-  public InstructorConsultingDatesIqRequest(List<ConsultingDateIqElement> consultingHours) {
+  public InstructorConsultingDatesIqRequest(String instructorId,
+      List<ConsultingDateIqElement> consultingHours) {
     super(ELEMENT);
+    this.instructorId = instructorId;
     this.consultingDates = consultingHours;
   }
 

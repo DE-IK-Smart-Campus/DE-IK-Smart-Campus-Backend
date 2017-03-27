@@ -19,11 +19,11 @@ import hu.unideb.smartcampus.shared.wrapper.SignUpForConsultingHourWrapper;
 
 
 /**
- * Test for {@link SignUpForConsultingHourRequestServiceImpl}.
+ * Test for {@link SignUpForConsultingDateRequestServiceImpl}.
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings({"PMD.UnusedPrivateField"})
-public class SignUpForConsultingHourRequestServiceImplTest {
+public class SignUpForConsultingDateRequestServiceImplTest {
 
   /**
    * Consulting date date.
@@ -87,12 +87,12 @@ public class SignUpForConsultingHourRequestServiceImplTest {
   private static ConsultingDateEntity createConsultingDateEntity() {
     return ConsultingDateEntity.builder().date(CONSULTING_DATE_DATE).build();
   }
-  
+
   /**
    * Service impl.
    */
   @InjectMocks
-  private SignUpForConsultingHourRequestServiceImpl service;
+  private SignUpForConsultingDateRequestServiceImpl service;
 
   /**
    * User repository mock.
@@ -127,7 +127,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
         .thenReturn(consultingDateEntity);
 
     // then
-    SignUpForConsultingHourWrapper response = service.getResponse(EXAMPLE_REQUEST);
+    SignUpForConsultingHourWrapper response = service.signUpByRequest(EXAMPLE_REQUEST);
     Assert.assertEquals(OK, response.getStatus());
     Assert.assertEquals(Integer.valueOf(1), consultingDateEntity.getSum());
   }
@@ -144,7 +144,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
     Mockito.when(consultingDateRepository.findOne(CONSULTING_DATE_ID)).thenReturn(null);
 
     // then
-    SignUpForConsultingHourWrapper response = service.getResponse(EXAMPLE_REQUEST);
+    SignUpForConsultingHourWrapper response = service.signUpByRequest(EXAMPLE_REQUEST);
     Assert.assertEquals(NO_CONSULTING_DATE_EXISTS, response.getStatus());
   }
 
@@ -163,7 +163,7 @@ public class SignUpForConsultingHourRequestServiceImplTest {
         .thenReturn(consultingDateEntity);
 
     // then
-    SignUpForConsultingHourWrapper response = service.getResponse(EXAMPLE_REQUEST);
+    SignUpForConsultingHourWrapper response = service.signUpByRequest(EXAMPLE_REQUEST);
     Assert.assertEquals(USER_DOES_NOT_EXISTS, response.getStatus());
   }
 

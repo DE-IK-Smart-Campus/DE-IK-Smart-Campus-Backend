@@ -13,8 +13,6 @@ import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.ConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
-import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.shared.requestmessages.BaseRequestType;
 import hu.unideb.smartcampus.shared.requestmessages.SignUpForConsultingHourRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 import hu.unideb.smartcampus.shared.wrapper.SignUpForConsultingHourWrapper;
@@ -23,12 +21,10 @@ import hu.unideb.smartcampus.shared.wrapper.SignUpForConsultingHourWrapper;
  * Processing signing up for consulting hours.
  *
  */
-@Service(SignUpForConsultingHourRequestServiceImpl.BEAN_NAME)
+@Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class SignUpForConsultingHourRequestServiceImpl
-    implements MessageProcessingClass<SignUpForConsultingHourWrapper> {
-
-  public static final String BEAN_NAME = "signUpForConsultingHourRequestServiceImpl";
+public class SignUpForConsultingDateRequestServiceImpl
+    implements SignUpForConsultingDateRequestService {
 
   private static final String USER_DOES_NOT_EXISTS = "User does not exists.";
 
@@ -37,7 +33,7 @@ public class SignUpForConsultingHourRequestServiceImpl
   private static final String OK = "OK";
 
   private static final Logger LOGGER =
-      LoggerFactory.getLogger(SignUpForConsultingHourRequestServiceImpl.class);
+      LoggerFactory.getLogger(SignUpForConsultingDateRequestServiceImpl.class);
 
   @Autowired
   private UserRepository userRepository;
@@ -48,26 +44,33 @@ public class SignUpForConsultingHourRequestServiceImpl
   @Autowired
   private UserConsultingDateRepository userConsultingDateRepository;
 
+
   /**
    * {@inheritDoc}.
    */
   @Override
-  public SignUpForConsultingHourWrapper getResponse(Object object) {
-    SignUpForConsultingHourRequest msg = (SignUpForConsultingHourRequest) object;
-    ConsultingDateEntity dateEntity = consultingDateRepository.findOne(msg.getConsultingHourId());
+  public SignUpForConsultingHourWrapper signUpByRequest(SignUpForConsultingHourRequest request) {
+    ConsultingDateEntity dateEntity =
+        consultingDateRepository.findOne(request.getConsultingHourId());
     UserEntity userEntity;
     String status = NO_CONSULTING_DATE_EXISTS;
     if (dateEntity != null) {
       status = USER_DOES_NOT_EXISTS;
-      userEntity = userRepository.findByUsername(msg.getUserId());
+      userEntity = userRepository.findByUsername(request.getUserId());
       if (userEntity != null) {
-        incrementAndSaveConsultingSignUp(msg, dateEntity, userEntity);
+        incrementAndSaveConsultingSignUp(request, dateEntity, userEntity);
         status = OK;
       }
     }
     return SignUpForConsultingHourWrapper.builder()
         .messageType(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_RESPONSE).status(status)
         .build();
+  }
+
+  private UserConsultingDateEntity createUserConsultingDateEntityByRequest(
+      SignUpForConsultingHourRequest msg, ConsultingDateEntity dateEntity, UserEntity userEntity) {
+    return UserConsultingDateEntity.builder().user(userEntity).consultingDate(dateEntity)
+        .reason(msg.getReason()).duration(msg.getDuration()).build();
   }
 
   private void incrementAndSaveConsultingSignUp(SignUpForConsultingHourRequest msg,
@@ -80,32 +83,10 @@ public class SignUpForConsultingHourRequestServiceImpl
         .save(createUserConsultingDateEntityByRequest(msg, dateEntity, userEntity));
   }
 
-  private UserConsultingDateEntity createUserConsultingDateEntityByRequest(
-      SignUpForConsultingHourRequest msg, ConsultingDateEntity dateEntity, UserEntity userEntity) {
-    return UserConsultingDateEntity.builder().user(userEntity).consultingDate(dateEntity)
-        .reason(msg.getReason()).duration(msg.getDuration()).build();
-  }
-
   private void incrementSum(ConsultingDateEntity dateEntity) {
     Integer sum = dateEntity.getSum();
     sum = sum == null ? 1 : sum + 1;
     dateEntity.setSum(sum);
-  }
-
-  /**
-   * {@inheritDoc}.
-   */
-  @Override
-  public Class<? extends BaseRequestType> getSupportedClass() {
-    return SignUpForConsultingHourRequest.class;
-  }
-
-  /**
-   * {@inheritDoc}.
-   */
-  @Override
-  public String getBeanName() {
-    return BEAN_NAME;
   }
 
 }
