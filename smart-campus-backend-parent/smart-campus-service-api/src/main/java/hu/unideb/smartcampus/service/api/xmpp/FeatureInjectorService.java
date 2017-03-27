@@ -10,6 +10,6 @@ public interface FeatureInjectorService {
   /**
    * Register custom features for XMPP connection.
    */
-  void registerFeaturesForConnection(XMPPConnection connection);
+  void registerFeaturesForConnectionWithHandlers(XMPPConnection connection);
 
 }

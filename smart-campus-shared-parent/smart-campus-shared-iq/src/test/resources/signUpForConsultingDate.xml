@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ns0:signUpForConsultingDate xmlns:ns0="http://inf.unideb.hu/smartcampus/">
-   <packetID>1646b98a-5a0d-4a50-922d-537d031408b4</packetID>
-   <stanzaId>1646b98a-5a0d-4a50-922d-537d031408b4</stanzaId>
+   <packetID>a04820be-f638-43d6-a441-9de11540ab00</packetID>
+   <stanzaId>a04820be-f638-43d6-a441-9de11540ab00</stanzaId>
    <type>get</type>
    <ns0:userId>1</ns0:userId>
    <ns0:consultingHourId>2</ns0:consultingHourId>

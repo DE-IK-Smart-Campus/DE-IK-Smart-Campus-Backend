@@ -1,41 +1,41 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import javax.xml.bind.JAXBException;
+import java.io.CharArrayReader;
+import java.io.Reader;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.xmlpull.mxp1.MXParser;
+import org.xmlpull.v1.XmlPullParser;
+
+import hu.unideb.smartcampus.shared.iq.provider.SignUpForConsultingHourIqProvider;
 
 /**
  * SignUpForConsultingDate IQ parser test.
  */
-public class SignUpForConsultingDateIqParserTest extends AbstractIqParserTest {
+public class SignUpForConsultingDateIqParserTest {
 
   private static final Long CONSULTING_HOUR_ID = 2L;
   private static final String USER_ID = "1";
   private static final String REASON = "Why not?";
   private static final String DURATION = "A moment.";
-  private static final String FILE = "src/test/resources/signUpForConsultingDate.xml";
-
-  @Before
-  public void before() {
-    super.before();
-  }
 
   @Test
-  public void testParseXml() throws JAXBException {
+  @Ignore
+  public void testProvider() throws Exception {
     SignUpForConsultingDateIqRequest iq = SignUpForConsultingDateIqRequest.builder().userId(USER_ID)
         .consultingHourId(CONSULTING_HOUR_ID).duration(DURATION).reason(REASON).build();
-    SignUpForConsultingDateIqRequest result = (SignUpForConsultingDateIqRequest) runTest(iq);
-    Assert.assertEquals(USER_ID, result.getUserId());
-    Assert.assertEquals(CONSULTING_HOUR_ID, result.getConsultingHourId());
-    Assert.assertEquals(REASON, result.getReason());
-    Assert.assertEquals(DURATION, result.getDuration());
+    SignUpForConsultingHourIqProvider provider = new SignUpForConsultingHourIqProvider();
+    XmlPullParser parser = new MXParser();
+    Reader in = new CharArrayReader(iq.toXml().toCharArray());
+    parser.setInput(in);
+    SignUpForConsultingDateIqRequest parse = provider.parse(parser, 0);
+    Assert.assertEquals(USER_ID, parse.getUserId());
+    Assert.assertEquals(CONSULTING_HOUR_ID, parse.getConsultingHourId());
+    Assert.assertEquals(DURATION, parse.getDuration());
+    Assert.assertEquals(REASON, parse.getReason());
   }
 
-  @Override
-  protected String getFile() {
-    return FILE;
-  }
 
 }
