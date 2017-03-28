@@ -14,10 +14,18 @@ public interface DefaultUser {
    * @return default smartcampus user's active connection.
    */
   XMPPTCPConnection getConnection();
-  
+
   /**
    * Reconnect.
    */
   void reconnect();
+
+  /**
+   * Checks if the default user is connected to the XMPP server.
+   *
+   * @return {@code true} if the default user is connected to the XMPP server {@code false}
+   *         otherwise
+   */
+  boolean isDisconnected();
 
 }
