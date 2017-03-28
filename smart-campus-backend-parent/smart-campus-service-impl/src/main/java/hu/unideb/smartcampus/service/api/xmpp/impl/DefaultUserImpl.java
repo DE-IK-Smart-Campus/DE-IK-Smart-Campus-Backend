@@ -138,6 +138,11 @@ public class DefaultUserImpl implements DefaultUser {
     init();
   }
 
+  @Override
+  public final boolean isDisconnected() {
+    return !connection.isConnected();
+  }
+
   @PreDestroy
   public void preDestroy() {
     disconnectAndResetConnection();

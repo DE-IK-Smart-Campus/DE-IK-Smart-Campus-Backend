@@ -22,7 +22,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SubjectsIqRequest extends BaseSmartCampusIq {
+public class SubjectsIqRequest extends BaseSmartCampusIqRequest {
 
   /**
    * Element.
@@ -90,14 +90,6 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
       builder.append(tag(NAME, instructor.getName()));
       builder.append(closeTag(INSTRUCTOR));
     }
-  }
-
-  @Override
-  public IQChildElementXmlStringBuilder getIQChildElementBuilder(
-      IQChildElementXmlStringBuilder xml) {
-    xml.append(" >");
-    xml.append(toXml());
-    return xml;
   }
 
   @Override

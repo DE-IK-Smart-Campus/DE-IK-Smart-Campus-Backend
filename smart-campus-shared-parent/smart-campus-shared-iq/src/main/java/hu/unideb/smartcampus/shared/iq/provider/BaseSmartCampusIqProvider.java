@@ -3,20 +3,20 @@ package hu.unideb.smartcampus.shared.iq.provider;
 import org.jivesoftware.smack.provider.IQProvider;
 import org.xmlpull.v1.XmlPullParser;
 
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 
 /**
  * Base provider.
  */
-public class BaseSmartCampusIqProvider<T extends BaseSmartCampusIq> extends IQProvider<T> {
+public class BaseSmartCampusIqProvider<T extends BaseSmartCampusIqRequest> extends IQProvider<T> {
 
   @Override
   public T parse(XmlPullParser parser, int initialDepth) throws Exception {
-    return (T) new BaseSmartCampusIq("base");
+    return (T) new BaseSmartCampusIqRequest("base");
   }
   
-  public Class<? extends BaseSmartCampusIq> getHandledIq() {
-    return BaseSmartCampusIq.class;
+  public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
+    return BaseSmartCampusIqRequest.class;
   }
 
 

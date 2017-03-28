@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.request.service.RetrieveSubjectsRequestService;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
@@ -31,7 +31,7 @@ public class SubjectRequestIqRequestHandler extends AbstractSmartCampusIqRequest
    * Ctor.
    */
   public SubjectRequestIqRequestHandler() {
-    super(SubjectsIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE, Type.get, Mode.async);
+    super(SubjectsIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get, Mode.async);
   }
 
   /**

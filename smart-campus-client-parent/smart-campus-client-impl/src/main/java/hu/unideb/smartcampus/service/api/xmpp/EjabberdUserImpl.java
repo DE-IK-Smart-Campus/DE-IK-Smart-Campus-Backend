@@ -60,18 +60,8 @@ public class EjabberdUserImpl implements EjabberdUser {
     LOGGER.info("Logging in user {}", username);
     if (connection == null || !connection.isAuthenticated()) {
       initConnection(username, password);
-      initFeatures();
-      initIqHandler();
     }
     LOGGER.info("Login succesfull.");
-  }
-
-  private void initFeatures() {
-
-  }
-
-  private void initIqHandler() {
-    // empty
   }
 
   /**

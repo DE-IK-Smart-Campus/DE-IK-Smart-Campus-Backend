@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
@@ -82,7 +82,7 @@ public class SubjectRequestIqProvider extends BaseSmartCampusIqProvider<Subjects
   }
 
   @Override
-  public Class<? extends BaseSmartCampusIq> getHandledIq() {
+  public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
     return SubjectsIqRequest.class;
   }
 
