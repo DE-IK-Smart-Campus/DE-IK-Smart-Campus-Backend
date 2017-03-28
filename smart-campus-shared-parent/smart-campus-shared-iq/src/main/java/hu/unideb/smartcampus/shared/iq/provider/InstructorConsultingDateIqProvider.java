@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;;
@@ -84,7 +84,7 @@ public class InstructorConsultingDateIqProvider
   }
 
   @Override
-  public Class<? extends BaseSmartCampusIq> getHandledIq() {
+  public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
     return InstructorConsultingDatesIqRequest.class;
   }
 
