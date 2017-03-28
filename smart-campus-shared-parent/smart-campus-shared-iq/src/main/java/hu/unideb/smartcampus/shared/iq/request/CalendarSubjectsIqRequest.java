@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.APPOINTMENT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.APPOINTMENTS;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.DESCRIPTION;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.FROM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.STUDENT;
@@ -13,6 +15,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqR
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.unideb.smartcampus.shared.iq.request.element.AppointmentTimeIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 import lombok.Builder;
 import lombok.Getter;
@@ -78,11 +81,22 @@ public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
         builder.append(tag(WHEN, calendarIqElement.getWhen()));
         builder.append(tag(WHERE, calendarIqElement.getWhere()));
         builder.append(tag(DESCRIPTION, calendarIqElement.getDescription()));
-        builder.append(tag(FROM, calendarIqElement.getFrom()));
-        builder.append(tag(TO, calendarIqElement.getTo()));
+        builder.append(openTag(APPOINTMENTS));
+        buildAppointmentTimes(builder, calendarIqElement);
+        builder.append(closeTag(APPOINTMENTS));
         builder.append(closeTag(SUBJECT));
       }
       builder.append(closeTag(SUBJECT_EVENTS));
+    }
+  }
+
+  private void buildAppointmentTimes(StringBuilder builder,
+      CalendarSubjectIqElement calendarIqElement) {
+    for (AppointmentTimeIqElement appointment : calendarIqElement.getAppointmentTimes()) {
+      builder.append(openTag(APPOINTMENT));
+      builder.append(tag(FROM, appointment.getFrom()));
+      builder.append(tag(TO, appointment.getTo()));
+      builder.append(closeTag(APPOINTMENT));
     }
   }
 

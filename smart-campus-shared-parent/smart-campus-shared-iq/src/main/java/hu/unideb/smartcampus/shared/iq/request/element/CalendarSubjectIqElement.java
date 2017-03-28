@@ -1,11 +1,12 @@
 package hu.unideb.smartcampus.shared.iq.request.element;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 
 /**
  * Calendar subject IQ element.
@@ -19,8 +20,6 @@ import lombok.NoArgsConstructor;
  * <subjectName>RFT</subjectName>
  * <where>IF 01</where>
  * <desc>John LABORATORY</desc>
- * <from>123</from> <!--in long-->
- * <to>321</to> <!--in long-->
  * 
  *  }
  * </pre>
@@ -29,7 +28,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
 public class CalendarSubjectIqElement implements Serializable {
 
   /**
@@ -58,27 +56,21 @@ public class CalendarSubjectIqElement implements Serializable {
   private String description;
 
   /**
-   * From in Long from timestamp.
+   * Appointment times.
    */
-  private Long from;
+  private List<AppointmentTimeIqElement> appointmentTimes;
 
   /**
-   * To in Long from Timestamp.
-   */
-  private Long to;
-
-  /**
-   * Constructs a SubjectWrapper instance.
+   * Constructs a CalendarSubjectIqElement instance.
    */
   @Builder
   public CalendarSubjectIqElement(String subjectName, Long when, String where, String description,
-      Long from, Long to) {
+      List<AppointmentTimeIqElement> appointmentTimes) {
     this.subjectName = subjectName;
     this.when = when;
     this.where = where;
     this.description = description;
-    this.from = from;
-    this.to = to;
+    this.appointmentTimes = appointmentTimes;
   }
 
 

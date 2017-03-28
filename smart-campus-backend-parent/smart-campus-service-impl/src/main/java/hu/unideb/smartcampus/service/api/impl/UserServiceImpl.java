@@ -61,4 +61,9 @@ public class UserServiceImpl implements UserService {
     UserEntity userEntity = conversionService.convert(user, UserEntity.class);
     return conversionService.convert(userRepository.save(userEntity), User.class);
   }
+
+  @Override
+  public Long getIdByUsername(String username) {
+    return userRepository.getIdByUsername(username);
+  }
 }

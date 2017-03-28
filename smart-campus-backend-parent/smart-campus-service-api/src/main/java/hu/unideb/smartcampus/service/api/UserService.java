@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api;
 
 import java.util.Optional;
+
 import hu.unideb.smartcampus.service.api.domain.User;
 
 /**
@@ -25,4 +26,9 @@ public interface UserService {
    * @return the persisted entity with its id set
    */
   User save(User user);
+  
+  /**
+   * Get id by username.
+   */
+  Long getIdByUsername(String username);
 }

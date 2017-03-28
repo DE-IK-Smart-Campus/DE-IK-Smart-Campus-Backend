@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.APPOINTMENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.DESCRIPTION;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.FROM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.STUDENT;
@@ -16,6 +17,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.element.AppointmentTimeIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 
 /**
@@ -26,13 +28,16 @@ public class CalendarSubjectsIqProvider
     extends BaseSmartCampusIqProvider<CalendarSubjectsIqRequest> {
 
   private List<CalendarSubjectIqElement> subjectEvents;
+  private List<AppointmentTimeIqElement> appointmentTimes;
   private String student;
   private boolean done = false;
   private CalendarSubjectIqElement subject;
+  private AppointmentTimeIqElement appointmentTime;
 
   @Override
   public CalendarSubjectsIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     subjectEvents = new ArrayList<>();
+    appointmentTimes = new ArrayList<>();
     int eventType = parser.getEventType();
     String text = "";
     while (!done) {
@@ -58,18 +63,23 @@ public class CalendarSubjectsIqProvider
   private void parseStartTag(String tagname) {
     if (tagname.equalsIgnoreCase(SUBJECT)) {
       subject = new CalendarSubjectIqElement();
+    } else if (tagname.equalsIgnoreCase(APPOINTMENT)) {
+      appointmentTime = new AppointmentTimeIqElement();
     }
   }
 
   private void parseEndTag(String text, String tagname) {
     if (tagname.equalsIgnoreCase(SUBJECT)) {
+      subject.setAppointmentTimes(appointmentTimes);
       subjectEvents.add(subject);
     } else if (tagname.equalsIgnoreCase(STUDENT)) {
       student = text;
+    } else if (tagname.equalsIgnoreCase(APPOINTMENT)) {
+      appointmentTimes.add(appointmentTime);
     } else if (tagname.equalsIgnoreCase(FROM)) {
-      subject.setFrom(Long.valueOf(text));
+      appointmentTime.setFrom(Long.valueOf(text));
     } else if (tagname.equalsIgnoreCase(TO)) {
-      subject.setTo(Long.valueOf(text));
+      appointmentTime.setTo(Long.valueOf(text));
     } else if (tagname.equalsIgnoreCase(WHEN)) {
       subject.setWhen(Long.valueOf(text));
     } else if (tagname.equalsIgnoreCase(WHERE)) {

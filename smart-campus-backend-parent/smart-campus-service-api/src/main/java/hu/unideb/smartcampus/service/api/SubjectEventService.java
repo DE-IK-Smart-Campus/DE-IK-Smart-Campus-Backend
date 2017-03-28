@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api;
 
 import java.util.List;
+
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 
@@ -28,4 +29,9 @@ public interface SubjectEventService {
    * Save.
    */
   void save(List<SubjectEvent> subjectEvents);
+  
+  /**
+   * Get all subject event by user name.
+   */
+  List<SubjectEvent> getAllSubjectEventByUsername(String username);
 }

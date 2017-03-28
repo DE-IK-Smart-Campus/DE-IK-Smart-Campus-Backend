@@ -58,4 +58,10 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
     subjectDetailsList.forEach(subjectDetails -> save(subjectDetails));
     subjectDetailsRepository.flush();
   }
+
+  @Override
+  public List<SubjectDetails> getAllSubjectDetailsByUsername(String username) {
+    Long userId = userService.getIdByUsername(username);
+    return getAllSubjectDetailsByUserId(userId);
+  }
 }

@@ -1,14 +1,15 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.repository.SubjectEventRepository;
@@ -84,5 +85,11 @@ public class SubjectEventServiceImpl implements SubjectEventService {
     return subjectEvents.parallelStream()
         .map(subjectEvent -> subjectEvent.getSubjectDetails())
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<SubjectEvent> getAllSubjectEventByUsername(String username) {
+    final List<SubjectDetails> subjectDetails = subjectDetailsService.getAllSubjectDetailsByUsername(username);
+    return getAllSubjectEventBySubjectDetails(subjectDetails);
   }
 }

@@ -162,6 +162,17 @@ public class Fields {
     public static final String SUBJECT_EVENTS = "subjects";
 
     /**
+     * Appointments tag.
+     */
+    public static final String APPOINTMENTS = "appointments";
+    
+    /**
+     * Appointments field.
+     */
+    public static final String APPOINTMENT = "appointment";
+
+
+    /**
      * Subject field.
      */
     public static final String SUBJECT = "subject";

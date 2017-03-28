@@ -23,4 +23,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
    * Get actual subjects by username.
    */
   Set<SubjectDetailsEntity> getSubjectsByUsername(String username);
+  
+  /**
+   * Get user id by username.
+   */
+  Long getIdByUsername(String username);
 }
