@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.request.service.SignUpForConsultingDateRequestService;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 import hu.unideb.smartcampus.shared.requestmessages.SignUpForConsultingHourRequest;
 import hu.unideb.smartcampus.shared.wrapper.SignUpForConsultingHourWrapper;
@@ -25,7 +25,7 @@ public class SignUpForConsultingDateRequestHandler extends AbstractSmartCampusIq
    * Ctor.
    */
   public SignUpForConsultingDateRequestHandler() {
-    super(SignUpForConsultingDateIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE, Type.set,
+    super(SignUpForConsultingDateIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.set,
         Mode.async);
   }
 

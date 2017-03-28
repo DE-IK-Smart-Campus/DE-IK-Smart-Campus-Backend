@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
+public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIqRequest {
 
   /**
    * Element.
@@ -72,7 +72,6 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIq {
   }
 
   private void buildIq(StringBuilder builder) {
-    builder.append(">");
     builder.append(tag(INSTRUCTORID, instructorId));
     builder.append(openTag(CONSULTING_DATES));
     buildConsultingDate(builder);

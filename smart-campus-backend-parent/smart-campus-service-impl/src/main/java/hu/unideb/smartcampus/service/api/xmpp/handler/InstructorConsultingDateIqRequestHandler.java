@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingDatesRequestService;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;
@@ -30,7 +30,7 @@ public class InstructorConsultingDateIqRequestHandler extends AbstractSmartCampu
    * Ctor.
    */
   public InstructorConsultingDateIqRequestHandler() {
-    super(InstructorConsultingDatesIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE, Type.get,
+    super(InstructorConsultingDatesIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get,
         Mode.async);
   }
 

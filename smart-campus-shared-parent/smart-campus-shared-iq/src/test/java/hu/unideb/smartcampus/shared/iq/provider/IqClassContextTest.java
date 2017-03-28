@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import hu.unideb.smartcampus.shared.iq.context.IqClassContext;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
@@ -22,7 +22,7 @@ public class IqClassContextTest {
    */
   @Test
   public void testIqWithProvider() throws InstantiationException, IllegalAccessException {
-    Map<Class<? extends BaseSmartCampusIq>, Class<? extends BaseSmartCampusIqProvider>> iqWithProvider =
+    Map<Class<? extends BaseSmartCampusIqRequest>, Class<? extends BaseSmartCampusIqProvider>> iqWithProvider =
         IqClassContext.getIqWithProvider();
     Assert.assertEquals(SubjectRequestIqProvider.class,
         iqWithProvider.get(SubjectsIqRequest.class));

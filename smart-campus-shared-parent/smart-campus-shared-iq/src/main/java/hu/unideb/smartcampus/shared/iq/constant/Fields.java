@@ -50,6 +50,27 @@ public class Fields {
   }
 
   /**
+   * Save subjects by ICS IQ request fields.
+   */
+  public static class SaveSubjectsIcsIqFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * ICS link field.
+     */
+    public static final String ICS = "ics";
+    
+    /**
+     * Status message field.
+     */
+    public static final String STATUS_MESSAGE = "statusMessage";
+  }
+
+  /**
    * Instructor consulting dates IQ request fields.
    */
   public static class InstructorConsultingDatesIqRequestFields {
