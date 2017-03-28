@@ -21,18 +21,18 @@ public class CalendarSubjectsIqRequestTest extends AbstractParserTest {
   private static final Long TO = 10L;
   private static final Long FROM = 1L;
   private static final AppointmentTimeIqElement APPOINTMENT_TIME_IQ_ELEMENT =
-      AppointmentTimeIqElement.builder().from(FROM).to(TO).build();
+      AppointmentTimeIqElement.builder().from(FROM).to(TO).when(WHEN).build();
   private static final AppointmentTimeIqElement APPOINTMENT_TIME_IQ_ELEMENT_SECOND =
-      AppointmentTimeIqElement.builder().from(FROM + TO).to(TO + TO).build();
+      AppointmentTimeIqElement.builder().from(FROM + TO).to(TO + TO).when(WHEN).build();
   private static final String WHERE = "Room";
   private static final String DESCRIPTION = "description";
   private static final String STUDENT = "ExampleStudent";
   private static final String SUBJECTNAME = "AI";
   private static final List<AppointmentTimeIqElement> APPOINTMENTTIMES =
       Arrays.asList(APPOINTMENT_TIME_IQ_ELEMENT, APPOINTMENT_TIME_IQ_ELEMENT_SECOND);
-  private static final List<CalendarSubjectIqElement> SUBJECTEVENTS = Arrays.asList(
-      CalendarSubjectIqElement.builder().subjectName(SUBJECTNAME).appointmentTimes(APPOINTMENTTIMES)
-          .when(WHEN).description(DESCRIPTION).where(WHERE).build());
+  private static final List<CalendarSubjectIqElement> SUBJECTEVENTS =
+      Arrays.asList(CalendarSubjectIqElement.builder().subjectName(SUBJECTNAME)
+          .appointmentTimes(APPOINTMENTTIMES).description(DESCRIPTION).where(WHERE).build());
 
   @Test
   public void testIqProvider() throws Exception {

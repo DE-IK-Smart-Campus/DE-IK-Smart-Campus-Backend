@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
  * <pre>
  * {@code
  * 
- * <when>567</when> <!--in long-->
  * <subjectName>RFT</subjectName>
  * <where>IF 01</where>
  * <desc>John LABORATORY</desc>
@@ -41,11 +40,6 @@ public class CalendarSubjectIqElement implements Serializable {
   private String subjectName;
 
   /**
-   * When.
-   */
-  private Long when;
-
-  /**
    * Where.
    */
   private String where;
@@ -64,10 +58,9 @@ public class CalendarSubjectIqElement implements Serializable {
    * Constructs a CalendarSubjectIqElement instance.
    */
   @Builder
-  public CalendarSubjectIqElement(String subjectName, Long when, String where, String description,
+  public CalendarSubjectIqElement(String subjectName, String where, String description,
       List<AppointmentTimeIqElement> appointmentTimes) {
     this.subjectName = subjectName;
-    this.when = when;
     this.where = where;
     this.description = description;
     this.appointmentTimes = appointmentTimes;

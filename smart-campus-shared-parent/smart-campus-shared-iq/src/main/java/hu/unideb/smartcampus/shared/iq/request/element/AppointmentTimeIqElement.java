@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  * <pre>
  * {@code
  * 
+ * <when>456</when> <!--in long-->
  * <from>123</from> <!--in long-->
  * <to>321</to> <!--in long-->
  * 
@@ -35,12 +36,18 @@ public class AppointmentTimeIqElement {
   private Long to;
 
   /**
+   * When, Date.
+   */
+  private Long when;
+
+  /**
    * Constructrs an IQ element.
    */
   @Builder
-  public AppointmentTimeIqElement(Long from, Long to) {
+  public AppointmentTimeIqElement(Long when, Long from, Long to) {
     this.from = from;
     this.to = to;
+    this.when = when;
   }
 
 

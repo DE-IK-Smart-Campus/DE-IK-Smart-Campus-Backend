@@ -81,7 +81,7 @@ public class CalendarSubjectsIqProvider
     } else if (tagname.equalsIgnoreCase(TO)) {
       appointmentTime.setTo(Long.valueOf(text));
     } else if (tagname.equalsIgnoreCase(WHEN)) {
-      subject.setWhen(Long.valueOf(text));
+      appointmentTime.setWhen(Long.valueOf(text));
     } else if (tagname.equalsIgnoreCase(WHERE)) {
       subject.setWhere(text);
     } else if (tagname.equalsIgnoreCase(SUBJECT_NAME)) {

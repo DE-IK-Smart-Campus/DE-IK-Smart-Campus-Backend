@@ -18,6 +18,7 @@ import java.util.List;
 import hu.unideb.smartcampus.shared.iq.request.element.AppointmentTimeIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = false)
 public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
 
   /**
@@ -78,7 +80,6 @@ public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
       for (CalendarSubjectIqElement calendarIqElement : subjectEvents) {
         builder.append(openTag(SUBJECT));
         builder.append(tag(SUBJECT_NAME, calendarIqElement.getSubjectName()));
-        builder.append(tag(WHEN, calendarIqElement.getWhen()));
         builder.append(tag(WHERE, calendarIqElement.getWhere()));
         builder.append(tag(DESCRIPTION, calendarIqElement.getDescription()));
         builder.append(openTag(APPOINTMENTS));
@@ -94,6 +95,7 @@ public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
       CalendarSubjectIqElement calendarIqElement) {
     for (AppointmentTimeIqElement appointment : calendarIqElement.getAppointmentTimes()) {
       builder.append(openTag(APPOINTMENT));
+      builder.append(tag(WHEN, appointment.getWhen()));
       builder.append(tag(FROM, appointment.getFrom()));
       builder.append(tag(TO, appointment.getTo()));
       builder.append(closeTag(APPOINTMENT));
