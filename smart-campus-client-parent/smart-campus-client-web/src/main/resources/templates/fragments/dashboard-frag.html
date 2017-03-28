@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
+  <script src="https://cdn.conversejs.org/dist/converse.min.js"></script>
+</head>
 <body>
 <div th:fragment="dashboard-frag">
   <!--
@@ -31,4 +35,12 @@
   </div>
 </div>
 </body>
+<script>
+    converse.initialize(
+        {
+            bosh_service_url: 'smartcampus:5280/http-bind',
+            show_controlbox_by_default: true
+        }
+    );
+</script>
 </html>
