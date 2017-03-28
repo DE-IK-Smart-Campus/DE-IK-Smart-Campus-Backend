@@ -1,6 +1,8 @@
 package hu.unideb.smartcampus.persistence.entity.primarykey;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
@@ -20,4 +22,14 @@ public class SubjectDetailsPrimaryKey implements Serializable {
    * Subject type.
    */
   private String subjectType;
+
+  /**
+   * Start date time.
+   */
+  private LocalDate startPeriod;
+
+  /**
+   * End date time.
+   */
+  private LocalDate endPeriod;
 }

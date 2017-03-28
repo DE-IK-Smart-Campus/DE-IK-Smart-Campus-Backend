@@ -74,7 +74,6 @@ public class EjabberdUserImpl implements EjabberdUser {
   }
 
   private void initIqHandler() {
-    // empty
   }
 
   /**

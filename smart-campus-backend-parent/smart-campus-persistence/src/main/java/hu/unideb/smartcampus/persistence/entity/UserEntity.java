@@ -74,7 +74,9 @@ public class UserEntity extends BaseEntity<Long> {
   @JoinTable(name = "user_subject_details_relation", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = {
           @JoinColumn(name = "subject_type", referencedColumnName = "subject_type"),
-          @JoinColumn(name = "subject_name", referencedColumnName = "subject_name")
+          @JoinColumn(name = "subject_name", referencedColumnName = "subject_name"),
+          @JoinColumn(name = "start_period", referencedColumnName = "start_period"),
+          @JoinColumn(name = "end_period", referencedColumnName = "end_period")
       })
   private List<SubjectDetailsEntity> actualSubjects;
 

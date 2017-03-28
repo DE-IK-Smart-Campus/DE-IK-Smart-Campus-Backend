@@ -21,7 +21,6 @@ import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
-import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 
@@ -159,11 +158,9 @@ public class RetrieveSubjectsRequestServiceImplTest {
     Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(SUBJECTS);
 
     // then
-    SubjectRetrievalResponseWrapper response = service.getResponse(MESSAGE_REQUEST);
+    List<SubjectWrapper> requestedSubjects = service.getSubjects(USER_ID);
 
-    Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
-        response.getMessageType());
-    Assert.assertEquals(RESPONSE_WRAPPER_WITHOUTH_INSTRUCTORS, response.getSubjects());
+    Assert.assertEquals(RESPONSE_WRAPPER_WITHOUTH_INSTRUCTORS, requestedSubjects);
   }
 
   /**
@@ -176,11 +173,9 @@ public class RetrieveSubjectsRequestServiceImplTest {
     // when
     Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(null);
     // then
-    SubjectRetrievalResponseWrapper response = service.getResponse(MESSAGE_REQUEST);
+    List<SubjectWrapper> requestedSubjects = service.getSubjects(USER_ID);
 
-    Assert.assertEquals(RequestMessagesConstants.RETRIEVE_SUBJECTS_RESPONSE,
-        response.getMessageType());
-    Assert.assertEquals(Collections.emptyList(), response.getSubjects());
+    Assert.assertEquals(Collections.emptyList(), requestedSubjects);
   }
 
   /**

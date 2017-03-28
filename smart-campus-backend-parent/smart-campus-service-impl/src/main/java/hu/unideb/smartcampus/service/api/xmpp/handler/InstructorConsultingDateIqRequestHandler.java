@@ -6,17 +6,13 @@ import java.util.stream.Collectors;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.IQ.Type;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingHoursRequestServiceImpl;
+import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingDatesRequestService;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;
-import hu.unideb.smartcampus.shared.requestmessages.RetrieveInstructorConsultingHours;
-import hu.unideb.smartcampus.shared.wrapper.InstructorConsultingHoursWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.ConsultingDateWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.FromToDateWrapper;
 
@@ -28,15 +24,14 @@ import hu.unideb.smartcampus.shared.wrapper.inner.FromToDateWrapper;
 public class InstructorConsultingDateIqRequestHandler extends AbstractSmartCampusIqRequestHandler {
 
   @Autowired
-  @Qualifier(RetrieveInstructorsConsultingHoursRequestServiceImpl.BEAN_NAME)
-  private MessageProcessingClass<InstructorConsultingHoursWrapper> service;
+  private RetrieveInstructorsConsultingDatesRequestService service;
 
   /**
    * Ctor.
    */
   public InstructorConsultingDateIqRequestHandler() {
-    super(InstructorConsultingDatesIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE,
-        Type.get, Mode.sync);
+    super(InstructorConsultingDatesIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE, Type.get,
+        Mode.async);
   }
 
   /**
@@ -55,10 +50,8 @@ public class InstructorConsultingDateIqRequestHandler extends AbstractSmartCampu
     InstructorConsultingDatesIqRequest iq =
         (InstructorConsultingDatesIqRequest) super.handleIQRequest(iqRequest);
     String instructorId = iq.getInstructorId();
-    RetrieveInstructorConsultingHours request = RetrieveInstructorConsultingHours.builder()
-        .instructorId(Long.valueOf(instructorId)).build();
-    InstructorConsultingHoursWrapper response = service.getResponse(request);
-    List<ConsultingDateWrapper> consultingHours = response.getConsultingHours();
+    List<ConsultingDateWrapper> consultingHours =
+        service.getConsultingDatesByInstructorId(Long.valueOf(instructorId));
     List<ConsultingDateIqElement> consultingDates =
         consultingHours.stream().map(this::toIqElement).collect(Collectors.toList());
     iq.setConsultingDates(consultingDates);

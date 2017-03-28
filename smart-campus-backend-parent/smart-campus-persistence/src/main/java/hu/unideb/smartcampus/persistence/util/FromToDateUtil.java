@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.shared.util.DateHelper;
+import hu.unideb.smartcampus.shared.wrapper.inner.FromToDateWrapper;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -15,13 +16,23 @@ import lombok.experimental.UtilityClass;
 public class FromToDateUtil {
 
   /**
-   * Creates an entity to tests.
+   * Creates an entity.
    */
   public FromToDateEmbeddedEntity createEntity(DateHelper fromDate, DateHelper toDate) {
     Calendar from = createCalenderWithGivenOptions(fromDate);
     Calendar to = createCalenderWithGivenOptions(toDate);
     return FromToDateEmbeddedEntity.builder().fromDate(createTimestampWithZeroNanos(from))
         .toDate(createTimestampWithZeroNanos(to)).build();
+  }
+
+  /**
+   * Creates a wrapper.
+   */
+  public FromToDateWrapper createWrapper(DateHelper fromDate, DateHelper toDate) {
+    Calendar from = createCalenderWithGivenOptions(fromDate);
+    Calendar to = createCalenderWithGivenOptions(toDate);
+    return FromToDateWrapper.builder().from(from.getTimeInMillis()).to(to.getTimeInMillis())
+        .build();
   }
 
   private Calendar createCalenderWithGivenOptions(DateHelper date) {
