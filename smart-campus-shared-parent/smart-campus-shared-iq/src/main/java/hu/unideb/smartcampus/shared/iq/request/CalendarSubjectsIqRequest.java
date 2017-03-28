@@ -89,7 +89,6 @@ public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
   @Override
   public IQChildElementXmlStringBuilder getIQChildElementBuilder(
       IQChildElementXmlStringBuilder xml) {
-    xml.append(" >");
     xml.append(toXml());
     return xml;
   }
