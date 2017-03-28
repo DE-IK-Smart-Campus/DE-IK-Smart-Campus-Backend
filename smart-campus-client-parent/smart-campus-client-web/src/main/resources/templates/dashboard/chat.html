@@ -6,6 +6,9 @@
   <meta name="description" content=""/>
   <meta name="viewport" content="width=device-width"/>
   <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
+  <!-- Converse.js -->
+  <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css"/>
+  <script src="https://cdn.conversejs.org/dist/converse.min.js"></script>
 </head>
 <body>
 <div class="dashboard-page">
@@ -38,4 +41,26 @@
   </div>
 </div>
 </body>
+<script>
+    // Converse.js initialization
+    converse.initialize(
+        {
+            bosh_service_url: 'smartcampus:5280/http-bind',
+            show_controlbox_by_default: true,
+            authentication: 'prebind', // attaching to an existing XMPP BOSH session, that is set up server-side
+            keepalive: true, // once a user is logged in, the session will be kept alive across page loads
+            jid: 'me@example.com', // the jabber ID TODO get the JID from server-side and set here
+            prebind_url: 'http://example.com/api/prebind', // will call whenever a new BOSH session needs to be set up
+            allow_logout: false, // no logout is allowed, you are trapped forever MUHAHAHAA (or until you log out from SmartCampus whatevs..)
+            auto_login: true, // automatically log the user in as soon as the page loads
+            i18n: 'en', // set locale to 'en', until actual TODO I18N messages
+            visible_toolbar_buttons: { // show or hide buttons on the chat boxes' toolbars
+                call: false, // for third party library calls
+                clear: true, // clearing messages from chat box
+                emoticons: false, // rendering emoticons and a toolbar
+                toggle_occupants: true // showing/hiding the list of occupants in a room
+            }
+        }
+    );
+</script>
 </html>
