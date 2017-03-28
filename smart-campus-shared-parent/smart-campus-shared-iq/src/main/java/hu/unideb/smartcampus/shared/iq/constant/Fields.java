@@ -50,6 +50,52 @@ public class Fields {
   }
 
   /**
+   * Calendar subjects IQ request fields.
+   */
+  public static class CalendarSubjectIqRequestFields {
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Subjects tag.
+     */
+    public static final String SUBJECT_EVENTS = "subjects";
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT_NAME = "subjectName";
+
+    /**
+     * When field.
+     */
+    public static final String WHEN = "when";
+
+    /**
+     * Where field.
+     */
+    public static final String WHERE = "where";
+
+    /**
+     * Description field.
+     */
+    public static final String DESCRIPTION = "description";
+
+    /**
+     * From field.
+     */
+    public static final String FROM = "from";
+
+    /**
+     * To field.
+     */
+    public static final String TO = "to";
+  }
+
+
+  /**
    * Instructor consulting dates IQ request fields.
    */
   public static class InstructorConsultingDatesIqRequestFields {
