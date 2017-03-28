@@ -23,7 +23,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CalendarSubjectsIqRequest extends BaseSmartCampusIq {
+public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
 
   /**
    * Element.

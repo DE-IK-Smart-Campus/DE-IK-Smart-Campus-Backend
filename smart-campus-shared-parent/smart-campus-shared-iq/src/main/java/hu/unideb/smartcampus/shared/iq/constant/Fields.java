@@ -50,50 +50,25 @@ public class Fields {
   }
 
   /**
-   * Calendar subjects IQ request fields.
+   * Save subjects by ICS IQ request fields.
    */
-  public static class CalendarSubjectIqRequestFields {
+  public static class SaveSubjectsIcsIqFields {
+
     /**
      * Student field.
      */
     public static final String STUDENT = "student";
 
     /**
-     * Subjects tag.
+     * ICS link field.
      */
-    public static final String SUBJECT_EVENTS = "subjects";
+    public static final String ICS = "ics";
 
     /**
-     * Subject field.
+     * Status message field.
      */
-    public static final String SUBJECT_NAME = "subjectName";
-
-    /**
-     * When field.
-     */
-    public static final String WHEN = "when";
-
-    /**
-     * Where field.
-     */
-    public static final String WHERE = "where";
-
-    /**
-     * Description field.
-     */
-    public static final String DESCRIPTION = "description";
-
-    /**
-     * From field.
-     */
-    public static final String FROM = "from";
-
-    /**
-     * To field.
-     */
-    public static final String TO = "to";
+    public static final String STATUS_MESSAGE = "statusMessage";
   }
-
 
   /**
    * Instructor consulting dates IQ request fields.
@@ -171,5 +146,56 @@ public class Fields {
     public static final String RESPONSE_MESSAGE = "responseMessage";
 
   }
+
+  /**
+   * Calendar subjects IQ request fields.
+   */
+  public static class CalendarSubjectIqRequestFields {
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Subjects tag.
+     */
+    public static final String SUBJECT_EVENTS = "subjects";
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT = "subject";
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT_NAME = "subjectName";
+
+    /**
+     * When field.
+     */
+    public static final String WHEN = "when";
+
+    /**
+     * Where field.
+     */
+    public static final String WHERE = "where";
+
+    /**
+     * Description field.
+     */
+    public static final String DESCRIPTION = "description";
+
+    /**
+     * From field.
+     */
+    public static final String FROM = "from";
+
+    /**
+     * To field.
+     */
+    public static final String TO = "to";
+  }
+
 
 }

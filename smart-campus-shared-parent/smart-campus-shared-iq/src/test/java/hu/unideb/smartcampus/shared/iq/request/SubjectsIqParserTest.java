@@ -1,15 +1,11 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import java.io.CharArrayReader;
-import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jivesoftware.smack.provider.IQProvider;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.xmlpull.mxp1.MXParser;
-import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.provider.SubjectRequestIqProvider;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
@@ -18,7 +14,7 @@ import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
 /**
  * Subjects IQ parser test.
  */
-public class SubjectsIqParserTest {
+public class SubjectsIqParserTest extends AbstractParserTest {
 
   private static final List<InstructorIqElement> IE_INSTRUCTORS =
       Arrays.asList(new InstructorIqElement(1L, "George"), new InstructorIqElement(2L, "Andre"));
@@ -29,18 +25,21 @@ public class SubjectsIqParserTest {
   private static final String STUDENT = "Emily Stock";
 
   @Test
-  @Ignore
   public void testIqProvider() throws Exception {
     SubjectsIqRequest iq = SubjectsIqRequest.builder().student(STUDENT).subjects(SUBJECTS).build();
-//    IQChildElementXmlStringBuilder iqChildElementBuilder = iq.getIQChildElementBuilder((IQ)ExtensionElementFactory.getExtensionByElementName(SubjectsIqRequest.ELEMENT));
-//    System.out.println(iqChildElementBuilder);
-    SubjectRequestIqProvider provider = new SubjectRequestIqProvider();
-    XmlPullParser parser = new MXParser();
-    Reader in = new CharArrayReader(iq.toXml().toCharArray());
-    parser.setInput(in);
-    SubjectsIqRequest parse = provider.parse(parser, 0);
+    SubjectsIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(STUDENT, parse.getStudent());
-//    Assert.assertEquals(SUBJECTS, parse.getSubjects());
+    Assert.assertEquals(SUBJECTS, parse.getSubjects());
+  }
+
+  @Override
+  public String getElement() {
+    return SubjectsIqRequest.ELEMENT;
+  }
+
+  @Override
+  public IQProvider getProvider() {
+    return new SubjectRequestIqProvider();
   }
 
 }
