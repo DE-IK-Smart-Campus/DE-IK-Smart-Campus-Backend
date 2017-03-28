@@ -11,6 +11,7 @@ public abstract class SpringContextAwareQuartzJob implements Job, ApplicationCon
 
   protected static ApplicationContext ctx;
 
+  @SuppressWarnings("static-access")
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.ctx = applicationContext;
