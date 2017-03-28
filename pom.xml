@@ -107,6 +107,8 @@
         <moxy.version>2.6.4</moxy.version>
         <reflections.version>0.9.11</reflections.version>
         <wildfly.maven.plugin.version>1.1.0.Alpha11</wildfly.maven.plugin.version>
+        <quartz.version>2.2.3</quartz.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -259,6 +261,21 @@
                 <artifactId>org.eclipse.persistence.moxy</artifactId>
                 <version>${moxy.version}</version>
             </dependency>
+            <dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz-jobs</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -1,0 +1,13 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="quartz-database-init" author="kfnorbi"
+		logicalFilePath="quartz/schema-mysql.sql">
+		<sqlFile path="quartz/schema-mysql.sql"
+			relativeToChangelogFile="true" endDelimiter="EXECUTE" encoding="UTF-8" />
+		<comment>Creates the main MYSQL database for the Quartz scheduler.</comment>
+	</changeSet>
+	
+</databaseChangeLog>
