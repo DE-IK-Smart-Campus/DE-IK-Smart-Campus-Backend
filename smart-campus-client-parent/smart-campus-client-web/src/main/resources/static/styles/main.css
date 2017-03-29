@@ -6878,7 +6878,7 @@ button.close {
     right: 0;
     bottom: 0;
     overflow: auto;
-    background: #3ca2e0;
+    background: linear-gradient(135deg, rgba(59,103,158,1) 0%,rgba(43,136,217,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);
     text-align: center;
     color: #fff;
     padding: 3em
@@ -6951,7 +6951,7 @@ button.close {
         padding: 0 20px 20px;
         overflow-x: hidden;
         overflow-y: auto;
-        background-color: #3ca2e0;
+        background: linear-gradient(135deg, rgba(59,103,158,1) 0%,rgba(43,136,217,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);
         border-right: 1px solid #eee
     }
 }
