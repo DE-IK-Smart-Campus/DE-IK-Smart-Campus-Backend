@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
@@ -29,9 +30,15 @@ public interface SubjectEventService {
    * Save.
    */
   void save(List<SubjectEvent> subjectEvents);
-  
+
   /**
    * Get all subject event by user name.
    */
   List<SubjectEvent> getAllSubjectEventByUsername(String username);
+
+  /**
+   * Get subjects within range by user name.
+   */
+  List<SubjectEvent> getSubjectEventWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to);
 }

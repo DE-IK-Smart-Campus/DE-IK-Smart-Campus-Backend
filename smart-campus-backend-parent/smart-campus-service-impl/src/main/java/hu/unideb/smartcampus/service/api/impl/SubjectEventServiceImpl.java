@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,8 +29,9 @@ public class SubjectEventServiceImpl implements SubjectEventService {
   private final ConversionService conversionService;
 
   @Autowired
-  public SubjectEventServiceImpl(final SubjectEventRepository subjectEventRepository, final SubjectDetailsService subjectDetailsService,
-                                 final ConversionService conversionService) {
+  public SubjectEventServiceImpl(final SubjectEventRepository subjectEventRepository,
+      final SubjectDetailsService subjectDetailsService,
+      final ConversionService conversionService) {
     this.subjectEventRepository = subjectEventRepository;
     this.subjectDetailsService = subjectDetailsService;
     this.conversionService = conversionService;
@@ -38,23 +40,28 @@ public class SubjectEventServiceImpl implements SubjectEventService {
   @Transactional(readOnly = true)
   @Override
   public List<SubjectEvent> getAllSubjectEventByUserId(final Long userId) {
-    final List<SubjectDetails> subjectDetailsList = subjectDetailsService.getAllSubjectDetailsByUserId(userId);
+    final List<SubjectDetails> subjectDetailsList =
+        subjectDetailsService.getAllSubjectDetailsByUserId(userId);
     return getAllSubjectEventBySubjectDetails(subjectDetailsList);
   }
 
   @Transactional(readOnly = true)
   @Override
-  public List<SubjectEvent> getAllSubjectEventBySubjectDetails(final List<SubjectDetails> subjectDetailsList) {
+  public List<SubjectEvent> getAllSubjectEventBySubjectDetails(
+      final List<SubjectDetails> subjectDetailsList) {
     Assert.notNull(subjectDetailsList);
 
-    final Set<SubjectDetailsEntity> subjectDetailsEntities = subjectDetailsList.parallelStream()
-        .map(subjectDetails -> conversionService.convert(subjectDetails, SubjectDetailsEntity.class))
+    final Set<SubjectDetailsEntity> subjectDetailsEntities = subjectDetailsList.stream()
+        .map(
+            subjectDetails -> conversionService.convert(subjectDetails, SubjectDetailsEntity.class))
         .collect(Collectors.toSet());
 
-    final List<SubjectEventEntity> subjectEventEntities = subjectEventRepository.findAllBySubjectDetailsEntityIn(subjectDetailsEntities);
+    final List<SubjectEventEntity> subjectEventEntities =
+        subjectEventRepository.findAllBySubjectDetailsEntityIn(subjectDetailsEntities);
 
-    return subjectEventEntities.parallelStream()
-        .map(subjectEventEntity -> conversionService.convert(subjectEventEntity, SubjectEvent.class))
+    return subjectEventEntities.stream()
+        .map(
+            subjectEventEntity -> conversionService.convert(subjectEventEntity, SubjectEvent.class))
         .collect(Collectors.toList());
   }
 
@@ -81,15 +88,27 @@ public class SubjectEventServiceImpl implements SubjectEventService {
     subjectDetailsService.save(subjectDetailsList);
   }
 
-  private List<SubjectDetails> mapSubjectEventListToSubjectDetailsList(final List<SubjectEvent> subjectEvents) {
+  private List<SubjectDetails> mapSubjectEventListToSubjectDetailsList(
+      final List<SubjectEvent> subjectEvents) {
     return subjectEvents.parallelStream()
         .map(subjectEvent -> subjectEvent.getSubjectDetails())
         .collect(Collectors.toList());
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<SubjectEvent> getAllSubjectEventByUsername(String username) {
-    final List<SubjectDetails> subjectDetails = subjectDetailsService.getAllSubjectDetailsByUsername(username);
+    final List<SubjectDetails> subjectDetails =
+        subjectDetailsService.getAllSubjectDetailsByUsername(username);
+    return getAllSubjectEventBySubjectDetails(subjectDetails);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectEvent> getSubjectEventWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to) {
+    List<SubjectDetails> subjectDetails =
+        subjectDetailsService.getSubjectDetailsWithinRangeByUsername(from, to, username);
     return getAllSubjectEventBySubjectDetails(subjectDetails);
   }
 }

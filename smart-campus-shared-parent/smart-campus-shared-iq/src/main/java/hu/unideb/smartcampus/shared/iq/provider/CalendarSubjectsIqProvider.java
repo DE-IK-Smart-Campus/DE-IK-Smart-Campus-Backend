@@ -2,7 +2,9 @@ package hu.unideb.smartcampus.shared.iq.provider;
 
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.APPOINTMENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.DESCRIPTION;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.END_PERIOD;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.FROM;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.START_PERIOD;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.STUDENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.SUBJECT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.SUBJECT_NAME;
@@ -27,10 +29,12 @@ import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 public class CalendarSubjectsIqProvider
     extends BaseSmartCampusIqProvider<CalendarSubjectsIqRequest> {
 
+  private Long startPeriod;
+  private Long endPeriod;
   private List<CalendarSubjectIqElement> subjectEvents;
   private List<AppointmentTimeIqElement> appointmentTimes;
   private String student;
-  private boolean done = false;
+  private boolean done;
   private CalendarSubjectIqElement subject;
   private AppointmentTimeIqElement appointmentTime;
 
@@ -38,6 +42,7 @@ public class CalendarSubjectsIqProvider
   public CalendarSubjectsIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     subjectEvents = new ArrayList<>();
     appointmentTimes = new ArrayList<>();
+    done = false;
     int eventType = parser.getEventType();
     String text = "";
     while (!done) {
@@ -57,7 +62,7 @@ public class CalendarSubjectsIqProvider
           break;
       }
     }
-    return new CalendarSubjectsIqRequest(student, subjectEvents);
+    return new CalendarSubjectsIqRequest(student, subjectEvents, startPeriod, endPeriod);
   }
 
   private void parseStartTag(String tagname) {
@@ -88,6 +93,10 @@ public class CalendarSubjectsIqProvider
       subject.setSubjectName(text);
     } else if (tagname.equalsIgnoreCase(DESCRIPTION)) {
       subject.setDescription(text);
+    } else if (tagname.equalsIgnoreCase(START_PERIOD)) {
+      startPeriod = Long.valueOf(text);
+    } else if (tagname.equalsIgnoreCase(END_PERIOD)) {
+      endPeriod = Long.valueOf(text);
     } else if (tagname.equals(CalendarSubjectsIqRequest.ELEMENT)) {
       done = true;
     }

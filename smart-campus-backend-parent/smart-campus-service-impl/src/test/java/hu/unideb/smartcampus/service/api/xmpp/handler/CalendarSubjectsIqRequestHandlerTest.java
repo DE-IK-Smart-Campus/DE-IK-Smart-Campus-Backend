@@ -14,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hu.unideb.smartcampus.service.api.SubjectEventService;
+import hu.unideb.smartcampus.service.api.CalendarSubjectService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentTime;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
@@ -116,6 +116,8 @@ public class CalendarSubjectsIqRequestHandlerTest {
   private static final CalendarSubjectsIqRequest IQ_REQUEST =
       CalendarSubjectsIqRequest.builder()
           .student(USERNAME)
+          .startPeriod(LocalDateTime.of(2017, 2, 20, 8, 0, 0).toEpochSecond(HUNGARIAN_OFFSET))
+          .endPeriod(LocalDateTime.of(2017, 5, 26, 8, 0, 0).toEpochSecond(HUNGARIAN_OFFSET))
           .build();
 
   /**
@@ -173,7 +175,7 @@ public class CalendarSubjectsIqRequestHandlerTest {
    * Subject event service.
    */
   @Mock
-  private SubjectEventService subjectEventService;
+  private CalendarSubjectService subjectEventService;
 
   /**
    * Test handler.
@@ -183,8 +185,8 @@ public class CalendarSubjectsIqRequestHandlerTest {
     // given
 
     // when
-    Mockito.when(subjectEventService.getAllSubjectEventByUsername(USERNAME))
-        .thenReturn(SUBJECT_EVENT_LIST);
+    Mockito.when(subjectEventService.getSubjectEventsWithinPeriod(IQ_REQUEST))
+        .thenReturn(EXPECTED);
 
     CalendarSubjectsIqRequest iqRequest =
         (CalendarSubjectsIqRequest) handler.handleIQRequest(IQ_REQUEST);

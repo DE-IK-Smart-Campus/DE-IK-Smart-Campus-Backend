@@ -206,6 +206,16 @@ public class Fields {
      * To field.
      */
     public static final String TO = "to";
+    
+    /**
+     * Start period field.
+     */
+    public static final String START_PERIOD = "startPeriod";
+
+    /**
+     * End period field.
+     */
+    public static final String END_PERIOD = "endPeriod";
   }
 
 

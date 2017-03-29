@@ -139,4 +139,13 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
     
     Assert.assertEquals(USER_ID_ADMIN, idByUsername.longValue());
   }
+  
+  /**
+   * Test get user subjects within range.
+   */
+  @Test
+  public void getSubjectsWithinRangeByUsername() throws Exception {
+    Set<SubjectDetailsEntity> subjects = userRepository.getSubjectsWithinRangeByUsername(USERNAME_ADMIN, LocalDate.of(2016, 1, 1), LocalDate.of(2016, 05, 31));
+    
+  }
 }

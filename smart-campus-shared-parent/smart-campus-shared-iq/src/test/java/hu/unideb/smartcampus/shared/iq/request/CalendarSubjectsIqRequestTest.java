@@ -16,6 +16,8 @@ import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
  */
 public class CalendarSubjectsIqRequestTest extends AbstractParserTest {
 
+  private static final Long START_PERIOD = 123456L;
+  private static final Long END_PERIOD = 654321L;
   private static final int FIRST_ELEMENT_INDEX = 0;
   private static final Long WHEN = 123L;
   private static final Long TO = 10L;
@@ -37,12 +39,14 @@ public class CalendarSubjectsIqRequestTest extends AbstractParserTest {
   @Test
   public void testIqProvider() throws Exception {
     CalendarSubjectsIqRequest iq =
-        CalendarSubjectsIqRequest.builder().student(STUDENT).subjectEvents(SUBJECTEVENTS).build();
+        CalendarSubjectsIqRequest.builder().student(STUDENT).subjectEvents(SUBJECTEVENTS).startPeriod(START_PERIOD).endPeriod(END_PERIOD).build();
     CalendarSubjectsIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(STUDENT, parse.getStudent());
     Assert.assertEquals(SUBJECTEVENTS, parse.getSubjectEvents());
     Assert.assertEquals(APPOINTMENTTIMES,
         parse.getSubjectEvents().get(FIRST_ELEMENT_INDEX).getAppointmentTimes());
+    Assert.assertEquals(START_PERIOD, parse.getStartPeriod());
+    Assert.assertEquals(END_PERIOD, parse.getEndPeriod());
   }
 
   @Override

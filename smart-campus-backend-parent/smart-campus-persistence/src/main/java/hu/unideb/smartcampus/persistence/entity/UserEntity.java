@@ -43,6 +43,8 @@ import lombok.ToString;
 @NamedQueries({
     @NamedQuery(name = "UserEntity.getSubjectsByUsername",
         query = "SELECT u.actualSubjects FROM UserEntity u WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getSubjectsWithinRangeByUsername",
+        query = "SELECT actual FROM UserEntity u join u.actualSubjects actual WHERE u.username = ?1 AND actual.startPeriod BETWEEN ?2 AND ?3"),
     @NamedQuery(name = "UserEntity.getIdByUsername",
         query = "SELECT u.id FROM UserEntity u WHERE u.username = ?1")})
 public class UserEntity extends BaseEntity<Long> {

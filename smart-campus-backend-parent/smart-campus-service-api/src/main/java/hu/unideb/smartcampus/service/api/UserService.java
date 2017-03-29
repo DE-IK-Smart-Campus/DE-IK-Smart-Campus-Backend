@@ -1,7 +1,10 @@
 package hu.unideb.smartcampus.service.api;
 
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.Set;
 
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.domain.User;
 
 /**
@@ -31,4 +34,9 @@ public interface UserService {
    * Get id by username.
    */
   Long getIdByUsername(String username);
+  
+  /**
+   * Get user actual subjects in range.
+   */
+  Set<SubjectDetails> getSubjectsWithinRangeByUsername(String username, LocalDate from, LocalDate to);
 }
