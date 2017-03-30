@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(path = "/dashboard/chat")
 public class ChatController {
-
+  
   /**
    * TODO.
    */
@@ -18,11 +18,13 @@ public class ChatController {
 
   /**
    * TODO.
+   * 
    * @return asd
    */
   @GetMapping
   public String loadChatView() {
     return CHAT_VIEW;
   }
+  
 }
 
