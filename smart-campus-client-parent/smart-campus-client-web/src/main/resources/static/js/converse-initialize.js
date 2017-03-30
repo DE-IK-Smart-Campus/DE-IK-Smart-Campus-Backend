@@ -1,7 +1,13 @@
+var port = "";
+if (location.hostname === "smartcampus"
+    || location.hostname === "localhost"
+    || location.hostname === "127.0.0.1") {
+    port = ":5280";
+}
 converse.initialize(
     {
-        bosh_service_url: 'http://' + location.hostname + ':5280/http-bind',
-        credentials_url: 'http://' + location.hostname + ':8080/smartcampus-client/xmppcredentials',
+        bosh_service_url: location.protocol + "//" + location.hostname + port + '/http-bind',
+        credentials_url: location.origin + '/smartcampus-client/xmppcredentials',
         muc_domain:'conference.smartcampus',
         show_controlbox_by_default: true,
         authentication: 'login',
