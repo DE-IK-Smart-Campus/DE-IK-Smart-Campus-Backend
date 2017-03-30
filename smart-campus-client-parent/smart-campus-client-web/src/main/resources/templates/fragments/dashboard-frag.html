@@ -14,19 +14,19 @@
       TODO fix sidebarToggle
       <a ng-click="hideSidebar()" class="btn btn-white btn-outline btn-rounded">Hide sidebar</a>
       -->
-      <img th:src="@{/images/512x512_logo_white.png}" width="128"/>
+      <img th:src="@{/images/512x512_logo_white.png}" class="hvr-grow" width="128" style="margin: 20px"/>
       <h4>Logged in with</h4>
       <p th:text="${currentUsername}"></p>
       <!-- TODO add functionality to Logout button -->
-      <a class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+      <a class="hvr-fade btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
     </div>
 
     <ul class="nav nav-sidebar">
-      <li><a th:href="@{/dashboard/home}">Home</a></li>
-      <li><a th:href="@{/dashboard/calendar}">Calendar</a></li>
-      <li><a th:href="@{/dashboard/consulting-hours}">Consulting hours</a></li>
-      <li><a th:href="@{/dashboard/other}">Other</a></li>
-      <li><a th:href="@{/dashboard/about-us}">About us</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/home}">Home</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/calendar}">Calendar</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/consulting-hours}">Consulting hours</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/other}">Other</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/about-us}">About us</a></li>
     </ul>
 
   </div>
