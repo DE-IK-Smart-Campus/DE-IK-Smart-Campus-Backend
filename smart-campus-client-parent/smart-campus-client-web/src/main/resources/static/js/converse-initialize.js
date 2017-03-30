@@ -6,11 +6,12 @@ if (location.hostname === "smartcampus"
 }
 converse.initialize(
     {
-        bosh_service_url: location.protocol + "//" + location.hostname + port + '/http-bind',
+        bosh_service_url: location.protocol + "//" + location.hostname + port + '/http-bind/',
         credentials_url: location.origin + '/smartcampus-client/xmppcredentials',
         muc_domain:'conference.smartcampus',
         show_controlbox_by_default: true,
         authentication: 'login',
+        debug: true,
         keepalive: true,
         allow_logout: false,
         allow_registration: false,
