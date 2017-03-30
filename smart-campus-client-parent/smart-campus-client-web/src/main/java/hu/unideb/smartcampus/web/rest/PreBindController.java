@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.web.controller;
+package hu.unideb.smartcampus.web.rest;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.springframework.beans.factory.annotation.Autowired;
