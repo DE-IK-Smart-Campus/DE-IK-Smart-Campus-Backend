@@ -1,14 +1,10 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import java.io.CharArrayReader;
-import java.io.Reader;
 import java.util.Arrays;
 
+import org.jivesoftware.smack.provider.IQProvider;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.xmlpull.mxp1.MXParser;
-import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.provider.InstructorConsultingDateIqProvider;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
@@ -17,7 +13,7 @@ import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;
 /**
  * InstructorConsultingDates IQ parser test.
  */
-public class InstructorConsultingDatesIqParserTest {
+public class InstructorConsultingDatesIqParserTest extends AbstractParserTest {
 
   private static final String INSTRUCTOR_ID = "1";
 
@@ -40,21 +36,26 @@ public class InstructorConsultingDatesIqParserTest {
 
 
   @Test
-  @Ignore
   public void testProvider() throws Exception {
     InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest();
     iq.setInstructorId(INSTRUCTOR_ID);
     iq.setConsultingDates(
         Arrays.asList(CONSULTING_DATE_IQ_ELEMENT, CONSULTING_DATE_IQ_ELEMENT_SECOND));
-    InstructorConsultingDateIqProvider provider = new InstructorConsultingDateIqProvider();
-    XmlPullParser parser = new MXParser();
-    Reader in = new CharArrayReader(iq.toXml().toCharArray());
-    parser.setInput(in);
-    InstructorConsultingDatesIqRequest parse = provider.parse(parser, 0);
+    InstructorConsultingDatesIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(INSTRUCTOR_ID, parse.getInstructorId());
     Assert.assertEquals(
         Arrays.asList(CONSULTING_DATE_IQ_ELEMENT, CONSULTING_DATE_IQ_ELEMENT_SECOND),
         parse.getConsultingDates());
+  }
+
+  @Override
+  public String getElement() {
+    return InstructorConsultingDatesIqRequest.ELEMENT;
+  }
+
+  @Override
+  public IQProvider getProvider() {
+    return new InstructorConsultingDateIqProvider();
   }
 
 }

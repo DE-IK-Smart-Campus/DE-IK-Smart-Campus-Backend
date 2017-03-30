@@ -9,7 +9,7 @@ import java.util.Set;
 import org.reflections.Reflections;
 
 import hu.unideb.smartcampus.shared.iq.provider.BaseSmartCampusIqProvider;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 
 /**
  * IQ class context holder.
@@ -26,7 +26,7 @@ public final class IqClassContext {
   /**
    * IQ classes.
    */
-  private static final Class<? extends BaseSmartCampusIq>[] IQ_CLASSES;
+  private static final Class<? extends BaseSmartCampusIqRequest>[] IQ_CLASSES;
 
   /**
    * IQ provider classes.
@@ -34,7 +34,7 @@ public final class IqClassContext {
   private static final Class<? extends BaseSmartCampusIqProvider>[] IQ_PROVIDER_CLASSES;
 
   static {
-    Set<Class<? extends BaseSmartCampusIq>> iqs = getIqs();
+    Set<Class<? extends BaseSmartCampusIqRequest>> iqs = getIqs();
     Set<Class<? extends BaseSmartCampusIqProvider>> providers = getProviderClasses();
     IQ_CLASSES = convertToClasses(iqs);
     IQ_PROVIDER_CLASSES = convertToClasses(providers);
@@ -56,7 +56,7 @@ public final class IqClassContext {
    * 
    * @return IQ classes.
    */
-  public static Class<? extends BaseSmartCampusIq>[] getIqClasses() {
+  public static Class<? extends BaseSmartCampusIqRequest>[] getIqClasses() {
     return IQ_CLASSES.clone();
   }
 
@@ -73,8 +73,8 @@ public final class IqClassContext {
     return result;
   }
 
-  private static Set<Class<? extends BaseSmartCampusIq>> getIqs() {
-    return getByClass(CONTEXT_PATH_IQ, BaseSmartCampusIq.class);
+  private static Set<Class<? extends BaseSmartCampusIqRequest>> getIqs() {
+    return getByClass(CONTEXT_PATH_IQ, BaseSmartCampusIqRequest.class);
   }
 
   private static <T> Set<Class<? extends T>> getByClass(String contextPath, Class<T> clazz) {
@@ -86,9 +86,9 @@ public final class IqClassContext {
     // for PMD
   }
 
-  public static Map<Class<? extends BaseSmartCampusIq>, Class<? extends BaseSmartCampusIqProvider>> getIqWithProvider()
+  public static Map<Class<? extends BaseSmartCampusIqRequest>, Class<? extends BaseSmartCampusIqProvider>> getIqWithProvider()
       throws InstantiationException, IllegalAccessException {
-    Map<Class<? extends BaseSmartCampusIq>, Class<? extends BaseSmartCampusIqProvider>> result =
+    Map<Class<? extends BaseSmartCampusIqRequest>, Class<? extends BaseSmartCampusIqProvider>> result =
         new HashMap<>();
     for (Class<? extends BaseSmartCampusIqProvider> clazz : IQ_PROVIDER_CLASSES) {
       BaseSmartCampusIqProvider instance = clazz.newInstance();

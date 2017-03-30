@@ -8,7 +8,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.SignUpForConsultin
 
 import org.xmlpull.v1.XmlPullParser;
 
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 
 /**
@@ -64,7 +64,7 @@ public class SignUpForConsultingHourIqProvider
   }
 
   @Override
-  public Class<? extends BaseSmartCampusIq> getHandledIq() {
+  public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
     return SignUpForConsultingDateIqRequest.class;
   }
 }
