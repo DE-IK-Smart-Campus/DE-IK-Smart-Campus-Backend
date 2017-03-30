@@ -3,9 +3,7 @@
 <head>
   <title>SmartCampus - Chat</title>
   <thymeleaf th:replace="fragments/heads/basic-head-frag :: basic-head-frag"/>
-  <!-- Converse.js -->
-  <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css"/>
-  <script src="https://cdn.conversejs.org/dist/converse.min.js"></script>
+  <thymeleaf th:replace="fragments/heads/conversejs-head-frag :: conversejs-head-frag"/>
 </head>
 <body>
 <div class="dashboard-page">
@@ -42,13 +40,14 @@
     // Converse.js initialization
     converse.initialize(
         {
-            bosh_service_url: 'smartcampus:5280/http-bind',
+            bosh_service_url: 'http://smartcampus:5280/http-bind',
             show_controlbox_by_default: true,
             authentication: 'prebind', // attaching to an existing XMPP BOSH session, that is set up server-side
             keepalive: true, // once a user is logged in, the session will be kept alive across page loads
-            jid: 'me@example.com', // the jabber ID TODO get the JID from server-side and set here
+            jid: 'butikai@smartcampus/resource', // the jabber ID TODO get the JID from server-side and set here
             prebind_url: 'http://example.com/api/prebind', // will call whenever a new BOSH session needs to be set up
-            allow_logout: false, // no logout is allowed, you are trapped forever MUHAHAHAA (or until you log out from SmartCampus whatevs..)
+            allow_logout: false, // no logout is allowed, you are trapped forever
+            allow_registration: false, // disallow XMPP account registration showing the corresponding UI register form interface
             auto_login: true, // automatically log the user in as soon as the page loads
             i18n: 'en', // set locale to 'en', until actual TODO I18N messages
             visible_toolbar_buttons: { // show or hide buttons on the chat boxes' toolbars
