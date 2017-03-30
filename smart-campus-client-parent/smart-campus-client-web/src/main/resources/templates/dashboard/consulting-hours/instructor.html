@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>SmartCampus - Consulting hours</title>
-  <thymeleaf th:replace="fragments/heads/basic-head-frag :: basic-head-frag"/>
-  <thymeleaf th:replace="fragments/heads/conversejs-head-frag :: conversejs-head-frag"/>
+  <title>SmartCampus</title>
+  <meta charset="utf-8"/>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
 </head>
 <body>
 <div class="dashboard-page">
@@ -18,15 +20,15 @@
         <h2>Consulting hours</h2>
         <div class="jumbotron">
           <div class="container">
-            <h1>Consulting hours</h1>
-            <div th:each="subject : ${subjectRetrievalResponse.subjects}">
-              <h2 th:text="${subject.subjectName}"></h2>
-              <div th:each="instructor : ${subject.instructors}">
-                <!--
-                TODO set proper link
-                -->
-                <a href="nothing" th:text="${instructor.name}"></a>
-              </div>
+            <!--
+             TODO service will get the selected subject and instructor
+            -->
+            <h1 th:text="SELECTED INSTRUCTOR"></h1>
+            <div th:each="consultingHour : ${consultingHourList}">
+              <!--
+              TODO set proper link
+              -->
+              <a href="nothing" th:text="__${consultingHour.from}__ - __${consultingHour.to}__"></a>
             </div>
           </div>
         </div>

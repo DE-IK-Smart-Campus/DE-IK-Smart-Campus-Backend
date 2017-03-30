@@ -17,6 +17,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
+import hu.unideb.smartcampus.shared.exception.IqRegistrationException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 
@@ -45,6 +46,9 @@ public class EjabberdUserImpl implements EjabberdUser {
 
   @Autowired
   private XmppClientConfigurationService connectionConfigurationService;
+  
+  @Autowired
+  private IqRegistrationService registartionService;
 
   @PreDestroy
   public void preDestroy() {
@@ -100,6 +104,15 @@ public class EjabberdUserImpl implements EjabberdUser {
       LOGGER.error("Thread sleeping was not working.");
     }
     doLogin();
+    initIqProviders();
+  }
+
+  private void initIqProviders() {
+    try {
+      registartionService.registerIqWithProviders();
+    } catch (IqRegistrationException e) {
+      LOGGER.error("Unable to register IQ provider.");
+    }
   }
 
   private void connect() throws ConnectionException {
