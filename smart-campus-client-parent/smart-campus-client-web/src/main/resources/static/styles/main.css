@@ -7203,11 +7203,11 @@ html, body {
     transition-timing-function: ease-out;
 }
 
-.hvr-sweep-to-right:hover, .hvr-sweep-to-right:focus, .hvr-sweep-to-right:active {
+.hvr-sweep-to-right:hover {
     color: #243085 !important;
 }
 
-.hvr-sweep-to-right:hover:before, .hvr-sweep-to-right:focus:before, .hvr-sweep-to-right:active:before {
+.hvr-sweep-to-right:hover:before {
     transform: scaleX(1);
 }
 
