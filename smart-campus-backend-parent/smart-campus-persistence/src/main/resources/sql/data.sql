@@ -9,7 +9,7 @@ insert into user (id, username, password, role)
 values (3, 'nolbi', '$2y$10$eb8loJbSOyoaLSuvPp9vNeOX70n9fc4Rc0eks3c19qAivhL8zwnK.', 'USER');
 
 insert into user (id, username, password, role)
-values (4, 'holikai', '$2y$10$odHOFc/JS8bEVWVDuduK2.NT/ZE99P03RkvF07TDKMSRoqFCkE9Fe', 'USER');
+values (4, 'holi60', '$2y$10$odHOFc/JS8bEVWVDuduK2.NT/ZE99P03RkvF07TDKMSRoqFCkE9Fe', 'USER');
 
 insert into user (id, username, password, role)
 values (5, 'filtikai', '$2y$10$UIkkPdXwzCe7dZLnXuihtODAgW4fLdJLbG4KFhrBxXIdVBa4SJvDm', 'USER');
@@ -104,10 +104,10 @@ insert into user_subject_details_relation(user_id,subject_name, subject_type, st
 values (1, 'AI', 'LABORATORY', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
 
 insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Mesterséges intelligencia alapjai', 'LABORATORY', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
+values (4, 'Mesterséges intelligencia alapjai', 'LABORATORY', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
 
 insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Hálózati architektúrák és protokollok', 'LECTURE', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
+values (4, 'Hálózati architektúrák és protokollok', 'LECTURE', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
 
 insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Az internet eszközei és szolgáltatásai', 'LECTURE', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
+values (4, 'Az internet eszközei és szolgáltatásai', 'LECTURE', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
