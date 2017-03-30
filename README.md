@@ -42,6 +42,9 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 					<backend.host></backend.host>
 					<backend.port></backend.port>
 					<backend.context></backend.context>
+					<mongo.host></mongo.host>
+        			<mongo.port></mongo.port>
+        			<mongo.database></mongo.database>
 			    </properties>
 		    </profile>
 	</profiles>
