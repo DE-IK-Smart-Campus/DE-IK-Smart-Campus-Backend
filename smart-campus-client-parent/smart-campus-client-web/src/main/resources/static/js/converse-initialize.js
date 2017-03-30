@@ -8,7 +8,7 @@ converse.initialize(
     {
         bosh_service_url: location.protocol + "//" + location.hostname + port + '/http-bind',
         credentials_url: location.origin + '/smartcampus-client/xmppcredentials',
-        muc_domain:'conference.smartcampus',
+        muc_domain:'conference.' + location.hostname,
         show_controlbox_by_default: true,
         authentication: 'login',
         keepalive: true,
