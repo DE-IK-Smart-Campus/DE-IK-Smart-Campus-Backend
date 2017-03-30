@@ -24,7 +24,7 @@ converse.initialize(
         visible_toolbar_buttons: {
             call: false,
             clear: true,
-            emoticons: false,
+            emoticons: true,
             toggle_occupants: true
         }
     }
