@@ -40,8 +40,13 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 					<ldap.groupsearchbase></ldap.groupsearchbase>
 					<ldap.groupfilter></ldap.groupfilter>
 					<backend.host></backend.host>
-				   <backend.port></backend.port>
-				   <backend.context></backend.context>
+					<backend.port></backend.port>
+					<backend.context></backend.context>
+					<neptun.grant.type></neptun.grant.type>
+					<neptun.client.id></neptun.client.id>
+					<neptun.client.secret.value></neptun.client.secret.value>
+					<neptun.url></neptun.url>
+					<neptun.token.endpoint></neptun.token.endpoint>
 					<converse.bosh.service.url></converse.bosh.service.url>
 					<converse.credentials.url></converse.credentials.url>
 					<converse.mucdomain></converse.mucdomain>
