@@ -7172,6 +7172,7 @@ html, body {
     transition-duration: 0.3s;
     transition-property: transform;
 }
+
 .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
     transform: scale(1.1);
 }
@@ -7221,7 +7222,18 @@ html, body {
     transition-duration: 0.3s;
     transition-property: color, background-color;
 }
+
 .hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
     background: #fff;
     color: #243085 !important;
+}
+
+.error-title {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.error-subtitle {
+    font-size: 30px;
+    font-weight: bold;
 }
