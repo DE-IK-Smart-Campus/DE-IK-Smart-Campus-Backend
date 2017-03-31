@@ -7232,3 +7232,8 @@ html, body {
     font-size: 40px;
     font-weight: bold;
 }
+
+.error-subtitle {
+    font-size: 30px;
+    font-weight: bold;
+}

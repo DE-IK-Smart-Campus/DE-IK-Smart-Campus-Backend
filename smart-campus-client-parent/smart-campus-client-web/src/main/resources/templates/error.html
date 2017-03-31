@@ -11,14 +11,21 @@
       <img th:src="@{/images/512x512_logo_white.png}" class="hvr-grow" width="256"/>
       <div class="form-content">
         <div class="error-title">
-          <p>Ooops!</p>
-          <p>Something went wrong!</p>
+          Ooops!
         </div>
-        <div>There was an issue while processing your request. Since <b>SmartCampus</b> is a beta application, the problem might actually be on our
-             side, but just to be sure, please check if it is not you who caused the error!
+        <div class="error-subtitle">
+          Something went wrong!
+        </div>
+        <div>
+          There was an issue while processing your request. Since <b>SmartCampus</b> is a beta application, the problem might actually be on our
+          side, but just to be sure, please check if it is not you who caused the error!
         </div>
       </div>
+      <div>
+      <a type="submit" class="hvr-fade btn btn-white btn-outline btn-lg btn-rounded" th:href="@{/logout}">Back to Login</a>
+        Or
       <a type="submit" class="hvr-fade btn btn-white btn-outline btn-lg btn-rounded" th:href="@{/dashboard/home}">Back to Homepage</a>
+      </div>
     </div>
   </div>
 </div>
