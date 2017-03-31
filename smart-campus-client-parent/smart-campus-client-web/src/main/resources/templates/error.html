@@ -10,13 +10,15 @@
     <div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
       <img th:src="@{/images/512x512_logo_white.png}" class="hvr-grow" width="256"/>
       <div class="form-content">
-        <h1 style="font-weight:bold">Ooops!</h1>
-        <h1 style="font-weight:bold">Something went wrong!</h1>
+        <div class="error-title">
+          <p>Ooops!</p>
+          <p>Something went wrong!</p>
+        </div>
         <div>There was an issue while processing your request. Since <b>SmartCampus</b> is a beta application, the problem might actually be on our
              side, but just to be sure, please check if it is not you who caused the error!
         </div>
       </div>
-      <a type="submit" class="hvr-fade btn btn-white btn-outline btn-lg btn-rounded">Back to Homepage</a>
+      <a type="submit" class="hvr-fade btn btn-white btn-outline btn-lg btn-rounded" th:href="@{/dashboard/home}">Back to Homepage</a>
     </div>
   </div>
 </div>
