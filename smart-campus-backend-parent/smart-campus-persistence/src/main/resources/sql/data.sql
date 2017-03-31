@@ -6,7 +6,7 @@ insert into user (id, username, password, role)
 values (2, 'adamkai', 'admin', 'USER');
 
 insert into user (id, username, password, role)
-values (3, 'nolbi', 'admin.', 'USER');
+values (3, 'nolbi', 'admin', 'USER');
 
 insert into user (id, username, password, role)
 values (4, 'holi60', 'admin', 'USER');
