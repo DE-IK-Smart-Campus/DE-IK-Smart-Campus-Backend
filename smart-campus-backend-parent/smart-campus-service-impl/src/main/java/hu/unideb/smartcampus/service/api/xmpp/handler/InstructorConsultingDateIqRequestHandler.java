@@ -30,7 +30,8 @@ public class InstructorConsultingDateIqRequestHandler extends AbstractSmartCampu
    * Ctor.
    */
   public InstructorConsultingDateIqRequestHandler() {
-    super(InstructorConsultingDatesIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get,
+    super(InstructorConsultingDatesIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE,
+        Type.get,
         Mode.async);
   }
 
@@ -50,11 +51,14 @@ public class InstructorConsultingDateIqRequestHandler extends AbstractSmartCampu
     InstructorConsultingDatesIqRequest iq =
         (InstructorConsultingDatesIqRequest) super.handleIQRequest(iqRequest);
     String instructorId = iq.getInstructorId();
+    Long instructorIdLong = Long.valueOf(instructorId);
     List<ConsultingDateWrapper> consultingHours =
-        service.getConsultingDatesByInstructorId(Long.valueOf(instructorId));
+        service.getConsultingDatesByInstructorId(instructorIdLong);
     List<ConsultingDateIqElement> consultingDates =
         consultingHours.stream().map(this::toIqElement).collect(Collectors.toList());
+    String instructorName = service.getInstructorNameById(instructorIdLong);
     iq.setConsultingDates(consultingDates);
+    iq.setInstructorName(instructorName);
     return iq;
   }
 
