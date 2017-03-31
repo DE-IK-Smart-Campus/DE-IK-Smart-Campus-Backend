@@ -17,8 +17,7 @@
       <img th:src="@{/images/512x512_logo_white.png}" class="hvr-grow" width="128" style="margin: 20px"/>
       <h4>Logged in with</h4>
       <p th:text="${currentUsername}"></p>
-      <!-- TODO add functionality to Logout button -->
-      <a class="hvr-fade btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+      <a class="hvr-fade btn btn-white btn-outline btn-rounded btn-sm" th:href="@{/logout}">Logout</a>
     </div>
 
     <ul class="nav nav-sidebar">

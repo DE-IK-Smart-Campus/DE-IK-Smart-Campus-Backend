@@ -16,7 +16,6 @@ import hu.unideb.smartcampus.web.config.security.SmartCampusLogoutSuccessHandler
 
 /**
  * Security configuration collector.
- *
  */
 @Configuration
 @EnableWebSecurity
@@ -31,14 +30,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http.authenticationProvider(authenticationProvider()).csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login")
-        .successHandler(authenticationSuccessHandler()).usernameParameter("username")
-        .passwordParameter("password").and().exceptionHandling();
+        .failureForwardUrl("/error").successHandler(authenticationSuccessHandler()).usernameParameter("username")
+        .passwordParameter("password").and().logout().logoutUrl("/logout").logoutSuccessUrl("/").and().exceptionHandling();
     // @formatter:on
   }
 
   /**
    * TODO.
-   * 
    */
   @Bean
   public AuthenticationSuccessHandler authenticationSuccessHandler() {
@@ -47,7 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   /**
    * TODO.
-   * 
    */
   @Bean
   public LogoutSuccessHandler logoutSuccessHandler() {
@@ -55,8 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public AuthenticationProvider authenticationProvider(){
+  public AuthenticationProvider authenticationProvider() {
     return new SmartCampusAuthenticationProvider();
   }
-  
+
 }
