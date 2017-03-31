@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
 <body>
 <div th:fragment="dashboard-frag">
   <!--
@@ -12,23 +14,22 @@
       TODO fix sidebarToggle
       <a ng-click="hideSidebar()" class="btn btn-white btn-outline btn-rounded">Hide sidebar</a>
       -->
-      <h1>SmartCampus</h1>
-      <!-- TODO rewrite when authentication is working -->
+      <img th:src="@{/images/512x512_logo_white.png}" class="hvr-grow" width="128" style="margin: 20px"/>
       <h4>Logged in with</h4>
-      <p>[NEPTUN-CODE]</p>
-      <a class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+      <p th:text="${currentUsername}"></p>
+      <a class="hvr-fade btn btn-white btn-outline btn-rounded btn-sm" th:href="@{/logout}">Logout</a>
     </div>
 
     <ul class="nav nav-sidebar">
-      <li><a th:href="@{/dashboard/home}">Home</a></li>
-      <li><a th:href="@{/dashboard/calendar}">Calendar</a></li>
-      <li><a th:href="@{/dashboard/consulting-hours}">Consulting hours</a></li>
-      <li><a th:href="@{/dashboard/chat}">Chat</a></li>
-      <li><a th:href="@{/dashboard/other}">Other</a></li>
-      <li><a th:href="@{/dashboard/about-us}">About us</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/home}">Home</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/calendar}">Calendar</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/consulting-hours}">Consulting hours</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/other}">Other</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/about-us}">About us</a></li>
     </ul>
 
   </div>
+  <script type="text/javascript" th:src="@{/js/converse-initialize.js}"></script>
 </div>
 </body>
 </html>

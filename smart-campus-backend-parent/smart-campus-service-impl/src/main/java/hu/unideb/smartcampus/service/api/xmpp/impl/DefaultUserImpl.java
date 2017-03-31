@@ -5,11 +5,9 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
-import javax.xml.bind.JAXBException;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.slf4j.Logger;
@@ -20,15 +18,12 @@ import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
 import hu.unideb.smartcampus.service.api.xmpp.FeatureInjectorService;
+import hu.unideb.smartcampus.service.api.xmpp.IqRegistrationService;
 import hu.unideb.smartcampus.service.api.xmpp.XmppClientConfigurationService;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
+import hu.unideb.smartcampus.shared.exception.IqRegistrationException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
 import hu.unideb.smartcampus.shared.exception.XmppException;
-import hu.unideb.smartcampus.shared.iq.provider.InstructorConsultingDateIqProvider;
-import hu.unideb.smartcampus.shared.iq.provider.SubjectRequestIqProvider;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
-import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 
 /**
  * Default user implementation, smartcampus@HOST.
@@ -66,6 +61,8 @@ public class DefaultUserImpl implements DefaultUser {
   @Autowired
   private FeatureInjectorService featureInjectorService;
 
+  @Autowired
+  private IqRegistrationService iqRegistrationService;
 
   /**
    * Init after class.
@@ -85,18 +82,16 @@ public class DefaultUserImpl implements DefaultUser {
 
   private void registerCustomIQs() {
     try {
-      ProviderManager.addIQProvider(SubjectsIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE,
-          new SubjectRequestIqProvider());
-      ProviderManager.addIQProvider(InstructorConsultingDatesIqRequest.ELEMENT,
-          BaseSmartCampusIq.BASE_NAMESPACE, new InstructorConsultingDateIqProvider());
-    } catch (JAXBException e) {
-      LOGGER.error("Unable to register custom IQ's please check the log for more information.", e);
+      iqRegistrationService.registerIqWithProviders();
+    } catch (IqRegistrationException e) {
+      LOGGER.error("Error while registering IQ's with providers, please contact the administrator.",
+          e);
     }
   }
 
 
   private void registerFeatures() {
-    featureInjectorService.registerFeaturesForConnection(connection);
+    featureInjectorService.registerFeaturesForConnectionWithHandlers(connection);
   }
 
   private void initConnection(String username, String password) throws XmppException {
@@ -141,6 +136,11 @@ public class DefaultUserImpl implements DefaultUser {
       connection = null;
     }
     init();
+  }
+
+  @Override
+  public final boolean isDisconnected() {
+    return !connection.isConnected();
   }
 
   @PreDestroy

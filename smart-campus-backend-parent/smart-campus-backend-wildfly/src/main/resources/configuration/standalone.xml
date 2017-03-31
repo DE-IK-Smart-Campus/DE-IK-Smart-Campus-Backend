@@ -409,6 +409,23 @@
                     value="@ldap.passwordattribute@" />
                 <simple name="java:global/ldap.groupfilter"
                     value="@ldap.groupfilter@" />
+                <!-- Neptun -->
+                <simple name="java:global/neptun.grant.type"
+                    value="@neptun.grant.type@" />
+                <simple name="java:global/neptun.client.id"
+                    value="@neptun.client.id@" />
+                <simple name="java:global/neptun.client.secret.value"
+                    value="@neptun.client.secret.value@" />
+                <simple name="java:global/neptun.url"
+                    value="@neptun.url@" />
+                <simple name="java:global/neptun.token.endpoint"
+                    value="@neptun.token.endpoint@" />
+               	<simple name="java:comp/env/spring.data.mongodb.host"
+                    value="@mongo.host@" />
+				<simple name="java:comp/env/spring.data.mongodb.port"
+                    value="@mongo.port@" />
+                <simple name="java:comp/env/spring.data.mongodb.database"
+                    value="@mongo.database@" />
             </bindings>
             <remote-naming />
         </subsystem>

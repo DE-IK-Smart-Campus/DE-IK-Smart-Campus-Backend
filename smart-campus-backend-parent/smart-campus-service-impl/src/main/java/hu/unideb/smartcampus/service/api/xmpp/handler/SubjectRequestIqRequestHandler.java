@@ -7,16 +7,13 @@ import java.util.stream.Collectors;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.IQ.Type;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.smartcampus.service.api.MessageProcessingClass;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIq;
+import hu.unideb.smartcampus.service.api.request.service.RetrieveSubjectsRequestService;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
-import hu.unideb.smartcampus.shared.requestmessages.RetrieveSubjectsRequest;
-import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 
@@ -28,14 +25,13 @@ import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 public class SubjectRequestIqRequestHandler extends AbstractSmartCampusIqRequestHandler {
 
   @Autowired
-  @Qualifier("retrieveSubjectsRequestServiceImpl")
-  private MessageProcessingClass<SubjectRetrievalResponseWrapper> service;
+  private RetrieveSubjectsRequestService service;
 
   /**
    * Ctor.
    */
   public SubjectRequestIqRequestHandler() {
-    super(SubjectsIqRequest.ELEMENT, BaseSmartCampusIq.BASE_NAMESPACE, Type.get, Mode.sync);
+    super(SubjectsIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get, Mode.async);
   }
 
   /**
@@ -58,9 +54,7 @@ public class SubjectRequestIqRequestHandler extends AbstractSmartCampusIqRequest
   }
 
   private List<SubjectIqElement> getSubjectList(String student) {
-    RetrieveSubjectsRequest request = RetrieveSubjectsRequest.builder().userId(student).build();
-    SubjectRetrievalResponseWrapper response = service.getResponse(request);
-    List<SubjectWrapper> subjects = response.getSubjects();
+    List<SubjectWrapper> subjects = service.getSubjects(student);
     List<SubjectIqElement> subjectsList = new ArrayList<>();
     for (SubjectWrapper subjectWrapper : subjects) {
       List<InstructorIqElement> instructors = getInstructors(subjectWrapper);

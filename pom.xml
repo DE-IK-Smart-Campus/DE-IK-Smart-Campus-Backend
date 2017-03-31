@@ -18,48 +18,48 @@
     <description>This module provides the server side of the project called Smart Campus at the University of Debrecen.</description>
     <inceptionYear>2017</inceptionYear>
 
-	<developers>
-		<developer>
-			<id>Nandi</id>
-			<name>Nándor Holozsnyák</name>
-			<email>holi60@gmail.com</email>
-			<organization>University of Debrecen</organization>
-			<roles>
-				<role>Student</role>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>Gabor</id>
-			<name>Gabor Ivanyi-Nagy</name>
-			<email>gabilampard@gmail.com</email>
-			<organization>University of Debrecen</organization>
-			<roles>
-				<role>Student</role>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>Atka</id>
-			<name>Attila Fekete</name>
-			<email>atkavagyok@gmail.com</email>
-			<organization>University of Debrecen</organization>
-			<roles>
-				<role>Student</role>
-        <role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>kfnorbi</id>
-			<name>Norbert Kovács-Ferenc</name>
-			<email>kfnorbi@gmail.com</email>
-			<organization>University of Debrecen</organization>
-			<roles>
-				<role>Student</role>
-        <role>Developer</role>
-			</roles>
-		</developer>
-  </developers>
+    <developers>
+        <developer>
+            <id>Nandi</id>
+            <name>Nándor Holozsnyák</name>
+            <email>holi60@gmail.com</email>
+            <organization>University of Debrecen</organization>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Gabor</id>
+            <name>Gabor Ivanyi-Nagy</name>
+            <email>gabilampard@gmail.com</email>
+            <organization>University of Debrecen</organization>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Atka</id>
+            <name>Attila Fekete</name>
+            <email>atkavagyok@gmail.com</email>
+            <organization>University of Debrecen</organization>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>kfnorbi</id>
+            <name>Norbert Kovács-Ferenc</name>
+            <email>kfnorbi@gmail.com</email>
+            <organization>University of Debrecen</organization>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <ciManagement>
         <system>Travis CI</system>
@@ -80,8 +80,8 @@
 
     <modules>
         <module>smart-campus-shared-parent</module>
-		<module>smart-campus-client-parent</module>
-		<module>smart-campus-backend-parent</module>
+        <module>smart-campus-client-parent</module>
+        <module>smart-campus-backend-parent</module>
     </modules>
 
     <properties>
@@ -106,7 +106,10 @@
         <jaxb.version>2.2.11</jaxb.version>
         <moxy.version>2.6.4</moxy.version>
         <reflections.version>0.9.11</reflections.version>
+        <powermock.version>1.6.6</powermock.version>
         <wildfly.maven.plugin.version>1.1.0.Alpha11</wildfly.maven.plugin.version>
+        <quartz.version>2.2.3</quartz.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -259,6 +262,31 @@
                 <artifactId>org.eclipse.persistence.moxy</artifactId>
                 <version>${moxy.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${powermock.version}</version>
+            </dependency>
+            <dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz-jobs</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -300,16 +328,8 @@
                         <failOnViolation>true</failOnViolation>
                         <linkXRef>false</linkXRef>
                     </configuration>
-                    <!--<executions>
-                        <execution>
-                            <id>pmd-check</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>check</goal>
-                                <goal>pmd</goal>
-                            </goals>
-                        </execution>
-                    </executions>-->
+                    <!--<executions> <execution> <id>pmd-check</id> <phase>verify</phase> 
+                        <goals> <goal>check</goal> <goal>pmd</goal> </goals> </execution> </executions> -->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -322,29 +342,14 @@
                             <version>${com.puppycrawl.tools.version}</version>
                         </dependency>
                     </dependencies>
-                    <!--<executions>
-                        <execution>
-                            <id>checkstyle-check</id>
-                            <phase>verify</phase>
-                            <configuration>
-                                <configLocation>${checkstyle.xml.location}</configLocation>
-                                <encoding>${project.build.sourceEncoding}</encoding>
-                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                                <consoleOutput>true</consoleOutput>
-                                <logViolationsToConsole>true</logViolationsToConsole>
-                                <failOnViolation>true</failOnViolation>
-                                <failsOnError>true</failsOnError>
-                                <linkXRef>false</linkXRef>
-                            </configuration>
-                            <goals>
-                                <goal>check</goal>
-                                <goal>checkstyle</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <excludes> **/PullUnmarshaller.java</excludes>
-                    </configuration>-->
+                    <!--<executions> <execution> <id>checkstyle-check</id> 
+                        <phase>verify</phase> <configuration> <configLocation>${checkstyle.xml.location}</configLocation> 
+                        <encoding>${project.build.sourceEncoding}</encoding> <includeTestSourceDirectory>true</includeTestSourceDirectory> 
+                        <consoleOutput>true</consoleOutput> <logViolationsToConsole>true</logViolationsToConsole> 
+                        <failOnViolation>true</failOnViolation> <failsOnError>true</failsOnError> 
+                        <linkXRef>false</linkXRef> </configuration> <goals> <goal>check</goal> <goal>checkstyle</goal> 
+                        </goals> </execution> </executions> <configuration> <excludes> **/PullUnmarshaller.java</excludes> 
+                        </configuration> -->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

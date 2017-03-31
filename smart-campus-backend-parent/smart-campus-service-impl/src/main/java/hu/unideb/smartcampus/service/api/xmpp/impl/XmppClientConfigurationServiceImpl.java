@@ -64,6 +64,7 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
           .setPort(boshPort)
           .setSecurityMode(SecurityMode.disabled)
           .setUsernameAndPassword(username, password)
+//          .setDebuggerEnabled(true)
           .build();
     } catch (XmppStringprepException e) {
       LOGGER.error("Error on creating BOSH configuration.",e);
@@ -82,7 +83,7 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
           .setPort(tcpPort)
           .setResource(RESOURCE)
           .setSecurityMode(SecurityMode.disabled)
-          .setDebuggerEnabled(true)
+//          .setDebuggerEnabled(true) 
           .setUsernameAndPassword(username, password)
           .build();
     } catch (XmppStringprepException e) {

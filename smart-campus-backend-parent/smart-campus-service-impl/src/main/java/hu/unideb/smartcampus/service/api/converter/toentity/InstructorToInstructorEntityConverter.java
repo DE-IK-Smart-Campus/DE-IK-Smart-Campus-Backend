@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
+import com.google.common.collect.Sets;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
@@ -44,13 +46,13 @@ public class InstructorToInstructorEntityConverter implements Converter<Instruct
   }
 
   private Set<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(final Set<SubjectDetails> subjectDetailsSet) {
-    return subjectDetailsSet == null ? null : subjectDetailsSet.parallelStream()
+    return subjectDetailsSet == null ? Sets.newHashSet() : subjectDetailsSet.parallelStream()
         .map(subjectDetails -> subjectDetailsConverter.convert(subjectDetails))
         .collect(Collectors.toSet());
   }
 
   private Set<ConsultingDateEntity> convertConsultingDateSetToConsultingDateEntitySet(final Set<ConsultingDate> consultingDateSet) {
-    return consultingDateSet == null ? null : consultingDateSet.parallelStream()
+    return consultingDateSet == null ? Sets.newHashSet() : consultingDateSet.parallelStream()
         .map(consultingDate -> consultingDateConverter.convert(consultingDate))
         .collect(Collectors.toSet());
   }
