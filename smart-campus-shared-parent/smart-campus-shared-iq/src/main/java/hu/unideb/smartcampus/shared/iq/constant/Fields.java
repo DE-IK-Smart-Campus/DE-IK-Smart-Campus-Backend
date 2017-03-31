@@ -165,7 +165,7 @@ public class Fields {
      * Appointments tag.
      */
     public static final String APPOINTMENTS = "appointments";
-    
+
     /**
      * Appointments field.
      */
@@ -206,7 +206,7 @@ public class Fields {
      * To field.
      */
     public static final String TO = "to";
-    
+
     /**
      * Start period field.
      */
@@ -218,5 +218,59 @@ public class Fields {
     public static final String END_PERIOD = "endPeriod";
   }
 
+  /**
+   * Custom event IQ request fields.
+   */
+  public static class CustomEventIqRequestFields {
 
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Custom events tag.
+     */
+    public static final String CUSTOM_EVENTS = "events";
+    
+    /**
+     * Custom event field.
+     */
+    public static final String CUSTOM_EVENT = "event";
+
+    /**
+     * Event name tag.
+     */
+    public static final String EVENT_NAME = "eventName";
+
+    /**
+     * Event description field.
+     */
+    public static final String EVENT_DESCRIPTION = "eventDescription";
+
+    /**
+     * Event place field.
+     */
+    public static final String EVENT_PLACE = "eventPlace";
+
+    /**
+     * Event start field.
+     */
+    public static final String EVENT_START = "eventStart";
+
+    /**
+     * Event end field.
+     */
+    public static final String EVENT_END = "eventEnd";
+
+    /**
+     * Event repeat field.
+     */
+    public static final String EVENT_REPEAT = "eventRepeat";
+
+    /**
+     * Reminder field.
+     */
+    public static final String REMINDER = "reminder";
+  }
 }
