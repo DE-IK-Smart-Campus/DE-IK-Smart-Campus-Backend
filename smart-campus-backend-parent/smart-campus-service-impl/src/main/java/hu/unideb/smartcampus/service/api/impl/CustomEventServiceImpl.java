@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.persistence.entity.CustomEventEntity;
 import hu.unideb.smartcampus.persistence.repository.CustomEventRepository;
@@ -15,6 +16,7 @@ import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 /**
  * Custom event service impl.
  */
+@Service
 public class CustomEventServiceImpl implements CustomEventService {
 
   @Autowired
