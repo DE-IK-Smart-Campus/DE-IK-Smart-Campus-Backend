@@ -45,7 +45,7 @@ public class InstructorEntity extends BaseEntity<Long> {
    */
   @NotNull
   @Size(min = 2, max = 128)
-  @Column(name = COLUMN_NAME_NAME)
+  @Column(name = COLUMN_NAME_NAME, unique = true)
   private String name;
 
   /**
