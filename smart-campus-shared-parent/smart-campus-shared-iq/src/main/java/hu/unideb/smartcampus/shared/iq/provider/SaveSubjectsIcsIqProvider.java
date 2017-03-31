@@ -24,6 +24,7 @@ public class SaveSubjectsIcsIqProvider extends BaseSmartCampusIqProvider<SaveSub
   public SaveSubjectsIcsIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     int eventType = parser.getEventType();
     String text = "";
+    done = false;
     while (!done) {
       eventType = parser.next();
       String tagname = parser.getName();

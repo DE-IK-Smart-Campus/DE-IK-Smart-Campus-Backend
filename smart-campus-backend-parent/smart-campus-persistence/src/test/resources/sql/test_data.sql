@@ -56,7 +56,7 @@ values (1, 2);
 
 -- subjects
 
-insert into subject_details(subject_name,subject_type, start_period, end_period) values ('AI', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
+insert into subject_details(subject_name,subject_type, start_period, end_period) values ('AI', 'LABORATORY', DATE '2017-02-01', DATE '2017-05-31');
 
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
@@ -68,7 +68,7 @@ insert into subject_details(subject_name, subject_type, start_period, end_period
 
 --instructor to subject
 insert into instructor_subject_details(instructor_id,subject_name, subject_type, start_period, end_period)
-values (1, 'AI', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
+values (1, 'AI', 'LABORATORY',DATE '2017-02-01', DATE '2017-05-31');
 
 insert into instructor_subject_details(instructor_id,subject_name, subject_type, start_period, end_period)
 values (2, 'Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
@@ -85,7 +85,7 @@ values (5, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-0
 
 -- User actual subjects
 insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (1, 'AI', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
+values (1, 'AI', 'LABORATORY', DATE '2017-02-01', DATE '2017-05-31');
 
 insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
 values (2, 'Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE'2000-05-31');
