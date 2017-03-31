@@ -39,9 +39,9 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 					<ldap.userpattern></ldap.userpattern>
 					<ldap.groupsearchbase></ldap.groupsearchbase>
 					<ldap.groupfilter></ldap.groupfilter>
-					<backend.host></backend.host>
-					<backend.port></backend.port>
-					<backend.context></backend.context>
+					<converse.bosh.service.url></converse.bosh.service.url>
+					<converse.credentials.url></converse.credentials.url>
+					<converse.mucdomain></converse.mucdomain>
 			    </properties>
 		    </profile>
 	</profiles>
