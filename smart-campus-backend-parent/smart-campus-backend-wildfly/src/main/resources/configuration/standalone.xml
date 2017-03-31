@@ -420,6 +420,12 @@
                     value="@neptun.url@" />
                 <simple name="java:global/neptun.token.endpoint"
                     value="@neptun.token.endpoint@" />
+               	<simple name="java:comp/env/spring.data.mongodb.host"
+                    value="@mongo.host@" />
+				<simple name="java:comp/env/spring.data.mongodb.port"
+                    value="@mongo.port@" />
+                <simple name="java:comp/env/spring.data.mongodb.database"
+                    value="@mongo.database@" />
             </bindings>
             <remote-naming />
         </subsystem>
