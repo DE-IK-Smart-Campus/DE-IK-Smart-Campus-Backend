@@ -19,13 +19,10 @@
         <div class="jumbotron">
           <div class="container">
             <h1>Consulting hours</h1>
-            <div th:each="subject : ${subjectRetrievalResponse.subjects}">
+            <div th:each="subject : ${subjectList.subjects}">
               <h2 th:text="${subject.subjectName}"></h2>
               <div th:each="instructor : ${subject.instructors}">
-                <form th:action="@{/dashboard/consulting-hours/instructor}" method="GET">
-                  <input th:value="${instructor.id}" hidden/>
-                  <button type="submit" th:text="${instructor.name}"></button>
-                </form>
+                <a th:href="@{/dashboard/consulting-hours/instructor/__${instructor.instructorId}__}" th:text="${instructor.name}"></a>
               </div>
             </div>
           </div>
