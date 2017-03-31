@@ -1,12 +1,10 @@
 package hu.unideb.smartcampus.persistence.repository;
 
-import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_EQUAL_TO_ERROR_MESSAGE;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_NOT_NULL_VALUE_ERROR_MESSAGE;
 import static h.unideb.smartcampus.shared.message.AssertionErrorMessage.ASSERTION_NULL_VALUE_ERROR_MESSAGE;
 import static hu.unideb.smartcampus.shared.test.property.UserTestProperty.PASSWORD_ADMIN;
 import static hu.unideb.smartcampus.shared.test.property.UserTestProperty.USERNAME_ADMIN;
 import static hu.unideb.smartcampus.shared.test.property.UserTestProperty.USER_ID_ADMIN;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,8 +16,6 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.collect.Sets;
 
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;

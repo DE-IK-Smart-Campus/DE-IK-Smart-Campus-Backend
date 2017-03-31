@@ -43,4 +43,9 @@ public final class TableName {
    * Subject event table.
    */
   public static final String TABLE_NAME_SUBJECT_EVENT_DETAILS = "subject_event";
+  
+  /**
+   * Custo event table.
+   */
+  public static final String TABLE_NAME_CUSTOM_EVENT = "custom_event";
 }

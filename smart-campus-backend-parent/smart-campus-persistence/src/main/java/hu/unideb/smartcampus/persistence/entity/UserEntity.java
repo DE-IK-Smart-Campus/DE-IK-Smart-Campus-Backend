@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -40,7 +41,8 @@ import lombok.ToString;
 @Entity
 @Table(name = TABLE_NAME_USER,
     uniqueConstraints = @UniqueConstraint(columnNames = COLUMN_NAME_USERNAME))
-@NamedQueries({@NamedQuery(name = "UserEntity.getSubjectsByUsername", query = "SELECT u.actualSubjects FROM UserEntity u WHERE u.username = ?1")})
+@NamedQueries({@NamedQuery(name = "UserEntity.getSubjectsByUsername",
+    query = "SELECT u.actualSubjects FROM UserEntity u WHERE u.username = ?1")})
 public class UserEntity extends BaseEntity<Long> {
 
   /**
@@ -71,7 +73,8 @@ public class UserEntity extends BaseEntity<Long> {
    * Actual semester subjects.
    */
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "user_subject_details_relation", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+  @JoinTable(name = "user_subject_details_relation",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = {
           @JoinColumn(name = "subject_type", referencedColumnName = "subject_type"),
           @JoinColumn(name = "subject_name", referencedColumnName = "subject_name"),
@@ -81,14 +84,25 @@ public class UserEntity extends BaseEntity<Long> {
   private List<SubjectDetailsEntity> actualSubjects;
 
   /**
+   * User custom events.
+   */
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "user_custom_events",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "custom_event_id", referencedColumnName = "id"))
+  private List<CustomEventEntity> customEvents;
+
+  /**
    * Builder pattern for creating user.
    */
   @Builder
-  public UserEntity(final Long id, final String username, final String password, final Role role, final List<SubjectDetailsEntity> actualSubjects) {
+  public UserEntity(final Long id, final String username, final String password, final Role role,
+      final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents) {
     super(id);
     this.username = username;
     this.password = password;
     this.role = role;
     this.actualSubjects = actualSubjects;
+    this.customEvents = customEvents;
   }
 }
