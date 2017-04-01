@@ -2,10 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>SmartCampus</title>
-  <meta charset="utf-8"/>
-  <meta name="description" content=""/>
-  <meta name="viewport" content="width=device-width"/>
-  <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
+  <thymeleaf th:replace="fragments/heads/basic-head-frag :: basic-head-frag"/>
+  <thymeleaf th:replace="fragments/heads/conversejs-head-frag :: conversejs-head-frag"/>
 </head>
 <body>
 <div class="dashboard-page">
@@ -20,13 +18,13 @@
         <h2>Consulting hours</h2>
         <div class="jumbotron">
           <div class="container">
-            <h1 th:text="${instructorName}"></h1>
-            <div th:each="consultingDate : ${consultingDateList}">
+            <h1 th:text="${instructor.name}"></h1>
+            <div th:each="consultingDate : ${instructor.consultingDates}">
               <!--
               TODO set proper link + date format
               -->
-              <a href="nothing" th:text="${consultingDate.fromToDates.from}"></a>
-              <a href="nothing" th:text="${consultingDate.fromToDates.to}"></a>
+              <a href="nothing" th:text="${consultingDate.from}"></a>
+              <a href="nothing" th:text="${consultingDate.to}"></a>
             </div>
           </div>
         </div>

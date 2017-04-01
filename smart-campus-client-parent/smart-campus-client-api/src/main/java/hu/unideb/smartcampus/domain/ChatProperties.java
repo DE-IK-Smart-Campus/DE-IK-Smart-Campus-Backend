@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.domain;
+package hu.unideb.smartcampus.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
