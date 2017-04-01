@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.iq.request.AddCustomEventIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.DeleteCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
@@ -79,6 +81,27 @@ public class CustomEventController {
     }
     return ResponseEntity.ok().build();
   }
+
+  /**
+   * Get Converse JS connection properties.
+   */
+  @GetMapping("/del")
+  public ResponseEntity delCustomEvent(@RequestParam("id") Long id) {
+    try {
+      AbstractXMPPConnection connection = ejabberdUser.getConnection();
+      DeleteCustomEventIqRequest iq = new DeleteCustomEventIqRequest();
+      iq.setType(Type.set);
+      iq.setFrom(connection.getUser());
+      iq.setTo(JidCreate.from(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS));
+      iq.setStudent(getUser(connection));
+      iq.setEventId(id);
+      connection.sendStanza(iq);
+    } catch (NotConnectedException | InterruptedException | XmppStringprepException e) {
+      ResponseEntity.badRequest().body(e.getCause().getMessage());
+    }
+    return ResponseEntity.ok().build();
+  }
+
 
   private String getUser(AbstractXMPPConnection connection) {
     return connection.getUser().toString().split("@")[0];

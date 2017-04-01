@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api;
 import java.util.List;
 
 import hu.unideb.smartcampus.shared.iq.request.AddCustomEventIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.DeleteCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
@@ -20,5 +21,10 @@ public interface CustomEventService {
    * Add custom event to user. 
    */
   void addCustomEntityByIq(AddCustomEventIqRequest iq);
+  
+  /**
+   * Delete custom event from user.
+   */
+  void deleteCustomEntityByIq(DeleteCustomEventIqRequest iq);
 
 }

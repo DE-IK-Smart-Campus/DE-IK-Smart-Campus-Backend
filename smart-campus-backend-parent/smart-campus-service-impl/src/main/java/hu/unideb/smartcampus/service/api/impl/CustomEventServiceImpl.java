@@ -18,6 +18,7 @@ import hu.unideb.smartcampus.service.api.CustomEventService;
 import hu.unideb.smartcampus.service.api.converter.toentity.CustomEventIqToCustomEventEntity;
 import hu.unideb.smartcampus.service.api.converter.toiq.CustomEventEntityToCustomEventIq;
 import hu.unideb.smartcampus.shared.iq.request.AddCustomEventIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.DeleteCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
@@ -61,7 +62,7 @@ public class CustomEventServiceImpl implements CustomEventService {
   @Transactional
   @Override
   public void addCustomEntityByIq(AddCustomEventIqRequest iq) {
-    LOGGER.info("Adding new custom evenst for {}", iq.getStudent());
+    LOGGER.info("Adding new custom event for {}", iq.getStudent());
     UserEntity user = userRepository.findByUsername(iq.getStudent());
     List<CustomEventEntity> customEvents = user.getCustomEvents();
     if (customEvents == null)
@@ -72,4 +73,13 @@ public class CustomEventServiceImpl implements CustomEventService {
     userRepository.save(user);
   }
 
+  /**
+   * {@inheritDoc}.
+   */
+  @Transactional
+  @Override
+  public void deleteCustomEntityByIq(DeleteCustomEventIqRequest iq) {
+    LOGGER.info("Deleting custom event from {}", iq.getStudent());
+    customEventRepository.delete(iq.getEventId());
+  }
 }

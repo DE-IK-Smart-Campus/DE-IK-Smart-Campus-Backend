@@ -13,7 +13,7 @@ import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
 /**
- * Calendar subject retrieval handler.
+ * List custom events handler.
  */
 @Service
 public class ListCustomEventIqRequestHandler extends AbstractSmartCampusIqRequestHandler {
