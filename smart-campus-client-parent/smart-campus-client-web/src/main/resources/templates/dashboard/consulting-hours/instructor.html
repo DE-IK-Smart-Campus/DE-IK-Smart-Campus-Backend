@@ -18,15 +18,13 @@
         <h2>Consulting hours</h2>
         <div class="jumbotron">
           <div class="container">
-            <!--
-             TODO service will get the selected subject and instructor
-            -->
-            <h1 th:text="SELECTED INSTRUCTOR"></h1>
-            <div th:each="consultingHour : ${consultingHourList}">
+            <h1 th:text="${instructor.name}"></h1>
+            <div th:each="consultingDate : ${instructor.consultingDates}">
               <!--
-              TODO set proper link
+              TODO set proper link + date format
               -->
-              <a href="nothing" th:text="__${consultingHour.from}__ - __${consultingHour.to}__"></a>
+              <a href="nothing" th:text="${consultingDate.from}"></a>
+              <a href="nothing" th:text="${consultingDate.to}"></a>
             </div>
           </div>
         </div>

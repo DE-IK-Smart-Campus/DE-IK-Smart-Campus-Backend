@@ -6,6 +6,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsulti
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM_TO_DATE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.INSTRUCTORID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.INSTRUCTORNAME;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.RESERVED_SUM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.TO;
 
@@ -35,6 +36,11 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIqRequest
    * Instructor id.
    */
   private String instructorId;
+  
+  /**
+   * Instructor name.
+   */
+  private String instructorName;
 
   /**
    * Consulting hours.
@@ -46,10 +52,11 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIqRequest
    */
   @Builder
   public InstructorConsultingDatesIqRequest(String instructorId,
-      List<ConsultingDateIqElement> consultingHours) {
+      List<ConsultingDateIqElement> consultingHours,String instructorName) {
     super(ELEMENT);
     this.instructorId = instructorId;
     this.consultingDates = consultingHours;
+    this.instructorName = instructorName;
   }
 
   /**
@@ -73,6 +80,7 @@ public class InstructorConsultingDatesIqRequest extends BaseSmartCampusIqRequest
 
   private void buildIq(StringBuilder builder) {
     builder.append(tag(INSTRUCTORID, instructorId));
+    builder.append(tag(INSTRUCTORNAME, instructorName));
     builder.append(openTag(CONSULTING_DATES));
     buildConsultingDate(builder);
     builder.append(closeTag(CONSULTING_DATES));

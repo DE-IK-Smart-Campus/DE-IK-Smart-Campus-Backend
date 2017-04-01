@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.service.api.authentication;
 
-import hu.unideb.smartcampus.service.api.domain.ChatProperties;
+import hu.unideb.smartcampus.domain.ChatProperties;
 
 /**
  * Chat properties holder service.

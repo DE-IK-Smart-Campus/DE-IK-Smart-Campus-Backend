@@ -1,6 +1,8 @@
 package hu.unideb.smartcampus.service.api;
 
-import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
+import java.util.List;
+import hu.unideb.smartcampus.domain.Instructor;
+import hu.unideb.smartcampus.domain.Subject;
 
 /**
  * Consulting hour service to use IQ.
@@ -8,8 +10,12 @@ import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 public interface ConsultingHoursService {
 
   /**
-   * Get student subjects.
+   * Get subjects of current user.
    */
-  SubjectsIqRequest getSubjects();
+  List<Subject> getSubjects();
 
+  /**
+   * Get instructor by instructor ID.
+   */
+  Instructor getInstructorByInstructorId(Long instructorId);
 }

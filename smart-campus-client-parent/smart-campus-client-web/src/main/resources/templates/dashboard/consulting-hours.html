@@ -18,14 +18,11 @@
         <h2>Consulting hours</h2>
         <div class="jumbotron">
           <div class="container">
-            <h1>Consulting hours</h1>
-            <div th:each="subject : ${subjectRetrievalResponse.subjects}">
-              <h2 th:text="${subject.subjectName}"></h2>
+            <h1>List of subjects</h1>
+            <div th:each="subject : ${subjectList}">
+              <h2 th:text="${subject.name}"></h2>
               <div th:each="instructor : ${subject.instructors}">
-                <!--
-                TODO set proper link
-                -->
-                <a href="nothing" th:text="${instructor.name}"></a>
+                <a th:href="@{/dashboard/consulting-hours/instructor/__${instructor.id}__}" th:text="${instructor.name}"></a>
               </div>
             </div>
           </div>

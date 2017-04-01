@@ -1,11 +1,10 @@
 package hu.unideb.smartcampus.service.api;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import hu.unideb.smartcampus.domain.ChatProperties;
 import hu.unideb.smartcampus.service.api.authentication.ChatPropertiesHolderService;
-import hu.unideb.smartcampus.service.api.domain.ChatProperties;
 
 /**
  * Service for chat properties.
