@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.authenticationProvider(authenticationProvider()).csrf().disable().formLogin().successForwardUrl("/dashboard").loginProcessingUrl("/login")
+    http.authenticationProvider(authenticationProvider()).csrf().disable().formLogin().loginProcessingUrl("/login")
         .failureForwardUrl("/error").successHandler(authenticationSuccessHandler()).usernameParameter("username")
         .passwordParameter("password").and().logout().logoutUrl("/logout").logoutSuccessUrl("/").and().exceptionHandling();
     // @formatter:on

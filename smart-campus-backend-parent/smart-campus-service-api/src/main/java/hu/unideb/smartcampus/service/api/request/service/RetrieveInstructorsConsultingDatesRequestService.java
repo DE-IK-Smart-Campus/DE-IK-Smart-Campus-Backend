@@ -14,4 +14,9 @@ public interface RetrieveInstructorsConsultingDatesRequestService {
    */
   List<ConsultingDateWrapper> getConsultingDatesByInstructorId(Long instructorId);
   
+  /**
+   * Get instructor name by id.
+   */
+  String getInstructorNameById(Long instructorId);
+  
 }

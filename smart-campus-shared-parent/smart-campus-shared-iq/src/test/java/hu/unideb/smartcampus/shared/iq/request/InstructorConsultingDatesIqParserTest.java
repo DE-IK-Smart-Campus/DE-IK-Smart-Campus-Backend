@@ -33,16 +33,20 @@ public class InstructorConsultingDatesIqParserTest extends AbstractParserTest {
       ConsultingDateIqElement.builder().consultingHourId(3L)
           .fromToDates(FROM_TO_DATE_IQ_ELEMENT_SECOND).reservedSum(3).build();
 
+  private static final String INSTRUCTORNAME = "Instructor";
+
 
 
   @Test
   public void testProvider() throws Exception {
     InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest();
     iq.setInstructorId(INSTRUCTOR_ID);
+    iq.setInstructorName(INSTRUCTORNAME);
     iq.setConsultingDates(
         Arrays.asList(CONSULTING_DATE_IQ_ELEMENT, CONSULTING_DATE_IQ_ELEMENT_SECOND));
     InstructorConsultingDatesIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(INSTRUCTOR_ID, parse.getInstructorId());
+    Assert.assertEquals(INSTRUCTORNAME, parse.getInstructorName());
     Assert.assertEquals(
         Arrays.asList(CONSULTING_DATE_IQ_ELEMENT, CONSULTING_DATE_IQ_ELEMENT_SECOND),
         parse.getConsultingDates());

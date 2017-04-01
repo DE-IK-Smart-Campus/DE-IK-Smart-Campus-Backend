@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.authentication.ChatPropertiesHolderService;
-import hu.unideb.smartcampus.service.api.domain.ChatProperties;
+import hu.unideb.smartcampus.domain.ChatProperties;
 
 /**
  * Chat property REST controller.

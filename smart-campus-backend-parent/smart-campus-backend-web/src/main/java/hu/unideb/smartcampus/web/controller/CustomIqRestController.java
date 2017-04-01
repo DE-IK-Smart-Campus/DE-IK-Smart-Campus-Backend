@@ -1,8 +1,6 @@
 package hu.unideb.smartcampus.web.controller;
 
 
-import java.util.List;
-
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.StanzaCollector;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
@@ -93,7 +92,7 @@ public class CustomIqRestController {
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/consulting")
-  public ResponseEntity<List<ConsultingDateIqElement>> getInstrcutorConsultingDate(
+  public ResponseEntity<List<ConsultingDateIqElement>> getInstructorConsultingDate(
       @RequestParam(name = "id") String id) {
     List<ConsultingDateIqElement> result = null;
     try {

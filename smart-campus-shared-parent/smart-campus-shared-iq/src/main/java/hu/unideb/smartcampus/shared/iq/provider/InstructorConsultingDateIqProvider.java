@@ -5,6 +5,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsulti
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.FROM_TO_DATE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.INSTRUCTORID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.INSTRUCTORNAME;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.RESERVED_SUM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.InstructorConsultingDatesIqRequestFields.TO;
 
@@ -26,15 +27,22 @@ import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;;
 public class InstructorConsultingDateIqProvider
     extends BaseSmartCampusIqProvider<InstructorConsultingDatesIqRequest> {
 
+  private List<ConsultingDateIqElement> consultingHours;
+  private ConsultingDateIqElement consultingDate;
+  private FromToDateIqElement fromToDate;
+  private Integer reservedSum;
+  private String instructorId;
+  private String instructorName;
+
   @Override
   public InstructorConsultingDatesIqRequest parse(XmlPullParser parser, int initialDepth)
       throws Exception {
-    List<ConsultingDateIqElement> consultingHours = new ArrayList<>();
-    ConsultingDateIqElement consultingDate = new ConsultingDateIqElement();
-    FromToDateIqElement fromToDate = new FromToDateIqElement();
-    Integer reservedSum = 0;
+    consultingHours = new ArrayList<>();
+    consultingDate = new ConsultingDateIqElement();
+    fromToDate = new FromToDateIqElement();
+    reservedSum = 0;
+    instructorId = "";
     String text = "";
-    String instructorId = "";
     int eventType = parser.getEventType();
     boolean done = false;
     while (!done) {
@@ -69,6 +77,8 @@ public class InstructorConsultingDateIqProvider
             consultingDate.setReservedSum(reservedSum);
           } else if (tagname.equalsIgnoreCase(INSTRUCTORID)) {
             instructorId = text;
+          } else if (tagname.equalsIgnoreCase(INSTRUCTORNAME)) {
+            instructorName = text;
           } else if (tagname.equals(InstructorConsultingDatesIqRequest.ELEMENT)) {
             done = true;
           }
@@ -79,7 +89,8 @@ public class InstructorConsultingDateIqProvider
       }
     }
 
-    InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest(instructorId,consultingHours);
+    InstructorConsultingDatesIqRequest iq =
+        new InstructorConsultingDatesIqRequest(instructorId, consultingHours, instructorName);
     return iq;
   }
 

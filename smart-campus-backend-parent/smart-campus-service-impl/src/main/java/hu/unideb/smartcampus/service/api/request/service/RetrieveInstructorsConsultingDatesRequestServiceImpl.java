@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
+import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.shared.wrapper.inner.ConsultingDateWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.FromToDateWrapper;
@@ -65,6 +66,15 @@ public class RetrieveInstructorsConsultingDatesRequestServiceImpl
   private List<ConsultingDateWrapper> extractConsultingHour(
       Set<ConsultingDateEntity> consultingDates) {
     return consultingDates.stream().map(this::consultingDateToWrapper).collect(Collectors.toList());
+  }
+
+  @Override
+  public String getInstructorNameById(Long instructorId) {
+    InstructorEntity entity = instructorRepository.findOne(instructorId);
+    if (entity != null) {
+      return entity.getName();
+    }
+    return "";
   }
 
 }

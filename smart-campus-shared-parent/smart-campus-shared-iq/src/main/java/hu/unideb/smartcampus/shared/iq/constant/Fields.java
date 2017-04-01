@@ -113,6 +113,11 @@ public class Fields {
      * Instructor ID field.
      */
     public static final String INSTRUCTORID = "instructorId";
+    
+    /**
+     * Instructor name field.
+     */
+    public static final String INSTRUCTORNAME = "instructorName";
   }
 
   /**
