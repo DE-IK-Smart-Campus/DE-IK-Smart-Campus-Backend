@@ -13,6 +13,11 @@ import lombok.NoArgsConstructor;
 public class CustomEventIqElement {
 
   /**
+   * Event ID.
+   */
+  private Long eventId;
+  
+  /**
    * Event name.
    */
   private String eventName;
@@ -51,8 +56,9 @@ public class CustomEventIqElement {
    * Builder.
    */
   @Builder
-  public CustomEventIqElement(String eventName, String eventDescription, String eventPlace,
+  public CustomEventIqElement(Long eventId, String eventName, String eventDescription, String eventPlace,
       Long eventStart, Long eventEnd, String eventRepeat, String reminder) {
+    this.eventId = eventId;
     this.eventName = eventName;
     this.eventDescription = eventDescription;
     this.eventPlace = eventPlace;

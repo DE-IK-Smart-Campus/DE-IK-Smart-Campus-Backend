@@ -4,6 +4,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqReque
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.CUSTOM_EVENTS;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_DESCRIPTION;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_END;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_ID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_NAME;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
@@ -26,12 +27,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class CustomEventListIqRequest extends BaseSmartCampusIqRequest {
+public class ListCustomEventIqRequest extends BaseSmartCampusIqRequest {
 
   /**
    * Element.
    */
-  public static final String ELEMENT = "customEventList";
+  public static final String ELEMENT = "listCustomEvent";
 
   /**
    * Student's username.
@@ -46,7 +47,7 @@ public class CustomEventListIqRequest extends BaseSmartCampusIqRequest {
   /**
    * Default constructor.
    */
-  public CustomEventListIqRequest() {
+  public ListCustomEventIqRequest() {
     super(ELEMENT);
     customEvents = new ArrayList<>();
   }
@@ -55,7 +56,7 @@ public class CustomEventListIqRequest extends BaseSmartCampusIqRequest {
    * Constructs.
    */
   @Builder
-  public CustomEventListIqRequest(String student, List<CustomEventIqElement> customEvents) {
+  public ListCustomEventIqRequest(String student, List<CustomEventIqElement> customEvents) {
     super(ELEMENT);
     this.student = student;
     this.customEvents = customEvents;
@@ -84,6 +85,7 @@ public class CustomEventListIqRequest extends BaseSmartCampusIqRequest {
 
   private void buildEvent(StringBuilder builder, CustomEventIqElement customIqElement) {
     builder.append(openTag(CUSTOM_EVENT));
+    builder.append(tag(EVENT_ID, customIqElement.getEventId()));
     builder.append(tag(EVENT_NAME, customIqElement.getEventName()));
     builder.append(tag(EVENT_DESCRIPTION, customIqElement.getEventDescription()));
     builder.append(tag(EVENT_PLACE, customIqElement.getEventPlace()));

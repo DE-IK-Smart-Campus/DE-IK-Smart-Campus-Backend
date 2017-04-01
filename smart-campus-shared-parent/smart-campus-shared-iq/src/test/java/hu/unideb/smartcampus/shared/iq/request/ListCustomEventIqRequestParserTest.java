@@ -7,13 +7,15 @@ import org.jivesoftware.smack.provider.IQProvider;
 import org.junit.Assert;
 import org.junit.Test;
 
-import hu.unideb.smartcampus.shared.iq.provider.CustomEventIqProvider;
+import hu.unideb.smartcampus.shared.iq.provider.ListCustomEventIqProvider;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
 /**
  * Calendar subjects IQ parser test.
  */
-public class CustomEventIqRequestParserTest extends AbstractParserTest {
+public class ListCustomEventIqRequestParserTest extends AbstractParserTest {
+
+  private static final Long EVENT_ID = 1L;
 
   private static final String EVENT_REMINDER = "EventReminder";
 
@@ -30,6 +32,7 @@ public class CustomEventIqRequestParserTest extends AbstractParserTest {
   private static final String EVENT_NAME = "EventName";
 
   private static final CustomEventIqElement CUSTOM_EVENT_IQ_ELEMENT = CustomEventIqElement.builder()
+      .eventId(EVENT_ID)
       .eventName(EVENT_NAME)
       .eventPlace(EVENT_PLACE)
       .eventDescription(EVENT_DESCRIPTION)
@@ -46,24 +49,24 @@ public class CustomEventIqRequestParserTest extends AbstractParserTest {
 
   @Test
   public void testIqProvider() throws Exception {
-    CustomEventListIqRequest iq =
-        CustomEventListIqRequest.builder()
+    ListCustomEventIqRequest iq =
+        ListCustomEventIqRequest.builder()
             .student(STUDENT)
             .customEvents(CUSTOMEVENTS)
             .build();
-    CustomEventListIqRequest parse = getParsedObject(iq);
+    ListCustomEventIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(STUDENT, parse.getStudent());
     Assert.assertEquals(CUSTOMEVENTS, parse.getCustomEvents());
   }
 
   @Override
   public String getElement() {
-    return CustomEventListIqRequest.ELEMENT;
+    return ListCustomEventIqRequest.ELEMENT;
   }
 
   @Override
   public IQProvider getProvider() {
-    return new CustomEventIqProvider();
+    return new ListCustomEventIqProvider();
   }
 
 }

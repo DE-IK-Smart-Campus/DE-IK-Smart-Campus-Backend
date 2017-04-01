@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.shared.iq.provider;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.CUSTOM_EVENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_DESCRIPTION;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_END;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_ID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_NAME;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
@@ -16,15 +17,15 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.CustomEventListIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
 /**
  * Custom event provider.
  */
 @SuppressWarnings({"PMD"})
-public class CustomEventIqProvider
-    extends BaseSmartCampusIqProvider<CustomEventListIqRequest> {
+public class ListCustomEventIqProvider
+    extends BaseSmartCampusIqProvider<ListCustomEventIqRequest> {
 
 
   private String student;
@@ -33,7 +34,7 @@ public class CustomEventIqProvider
   private boolean done;
 
   @Override
-  public CustomEventListIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
+  public ListCustomEventIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     customEvents = new ArrayList<>();
     customEvent = new CustomEventIqElement();
     done = false;
@@ -56,7 +57,7 @@ public class CustomEventIqProvider
           break;
       }
     }
-    return new CustomEventListIqRequest(student, customEvents);
+    return new ListCustomEventIqRequest(student, customEvents);
   }
 
   private void parseStartTag(String tagname) {
@@ -70,6 +71,8 @@ public class CustomEventIqProvider
       customEvents.add(customEvent);
     } else if (tagname.equalsIgnoreCase(STUDENT)) {
       student = text;
+    } else if (tagname.equalsIgnoreCase(EVENT_ID)) {
+      customEvent.setEventId(Long.valueOf(text));
     } else if (tagname.equalsIgnoreCase(EVENT_NAME)) {
       customEvent.setEventName(text);
     } else if (tagname.equalsIgnoreCase(EVENT_DESCRIPTION)) {
@@ -84,14 +87,14 @@ public class CustomEventIqProvider
       customEvent.setEventRepeat(text);
     } else if (tagname.equalsIgnoreCase(REMINDER)) {
       customEvent.setReminder(text);
-    } else if (tagname.equals(CustomEventListIqRequest.ELEMENT)) {
+    } else if (tagname.equals(ListCustomEventIqRequest.ELEMENT)) {
       done = true;
     }
   }
 
   @Override
   public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
-    return CustomEventListIqRequest.class;
+    return ListCustomEventIqRequest.class;
   }
 
 }

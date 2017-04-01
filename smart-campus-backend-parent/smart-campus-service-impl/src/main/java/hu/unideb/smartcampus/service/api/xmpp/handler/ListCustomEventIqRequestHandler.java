@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.CustomEventService;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.CustomEventListIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
 /**
  * Calendar subject retrieval handler.
  */
 @Service
-public class CustomEventListIqRequestHandler extends AbstractSmartCampusIqRequestHandler {
+public class ListCustomEventIqRequestHandler extends AbstractSmartCampusIqRequestHandler {
 
   @Autowired
   private CustomEventService customEventService;
@@ -24,15 +24,15 @@ public class CustomEventListIqRequestHandler extends AbstractSmartCampusIqReques
   /**
    * Ctor.
    */
-  public CustomEventListIqRequestHandler() {
-    super(CustomEventListIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get,
+  public ListCustomEventIqRequestHandler() {
+    super(ListCustomEventIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get,
         Mode.async);
   }
 
   /**
    * Ctor.
    */
-  protected CustomEventListIqRequestHandler(String element, String namespace, Type type,
+  protected ListCustomEventIqRequestHandler(String element, String namespace, Type type,
       Mode mode) {
     super(element, namespace, type, mode);
   }
@@ -42,7 +42,7 @@ public class CustomEventListIqRequestHandler extends AbstractSmartCampusIqReques
    */
   @Override
   public IQ handleIQRequest(IQ iqRequest) {
-    CustomEventListIqRequest iq = (CustomEventListIqRequest) super.handleIQRequest(iqRequest);
+    ListCustomEventIqRequest iq = (ListCustomEventIqRequest) super.handleIQRequest(iqRequest);
     List<CustomEventIqElement> customEvents = customEventService.getCustomEventsByIq(iq);
     iq.setCustomEvents(customEvents);
     return iq;

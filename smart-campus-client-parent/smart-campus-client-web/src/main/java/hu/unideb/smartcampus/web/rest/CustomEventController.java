@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
-import hu.unideb.smartcampus.shared.iq.request.CustomEventListIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.AddCustomEventIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
 /**
@@ -25,7 +26,8 @@ import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 @RequestMapping("/custom-events")
 public class CustomEventController {
 
-  private static final String SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS = "smartcampus@smartcampus/Smartcampus";
+  private static final String SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS =
+      "smartcampus@smartcampus/Smartcampus";
   /**
    * Chat properties holder service.
    */
@@ -35,12 +37,12 @@ public class CustomEventController {
   /**
    * Get Converse JS connection properties.
    */
-  @GetMapping
+  @GetMapping("/list")
   public ResponseEntity<List<CustomEventIqElement>> getCustomEvents() {
-    CustomEventListIqRequest resultIq = null;
+    ListCustomEventIqRequest resultIq = null;
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
-      CustomEventListIqRequest iq = new CustomEventListIqRequest();
+      ListCustomEventIqRequest iq = new ListCustomEventIqRequest();
       iq.setType(Type.get);
       iq.setFrom(connection.getUser());
       iq.setTo(JidCreate.from(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS));
@@ -52,9 +54,35 @@ public class CustomEventController {
     }
     return ResponseEntity.ok().body(resultIq.getCustomEvents());
   }
-  
+
+  /**
+   * Get Converse JS connection properties.
+   */
+  @GetMapping("/add")
+  public ResponseEntity addCustomEvent() {
+    try {
+      AbstractXMPPConnection connection = ejabberdUser.getConnection();
+      AddCustomEventIqRequest iq = new AddCustomEventIqRequest();
+      iq.setType(Type.set);
+      iq.setFrom(connection.getUser());
+      iq.setTo(JidCreate.from(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS));
+      iq.setStudent(getUser(connection));
+      iq.setCustomEvent(
+          CustomEventIqElement.builder()
+              .eventName("Controllerbol")
+              .eventStart(100L)
+              .eventEnd(200L)
+              .build());
+      connection.sendStanza(iq);
+    } catch (NotConnectedException | InterruptedException | XmppStringprepException e) {
+      ResponseEntity.badRequest().body(e.getCause().getMessage());
+    }
+    return ResponseEntity.ok().build();
+  }
+
   private String getUser(AbstractXMPPConnection connection) {
     return connection.getUser().toString().split("@")[0];
   }
 
 }
+

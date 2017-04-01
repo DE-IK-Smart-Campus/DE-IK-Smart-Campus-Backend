@@ -237,6 +237,11 @@ public class Fields {
      * Custom event field.
      */
     public static final String CUSTOM_EVENT = "event";
+    
+    /**
+     * Custom event id field.
+     */
+    public static final String EVENT_ID = "eventId";
 
     /**
      * Event name tag.
