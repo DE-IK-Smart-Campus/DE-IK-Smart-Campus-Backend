@@ -1,6 +1,8 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -27,8 +29,9 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
   private final ConversionService conversionService;
 
   @Autowired
-  public SubjectDetailsServiceImpl(final SubjectDetailsRepository subjectDetailsRepository, final UserService userService,
-                                   final ConversionService conversionService) {
+  public SubjectDetailsServiceImpl(final SubjectDetailsRepository subjectDetailsRepository,
+      final UserService userService,
+      final ConversionService conversionService) {
     this.subjectDetailsRepository = subjectDetailsRepository;
     this.userService = userService;
     this.conversionService = conversionService;
@@ -37,7 +40,8 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
   @Transactional(readOnly = true)
   @Override
   public List<SubjectDetails> getAllSubjectDetailsByUserId(final Long userId) {
-    final User user = userService.getById(userId).orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+    final User user = userService.getById(userId)
+        .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
     return user.getSubjectDetailsList();
   }
@@ -47,7 +51,8 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
   public void save(final SubjectDetails subjectDetails) {
     Assert.notNull(subjectDetails);
 
-    subjectDetailsRepository.save(conversionService.convert(subjectDetails, SubjectDetailsEntity.class));
+    subjectDetailsRepository
+        .save(conversionService.convert(subjectDetails, SubjectDetailsEntity.class));
   }
 
   @Transactional
@@ -57,5 +62,19 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
 
     subjectDetailsList.forEach(subjectDetails -> save(subjectDetails));
     subjectDetailsRepository.flush();
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectDetails> getAllSubjectDetailsByUsername(String username) {
+    Long userId = userService.getIdByUsername(username);
+    return getAllSubjectDetailsByUserId(userId);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectDetails> getSubjectDetailsWithinRangeByUsername(LocalDate from, LocalDate to,
+      String username) {
+    return userService.getSubjectsWithinRangeByUsername(username, from, to).stream().collect(Collectors.toList());
   }
 }

@@ -63,7 +63,7 @@ public class Fields {
      * ICS link field.
      */
     public static final String ICS = "ics";
-    
+
     /**
      * Status message field.
      */
@@ -152,4 +152,140 @@ public class Fields {
 
   }
 
+  /**
+   * Calendar subjects IQ request fields.
+   */
+  public static class CalendarSubjectIqRequestFields {
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Subjects tag.
+     */
+    public static final String SUBJECT_EVENTS = "subjects";
+
+    /**
+     * Appointments tag.
+     */
+    public static final String APPOINTMENTS = "appointments";
+
+    /**
+     * Appointments field.
+     */
+    public static final String APPOINTMENT = "appointment";
+
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT = "subject";
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT_NAME = "subjectName";
+
+    /**
+     * When field.
+     */
+    public static final String WHEN = "when";
+
+    /**
+     * Where field.
+     */
+    public static final String WHERE = "where";
+
+    /**
+     * Description field.
+     */
+    public static final String DESCRIPTION = "description";
+
+    /**
+     * From field.
+     */
+    public static final String FROM = "from";
+
+    /**
+     * To field.
+     */
+    public static final String TO = "to";
+
+    /**
+     * Start period field.
+     */
+    public static final String START_PERIOD = "startPeriod";
+
+    /**
+     * End period field.
+     */
+    public static final String END_PERIOD = "endPeriod";
+  }
+
+  /**
+   * Custom event IQ request fields.
+   */
+  public static class CustomEventIqRequestFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Custom events tag.
+     */
+    public static final String CUSTOM_EVENTS = "events";
+    
+    /**
+     * Custom event field.
+     */
+    public static final String CUSTOM_EVENT = "event";
+    
+    /**
+     * Custom event id field.
+     */
+    public static final String EVENT_ID = "eventId";
+
+    /**
+     * Event name tag.
+     */
+    public static final String EVENT_NAME = "eventName";
+
+    /**
+     * Event description field.
+     */
+    public static final String EVENT_DESCRIPTION = "eventDescription";
+
+    /**
+     * Event place field.
+     */
+    public static final String EVENT_PLACE = "eventPlace";
+
+    /**
+     * Event start field.
+     */
+    public static final String EVENT_START = "eventStart";
+
+    /**
+     * Event end field.
+     */
+    public static final String EVENT_END = "eventEnd";
+
+    /**
+     * Event repeat field.
+     */
+    public static final String EVENT_REPEAT = "eventRepeat";
+
+    /**
+     * Reminder field.
+     */
+    public static final String REMINDER = "reminder";
+    
+    /**
+     * GUID field.
+     */
+    public static final String GUID = "guid";
+  }
 }
