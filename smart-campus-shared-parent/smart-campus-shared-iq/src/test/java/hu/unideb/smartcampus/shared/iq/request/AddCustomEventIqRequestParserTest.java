@@ -31,8 +31,10 @@ public class AddCustomEventIqRequestParserTest extends AbstractParserTest {
 
   private static final String EVENT_NAME = "EventName";
 
+  private static final String GUID = "GUID";
+
   private static final CustomEventIqElement CUSTOM_EVENT_IQ_ELEMENT = CustomEventIqElement.builder()
-      .eventId(EVENT_ID)
+      .guid(GUID)
       .eventName(EVENT_NAME)
       .eventPlace(EVENT_PLACE)
       .eventDescription(EVENT_DESCRIPTION)

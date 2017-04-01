@@ -80,6 +80,6 @@ public class CustomEventServiceImpl implements CustomEventService {
   @Override
   public void deleteCustomEntityByIq(DeleteCustomEventIqRequest iq) {
     LOGGER.info("Deleting custom event from {}", iq.getStudent());
-    customEventRepository.delete(iq.getEventId());
+    customEventRepository.deleteByGuid(iq.getEventGuid());
   }
 }

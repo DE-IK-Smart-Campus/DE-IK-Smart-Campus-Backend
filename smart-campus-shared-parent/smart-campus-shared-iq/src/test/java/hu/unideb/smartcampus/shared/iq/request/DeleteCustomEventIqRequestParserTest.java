@@ -11,7 +11,7 @@ import hu.unideb.smartcampus.shared.iq.provider.DeleteCustomEventIqProvider;
  */
 public class DeleteCustomEventIqRequestParserTest extends AbstractParserTest {
 
-  private static final Long EVENT_ID = 10L;
+  private static final String EVENT_ID = "123-GUID";
 
   private static final String STUDENT = "testUser";
 
@@ -20,11 +20,11 @@ public class DeleteCustomEventIqRequestParserTest extends AbstractParserTest {
     DeleteCustomEventIqRequest iq =
         DeleteCustomEventIqRequest.builder()
             .student(STUDENT)
-            .eventId(EVENT_ID)
+            .eventGuid(EVENT_ID)
             .build();
     DeleteCustomEventIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(STUDENT, parse.getStudent());
-    Assert.assertEquals(EVENT_ID, parse.getEventId());
+    Assert.assertEquals(EVENT_ID, parse.getEventGuid());
   }
 
   @Override

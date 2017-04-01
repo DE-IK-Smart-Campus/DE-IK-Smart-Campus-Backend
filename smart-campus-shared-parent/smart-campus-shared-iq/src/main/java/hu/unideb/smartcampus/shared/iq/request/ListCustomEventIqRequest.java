@@ -1,15 +1,6 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.CUSTOM_EVENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.CUSTOM_EVENTS;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_DESCRIPTION;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_END;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_ID;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_NAME;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_START;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.REMINDER;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.STUDENT;
 
 import java.util.ArrayList;
@@ -84,16 +75,7 @@ public class ListCustomEventIqRequest extends BaseSmartCampusIqRequest {
   }
 
   private void buildEvent(StringBuilder builder, CustomEventIqElement customIqElement) {
-    builder.append(openTag(CUSTOM_EVENT));
-    builder.append(tag(EVENT_ID, customIqElement.getEventId()));
-    builder.append(tag(EVENT_NAME, customIqElement.getEventName()));
-    builder.append(tag(EVENT_DESCRIPTION, customIqElement.getEventDescription()));
-    builder.append(tag(EVENT_PLACE, customIqElement.getEventPlace()));
-    builder.append(tag(EVENT_START, customIqElement.getEventStart()));
-    builder.append(tag(EVENT_END, customIqElement.getEventEnd()));
-    builder.append(tag(EVENT_REPEAT, customIqElement.getEventRepeat()));
-    builder.append(tag(REMINDER, customIqElement.getReminder()));
-    builder.append(closeTag(CUSTOM_EVENT));
+    builder.append(customIqElement.toXml());
   }
 
   @Override

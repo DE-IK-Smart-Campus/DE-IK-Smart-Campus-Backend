@@ -3,11 +3,11 @@ package hu.unideb.smartcampus.shared.iq.provider;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.CUSTOM_EVENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_DESCRIPTION;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_END;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_ID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_NAME;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_START;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.GUID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.REMINDER;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.STUDENT;
 
@@ -71,8 +71,6 @@ public class ListCustomEventIqProvider
       customEvents.add(customEvent);
     } else if (tagname.equalsIgnoreCase(STUDENT)) {
       student = text;
-    } else if (tagname.equalsIgnoreCase(EVENT_ID)) {
-      customEvent.setEventId(Long.valueOf(text));
     } else if (tagname.equalsIgnoreCase(EVENT_NAME)) {
       customEvent.setEventName(text);
     } else if (tagname.equalsIgnoreCase(EVENT_DESCRIPTION)) {
@@ -87,6 +85,8 @@ public class ListCustomEventIqProvider
       customEvent.setEventRepeat(text);
     } else if (tagname.equalsIgnoreCase(REMINDER)) {
       customEvent.setReminder(text);
+    } else if (tagname.equalsIgnoreCase(GUID)) {
+      customEvent.setGuid(text);
     } else if (tagname.equals(ListCustomEventIqRequest.ELEMENT)) {
       done = true;
     }

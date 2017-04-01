@@ -1,14 +1,5 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.CUSTOM_EVENT;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_DESCRIPTION;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_END;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_ID;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_NAME;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_START;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.REMINDER;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.STUDENT;
 
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
@@ -69,16 +60,7 @@ public class AddCustomEventIqRequest extends BaseSmartCampusIqRequest {
   }
 
   private void buildEvent(StringBuilder builder) {
-    builder.append(openTag(CUSTOM_EVENT));
-    builder.append(tag(EVENT_ID, customEvent.getEventId()));
-    builder.append(tag(EVENT_NAME, customEvent.getEventName()));
-    builder.append(tag(EVENT_DESCRIPTION, customEvent.getEventDescription()));
-    builder.append(tag(EVENT_PLACE, customEvent.getEventPlace()));
-    builder.append(tag(EVENT_START, customEvent.getEventStart()));
-    builder.append(tag(EVENT_END, customEvent.getEventEnd()));
-    builder.append(tag(EVENT_REPEAT, customEvent.getEventRepeat()));
-    builder.append(tag(REMINDER, customEvent.getReminder()));
-    builder.append(closeTag(CUSTOM_EVENT));
+    builder.append(customEvent.toXml());
   }
 
   @Override

@@ -21,8 +21,9 @@ public class CustomEventIqToCustomEventEntity
   public CustomEventEntity convert(CustomEventIqElement source) {
     return CustomEventEntity.builder()
         .eventName(source.getEventName())
-        .eventPlace(source.getEventName())
-        .eventDescription(source.getEventName())
+        .eventPlace(source.getEventPlace())
+        .eventDescription(source.getEventDescription())
+        .eventRepeat(source.getEventRepeat())
         .eventStart(getLocalDateTime(source.getEventStart()))
         .eventEnd(getLocalDateTime(source.getEventEnd()))
         .reminder(source.getReminder())

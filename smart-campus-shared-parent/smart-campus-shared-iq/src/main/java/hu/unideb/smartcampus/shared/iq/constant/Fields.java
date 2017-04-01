@@ -277,5 +277,10 @@ public class Fields {
      * Reminder field.
      */
     public static final String REMINDER = "reminder";
+    
+    /**
+     * GUID field.
+     */
+    public static final String GUID = "guid";
   }
 }

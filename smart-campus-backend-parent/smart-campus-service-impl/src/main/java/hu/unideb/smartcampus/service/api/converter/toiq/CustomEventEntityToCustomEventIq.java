@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.converter.toiq;
 
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 import org.springframework.core.convert.converter.Converter;
@@ -18,14 +19,21 @@ public class CustomEventEntityToCustomEventIq
   @Override
   public CustomEventIqElement convert(CustomEventEntity source) {
     return CustomEventIqElement.builder()
-        .eventId(source.getId())
+        .guid(source.getGuid())
         .eventName(source.getEventName())
-        .eventPlace(source.getEventName())
-        .eventDescription(source.getEventName())
-        .eventStart(source.getEventStart().toEpochSecond(ZoneOffset.ofHours(1)))
-        .eventEnd(source.getEventEnd().toEpochSecond(ZoneOffset.ofHours(1)))
+        .eventPlace(source.getEventPlace())
+        .eventDescription(source.getEventDescription())
+        .eventRepeat(source.getEventRepeat())
+        .eventStart(getInLong(source.getEventStart()))
+        .eventEnd(getInLong(source.getEventEnd()))
         .reminder(source.getReminder())
         .build();
+  }
+
+  private Long getInLong(LocalDateTime source) {
+    if (source == null)
+      return null;
+    return source.toEpochSecond(ZoneOffset.ofHours(0));
   }
 
 }

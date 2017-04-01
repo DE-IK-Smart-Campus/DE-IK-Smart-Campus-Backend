@@ -15,7 +15,7 @@ import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
  */
 public class ListCustomEventIqRequestParserTest extends AbstractParserTest {
 
-  private static final Long EVENT_ID = 1L;
+  private static final String GUID = "GUID";
 
   private static final String EVENT_REMINDER = "EventReminder";
 
@@ -32,7 +32,7 @@ public class ListCustomEventIqRequestParserTest extends AbstractParserTest {
   private static final String EVENT_NAME = "EventName";
 
   private static final CustomEventIqElement CUSTOM_EVENT_IQ_ELEMENT = CustomEventIqElement.builder()
-      .eventId(EVENT_ID)
+      .guid(GUID)
       .eventName(EVENT_NAME)
       .eventPlace(EVENT_PLACE)
       .eventDescription(EVENT_DESCRIPTION)

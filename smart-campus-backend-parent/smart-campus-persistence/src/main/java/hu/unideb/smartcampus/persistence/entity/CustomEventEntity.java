@@ -32,6 +32,12 @@ import lombok.ToString;
 public class CustomEventEntity extends BaseEntity<Long> {
 
   /**
+   * Global unique identifier..
+   */
+  @Column(name = "guid")
+  private String guid;
+
+  /**
    * Event name.
    */
   @Column(name = "event_name")
@@ -77,8 +83,10 @@ public class CustomEventEntity extends BaseEntity<Long> {
    * Constructs custom event entity.
    */
   @Builder
-  public CustomEventEntity(String eventName, String eventDescription, String eventPlace,
+  public CustomEventEntity(String guid, String eventName, String eventDescription,
+      String eventPlace,
       LocalDateTime eventStart, LocalDateTime eventEnd, String eventRepeat, String reminder) {
+    this.guid = guid;
     this.eventName = eventName;
     this.eventDescription = eventDescription;
     this.eventPlace = eventPlace;

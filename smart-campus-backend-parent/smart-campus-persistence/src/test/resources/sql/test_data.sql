@@ -97,8 +97,11 @@ insert into user_subject_details_relation(user_id,subject_name, subject_type, st
 values (2, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01',DATE'2000-05-31');
 
 -- User custom events
-insert into custom_event(id,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
-values (1,'Test event','Test event description', 'Test place',DATE '2000-02-01', DATE'2000-05-31','Repeat every day', 'Reminder');
+insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
+values (1,'GUID','Test event','Test event description', 'Test place',DATE '2000-02-01', DATE'2000-05-31','Repeat every day', 'Reminder');
+
+insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
+values (2,'GUID-TO-DELETE','Test event','Test event description', 'Test place',DATE '2000-02-01', DATE'2000-05-31','Repeat every day', 'Reminder');
 
 insert into user_custom_events(user_id,custom_event_id)
 values (1,1);

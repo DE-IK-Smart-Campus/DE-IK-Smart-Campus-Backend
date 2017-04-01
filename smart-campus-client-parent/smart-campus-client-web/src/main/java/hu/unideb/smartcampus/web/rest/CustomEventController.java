@@ -86,7 +86,7 @@ public class CustomEventController {
    * Get Converse JS connection properties.
    */
   @GetMapping("/del")
-  public ResponseEntity delCustomEvent(@RequestParam("id") Long id) {
+  public ResponseEntity delCustomEvent(@RequestParam("id") String id) {
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
       DeleteCustomEventIqRequest iq = new DeleteCustomEventIqRequest();
@@ -94,7 +94,7 @@ public class CustomEventController {
       iq.setFrom(connection.getUser());
       iq.setTo(JidCreate.from(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS));
       iq.setStudent(getUser(connection));
-      iq.setEventId(id);
+      iq.setEventGuid(id);
       connection.sendStanza(iq);
     } catch (NotConnectedException | InterruptedException | XmppStringprepException e) {
       ResponseEntity.badRequest().body(e.getCause().getMessage());

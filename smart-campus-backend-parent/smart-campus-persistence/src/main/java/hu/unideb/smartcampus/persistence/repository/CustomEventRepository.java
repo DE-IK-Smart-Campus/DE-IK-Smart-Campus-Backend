@@ -22,5 +22,10 @@ public interface CustomEventRepository extends JpaRepository<CustomEventEntity, 
    * Get custom events by user id.
    */
   List<CustomEventEntity> getEventsByUserId(Long userId);
+  
+  /**
+   * Delete custom event by GUID.
+   */
+  Integer deleteByGuid(String guid);
 
 }

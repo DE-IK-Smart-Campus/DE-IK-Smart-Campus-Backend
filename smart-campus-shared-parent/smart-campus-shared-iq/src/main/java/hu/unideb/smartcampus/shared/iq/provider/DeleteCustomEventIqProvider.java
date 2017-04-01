@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_ID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.GUID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.STUDENT;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -16,7 +16,7 @@ public class DeleteCustomEventIqProvider
     extends BaseSmartCampusIqProvider<DeleteCustomEventIqRequest> {
 
   private String student;
-  private Long eventId;
+  private String eventGuid;
   private boolean done;
 
   @Override
@@ -40,14 +40,14 @@ public class DeleteCustomEventIqProvider
           break;
       }
     }
-    return new DeleteCustomEventIqRequest(student, eventId);
+    return new DeleteCustomEventIqRequest(student, eventGuid);
   }
 
   private void parseEndTag(String text, String tagname) {
     if (tagname.equalsIgnoreCase(STUDENT)) {
       student = text;
-    } else if (tagname.equalsIgnoreCase(EVENT_ID)) {
-      eventId = Long.valueOf(text);
+    } else if (tagname.equalsIgnoreCase(GUID)) {
+      eventGuid = text;
     } else if (tagname.equals(DeleteCustomEventIqRequest.ELEMENT)) {
       done = true;
     }

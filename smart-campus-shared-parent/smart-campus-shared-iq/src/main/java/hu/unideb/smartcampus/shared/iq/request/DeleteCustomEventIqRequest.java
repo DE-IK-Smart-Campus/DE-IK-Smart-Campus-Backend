@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_ID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.GUID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.STUDENT;
 
 import lombok.Builder;
@@ -29,7 +29,7 @@ public class DeleteCustomEventIqRequest extends BaseSmartCampusIqRequest {
   /**
    * Student's custom events.
    */
-  private Long eventId;
+  private String eventGuid;
 
   /**
    * Default constructor.
@@ -42,10 +42,10 @@ public class DeleteCustomEventIqRequest extends BaseSmartCampusIqRequest {
    * Constructs.
    */
   @Builder
-  public DeleteCustomEventIqRequest(String student, Long eventId) {
+  public DeleteCustomEventIqRequest(String student, String eventGuid) {
     super(ELEMENT);
     this.student = student;
-    this.eventId = eventId;
+    this.eventGuid = eventGuid;
   }
 
   protected String toXml() {
@@ -56,7 +56,7 @@ public class DeleteCustomEventIqRequest extends BaseSmartCampusIqRequest {
 
   private void buildIq(StringBuilder builder) {
     builder.append(tag(STUDENT, student));
-    builder.append(tag(EVENT_ID, eventId));
+    builder.append(tag(GUID, eventGuid));
   }
 
 
