@@ -1,7 +1,6 @@
 package hu.unideb.smartcampus.service.api;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
-import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.StanzaCollector;
 import org.jivesoftware.smack.packet.IQ;
@@ -22,6 +21,7 @@ import hu.unideb.smartcampus.domain.Subject;
 import hu.unideb.smartcampus.service.api.converter.ConsultingDateListConverter;
 import hu.unideb.smartcampus.service.api.converter.SubjectListConverter;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
@@ -70,46 +70,35 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
    */
   @Override
   public List<Subject> getSubjects() {
-    LOGGER.info("GetSubjects()");
-    SubjectsIqRequest resultIq;
+    LOGGER.info("Getting subjects for user");
     AbstractXMPPConnection connection = ejabberdUser.getConnection();
     SubjectsIqRequest iq = new SubjectsIqRequest();
     iq.setType(Type.get);
     iq.setFrom(connection.getUser());
     setSmartcampusUser(iq);
     iq.setStudent(getUser(connection));
-    resultIq = getResult(connection, iq);
-    if (resultIq != null) {
-      LOGGER.debug("The size of the result subjects is:{}", resultIq.getSubjects().size());
-    }
-
+    SubjectsIqRequest resultIq = (SubjectsIqRequest) getResult(connection, iq);
     final Converter<List<SubjectIqElement>, List<Subject>> converter = new SubjectListConverter();
     return converter.convert(resultIq.getSubjects());
   }
 
   @Override
   public Instructor getInstructorByInstructorId(Long instructorId) {
-    Instructor result = null;
-    try {
-      AbstractXMPPConnection connection = ejabberdUser.getConnection();
-      InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest();
-      iq.setType(IQ.Type.get);
-      iq.setFrom(connection.getUser());
-      iq.setTo(JidCreate.from("smartcampus@smartcampus/Smartcampus"));
-      iq.setInstructorId(instructorId.toString());
-      StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
-      InstructorConsultingDatesIqRequest resultIq = collector.nextResultBlockForever();
-      final Converter<List<ConsultingDateIqElement>, List<ConsultingDate>> consultingDateListConverter = new ConsultingDateListConverter();
-      result = new Instructor(instructorId, resultIq.getInstructorName(), consultingDateListConverter.convert(resultIq.getConsultingDates()));
-    } catch (SmackException.NotConnectedException | InterruptedException | XmppStringprepException e) {
-      LOGGER.error("Error while sending IQ", e);
-    }
-    return result;
-  }
+    LOGGER.info("Getting instructors by instructor ID: {}", instructorId);
+    AbstractXMPPConnection connection = ejabberdUser.getConnection();
+    InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest();
+    iq.setType(IQ.Type.get);
+    iq.setFrom(connection.getUser());
+    setSmartcampusUser(iq);
+    iq.setInstructorId(instructorId.toString());
+    InstructorConsultingDatesIqRequest resultIq = (InstructorConsultingDatesIqRequest) getResult(connection, iq);
+    final Converter<List<ConsultingDateIqElement>, List<ConsultingDate>> converter = new ConsultingDateListConverter();
+    return new Instructor(instructorId, resultIq.getInstructorName(), converter.convert(resultIq.getConsultingDates()));
+}
 
-  private SubjectsIqRequest getResult(AbstractXMPPConnection connection,
-                                      SubjectsIqRequest iq) {
-    SubjectsIqRequest resultIq;
+  private BaseSmartCampusIqRequest getResult(AbstractXMPPConnection connection,
+                                             BaseSmartCampusIqRequest iq) {
+    BaseSmartCampusIqRequest resultIq;
     try {
       StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
       resultIq = collector.nextResult(10000);
@@ -121,7 +110,7 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
   }
 
 
-  private void setSmartcampusUser(SubjectsIqRequest iq) {
+  private void setSmartcampusUser(BaseSmartCampusIqRequest iq) {
     try {
       iq.setTo(JidCreate.from(getSmartcampusUser()));
     } catch (XmppStringprepException e1) {
