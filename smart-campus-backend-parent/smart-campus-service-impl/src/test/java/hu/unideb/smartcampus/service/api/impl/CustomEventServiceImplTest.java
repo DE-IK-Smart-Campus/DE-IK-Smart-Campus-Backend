@@ -34,12 +34,15 @@ public class CustomEventServiceImplTest {
   private static final String EVENT_REMINDER = "EventReminder";
 
   private static final LocalDateTime EVENT_START_LOCALDATETIME = LocalDateTime.now();
-  
-  private static final LocalDateTime EVENT_END_LOCALDATETIME = LocalDateTime.now().plus(1,ChronoUnit.HOURS);
-  
-  private static final Long EVENT_START = EVENT_START_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(0));
 
-  private static final Long EVENT_END = EVENT_END_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(0));;
+  private static final LocalDateTime EVENT_END_LOCALDATETIME =
+      LocalDateTime.now().plus(1, ChronoUnit.HOURS);
+
+  private static final Long EVENT_START =
+      EVENT_START_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(0));
+
+  private static final Long EVENT_END =
+      EVENT_END_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(0));;
 
   private static final String EVENT_REPEAT = "EventRepeat";
 
@@ -80,8 +83,8 @@ public class CustomEventServiceImplTest {
 
   private static final ListCustomEventIqRequest LIST_IQ_REQUEST =
       ListCustomEventIqRequest.builder()
-      .student(STUDENT)
-      .build();
+          .student(STUDENT)
+          .build();
 
   @InjectMocks
   private CustomEventServiceImpl service;
@@ -110,7 +113,7 @@ public class CustomEventServiceImplTest {
         .thenReturn(EVENT_ENTITY_LIST);
     // then
     List<CustomEventIqElement> customEventsByIq = service.getCustomEventsByIq(LIST_IQ_REQUEST);
-    
+
     Assert.assertEquals(customEventsByIq, CUSTOMEVENTS);
   }
 
@@ -120,7 +123,7 @@ public class CustomEventServiceImplTest {
   @Test
   public void addCustomEntityByIq() {
     // given
-    
+
     // when
 
     // then

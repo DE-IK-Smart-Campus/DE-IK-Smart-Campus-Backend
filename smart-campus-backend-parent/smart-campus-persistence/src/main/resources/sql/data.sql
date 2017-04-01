@@ -385,14 +385,14 @@ insert into user_subject_details_relation(user_id,subject_name, subject_type, st
 values (5, 'Hálózatmodellezés', 'LECTURE', STR_TO_DATE('2000-02-01', '%Y-%m-%d'), STR_TO_DATE('2000-05-31', '%Y-%m-%d'));
 
 -- User custom events
-insert into custom_event(id,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
-values (1,'Test event','Test event description', 'Test place',STR_TO_DATE('2017-04-01', '%Y-%m-%d'), STR_TO_DATE('2017-04-01', '%Y-%m-%d'),'Repeat every day', 'Reminder');
+insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
+values (1,'GUID1','Test event','Test event description', 'Test place',STR_TO_DATE('2017-04-01', '%Y-%m-%d'), STR_TO_DATE('2017-04-01', '%Y-%m-%d'),'Repeat every day', 'Reminder');
 
-insert into custom_event(id,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
-values (2,'Test event 2','Test event description', 'Test place',STR_TO_DATE('2017-04-01', '%Y-%m-%d'), STR_TO_DATE('2017-04-01', '%Y-%m-%d'),'Repeat every day', 'Reminder');
+insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
+values (2,'GUID2','Test event 2','Test event description', 'Test place',STR_TO_DATE('2017-04-01', '%Y-%m-%d'), STR_TO_DATE('2017-04-01', '%Y-%m-%d'),'Repeat every day', 'Reminder');
 
-insert into custom_event(id,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
-values (3,'Test event 3','Test event description', 'Test place',STR_TO_DATE('2017-04-01', '%Y-%m-%d'), STR_TO_DATE('2017-04-01', '%Y-%m-%d'),'Repeat every day', 'Reminder');
+insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
+values (3,'GUID3','Test event 3','Test event description', 'Test place',STR_TO_DATE('2017-04-01', '%Y-%m-%d'), STR_TO_DATE('2017-04-01', '%Y-%m-%d'),'Repeat every day', 'Reminder');
 
 insert into user_custom_events(user_id,custom_event_id)
 values (4,1);
