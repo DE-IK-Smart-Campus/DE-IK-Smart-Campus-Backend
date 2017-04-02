@@ -9,8 +9,9 @@ import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
  * IQ handler for IQ requests of subjects.
  */
 public class SubjectsIqHandler extends IqHandler<SubjectsIqRequest> {
-  public SubjectsIqHandler(AbstractXMPPConnection connection) {
+  public SubjectsIqHandler(AbstractXMPPConnection connection, String domain) {
     this.connection = connection;
+    this.domain = domain;
     this.iq = new SubjectsIqRequest();
     this.iq.setType(IQ.Type.get);
     this.iq.setFrom(connection.getUser());

@@ -7,6 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import javax.annotation.Resource;
 import hu.unideb.smartcampus.domain.ConsultingDate;
 import hu.unideb.smartcampus.domain.Instructor;
 import hu.unideb.smartcampus.domain.Subject;
@@ -32,6 +33,12 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
   private static final Logger LOGGER = LoggerFactory.getLogger(ConsultingHoursServiceImpl.class);
 
   /**
+   * Domain for smartcampus user.
+   */
+  @Resource(lookup = "java:global/smartcampus.xmpp.domain")
+  private String domain;
+
+  /**
    * Ejabberd user.
    */
   @Autowired
@@ -43,7 +50,7 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
   @Override
   public List<Subject> getSubjects() {
     LOGGER.info("Getting subjects for user");
-    final SubjectsIqHandler iqHandler = new SubjectsIqHandler(ejabberdUser.getConnection());
+    final SubjectsIqHandler iqHandler = new SubjectsIqHandler(ejabberdUser.getConnection(), domain);
     final SubjectsIqRequest iqRequest = iqHandler.getResult();
     final Converter<List<SubjectIqElement>, List<Subject>> converter = new SubjectListConverter();
     return converter.convert(iqRequest.getSubjects());
@@ -55,7 +62,7 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
   @Override
   public Instructor getInstructorByInstructorId(Long instructorId) {
     LOGGER.info("Getting instructor for instructor ID: {}", instructorId);
-    final InstructorConsultingDatesIqHandler iqHandler = new InstructorConsultingDatesIqHandler(ejabberdUser.getConnection(), instructorId);
+    final InstructorConsultingDatesIqHandler iqHandler = new InstructorConsultingDatesIqHandler(ejabberdUser.getConnection(), domain, instructorId);
     final InstructorConsultingDatesIqRequest iqRequest = iqHandler.getResult();
     final Converter<List<ConsultingDateIqElement>, List<ConsultingDate>> converter = new ConsultingDateListConverter();
     return new Instructor(instructorId, iqRequest.getInstructorName(), converter.convert(iqRequest.getConsultingDates()));
