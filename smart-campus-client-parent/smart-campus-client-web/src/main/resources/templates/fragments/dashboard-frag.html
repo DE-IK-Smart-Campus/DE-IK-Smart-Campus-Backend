@@ -26,6 +26,7 @@
       <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/consulting-hours}" th:text="#{dashboard.nav.consulting_hours}"></a></li>
     </ul>
 
+    <div th:replace="fragments/language-selector-frag :: language-selector-frag"/>
   </div>
   <script type="text/javascript" th:src="@{/js/converse-initialize.js}"></script>
 </div>

@@ -7237,3 +7237,26 @@ html, body {
     font-size: 30px;
     font-weight: bold;
 }
+
+.language-selector {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
+}
+
+.flag {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url('../images/flags.png') no-repeat;
+}
+
+
+.flag.flag-hu {
+    background-position: 0 0;
+}
+
+.flag.flag-us {
+    background-position: -32px 0;
+}
