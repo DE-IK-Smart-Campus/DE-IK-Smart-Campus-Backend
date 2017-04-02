@@ -30,4 +30,11 @@ public class XmppException extends SmartCampusException {
     super(message, cause);
   }
 
+  /**
+   * Constructs a XmppException with cause.
+   */
+  public XmppException(Throwable cause) {
+    super(cause);
+  }
+
 }
