@@ -8,7 +8,9 @@ import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_USER;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -97,11 +99,26 @@ public class UserEntity extends BaseEntity<Long> {
   private List<CustomEventEntity> customEvents;
 
   /**
+   * Joined MUC rooms JID list.
+   */
+  @ElementCollection
+  @CollectionTable(name = "user_muc_chat_list")
+  private List<String> mucChatList;
+
+  /**
+   * Chat partners.
+   */
+  @ElementCollection
+  @CollectionTable(name = "user_single_chat_list")
+  private List<String> singleChatList;
+
+  /**
    * Builder pattern for creating user.
    */
   @Builder
   public UserEntity(final Long id, final String username, final String password, final Role role,
-      final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents) {
+      final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
+      final List<String> mucChatList, final List<String> singleChatList) {
     super(id);
     this.username = username;
     this.password = password;

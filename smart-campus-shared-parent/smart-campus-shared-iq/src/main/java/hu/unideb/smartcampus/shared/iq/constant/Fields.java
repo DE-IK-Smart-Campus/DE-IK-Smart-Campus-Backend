@@ -113,7 +113,7 @@ public class Fields {
      * Instructor ID field.
      */
     public static final String INSTRUCTORID = "instructorId";
-    
+
     /**
      * Instructor name field.
      */
@@ -237,12 +237,12 @@ public class Fields {
      * Custom events tag.
      */
     public static final String CUSTOM_EVENTS = "events";
-    
+
     /**
      * Custom event field.
      */
     public static final String CUSTOM_EVENT = "event";
-    
+
     /**
      * Custom event id field.
      */
@@ -282,10 +282,85 @@ public class Fields {
      * Reminder field.
      */
     public static final String REMINDER = "reminder";
-    
+
     /**
      * GUID field.
      */
     public static final String GUID = "guid";
+  }
+
+
+  /**
+   * MUC list.
+   */
+  public static class UserMucListIqRequestFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Rooms tag.
+     */
+    public static final String ROOMS = "rooms";
+
+    /**
+     * Room field.
+     */
+    public static final String ROOM = "room";
+  }
+
+  /**
+   * User chat list fields
+   */
+  public static class UserChatListIqRequestFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Chats tag.
+     */
+    public static final String CHATS = "chats";
+
+    /**
+     * Chat field.
+     */
+    public static final String CHAT = "chat";
+  }
+
+  /**
+   * MUC list.
+   */
+  public static class AddMucChatIqField {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Room field.
+     */
+    public static final String ROOM = "room";
+  }
+
+  /**
+   * User chat list fields
+   */
+  public static class AddUserChatIqFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Chat field.
+     */
+    public static final String CHAT = "chat";
   }
 }
