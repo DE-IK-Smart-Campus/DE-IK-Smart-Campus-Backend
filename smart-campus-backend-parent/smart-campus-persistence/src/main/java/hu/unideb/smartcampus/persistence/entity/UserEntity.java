@@ -49,7 +49,11 @@ import lombok.ToString;
     @NamedQuery(name = "UserEntity.getSubjectsWithinRangeByUsername",
         query = "SELECT actual FROM UserEntity u join u.actualSubjects actual WHERE u.username = ?1 AND actual.startPeriod BETWEEN ?2 AND ?3"),
     @NamedQuery(name = "UserEntity.getIdByUsername",
-        query = "SELECT u.id FROM UserEntity u WHERE u.username = ?1")})
+        query = "SELECT u.id FROM UserEntity u WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getSingleChatListByUsername",
+        query = "SELECT list FROM UserEntity u join u.singleChatList list WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getMucChatListByUsername",
+        query = "SELECT list FROM UserEntity u join u.mucChatList list WHERE u.username = ?1")})
 public class UserEntity extends BaseEntity<Long> {
 
   /**
@@ -101,15 +105,15 @@ public class UserEntity extends BaseEntity<Long> {
   /**
    * Joined MUC rooms JID list.
    */
-  @ElementCollection
-  @CollectionTable(name = "user_muc_chat_list")
+  @ElementCollection(fetch = FetchType.LAZY)
+  @CollectionTable(name = "user_muc_chat")
   private List<String> mucChatList;
 
   /**
    * Chat partners.
    */
-  @ElementCollection
-  @CollectionTable(name = "user_single_chat_list")
+  @ElementCollection(fetch = FetchType.LAZY)
+  @CollectionTable(name = "user_single_chat")
   private List<String> singleChatList;
 
   /**

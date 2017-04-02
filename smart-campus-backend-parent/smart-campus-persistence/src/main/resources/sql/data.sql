@@ -402,3 +402,21 @@ values (4,2);
 
 insert into user_custom_events(user_id,custom_event_id)
 values (4,3);
+
+insert into user_single_chat(user_entity_id,single_chat_list)
+values(4,'1234@asd.com');
+
+insert into user_single_chat(user_entity_id,single_chat_list)
+values(4,'1234@asd2323.com');
+
+insert into user_single_chat(user_entity_id,single_chat_list)
+values(4,'13434234@asd2323.com');
+
+insert into user_muc_chat(user_entity_id,muc_chat_list)
+values(4,'1234234234234234234@asd.com');
+
+insert into user_muc_chat(user_entity_id,muc_chat_list)
+values(4,'1234234234@asd2323.com');
+
+insert into user_muc_chat(user_entity_id,muc_chat_list)
+values(4,'13434234234234@asd2323.com');

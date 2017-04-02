@@ -65,7 +65,7 @@ public class ListUserChatIqRequest extends BaseSmartCampusIqRequest {
   }
 
   private void buildEvents(StringBuilder builder) {
-    if (chatList != null && !chatList.isEmpty()) {
+    if (chatList != null) {
       builder.append(openTag(CHATS));
       for (String muc : chatList) {
         builder.append(tag(CHAT, muc));

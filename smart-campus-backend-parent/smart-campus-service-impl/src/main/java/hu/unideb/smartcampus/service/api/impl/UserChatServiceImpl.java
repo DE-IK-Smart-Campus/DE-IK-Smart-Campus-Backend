@@ -1,6 +1,5 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +49,7 @@ public class UserChatServiceImpl implements UserChatService {
   @Transactional(readOnly = true)
   @Override
   public List<String> listUserChats(String user) {
-    UserEntity userEntity = userRepository.findByUsername(user);
-    List<String> result;
-    if (userEntity == null) {
-      result = new ArrayList<>();
-    } else {
-      result = userEntity.getSingleChatList();
-    }
-    return result;
+    return userRepository.getSingleChatListByUsername(user);
   }
 
   /**
@@ -66,14 +58,7 @@ public class UserChatServiceImpl implements UserChatService {
   @Transactional(readOnly = true)
   @Override
   public List<String> listUserMucRooms(String user) {
-    UserEntity userEntity = userRepository.findByUsername(user);
-    List<String> result;
-    if (userEntity == null) {
-      result = new ArrayList<>();
-    } else {
-      result = userEntity.getMucChatList();
-    }
-    return result;
+    return userRepository.getMucChatListByUsername(user);
   }
 
 }

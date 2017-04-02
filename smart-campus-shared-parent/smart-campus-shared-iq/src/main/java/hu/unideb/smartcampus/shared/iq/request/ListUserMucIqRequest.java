@@ -65,7 +65,7 @@ public class ListUserMucIqRequest extends BaseSmartCampusIqRequest {
   }
 
   private void buildEvents(StringBuilder builder) {
-    if (mucChatList != null && !mucChatList.isEmpty()) {
+    if (mucChatList != null) {
       builder.append(openTag(ROOMS));
       for (String muc : mucChatList) {
         builder.append(tag(ROOM, muc));
