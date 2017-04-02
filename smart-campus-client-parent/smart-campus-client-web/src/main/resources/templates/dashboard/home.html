@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>SmartCampus - Home</title>
+  <title th:text="#{home.title}"></title>
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
 </head>
@@ -15,10 +15,10 @@
         TODO fix show sidebar button
         <show-sidebar-button></show-sidebar-button>
         -->
-        <h2>Home</h2>
+        <h2 th:text="#{home.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <h1>Welcome!</h1>
+            <h1 th:text="#{home.welcome}"></h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus hendrerit orci vitae mattis. Donec in euismod nibh. Nam lobortis
                tincidunt dui ut auctor. Nulla quis mauris et erat faucibus egestas in vitae risus. Aliquam ut lorem laoreet, lobortis purus sit amet,
                cursus

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>SmartCampus - Calendar</title>
+  <title th:text="#{calendar.title}"></title>
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: calendar-head-frag"/>
@@ -16,14 +16,11 @@
         TODO fix show sidebar button
         <show-sidebar-button></show-sidebar-button>
         -->
-        <h2>Calendar</h2>
+        <h2 th:text="#{calendar.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <h1>Calendar</h1>
-            <div class="form-group">
-              <div class="col-md-8">
-                <div id="calendar"></div>
-              </div>
+            <div class="col-md-8">
+              <div id="calendar"></div>
             </div>
           </div>
         </div>
