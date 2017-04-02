@@ -1,7 +1,4 @@
-/**
- * 
- */
-package hu.unideb.smartcampus.service.api.impl;
+package hu.unideb.smartcampus.webservice.api.neptun;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,9 +25,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import hu.unideb.smartcampus.service.api.NeptunTokenService;
-import hu.unideb.smartcampus.service.api.domain.AccessToken;
 
 /**
  * Neptun token service implementation.
@@ -98,8 +92,8 @@ public class NeptunTokenServiceImpl implements NeptunTokenService {
     HttpResponse response = client.execute(post);
     BufferedReader rd = createReaderByResponse(response);
     String string = readResult(rd);
-    AccessToken readValue = getAccessTokenObject(string);
-    return readValue.getAccessToken();
+    AccessToken parsedObject = getAccessTokenObject(string);
+    return parsedObject.getAccessToken();
   }
 
   private CloseableHttpClient createClient() {

@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api;
+package hu.unideb.smartcampus.webservice.api.neptun;
 
 import java.io.IOException;
 
