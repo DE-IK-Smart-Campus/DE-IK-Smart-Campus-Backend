@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hu.unideb.smartcampus.service.api.request.service.SignUpForConsultingDateRequestService;
+import hu.unideb.smartcampus.service.api.xmpp.handler.consulting.SignUpForConsultingDateRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 import hu.unideb.smartcampus.shared.requestmessages.SignUpForConsultingHourRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;

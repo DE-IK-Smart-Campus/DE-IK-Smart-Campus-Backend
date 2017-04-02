@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.xmpp.handler;
+package hu.unideb.smartcampus.service.api.xmpp.handler.event.custom;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.CustomEventService;
+import hu.unideb.smartcampus.service.api.xmpp.handler.AbstractSmartCampusIqRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;

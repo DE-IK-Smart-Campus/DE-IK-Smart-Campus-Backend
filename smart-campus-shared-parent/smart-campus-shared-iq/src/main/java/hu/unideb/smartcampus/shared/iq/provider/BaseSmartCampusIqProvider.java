@@ -10,6 +10,9 @@ import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
  */
 public class BaseSmartCampusIqProvider<T extends BaseSmartCampusIqRequest> extends IQProvider<T> {
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public T parse(XmlPullParser parser, int initialDepth) throws Exception {
     return (T) new BaseSmartCampusIqRequest("base");

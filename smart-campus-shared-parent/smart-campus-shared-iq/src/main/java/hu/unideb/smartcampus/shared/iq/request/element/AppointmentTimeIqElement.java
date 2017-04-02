@@ -42,6 +42,10 @@ public class AppointmentTimeIqElement {
 
   /**
    * Constructrs an IQ element.
+   * 
+   * @param when when.
+   * @param from from.
+   * @param to to.
    */
   @Builder
   public AppointmentTimeIqElement(Long when, Long from, Long to) {

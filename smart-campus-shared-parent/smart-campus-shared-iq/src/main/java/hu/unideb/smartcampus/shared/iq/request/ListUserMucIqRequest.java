@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class UserMucListIqRequest extends BaseSmartCampusIqRequest {
+public class ListUserMucIqRequest extends BaseSmartCampusIqRequest {
 
   /**
    * Element.
@@ -38,7 +38,7 @@ public class UserMucListIqRequest extends BaseSmartCampusIqRequest {
   /**
    * Default constructor.
    */
-  public UserMucListIqRequest() {
+  public ListUserMucIqRequest() {
     super(ELEMENT);
     mucChatList = new ArrayList<>();
   }
@@ -47,7 +47,7 @@ public class UserMucListIqRequest extends BaseSmartCampusIqRequest {
    * Constructs.
    */
   @Builder
-  public UserMucListIqRequest(String student, List<String> mucChatList) {
+  public ListUserMucIqRequest(String student, List<String> mucChatList) {
     super(ELEMENT);
     this.student = student;
     this.mucChatList = mucChatList;

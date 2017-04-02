@@ -9,16 +9,16 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.UserChatListIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.ListUserChatIqRequest;
 
 /**
  * Chat listing provider.
  */
 @SuppressWarnings({"PMD"})
-public class UserChatListIqProvider extends BaseSmartCampusIqProvider<UserChatListIqRequest> {
+public class UserChatListIqProvider extends BaseSmartCampusIqProvider<ListUserChatIqRequest> {
 
   @Override
-  public UserChatListIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
+  public ListUserChatIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     String student = null;
     List<String> chatList = new ArrayList<>();
     int eventType = parser.getEventType();
@@ -41,7 +41,7 @@ public class UserChatListIqProvider extends BaseSmartCampusIqProvider<UserChatLi
             student = text;
           } else if (tagname.equalsIgnoreCase(CHAT)) {
             chatList.add(text);
-          } else if (tagname.equals(UserChatListIqRequest.ELEMENT)) {
+          } else if (tagname.equals(ListUserChatIqRequest.ELEMENT)) {
             done = true;
           }
           break;
@@ -50,7 +50,7 @@ public class UserChatListIqProvider extends BaseSmartCampusIqProvider<UserChatLi
           break;
       }
     }
-    return UserChatListIqRequest.builder()
+    return ListUserChatIqRequest.builder()
         .student(student)
         .chatList(chatList)
         .build();
@@ -58,7 +58,7 @@ public class UserChatListIqProvider extends BaseSmartCampusIqProvider<UserChatLi
 
   @Override
   public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
-    return UserChatListIqRequest.class;
+    return ListUserChatIqRequest.class;
   }
 
 }

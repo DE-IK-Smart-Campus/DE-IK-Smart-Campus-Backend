@@ -19,16 +19,16 @@ public class UserMucListIqParserTest extends AbstractParserTest {
 
   @Test
   public void testIqProvider() throws Exception {
-    UserMucListIqRequest iq =
-        UserMucListIqRequest.builder().student(STUDENT).mucChatList(MUC_CHAT_LIST).build();
-    UserMucListIqRequest parse = getParsedObject(iq);
+    ListUserMucIqRequest iq =
+        ListUserMucIqRequest.builder().student(STUDENT).mucChatList(MUC_CHAT_LIST).build();
+    ListUserMucIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(STUDENT, parse.getStudent());
     Assert.assertEquals(MUC_CHAT_LIST, parse.getMucChatList());
   }
 
   @Override
   public String getElement() {
-    return UserMucListIqRequest.ELEMENT;
+    return ListUserMucIqRequest.ELEMENT;
   }
 
   @Override

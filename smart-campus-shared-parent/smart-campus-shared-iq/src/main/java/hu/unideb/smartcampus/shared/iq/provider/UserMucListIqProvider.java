@@ -9,16 +9,16 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.UserMucListIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.ListUserMucIqRequest;
 
 /**
  * MUC listing provider.
  */
 @SuppressWarnings({"PMD"})
-public class UserMucListIqProvider extends BaseSmartCampusIqProvider<UserMucListIqRequest> {
+public class UserMucListIqProvider extends BaseSmartCampusIqProvider<ListUserMucIqRequest> {
 
   @Override
-  public UserMucListIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
+  public ListUserMucIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     String student = null;
     List<String> mucChatList = new ArrayList<>();
     int eventType = parser.getEventType();
@@ -41,7 +41,7 @@ public class UserMucListIqProvider extends BaseSmartCampusIqProvider<UserMucList
             student = text;
           } else if (tagname.equalsIgnoreCase(ROOM)) {
             mucChatList.add(text);
-          } else if (tagname.equals(UserMucListIqRequest.ELEMENT)) {
+          } else if (tagname.equals(ListUserMucIqRequest.ELEMENT)) {
             done = true;
           }
           break;
@@ -50,7 +50,7 @@ public class UserMucListIqProvider extends BaseSmartCampusIqProvider<UserMucList
           break;
       }
     }
-    return UserMucListIqRequest.builder()
+    return ListUserMucIqRequest.builder()
         .student(student)
         .mucChatList(mucChatList)
         .build();
@@ -58,7 +58,7 @@ public class UserMucListIqProvider extends BaseSmartCampusIqProvider<UserMucList
 
   @Override
   public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
-    return UserMucListIqRequest.class;
+    return ListUserMucIqRequest.class;
   }
 
 }

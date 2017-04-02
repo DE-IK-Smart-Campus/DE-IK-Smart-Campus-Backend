@@ -19,16 +19,16 @@ public class UserChatListIqParserTest extends AbstractParserTest {
 
   @Test
   public void testIqProvider() throws Exception {
-    UserChatListIqRequest iq =
-        UserChatListIqRequest.builder().student(STUDENT).chatList(CHAT_LIST).build();
-    UserChatListIqRequest parse = getParsedObject(iq);
+    ListUserChatIqRequest iq =
+        ListUserChatIqRequest.builder().student(STUDENT).chatList(CHAT_LIST).build();
+    ListUserChatIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(STUDENT, parse.getStudent());
     Assert.assertEquals(CHAT_LIST, parse.getChatList());
   }
 
   @Override
   public String getElement() {
-    return UserChatListIqRequest.ELEMENT;
+    return ListUserChatIqRequest.ELEMENT;
   }
 
   @Override
