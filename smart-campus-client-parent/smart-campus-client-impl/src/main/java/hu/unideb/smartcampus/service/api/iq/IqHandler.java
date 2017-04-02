@@ -6,7 +6,6 @@ import org.jivesoftware.smack.StanzaCollector;
 import org.jxmpp.jid.impl.JidCreate;
 import org.jxmpp.stringprep.XmppStringprepException;
 
-import javax.annotation.Resource;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 
 /**
@@ -30,15 +29,14 @@ public abstract class IqHandler<T extends BaseSmartCampusIqRequest> {
   private static final String SMARTCAMPUS = "smartcampus";
 
   /**
-   * Domain for smartcampus user.
-   */
-  @Resource(lookup = "java:global/smartcampus.xmpp.domain")
-  private String domain;
-
-  /**
    * Connection.
    */
   protected AbstractXMPPConnection connection;
+
+  /**
+   * Domain string.
+   */
+  protected String domain;
 
   /**
    * IQ request.

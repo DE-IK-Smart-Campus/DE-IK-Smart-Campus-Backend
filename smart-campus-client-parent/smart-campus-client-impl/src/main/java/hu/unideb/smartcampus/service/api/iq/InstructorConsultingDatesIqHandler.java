@@ -9,8 +9,9 @@ import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqReques
  * IQ handler for IQ requests of consulting dates of instructors.
  */
 public class InstructorConsultingDatesIqHandler extends IqHandler<InstructorConsultingDatesIqRequest> {
-  public InstructorConsultingDatesIqHandler(AbstractXMPPConnection connection, Long instructorId) {
+  public InstructorConsultingDatesIqHandler(AbstractXMPPConnection connection, String domain, Long instructorId) {
     this.connection = connection;
+    this.domain = domain;
     this.iq = new InstructorConsultingDatesIqRequest();
     this.iq.setType(IQ.Type.get);
     this.iq.setFrom(connection.getUser());
