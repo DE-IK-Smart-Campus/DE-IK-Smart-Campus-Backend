@@ -34,7 +34,7 @@ public class UserLocationIqRequestHandler extends AbstractSmartCampusIqRequestHa
   private UserLocationService userLocationService;
 
   public UserLocationIqRequestHandler() {
-    super(UserLocationIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get,
+    super(UserLocationIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.set,
         Mode.sync);
   }
 

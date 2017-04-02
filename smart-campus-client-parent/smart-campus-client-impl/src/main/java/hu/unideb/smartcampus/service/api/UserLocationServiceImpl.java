@@ -17,7 +17,7 @@ import hu.unideb.smartcampus.shared.iq.request.UserLocationIqRequest;
 @Service
 public class UserLocationServiceImpl implements UserLocationService {
 
-  private static final long LOCATION_UPDATE_INTERVAL = 1;
+  private static final long LOCATION_UPDATE_INTERVAL = 300;
 
   @Autowired
   private XmppConnectedService xmppConnectedService;
@@ -36,7 +36,7 @@ public class UserLocationServiceImpl implements UserLocationService {
     request.setLongitude(location.getLongitude());
     request.setLatitude(location.getLatitude());
     request.setTimeStamp(location.getTimestamp());
-    request.setType(Type.get);
+    request.setType(Type.set);
     
     try {
       xmppConnectedService.sendRequestWithReauthenticate(request);
