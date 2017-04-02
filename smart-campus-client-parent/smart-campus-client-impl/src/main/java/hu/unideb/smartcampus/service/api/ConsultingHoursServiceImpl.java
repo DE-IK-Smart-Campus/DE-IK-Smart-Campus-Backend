@@ -1,12 +1,5 @@
 package hu.unideb.smartcampus.service.api;
 
-import org.jivesoftware.smack.AbstractXMPPConnection;
-import org.jivesoftware.smack.SmackException.NotConnectedException;
-import org.jivesoftware.smack.StanzaCollector;
-import org.jivesoftware.smack.packet.IQ;
-import org.jivesoftware.smack.packet.IQ.Type;
-import org.jxmpp.jid.impl.JidCreate;
-import org.jxmpp.stringprep.XmppStringprepException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +7,14 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import javax.annotation.Resource;
 import hu.unideb.smartcampus.domain.ConsultingDate;
 import hu.unideb.smartcampus.domain.Instructor;
 import hu.unideb.smartcampus.domain.Subject;
 import hu.unideb.smartcampus.service.api.converter.ConsultingDateListConverter;
 import hu.unideb.smartcampus.service.api.converter.SubjectListConverter;
+import hu.unideb.smartcampus.service.api.iq.InstructorConsultingDatesIqHandler;
+import hu.unideb.smartcampus.service.api.iq.SubjectsIqHandler;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
-import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
@@ -34,30 +27,9 @@ import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
 public class ConsultingHoursServiceImpl implements ConsultingHoursService {
 
   /**
-   * Delimiter.
-   */
-  private static final String AT = "@";
-
-  /**
-   * Resource.
-   */
-  private static final String RESOURCE = "/Smartcampus";
-
-  /**
-   * Smartcampus username.
-   */
-  private static final String SMARTCAMPUS = "smartcampus";
-
-  /**
    * Logger.
    */
   private static final Logger LOGGER = LoggerFactory.getLogger(ConsultingHoursServiceImpl.class);
-
-  /**
-   * Domain for smartcampus user.
-   */
-  @Resource(lookup = "java:global/smartcampus.xmpp.domain")
-  private String domain;
 
   /**
    * Ejabberd user.
@@ -71,66 +43,21 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
   @Override
   public List<Subject> getSubjects() {
     LOGGER.info("Getting subjects for user");
-    AbstractXMPPConnection connection = ejabberdUser.getConnection();
-    SubjectsIqRequest iq = new SubjectsIqRequest();
-    iq.setType(Type.get);
-    iq.setFrom(connection.getUser());
-    setSmartcampusUser(iq);
-    iq.setStudent(getUser(connection));
-    SubjectsIqRequest resultIq = (SubjectsIqRequest) getResult(connection, iq);
+    final SubjectsIqHandler iqHandler = new SubjectsIqHandler(ejabberdUser.getConnection());
+    final SubjectsIqRequest iqRequest = iqHandler.getResult();
     final Converter<List<SubjectIqElement>, List<Subject>> converter = new SubjectListConverter();
-    return converter.convert(resultIq.getSubjects());
+    return converter.convert(iqRequest.getSubjects());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Instructor getInstructorByInstructorId(Long instructorId) {
-    LOGGER.info("Getting instructors by instructor ID: {}", instructorId);
-    AbstractXMPPConnection connection = ejabberdUser.getConnection();
-    InstructorConsultingDatesIqRequest iq = new InstructorConsultingDatesIqRequest();
-    iq.setType(IQ.Type.get);
-    iq.setFrom(connection.getUser());
-    setSmartcampusUser(iq);
-    iq.setInstructorId(instructorId.toString());
-    InstructorConsultingDatesIqRequest resultIq = (InstructorConsultingDatesIqRequest) getResult(connection, iq);
+    LOGGER.info("Getting instructor for instructor ID: {}", instructorId);
+    final InstructorConsultingDatesIqHandler iqHandler = new InstructorConsultingDatesIqHandler(ejabberdUser.getConnection(), instructorId);
+    final InstructorConsultingDatesIqRequest iqRequest = iqHandler.getResult();
     final Converter<List<ConsultingDateIqElement>, List<ConsultingDate>> converter = new ConsultingDateListConverter();
-    return new Instructor(instructorId, resultIq.getInstructorName(), converter.convert(resultIq.getConsultingDates()));
-}
-
-  private BaseSmartCampusIqRequest getResult(AbstractXMPPConnection connection,
-                                             BaseSmartCampusIqRequest iq) {
-    BaseSmartCampusIqRequest resultIq;
-    try {
-      StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
-      resultIq = collector.nextResult(10000);
-    } catch (NotConnectedException | InterruptedException e) {
-      LOGGER.error("Error while sending IQ", e);
-      throw new RuntimeException(e);
-    }
-    return resultIq;
+    return new Instructor(instructorId, iqRequest.getInstructorName(), converter.convert(iqRequest.getConsultingDates()));
   }
-
-
-  private void setSmartcampusUser(BaseSmartCampusIqRequest iq) {
-    try {
-      iq.setTo(JidCreate.from(getSmartcampusUser()));
-    } catch (XmppStringprepException e1) {
-      throw new RuntimeException(e1);
-    }
-  }
-
-
-  private String getSmartcampusUser() {
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append(SMARTCAMPUS)
-        .append(AT)
-        .append(domain)
-        .append(RESOURCE);
-    return stringBuilder.toString();
-  }
-
-
-  private String getUser(AbstractXMPPConnection connection) {
-    return connection.getUser().toString().split(AT)[0];
-  }
-
 }
