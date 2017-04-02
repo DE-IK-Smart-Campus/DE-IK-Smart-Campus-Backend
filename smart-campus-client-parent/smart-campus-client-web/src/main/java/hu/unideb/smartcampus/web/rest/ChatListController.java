@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
+import hu.unideb.smartcampus.shared.iq.request.AddCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.AddMucChatIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.AddUserChatIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListUserChatIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListUserMucIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
 
 @RestController
@@ -102,6 +104,27 @@ public class ChatListController {
       iq.setTo(JidCreate.from(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS));
       iq.setStudent(student);
       iq.setMuc(jid);
+      StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
+      iq = collector.nextResultBlockForever();
+    } catch (NotConnectedException | InterruptedException | XmppStringprepException e) {
+      LOGGER.error("Error while sending IQ", e);
+      ResponseEntity.badRequest().body(e.getCause().getMessage());
+    }
+    return ResponseEntity.ok().body("OK");
+  }
+
+  @GetMapping(path = "/add/custom/{student}")
+  public ResponseEntity<String> addCustom(@PathVariable("student") String student) {
+    AddCustomEventIqRequest iq = new AddCustomEventIqRequest();
+    try {
+      AbstractXMPPConnection connection = ejabberdUser.getConnection();
+      iq.setType(Type.set);
+      iq.setFrom(connection.getUser());
+      iq.setTo(JidCreate.from(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS));
+      iq.setStudent(student);
+      iq.setCustomEvent(CustomEventIqElement.builder()
+          .eventName("Teszt Event")
+          .build());
       StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
       iq = collector.nextResultBlockForever();
     } catch (NotConnectedException | InterruptedException | XmppStringprepException e) {
