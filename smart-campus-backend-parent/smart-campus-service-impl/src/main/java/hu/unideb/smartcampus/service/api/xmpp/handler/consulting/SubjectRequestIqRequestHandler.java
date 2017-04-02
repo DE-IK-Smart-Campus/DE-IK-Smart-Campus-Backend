@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.xmpp.handler;
+package hu.unideb.smartcampus.service.api.xmpp.handler.consulting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.request.service.RetrieveSubjectsRequestService;
+import hu.unideb.smartcampus.service.api.xmpp.handler.AbstractSmartCampusIqRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;

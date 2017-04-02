@@ -21,6 +21,9 @@ public final class IqClassContext {
    */
   private static final String CONTEXT_PATH_IQ = "hu.unideb.smartcampus.shared.iq.request";
 
+  /**
+   * Provider context path.
+   */
   private static final String CONTEXT_PATH_PROVIDER = "hu.unideb.smartcampus.shared.iq.provider";
 
   /**
@@ -42,6 +45,8 @@ public final class IqClassContext {
 
   /**
    * Get provider classes.
+   * 
+   * @return IQ provider classes.
    */
   public static Class<? extends BaseSmartCampusIqProvider>[] getIqProviderClasses() {
     return IQ_PROVIDER_CLASSES.clone();
@@ -82,10 +87,13 @@ public final class IqClassContext {
     return reflections.getSubTypesOf(clazz);
   }
 
-  private IqClassContext() {
-    // for PMD
-  }
-
+  /**
+   * IQ's with providers in map.
+   * 
+   * @return IQ's with providers.
+   * @throws InstantiationException when provider could not instanciated.
+   * @throws IllegalAccessException when something goes wrong.
+   */
   public static Map<Class<? extends BaseSmartCampusIqRequest>, Class<? extends BaseSmartCampusIqProvider>> getIqWithProvider()
       throws InstantiationException, IllegalAccessException {
     Map<Class<? extends BaseSmartCampusIqRequest>, Class<? extends BaseSmartCampusIqProvider>> result =
@@ -95,6 +103,10 @@ public final class IqClassContext {
       result.put(instance.getHandledIq(), clazz);
     }
     return result;
+  }
+
+  private IqClassContext() {
+    // for PMD
   }
 
 }

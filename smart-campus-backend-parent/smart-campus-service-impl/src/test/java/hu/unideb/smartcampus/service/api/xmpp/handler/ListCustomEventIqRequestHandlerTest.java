@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hu.unideb.smartcampus.service.api.CustomEventService;
+import hu.unideb.smartcampus.service.api.xmpp.handler.event.custom.ListCustomEventIqRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 

@@ -29,6 +29,9 @@ public class AddCustomEventIqProvider
   private CustomEventIqElement customEvent;
   private boolean done;
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public AddCustomEventIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     customEvent = new CustomEventIqElement();

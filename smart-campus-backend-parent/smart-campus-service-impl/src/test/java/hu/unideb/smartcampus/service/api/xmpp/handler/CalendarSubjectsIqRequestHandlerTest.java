@@ -19,6 +19,7 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentTime
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectType;
+import hu.unideb.smartcampus.service.api.xmpp.handler.event.CalendarSubjectsIqRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.AppointmentTimeIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;

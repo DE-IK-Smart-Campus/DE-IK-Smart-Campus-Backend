@@ -8,7 +8,9 @@ import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_USER;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,7 +49,11 @@ import lombok.ToString;
     @NamedQuery(name = "UserEntity.getSubjectsWithinRangeByUsername",
         query = "SELECT actual FROM UserEntity u join u.actualSubjects actual WHERE u.username = ?1 AND actual.startPeriod BETWEEN ?2 AND ?3"),
     @NamedQuery(name = "UserEntity.getIdByUsername",
-        query = "SELECT u.id FROM UserEntity u WHERE u.username = ?1")})
+        query = "SELECT u.id FROM UserEntity u WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getSingleChatListByUsername",
+        query = "SELECT list FROM UserEntity u join u.singleChatList list WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getMucChatListByUsername",
+        query = "SELECT list FROM UserEntity u join u.mucChatList list WHERE u.username = ?1")})
 public class UserEntity extends BaseEntity<Long> {
 
   /**
@@ -97,11 +103,26 @@ public class UserEntity extends BaseEntity<Long> {
   private List<CustomEventEntity> customEvents;
 
   /**
+   * Joined MUC rooms JID list.
+   */
+  @ElementCollection(fetch = FetchType.LAZY)
+  @CollectionTable(name = "user_muc_chat")
+  private List<String> mucChatList;
+
+  /**
+   * Chat partners.
+   */
+  @ElementCollection(fetch = FetchType.LAZY)
+  @CollectionTable(name = "user_single_chat")
+  private List<String> singleChatList;
+
+  /**
    * Builder pattern for creating user.
    */
   @Builder
   public UserEntity(final Long id, final String username, final String password, final Role role,
-      final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents) {
+      final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
+      final List<String> mucChatList, final List<String> singleChatList) {
     super(id);
     this.username = username;
     this.password = password;

@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hu.unideb.smartcampus.service.api.request.service.RetrieveSubjectsRequestService;
+import hu.unideb.smartcampus.service.api.xmpp.handler.consulting.SubjectRequestIqRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;

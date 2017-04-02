@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hu.unideb.smartcampus.service.api.request.service.RetrieveInstructorsConsultingDatesRequestService;
+import hu.unideb.smartcampus.service.api.xmpp.handler.consulting.InstructorConsultingDateIqRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.FromToDateIqElement;
