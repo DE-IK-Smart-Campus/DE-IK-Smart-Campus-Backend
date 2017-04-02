@@ -6,10 +6,12 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import hu.unideb.smartcampus.persistence.listener.CustomEventEntityListener;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,10 +31,11 @@ import lombok.ToString;
     query = "SELECT e.customEvents FROM UserEntity e WHERE e.username = ?1 "),
     @NamedQuery(name = "CustomEventEntity.getEventsByUserId",
         query = "SELECT e.customEvents FROM UserEntity e WHERE e.id = ?1 ")})
+@EntityListeners(CustomEventEntityListener.class)
 public class CustomEventEntity extends BaseEntity<Long> {
 
   /**
-   * Global unique identifier..
+   * Global unique identifier.
    */
   @Column(name = "guid")
   private String guid;
