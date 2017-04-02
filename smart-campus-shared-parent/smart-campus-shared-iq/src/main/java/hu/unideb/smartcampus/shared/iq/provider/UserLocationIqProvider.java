@@ -38,6 +38,9 @@ public class UserLocationIqProvider extends BaseSmartCampusIqProvider<UserLocati
             case "timestamp":
               toReturn.setTimeStamp(Long.parseLong(text));
               break;
+            case UserLocationIqRequest.ELEMENT:
+              done=true;
+              break;
           }
           break;
         default:
