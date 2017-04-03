@@ -27,7 +27,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
   /**
    * Construct an instance of PropertySourcesPlaceholderConfigurer.
-   *
    * @return a bean instance of PropertySourcesPlaceholderConfigurer.
    */
   @Bean
@@ -38,7 +37,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public ResourceBundleMessageSource messageSource() {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-    messageSource.setBasenames("i18n/index", "i18n/dashboard", "i18n/home", "i18n/calendar", "i18n/consulting_hours");
+    messageSource.setBasenames("i18n/index", "i18n/error", "i18n/dashboard", "i18n/home", "i18n/calendar", "i18n/consulting_hours");
     return messageSource;
   }
 
