@@ -4,6 +4,6 @@ import hu.unideb.smartcampus.service.api.domain.UserLocation;
 
 public interface UserLocationService {
 
-  UserLocation save(UserLocation location);
+  void save(UserLocation location);
   
 }

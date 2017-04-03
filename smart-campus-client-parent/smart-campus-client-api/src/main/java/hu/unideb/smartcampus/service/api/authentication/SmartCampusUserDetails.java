@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.web.config.security;
+package hu.unideb.smartcampus.service.api.authentication;
 
 import java.util.Collection;
 import java.util.List;

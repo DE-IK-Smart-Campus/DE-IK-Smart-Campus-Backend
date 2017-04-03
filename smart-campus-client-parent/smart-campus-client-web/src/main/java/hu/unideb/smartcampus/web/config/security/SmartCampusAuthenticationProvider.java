@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import hu.unideb.smartcampus.service.api.authentication.AuthenticationCredentialProvider;
 import hu.unideb.smartcampus.service.api.authentication.SmartCampusAuthentication;
+import hu.unideb.smartcampus.service.api.authentication.SmartCampusUserDetails;
 
 public class SmartCampusAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 

@@ -23,11 +23,10 @@ public class UserLocationServiceImpl implements UserLocationService {
   private UserLocationToUserLocationEntityConverter userLocationToUserLocationEntityConverter;
 
   @Override
-  public UserLocation save(UserLocation location) {
+  public void save(UserLocation location) {
     
     UserLocationEntity persistedEntity = userLocationRepository.save(userLocationToUserLocationEntityConverter.convert(location));
     
-    return userLocationEntityToUserLocationConverter.convert(persistedEntity);
   }
 
 }

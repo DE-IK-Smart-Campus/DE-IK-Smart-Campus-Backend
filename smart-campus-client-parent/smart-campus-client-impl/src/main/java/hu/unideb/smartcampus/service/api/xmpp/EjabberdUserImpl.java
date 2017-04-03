@@ -14,8 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import hu.unideb.smartcampus.service.api.authentication.SmartCampusUserDetails;
 import hu.unideb.smartcampus.shared.exception.ConnectionException;
 import hu.unideb.smartcampus.shared.exception.IqRegistrationException;
 import hu.unideb.smartcampus.shared.exception.LoginException;
@@ -138,6 +140,17 @@ public class EjabberdUserImpl implements EjabberdUser {
       LOGGER.error("User could not log in.", e);
       throw new LoginException("Error on logging in to Ejabberd server.", e);
     }
+  }
+
+  @Override
+  public void reauthenticate() throws XmppException {
+    SmartCampusUserDetails authentication = getAuthentication();
+    login(authentication.getUsername(), authentication.getPassword());
+  }
+
+  private SmartCampusUserDetails getAuthentication() {
+    return (SmartCampusUserDetails) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal();
   }
 
 }
