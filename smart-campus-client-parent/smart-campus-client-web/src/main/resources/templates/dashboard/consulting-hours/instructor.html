@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>SmartCampus</title>
+  <title th:text="#{consulting_hours.instructor.title}"></title>
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
 </head>
@@ -15,7 +15,7 @@
         TODO fix show sidebar button
         <show-sidebar-button></show-sidebar-button>
         -->
-        <h2>Consulting hours</h2>
+        <h2 th:text="#{consulting_hours.instructor.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
             <h1 th:text="${instructor.name}"></h1>

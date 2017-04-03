@@ -15,19 +15,18 @@
       <a ng-click="hideSidebar()" class="btn btn-white btn-outline btn-rounded">Hide sidebar</a>
       -->
       <img th:src="@{/images/512x512_logo_white.png}" class="hvr-grow" width="128" style="margin: 20px"/>
-      <h4>Logged in with</h4>
+      <h4 th:text="#{dashboard.logged_in_with}"></h4>
       <p th:text="${currentUsername}"></p>
-      <a class="hvr-fade btn btn-white btn-outline btn-rounded btn-sm" th:href="@{/logout}">Logout</a>
+      <a class="hvr-fade btn btn-white btn-outline btn-rounded btn-sm" th:href="@{/logout}" th:text="#{dashboard.logout_button}"></a>
     </div>
 
     <ul class="nav nav-sidebar">
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/home}">Home</a></li>
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/calendar}">Calendar</a></li>
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/consulting-hours}">Consulting hours</a></li>
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/other}">Other</a></li>
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/about-us}">About us</a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/home}" th:text="#{dashboard.nav.home}"></a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/calendar}" th:text="#{dashboard.nav.calendar}"></a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/consulting-hours}" th:text="#{dashboard.nav.consulting_hours}"></a></li>
     </ul>
 
+    <div th:replace="fragments/language-selector-frag :: language-selector-frag"/>
   </div>
   <script type="text/javascript" th:src="@{/js/converse-initialize.js}"></script>
 </div>
