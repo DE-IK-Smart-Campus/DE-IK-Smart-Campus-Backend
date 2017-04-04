@@ -76,6 +76,7 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
    */
   @Override
   public void signUpForConsultingDate(Long consultingHourId, Long duration, String reason) {
+    LOGGER.info("Signing up for consulting date");
     final SignUpForConsultingDateIqHandler iqHandler = new SignUpForConsultingDateIqHandler(
         ejabberdUser.getConnection(),
         domain,
@@ -86,7 +87,6 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
     final SignUpForConsultingDateIqRequest iqRequest = iqHandler.getResult();
     final Converter<SignUpForConsultingDateIqRequest, String> converter = new SignUpForConsultingDateConverter();
     final String result = converter.convert(iqRequest);
-    LOGGER.info("Signing up for consulting date");
     LOGGER.info("Consulting date ID: {}", consultingHourId);
     LOGGER.info("Result: {}", result);
   }

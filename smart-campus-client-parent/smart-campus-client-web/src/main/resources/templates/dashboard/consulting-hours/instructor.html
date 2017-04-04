@@ -23,8 +23,8 @@
               <!--
               TODO set proper link + date format
               -->
-              <a href="nothing" th:text="${consultingDate.from}"></a>
-              <a href="nothing" th:text="${consultingDate.to}"></a>
+              <a th:href="@{/dashboard/consulting-hours/instructor/__${instructor.id}__/consulting-date/__${consultingDate.id}__}"
+                 th:text="${consultingDate.from} + ' - ' + ${consultingDate.to}"></a>
             </div>
           </div>
         </div>

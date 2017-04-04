@@ -18,6 +18,6 @@ public class ConsultingDateConverter implements Converter<ConsultingDateIqElemen
   @Override
   public ConsultingDate convert(ConsultingDateIqElement consultingDateIqElement) {
     Timestamp[] timestamps = fromToDateConverter.convert(consultingDateIqElement.getFromToDates());
-    return new ConsultingDate(timestamps[0], timestamps[1], consultingDateIqElement.getReservedSum());
+    return new ConsultingDate(consultingDateIqElement.getConsultingDateId(), timestamps[0], timestamps[1], consultingDateIqElement.getReservedSum());
   }
 }
