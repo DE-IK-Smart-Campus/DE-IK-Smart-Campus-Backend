@@ -41,7 +41,7 @@ public class UserConsultingDateServiceImplTest {
 
   private static final String DURATION = "10 minutes";
 
-  private static final Long INSTRUCTORID = null;
+  private static final Long INSTRUCTORID = 1L;
 
   private static final List<UserConsultingDateEntity> RETURNED_LIST =
       Arrays.asList(UserConsultingDateEntity.builder()
