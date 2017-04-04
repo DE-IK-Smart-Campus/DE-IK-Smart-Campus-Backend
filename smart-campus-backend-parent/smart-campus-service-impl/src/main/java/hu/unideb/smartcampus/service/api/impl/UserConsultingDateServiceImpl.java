@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.UserConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
@@ -33,6 +34,7 @@ public class UserConsultingDateServiceImpl implements UserConsultingDateService 
   /**
    * {@inheritDoc}.
    */
+  @Transactional(readOnly = true)
   @Override
   public List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek(Long instructorId) {
     LOGGER.info("Find user consulting dates for instructor {} within a week.", instructorId);
@@ -48,6 +50,7 @@ public class UserConsultingDateServiceImpl implements UserConsultingDateService 
   /**
    * {@inheritDoc}.
    */
+  @Transactional(readOnly = true)
   @Override
   public List<StudentIqElement> listSignedStudentByInstructorId(Long instructorId) {
     LOGGER.info("Find all user consulting dates for instructor {}.", instructorId);

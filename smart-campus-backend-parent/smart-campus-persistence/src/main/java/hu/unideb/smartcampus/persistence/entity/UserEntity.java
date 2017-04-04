@@ -61,7 +61,7 @@ public class UserEntity extends BaseEntity<Long> {
    * The username of the user.
    */
   @NotNull
-  @Size(min = 2, max = 20)
+  @Size(min = 2, max = 32)
   @Column(name = COLUMN_NAME_USERNAME)
   private String username;
 
@@ -69,7 +69,7 @@ public class UserEntity extends BaseEntity<Long> {
    * The name of the user.
    */
   @NotNull
-  @Size(min = 2, max = 20)
+  @Size(min = 2, max = 64)
   @Column(name = COLUMN_NAME_FULLNAME)
   private String fullName;
 
