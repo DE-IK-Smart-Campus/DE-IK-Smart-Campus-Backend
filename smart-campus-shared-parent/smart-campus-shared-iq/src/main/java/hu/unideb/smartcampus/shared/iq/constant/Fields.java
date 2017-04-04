@@ -363,4 +363,61 @@ public class Fields {
      */
     public static final String CHAT = "chat";
   }
+
+  /**
+   * Generate office hours fields.
+   */
+  public static class GenerateOfficeHoursIqFields {
+
+    /**
+     * Generated hours field.
+     */
+    public static final String CREATED_HOURS = "createdHours";
+
+    /**
+     * Instructor ID field.
+     */
+    public static final String INSTRUCTOR_ID = "instructorId";
+
+    /**
+     * Intervall field.
+     */
+    public static final String INTERVALL = "intervall";
+
+    /**
+     * Office hours tag.
+     */
+    public static final String OFFICE_HOURS = "officeHours";
+
+    /**
+     * Office hour field.
+     */
+    public static final String OFFICE_HOUR = "officeHour";
+
+    /**
+     * From date field.
+     */
+    public static final String FROM_DATE = "fromDate";
+
+    /**
+     * To date field.
+     */
+    public static final String TO_DATE = "toDate";
+
+    /**
+     * Day field.
+     */
+    public static final String DAY = "day";
+
+    /**
+     * From field.
+     */
+    public static final String FROM = "from";
+
+    /**
+     * To field.
+     */
+    public static final String TO = "to";
+
+  }
 }

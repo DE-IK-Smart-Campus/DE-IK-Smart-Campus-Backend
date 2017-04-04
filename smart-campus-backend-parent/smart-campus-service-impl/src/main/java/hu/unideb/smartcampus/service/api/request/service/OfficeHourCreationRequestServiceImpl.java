@@ -11,16 +11,13 @@ import hu.unideb.smartcampus.shared.requestmessages.CreateOfficeHoursRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
 
 /**
- * Service for retrivie...
- *
+ * Service for creating office hours.
  */
-@Service(OfficeHourCreationRequestServiceImpl.BEAN_NAME)
+@Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class OfficeHourCreationRequestServiceImpl implements OfficeHourCreationRequestService {
 
   private static final String OK = "OK";
-
-  public static final String BEAN_NAME = "officeHourRequestServiceImpl";
 
   /**
    * Consulting hour service.
