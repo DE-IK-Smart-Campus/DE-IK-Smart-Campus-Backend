@@ -16,7 +16,7 @@ public abstract class IqHandler<T extends BaseSmartCampusIqRequest> {
   /**
    * Delimiter.
    */
-  private static final String AT = "@";
+  protected static final String AT = "@";
 
   /**
    * Resource.

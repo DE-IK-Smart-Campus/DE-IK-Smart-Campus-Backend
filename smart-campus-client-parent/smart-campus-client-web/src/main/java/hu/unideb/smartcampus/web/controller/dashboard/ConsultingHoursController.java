@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.List;
+import hu.unideb.smartcampus.domain.ConsultingDate;
 import hu.unideb.smartcampus.domain.Instructor;
 import hu.unideb.smartcampus.domain.Subject;
 import hu.unideb.smartcampus.service.api.ConsultingHoursService;
@@ -35,6 +38,15 @@ public class ConsultingHoursController {
    * TODO.
    */
   private static final String CONSULTING_HOURS_INSTRUCTOR_VIEW = "dashboard/consulting-hours/instructor";
+  /**
+   * TODO.
+   */
+  private static final String CONSULTING_HOURS_CONSULTING_DATE_SIGN_UP_VIEW = "dashboard/consulting-hours/consulting-date-sign-up";
+
+  /**
+   * TODO.
+   */
+  private static final String REDIRECT_URL_TO_CONSULTING_HOURS_PATH = "redirect:/dashboard/consulting-hours";
 
   /**
    * TODO.
@@ -48,6 +60,14 @@ public class ConsultingHoursController {
    * TODO.
    */
   private static final String INSTRUCTOR_MODEL_OBJECT_NAME = "instructor";
+  /**
+   * TODO.
+   */
+  private static final String INSTRUCTOR_NAME_MODEL_OBJECT_NAME = "instructorName";
+  /**
+   * TODO.
+   */
+  private static final String CONSULTING_DATE_MODEL_OBJECT_NAME = "consultingDate";
 
   /**
    * TODO.
@@ -65,7 +85,6 @@ public class ConsultingHoursController {
     return modelAndView;
   }
 
-
   /**
    * TODO.
    * @return model and view.
@@ -77,9 +96,47 @@ public class ConsultingHoursController {
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
 
     final Instructor instructor = consultingHoursService.getInstructorByInstructorId(instructorId);
-
     modelAndView.addObject(INSTRUCTOR_MODEL_OBJECT_NAME, instructor);
 
     return modelAndView;
+  }
+
+  /**
+   * TODO.
+   * @return model and view.
+   */
+  @GetMapping("/instructor/{instructorId}/consulting-date/{consultingDateId}")
+  public ModelAndView loadConsultingDateSignUpView(
+      final Principal principal,
+      @PathVariable final Long instructorId,
+      @PathVariable final Long consultingDateId
+  ) {
+    final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_CONSULTING_DATE_SIGN_UP_VIEW);
+    final String name = principal.getName();
+    modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
+
+    final Instructor instructor = consultingHoursService.getInstructorByInstructorId(instructorId);
+    modelAndView.addObject(INSTRUCTOR_NAME_MODEL_OBJECT_NAME, instructor.getName());
+
+    final ConsultingDate consultingDate = instructor.getConsultingDates().stream()
+        .filter(date -> date.getId().equals(consultingDateId))
+        .findFirst()
+        .orElse(null);
+    modelAndView.addObject(CONSULTING_DATE_MODEL_OBJECT_NAME, consultingDate);
+
+    return modelAndView;
+  }
+
+  /**
+   * TODO.
+   */
+  @PostMapping("/{consultingHourId}")
+  public String signUpForConsultingDate(
+      @PathVariable final Long consultingHourId,
+      @RequestParam final Long duration,
+      @RequestParam final String reason
+  ) {
+    consultingHoursService.signUpForConsultingDate(consultingHourId, duration, reason);
+    return REDIRECT_URL_TO_CONSULTING_HOURS_PATH;
   }
 }

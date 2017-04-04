@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title th:text="#{consulting_hours.instructor.title}"></title>
+  <title th:text="#{consulting_hours.instructor.title(${instructor.name})}"></title>
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
 </head>
@@ -19,12 +19,13 @@
         <div class="jumbotron">
           <div class="container">
             <h1 th:text="${instructor.name}"></h1>
+            <h2 th:text="#{consulting_hours.instructor.available_dates}"></h2>
             <div th:each="consultingDate : ${instructor.consultingDates}">
               <!--
               TODO set proper link + date format
               -->
-              <a href="nothing" th:text="${consultingDate.from}"></a>
-              <a href="nothing" th:text="${consultingDate.to}"></a>
+              <a th:href="@{/dashboard/consulting-hours/instructor/__${instructor.id}__/consulting-date/__${consultingDate.id}__}"
+                 th:text="${consultingDate.from} + ' - ' + ${consultingDate.to}"></a>
             </div>
           </div>
         </div>

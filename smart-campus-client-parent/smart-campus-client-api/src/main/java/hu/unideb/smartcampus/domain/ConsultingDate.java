@@ -8,7 +8,7 @@ import lombok.Data;
  * Consulting date.
  */
 @Data
-public class ConsultingDate {
+public class ConsultingDate extends BaseObject<Long> {
 
   /**
    * From date.
@@ -29,7 +29,8 @@ public class ConsultingDate {
    * Constructs consulting date.
    */
   @Builder
-  public ConsultingDate(final Timestamp from, final Timestamp to, final Integer sum) {
+  public ConsultingDate(final Long id, final Timestamp from, final Timestamp to, final Integer sum) {
+    super(id);
     this.from = from;
     this.to = to;
     this.sum = sum;
