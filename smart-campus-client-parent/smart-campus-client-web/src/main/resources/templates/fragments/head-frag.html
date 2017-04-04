@@ -17,5 +17,11 @@
 <thymeleaf xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
            th:fragment="conversejs-head-frag" th:remove="tag">
   <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css"/>
+  <script th:if="__${#locale}__ == 'hu'">
+      var currentLocale = 'hu';
+  </script>
+  <script th:if="__${#locale}__ == 'en'">
+      var currentLocale = 'en';
+  </script>
   <script src="https://cdn.conversejs.org/dist/converse.min.js"></script>
 </thymeleaf>
