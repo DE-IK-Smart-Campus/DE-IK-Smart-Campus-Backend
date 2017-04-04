@@ -48,11 +48,29 @@ values (1, 'Friday 14-16',PARSEDATETIME('10-03-2017 14:00:00.000', 'dd-MM-yyyy h
 insert into consulting_date (id, date, START_DATE, END_DATE)
 values (2, 'Monday 08-10',PARSEDATETIME('06-03-2017 08:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'),PARSEDATETIME('06-03-2017 10:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'));
 
+insert into consulting_date (id, date, START_DATE, END_DATE)
+values (3, 'Monday 10-12',PARSEDATETIME('10-04-2017 08:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'),PARSEDATETIME('10-04-2017 10:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'));
+
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (1, 1);
 
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (1, 2);
+
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (2, 3);
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (1,4,1,'Mert teszt - 1','10 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (2,5,1,'Mert teszt - 2','5 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (3,6,1,'Mert teszt - 3','17 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (4,4,3,'Mert mennék TDK-t beszélni.','30 perc');
 
 -- subjects
 

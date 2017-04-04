@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.persistence.entity;
 
 import static hu.unideb.smartcampus.shared.exclusion.FieldExclusion.EXCLUDE_PASSWORD;
+import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_FULLNAME;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_PASSWORD;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_ROLE;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_USERNAME;
@@ -65,6 +66,14 @@ public class UserEntity extends BaseEntity<Long> {
   private String username;
 
   /**
+   * The name of the user.
+   */
+  @NotNull
+  @Size(min = 2, max = 20)
+  @Column(name = COLUMN_NAME_FULLNAME)
+  private String fullName;
+
+  /**
    * The password of the user.
    */
   @NotNull
@@ -122,12 +131,13 @@ public class UserEntity extends BaseEntity<Long> {
   @Builder
   public UserEntity(final Long id, final String username, final String password, final Role role,
       final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
-      final List<String> mucChatList, final List<String> singleChatList) {
+      final List<String> mucChatList, final List<String> singleChatList, final String fullName) {
     super(id);
     this.username = username;
     this.password = password;
     this.role = role;
     this.actualSubjects = actualSubjects;
     this.customEvents = customEvents;
+    this.fullName = fullName;
   }
 }
