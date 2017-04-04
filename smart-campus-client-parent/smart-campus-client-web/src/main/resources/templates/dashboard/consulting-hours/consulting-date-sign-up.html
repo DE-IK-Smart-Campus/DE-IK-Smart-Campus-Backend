@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title th:text="#{consulting_hours.sign_up_consulting_date.title}"></title>
+  <title th:text="#{consulting_hours.sign_up_consulting_date.title(${instructorName})}"></title>
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
 </head>
@@ -18,9 +18,9 @@
         <h2 th:text="#{consulting_hours.sign_up_consulting_date.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <h1 th:text="#{consulting_hours.sign_up_consulting_date.provide_duration_reason}"></h1>
-            <h2 th:text="${instructorName}"></h2>
+            <h1 th:text="${instructorName}"></h1>
             <h2 th:text="${consultingDate.from} + ' - ' + ${consultingDate.to}"></h2>
+            <h2 th:text="#{consulting_hours.sign_up_consulting_date.duration_reason}"></h2>
             <form th:action="@{/dashboard/consulting-hours/__${consultingDate.id}__}" method="POST">
               <label th:text="#{consulting_hours.sign_up_consulting_date.reason}"></label>
               <input type="text" class="form-control" th:placeholder="#{consulting_hours.sign_up_consulting_date.reason}" name="reason"/>

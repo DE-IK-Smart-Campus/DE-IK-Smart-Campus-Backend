@@ -46,6 +46,11 @@ public class ConsultingHoursController {
   /**
    * TODO.
    */
+  private static final String REDIRECT_URL_TO_CONSULTING_HOURS_PATH = "redirect:/dashboard/consulting-hours";
+
+  /**
+   * TODO.
+   */
   private static final String CURRENT_USERNAME_MODEL_OBJECT_NAME = "currentUsername";
   /**
    * TODO.
@@ -126,18 +131,12 @@ public class ConsultingHoursController {
    * TODO.
    */
   @PostMapping("/{consultingHourId}")
-  public ModelAndView signUpForConsultingDate(
-      final Principal principal,
+  public String signUpForConsultingDate(
       @PathVariable final Long consultingHourId,
       @RequestParam final Long duration,
       @RequestParam final String reason
   ) {
-    final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_INSTRUCTOR_VIEW);
-    final String name = principal.getName();
-    modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
-
     consultingHoursService.signUpForConsultingDate(consultingHourId, duration, reason);
-
-    return modelAndView;
+    return REDIRECT_URL_TO_CONSULTING_HOURS_PATH;
   }
 }
