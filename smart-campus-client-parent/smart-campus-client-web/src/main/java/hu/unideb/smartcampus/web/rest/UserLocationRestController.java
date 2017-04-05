@@ -2,18 +2,14 @@ package hu.unideb.smartcampus.web.rest;
 
 import java.security.Principal;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.RequestContext;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import hu.unideb.smartcampus.service.api.UserLocationService;
 import hu.unideb.smartcampus.service.api.domain.Location;
