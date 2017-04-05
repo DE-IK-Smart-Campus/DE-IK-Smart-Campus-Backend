@@ -18,4 +18,12 @@ public interface ConsultingHoursService {
    * Get instructor by instructor ID.
    */
   Instructor getInstructorByInstructorId(Long instructorId);
+
+  /**
+   * Sign up for consulting hour by consulting hour ID.
+   * @param consultingHourId consulting hour ID of the consulting hour to sign up.
+   * @param duration the duration.
+   * @param reason the reason.
+   */
+  void signUpForConsultingDate(Long consultingHourId, Long duration, String reason);
 }

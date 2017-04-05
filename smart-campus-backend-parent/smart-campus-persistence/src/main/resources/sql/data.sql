@@ -1,33 +1,33 @@
 -- User table insert
-insert into user (id, username, password, role)
-values (1, 'admin', 'admin', 'ADMIN');
+insert into user (id,fullname, username, password, role)
+values (1,'Admin', 'admin', 'admin', 'ADMIN');
 
-insert into user (id, username, password, role)
-values (2, 'adamkai', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (2,'Dr. Adamkó Attila', 'adamkai', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (3, 'nolbi', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (3,'Kovács-Ferenc Norbert', 'nolbi', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (4, 'holi60', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (4,'Nánti', 'holi60', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (5, 'filtikai', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (5,'Erdei Krisztián', 'filtikai', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (6, 'palu', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (6,'Bak Balázs', 'palu', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (7, 'butikai', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (7,'Fekete Attila', 'butikai', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (8, 'gabai', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (8,'Gabikaiikakaik', 'gabai', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (9, 'testuser', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (9,'Test User', 'testuser', 'admin', 'USER');
 
-insert into user (id, username, password, role)
-values (10, 'smartcampus', 'admin', 'USER');
+insert into user (id,fullname, username, password, role)
+values (10,'Smart Campus', 'smartcampus', 'admin', 'USER');
 ----------------------------------------------------------------------------------------------------
 
 -- instructors
@@ -75,7 +75,6 @@ values (14, 'Dr. Fazekas István');
 
 insert into instructor (id, name)
 values (15, 'Rápolti Ida');
-
 
 -------------------------------
 
@@ -220,6 +219,18 @@ values (6, 12);
 
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (6, 14);
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (1,4,1,'Mert teszt - 1','10 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (2,5,1,'Mert teszt - 2','5 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (3,6,1,'Mert teszt - 3','17 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (4,4,3,'Mert mennék TDK-t beszélni.','30 perc');
 
 
 -- subjects

@@ -12,11 +12,14 @@ import hu.unideb.smartcampus.domain.ConsultingDate;
 import hu.unideb.smartcampus.domain.Instructor;
 import hu.unideb.smartcampus.domain.Subject;
 import hu.unideb.smartcampus.service.api.converter.ConsultingDateListConverter;
+import hu.unideb.smartcampus.service.api.converter.SignUpForConsultingDateConverter;
 import hu.unideb.smartcampus.service.api.converter.SubjectListConverter;
 import hu.unideb.smartcampus.service.api.iq.InstructorConsultingDatesIqHandler;
+import hu.unideb.smartcampus.service.api.iq.SignUpForConsultingDateIqHandler;
 import hu.unideb.smartcampus.service.api.iq.SubjectsIqHandler;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
@@ -67,4 +70,25 @@ public class ConsultingHoursServiceImpl implements ConsultingHoursService {
     final Converter<List<ConsultingDateIqElement>, List<ConsultingDate>> converter = new ConsultingDateListConverter();
     return new Instructor(instructorId, iqRequest.getInstructorName(), converter.convert(iqRequest.getConsultingDates()));
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void signUpForConsultingDate(Long consultingHourId, Long duration, String reason) {
+    LOGGER.info("Signing up for consulting date");
+    final SignUpForConsultingDateIqHandler iqHandler = new SignUpForConsultingDateIqHandler(
+        ejabberdUser.getConnection(),
+        domain,
+        consultingHourId,
+        duration,
+        reason
+    );
+    final SignUpForConsultingDateIqRequest iqRequest = iqHandler.getResult();
+    final Converter<SignUpForConsultingDateIqRequest, String> converter = new SignUpForConsultingDateConverter();
+    final String result = converter.convert(iqRequest);
+    LOGGER.info("Consulting date ID: {}", consultingHourId);
+    LOGGER.info("Result: {}", result);
+  }
+
 }

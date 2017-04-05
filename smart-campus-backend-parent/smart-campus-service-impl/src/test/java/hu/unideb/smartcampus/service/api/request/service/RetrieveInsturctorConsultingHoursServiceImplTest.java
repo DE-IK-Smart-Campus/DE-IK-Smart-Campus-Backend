@@ -31,7 +31,7 @@ import hu.unideb.smartcampus.shared.wrapper.inner.FromToDateWrapper;
  * Test for {@link RetrieveInstructorsConsultingDatesRequestServiceImpl}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({RetrieveInstructorsConsultingDatesRequestServiceImpl.class})
+@PrepareForTest({Calendar.class})
 public class RetrieveInsturctorConsultingHoursServiceImplTest {
 
   /**
@@ -98,8 +98,8 @@ public class RetrieveInsturctorConsultingHoursServiceImplTest {
     // then
     List<ConsultingDateWrapper> consultingDatesByInstructorId =
         service.getConsultingDatesByInstructorId(INSTRUCTOR_ID);
-    // Assert.assertThat(Arrays.asList(fridayConsultingDateWrapper, mondayConsultingDateWrapper),
-    // Matchers.containsInAnyOrder(consultingDatesByInstructorId));
+//     Assert.assertThat(Arrays.asList(fridayConsultingDateWrapper, mondayConsultingDateWrapper),
+//     Matchers.containsInAnyOrder(consultingDatesByInstructorId));
   }
 
   private ConsultingDateWrapper createMondayConsultingDateWrapper() {
