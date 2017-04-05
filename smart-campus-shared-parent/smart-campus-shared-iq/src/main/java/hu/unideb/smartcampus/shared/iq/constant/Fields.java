@@ -363,4 +363,57 @@ public class Fields {
      */
     public static final String CHAT = "chat";
   }
+
+  /**
+   * Student IQ element fields.
+   */
+  public static class StudentIqElementFields {
+
+    /**
+     * Student name field.
+     */
+    public static final String STUDENT_NAME = "studentName";
+
+    /**
+     * Student name field.
+     */
+    public static final String NEPTUN_IDENTIFIER = "neptunIdentifier";
+
+    /**
+     * Reason field.
+     */
+    public static final String REASON = "reason";
+
+    /**
+     * Duration field.
+     */
+    public static final String DURATION = "duration";
+  }
+
+  /**
+   * List instructor consulting dates IQ fields.
+   */
+  public static class ListInstructorConsultingDatesIqFields {
+
+    /**
+     * Instructor ID field.
+     */
+    public static final String INSTRUCTORID = "instructorId";
+
+    /**
+     * Students tag.
+     */
+    public static final String STUDENTS = "students";
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+    
+    /**
+     * One week field.
+     */
+    public static final String ONE_WEEK = "oneWeek";
+
+  }
 }
