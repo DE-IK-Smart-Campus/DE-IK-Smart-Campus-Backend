@@ -56,7 +56,7 @@ public class GenerateOfficeHoursIqRequestHandler extends AbstractSmartCampusIqRe
 
   /**
    * Handling request.
-   */
+   */ 
   @Override
   public IQ handleIQRequest(IQ iqRequest) {
     GenerateOfficeHoursIqRequest iq =

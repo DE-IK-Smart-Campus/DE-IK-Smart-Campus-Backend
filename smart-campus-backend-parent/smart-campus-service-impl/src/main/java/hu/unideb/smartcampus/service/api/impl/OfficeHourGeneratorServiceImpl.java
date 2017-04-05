@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
 @Service
 public class OfficeHourGeneratorServiceImpl implements OfficeHourGeneratorService {
 
-  private static final String HUNGARIAN_ZONE_ID = "UTC+1";
+  private static final Integer HUNGARIAN_PLUS_HOURS = 2;
 
   private static final char WHITESPACE = ' ';
 
@@ -100,7 +100,7 @@ public class OfficeHourGeneratorServiceImpl implements OfficeHourGeneratorServic
   }
 
   private Timestamp getTimestamp(LocalDateTime time) {
-    return new Timestamp(time.atZone(ZoneId.of(HUNGARIAN_ZONE_ID)).toEpochSecond() * 1000);
+    return new Timestamp(time.atZone(ZoneOffset.ofHours(HUNGARIAN_PLUS_HOURS)).toEpochSecond() * 1000);
   }
 
 }

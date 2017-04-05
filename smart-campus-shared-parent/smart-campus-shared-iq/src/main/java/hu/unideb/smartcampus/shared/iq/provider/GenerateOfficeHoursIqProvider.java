@@ -1,13 +1,15 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.CREATED_HOURS;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.DAY;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.FROM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.FROM_DATE;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.CREATED_HOURS;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.INSTRUCTOR_ID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.OFFICE_HOUR;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.TO;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.GenerateOfficeHoursIqFields.TO_DATE;
+import static hu.unideb.smartcampus.shared.iq.util.IqProviderUtil.parseInt;
+import static hu.unideb.smartcampus.shared.iq.util.IqProviderUtil.parseLong;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class GenerateOfficeHoursIqProvider
           if (tagname.equalsIgnoreCase(OFFICE_HOUR)) {
             officeHours.add(officeHour);
           } else if (tagname.equalsIgnoreCase(INSTRUCTOR_ID)) {
-            instructorId = Long.valueOf(text);
+            instructorId = parseLong(text);
           } else if (tagname.equalsIgnoreCase(DAY)) {
             officeHour.setDay(DayOfWeek.valueOf(text));
           } else if (tagname.equalsIgnoreCase(TO)) {
@@ -62,11 +64,11 @@ public class GenerateOfficeHoursIqProvider
           } else if (tagname.equalsIgnoreCase(FROM)) {
             officeHour.setFrom(text);
           } else if (tagname.equalsIgnoreCase(FROM_DATE)) {
-            intervall.setFromDate(Long.valueOf(text));
+            intervall.setFromDate(parseLong(text));
           } else if (tagname.equalsIgnoreCase(TO_DATE)) {
-            intervall.setToDate(Long.valueOf(text));
+            intervall.setToDate(parseLong(text));
           } else if (tagname.equalsIgnoreCase(CREATED_HOURS)) {
-            createdHours = Integer.valueOf(text);
+            createdHours = parseInt(text);
           } else if (tagname.equals(GenerateOfficeHoursIqRequest.ELEMENT)) {
             done = true;
           }
