@@ -48,50 +48,93 @@ values (1, 'Friday 14-16',PARSEDATETIME('10-03-2017 14:00:00.000', 'dd-MM-yyyy h
 insert into consulting_date (id, date, START_DATE, END_DATE)
 values (2, 'Monday 08-10',PARSEDATETIME('06-03-2017 08:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'),PARSEDATETIME('06-03-2017 10:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'));
 
+insert into consulting_date (id, date, START_DATE, END_DATE)
+values (3, 'Monday 10-12',PARSEDATETIME('10-04-2017 08:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'),PARSEDATETIME('10-04-2017 10:00:00.000', 'dd-MM-yyyy hh:mm:ss.SS'));
+
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (1, 1);
 
 insert into instructor_consulting_dates (instructor_id,consulting_date_id)
 values (1, 2);
 
+insert into instructor_consulting_dates (instructor_id,consulting_date_id)
+values (2, 3);
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (1,4,1,'Mert teszt - 1','10 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (2,5,1,'Mert teszt - 2','5 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (3,6,1,'Mert teszt - 3','17 perc');
+
+insert into user_consulting_date(id,user_id,consulting_date_id,reason,duration)
+values (4,4,3,'Mert mennék TDK-t beszélni.','30 perc');
+
 -- subjects
 
-insert into subject_details(subject_name,subject_type) values ('AI', 'LABORATORY');
+insert into subject_details(subject_name,subject_type, start_period, end_period) values ('AI', 'LABORATORY', DATE '2017-02-01', DATE '2017-05-31');
 
-insert into subject_details(subject_name, subject_type) values ('Mesterséges intelligencia alapjai', 'LABORATORY');
+insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
-insert into subject_details(subject_name, subject_type) values ('Hálózati architektúrák és protokollok', 'LECTURE');
+insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
-insert into subject_details(subject_name, subject_type) values ('Az internet eszközei és szolgáltatásai', 'LECTURE');
+insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
 ---------------------------------------------------------------------------------
 
 --instructor to subject
-insert into instructor_subject_details(instructor_id,subject_name, subject_type)
-values (1, 'AI', 'LABORATORY');
+insert into instructor_subject_details(instructor_id,subject_name, subject_type, start_period, end_period)
+values (1, 'AI', 'LABORATORY',DATE '2017-02-01', DATE '2017-05-31');
 
-insert into instructor_subject_details(instructor_id,subject_name, subject_type)
-values (2, 'Hálózati architektúrák és protokollok', 'LECTURE');
+insert into instructor_subject_details(instructor_id,subject_name, subject_type, start_period, end_period)
+values (2, 'Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
-insert into instructor_subject_details(instructor_id,subject_name, subject_type)
-values (3, 'Hálózati architektúrák és protokollok', 'LECTURE');
+insert into instructor_subject_details(instructor_id,subject_name, subject_type, start_period, end_period)
+values (3, 'Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE'2000-05-31');
 
-insert into instructor_subject_details(instructor_id,subject_name, subject_type)
-values (4, 'Hálózati architektúrák és protokollok', 'LECTURE');
+insert into instructor_subject_details(instructor_id,subject_name, subject_type, start_period, end_period)
+values (4, 'Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE'2000-05-31');
 
-insert into instructor_subject_details(instructor_id,subject_name, subject_type)
-values (5, 'Az internet eszközei és szolgáltatásai', 'LECTURE');
+insert into instructor_subject_details(instructor_id,subject_name, subject_type, start_period, end_period)
+values (5, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01', DATE'2000-05-31');
 --------------------------------------------------------
 
 -- User actual subjects
-insert into user_subject_details_relation(user_id,subject_name, subject_type)
-values (1, 'AI', 'LABORATORY');
+insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
+values (1, 'AI', 'LABORATORY', DATE '2017-02-01', DATE '2017-05-31');
 
-insert into user_subject_details_relation(user_id,subject_name, subject_type)
-values (2, 'Mesterséges intelligencia alapjai', 'LABORATORY');
+insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
+values (2, 'Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE'2000-05-31');
 
-insert into user_subject_details_relation(user_id,subject_name, subject_type)
-values (2, 'Hálózati architektúrák és protokollok', 'LECTURE');
+insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
+values (2, 'Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
-insert into user_subject_details_relation(user_id,subject_name, subject_type)
-values (2, 'Az internet eszközei és szolgáltatásai', 'LECTURE');
+insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
+values (2, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01',DATE'2000-05-31');
+
+-- User custom events
+insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
+values (1,'GUID','Test event','Test event description', 'Test place',DATE '2000-02-01', DATE'2000-05-31','Repeat every day', 'Reminder');
+
+insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
+values (2,'GUID-TO-DELETE','Test event','Test event description', 'Test place',DATE '2000-02-01', DATE'2000-05-31','Repeat every day', 'Reminder');
+
+insert into user_custom_events(user_id,custom_event_id)
+values (1,1);
+
+insert into user_single_chat(user_entity_id,single_chat_list)
+values(1,'1234@asd.com');
+
+insert into user_single_chat(user_entity_id,single_chat_list)
+values(1,'1234@asd2323.com');
+
+insert into user_muc_chat(user_entity_id,muc_chat_list)
+values(1,'1234234234234234234@asd.com');
+
+insert into user_muc_chat(user_entity_id,muc_chat_list)
+values(1,'1234234234@asd2323.com');
+
+insert into user_muc_chat(user_entity_id,muc_chat_list)
+values(1,'13434234234234@asd2323.com');

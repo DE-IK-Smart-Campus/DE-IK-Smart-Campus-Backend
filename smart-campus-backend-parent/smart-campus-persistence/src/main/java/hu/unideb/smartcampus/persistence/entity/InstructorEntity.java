@@ -5,6 +5,7 @@ import static hu.unideb.smartcampus.shared.table.ColumnName.InstructorColumnName
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_INSTRUCTOR;
 
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,7 +47,7 @@ public class InstructorEntity extends BaseEntity<Long> {
    */
   @NotNull
   @Size(min = 2, max = 128)
-  @Column(name = COLUMN_NAME_NAME)
+  @Column(name = COLUMN_NAME_NAME, unique = true)
   private String name;
 
   /**
@@ -63,7 +65,9 @@ public class InstructorEntity extends BaseEntity<Long> {
   @JoinTable(name = "instructor_subject_details", joinColumns = @JoinColumn(name = "instructor_id", referencedColumnName = "id"),
       inverseJoinColumns = {
           @JoinColumn(name = "subject_type", referencedColumnName = "subject_type"),
-          @JoinColumn(name = "subject_name", referencedColumnName = "subject_name")
+          @JoinColumn(name = "subject_name", referencedColumnName = "subject_name"),
+          @JoinColumn(name = "start_period", referencedColumnName = "start_period"),
+          @JoinColumn(name = "end_period", referencedColumnName = "end_period")
       })
   private Set<SubjectDetailsEntity> subjects;
 

@@ -1,21 +1,22 @@
 package hu.unideb.smartcampus.web.controller.dashboard;
 
-import java.util.Arrays;
-
-import org.jivesoftware.smack.chat.ChatManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
-import hu.unideb.smartcampus.shared.wrapper.SubjectRetrievalResponseWrapper;
-import hu.unideb.smartcampus.shared.wrapper.inner.InstructorWrapper;
-import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
-import hu.unideb.smartcampus.web.listener.ConsultingHoursChatManagerListener;
+import java.security.Principal;
+import java.util.List;
+import hu.unideb.smartcampus.domain.ConsultingDate;
+import hu.unideb.smartcampus.domain.Instructor;
+import hu.unideb.smartcampus.domain.Subject;
+import hu.unideb.smartcampus.service.api.ConsultingHoursService;
 
 /**
  * TODO.
@@ -27,93 +28,115 @@ public class ConsultingHoursController {
   private static final Logger LOGGER = LoggerFactory.getLogger(ConsultingHoursController.class);
 
   @Autowired
-  private EjabberdUser user;
-
-  private ChatManager chatManager;
-
-  private SubjectRetrievalResponseWrapper result;
+  private ConsultingHoursService consultingHoursService;
 
   /**
    * TODO.
    */
   private static final String CONSULTING_HOURS_VIEW = "dashboard/consulting-hours";
+  /**
+   * TODO.
+   */
+  private static final String CONSULTING_HOURS_INSTRUCTOR_VIEW = "dashboard/consulting-hours/instructor";
+  /**
+   * TODO.
+   */
+  private static final String CONSULTING_HOURS_CONSULTING_DATE_SIGN_UP_VIEW = "dashboard/consulting-hours/consulting-date-sign-up";
 
   /**
    * TODO.
    */
-  private static final String SUBJECT_RETRIEVAL_RESPONSE_MODEL_OBJECT_NAME = "subjectRetrievalResponse";
+  private static final String REDIRECT_URL_TO_CONSULTING_HOURS_PATH = "redirect:/dashboard/consulting-hours";
 
   /**
    * TODO.
-   * @return asd
+   */
+  private static final String CURRENT_USERNAME_MODEL_OBJECT_NAME = "currentUsername";
+  /**
+   * TODO.
+   */
+  private static final String SUBJECT_LIST_MODEL_OBJECT_NAME = "subjectList";
+  /**
+   * TODO.
+   */
+  private static final String INSTRUCTOR_MODEL_OBJECT_NAME = "instructor";
+  /**
+   * TODO.
+   */
+  private static final String INSTRUCTOR_NAME_MODEL_OBJECT_NAME = "instructorName";
+  /**
+   * TODO.
+   */
+  private static final String CONSULTING_DATE_MODEL_OBJECT_NAME = "consultingDate";
+
+  /**
+   * TODO.
+   * @return model and view.
    */
   @GetMapping
-  public ModelAndView loadConsultingHoursView() {
-    chatManager = ChatManager.getInstanceFor(user.getConnection());
-    chatManager.addChatListener(new ConsultingHoursChatManagerListener(result));
+  public ModelAndView loadConsultingHoursView(final Principal principal) {
     final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_VIEW);
-    Integer i = 0;
-    while (result == null && i < 60) {
-      LOGGER.info("Result still null.");
-      try {
-        Thread.sleep(1000);
-        i++;
-      } catch (InterruptedException e) {
-        LOGGER.error("Error on thread sleep.",e);
-      }
-    }
-    LOGGER.info("Result {}.",result);
-    modelAndView.addObject(SUBJECT_RETRIEVAL_RESPONSE_MODEL_OBJECT_NAME, result);
+    final String name = principal.getName();
+    modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
+
+    final List<Subject> subjects = consultingHoursService.getSubjects();
+    modelAndView.addObject(SUBJECT_LIST_MODEL_OBJECT_NAME, subjects);
+
     return modelAndView;
   }
 
   /**
    * TODO.
-   * @return asd
+   * @return model and view.
    */
-  public SubjectRetrievalResponseWrapper mockSubjectRetrievalResponseWrapper() {
-    return new SubjectRetrievalResponseWrapper(
-        "AskSubjectsProcessMessageResponse",
-        Arrays.asList(
-            new SubjectWrapper(
-                "Hálózati architektúrák és protokollok",
-                Arrays.asList(
-                    new InstructorWrapper(
-                        1L,
-                        "Dr. Gál Zoltán"
-                    ),
-                    new InstructorWrapper(
-                        2L,
-                        "Dr. Szilágyi Szabolcs"
-                    ),
-                    new InstructorWrapper(
-                        3L,
-                        "Vas Ádám"
-                    )
-                )
-            ),
-            new SubjectWrapper(
-                "Az internet eszközei és szolgáltatásai",
-                Arrays.asList(
-                    new InstructorWrapper(
-                        4L,
-                        "Dr. Jeszenszky Péter"
-                    )
-                )
-            ),
-            new SubjectWrapper(
-                "A mesterséges intelligencia alapjai",
-                Arrays.asList(
-                    new InstructorWrapper(
-                        5L,
-                        "Dr. Várterész Magdolna"
-                    ),
-                    new InstructorWrapper(
-                        6L,
-                        "Dr. Horváth Géza"
-                    )
-                )
-            )
-        ));
+  @GetMapping("/instructor/{instructorId}")
+  public ModelAndView loadInstructorView(final Principal principal, @PathVariable final Long instructorId) {
+    final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_INSTRUCTOR_VIEW);
+    final String name = principal.getName();
+    modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
+
+    final Instructor instructor = consultingHoursService.getInstructorByInstructorId(instructorId);
+    modelAndView.addObject(INSTRUCTOR_MODEL_OBJECT_NAME, instructor);
+
+    return modelAndView;
+  }
+
+  /**
+   * TODO.
+   * @return model and view.
+   */
+  @GetMapping("/instructor/{instructorId}/consulting-date/{consultingDateId}")
+  public ModelAndView loadConsultingDateSignUpView(
+      final Principal principal,
+      @PathVariable final Long instructorId,
+      @PathVariable final Long consultingDateId
+  ) {
+    final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_CONSULTING_DATE_SIGN_UP_VIEW);
+    final String name = principal.getName();
+    modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
+
+    final Instructor instructor = consultingHoursService.getInstructorByInstructorId(instructorId);
+    modelAndView.addObject(INSTRUCTOR_NAME_MODEL_OBJECT_NAME, instructor.getName());
+
+    final ConsultingDate consultingDate = instructor.getConsultingDates().stream()
+        .filter(date -> date.getId().equals(consultingDateId))
+        .findFirst()
+        .orElse(null);
+    modelAndView.addObject(CONSULTING_DATE_MODEL_OBJECT_NAME, consultingDate);
+
+    return modelAndView;
+  }
+
+  /**
+   * TODO.
+   */
+  @PostMapping("/{consultingHourId}")
+  public String signUpForConsultingDate(
+      @PathVariable final Long consultingHourId,
+      @RequestParam final Long duration,
+      @RequestParam final String reason
+  ) {
+    consultingHoursService.signUpForConsultingDate(consultingHourId, duration, reason);
+    return REDIRECT_URL_TO_CONSULTING_HOURS_PATH;
   }
 }

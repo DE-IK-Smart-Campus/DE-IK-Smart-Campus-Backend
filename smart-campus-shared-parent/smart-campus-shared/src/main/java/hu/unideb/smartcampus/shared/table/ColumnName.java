@@ -19,6 +19,11 @@ public class ColumnName {
      * Username column.
      */
     public static final String COLUMN_NAME_USERNAME = "username";
+    
+    /**
+     * Fullname column.
+     */
+    public static final String COLUMN_NAME_FULLNAME = "fullname";
 
     /**
      * Password column.

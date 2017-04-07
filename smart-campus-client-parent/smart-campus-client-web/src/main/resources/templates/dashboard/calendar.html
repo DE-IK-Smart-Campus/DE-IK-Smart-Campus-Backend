@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>SmartCampus</title>
-  <meta charset="utf-8"/>
-  <meta name="description" content=""/>
-  <meta name="viewport" content="width=device-width"/>
-  <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
+  <title th:text="#{calendar.title}"></title>
+  <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
+  <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
+  <thymeleaf th:replace="fragments/head-frag :: calendar-head-frag"/>
 </head>
 <body>
 <div class="dashboard-page">
@@ -17,20 +16,18 @@
         TODO fix show sidebar button
         <show-sidebar-button></show-sidebar-button>
         -->
-        <h2>Calendar</h2>
+        <h2 th:text="#{calendar.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <h1>Calendar</h1>
-            <p>Nulla facilisi. Nunc et elit vel magna tempus faucibus. Donec in commodo ex. Nunc venenatis aliquam lacinia. Sed id magna a arcu
-               fermentum
-               vehicula ac at odio. Nam est lacus, pretium quis commodo in, blandit ac sapien. Praesent pulvinar mauris a mauris ornare posuere. Proin
-               sodales aliquet erat eu imperdiet. Maecenas sed neque venenatis est aliquam pharetra. Nullam dictum urna at ipsum sagittis vulputate.
-               Maecenas rhoncus gravida scelerisque. Quisque sed pellentesque enim, ac finibus augue.</p>
+            <div class="col-md-8">
+              <div id="calendar"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript" th:src="@{/js/calendar.js}"></script>
 </body>
 </html>

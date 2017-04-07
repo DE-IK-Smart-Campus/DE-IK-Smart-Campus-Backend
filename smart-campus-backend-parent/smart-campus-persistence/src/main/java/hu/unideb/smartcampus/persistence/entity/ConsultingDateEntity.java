@@ -47,7 +47,7 @@ public class ConsultingDateEntity extends BaseEntity<Long> {
    */
   @Column(columnDefinition = "Decimal(10,2) default '0'")
   private Integer sum;
-
+  
   /**
    * Constructs consulting date.
    */

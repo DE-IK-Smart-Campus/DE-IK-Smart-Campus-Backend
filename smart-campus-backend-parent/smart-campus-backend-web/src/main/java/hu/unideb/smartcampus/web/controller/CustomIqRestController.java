@@ -1,8 +1,6 @@
 package hu.unideb.smartcampus.web.controller;
 
 
-import java.util.List;
-
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.StanzaCollector;
@@ -17,9 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import hu.unideb.smartcampus.service.api.xmpp.DefaultUser;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.iq.request.InstructorConsultingDatesIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.SignUpForConsultingDateIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.SubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.ConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
@@ -67,7 +67,8 @@ public class CustomIqRestController {
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/subjects")
-  public ResponseEntity<List<SubjectIqElement>> sendSubjectRetrieval(@RequestParam(name = "user") String user) {
+  public ResponseEntity<List<SubjectIqElement>> sendSubjectRetrieval(
+      @RequestParam(name = "user") String user) {
     SubjectsIqRequest resultIq = null;
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
@@ -91,7 +92,8 @@ public class CustomIqRestController {
    * @return {@link ResponseEntity}
    */
   @GetMapping(path = "/consulting")
-  public ResponseEntity<List<ConsultingDateIqElement>> getInstrcutorConsultingDate(@RequestParam(name = "id") String id) {
+  public ResponseEntity<List<ConsultingDateIqElement>> getInstructorConsultingDate(
+      @RequestParam(name = "id") String id) {
     List<ConsultingDateIqElement> result = null;
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
@@ -109,6 +111,36 @@ public class CustomIqRestController {
     }
     return ResponseEntity.ok().body(result);
   }
+
+  /**
+   * Sample endpoint.
+   * 
+   * @return {@link ResponseEntity}
+   */
+  @GetMapping(path = "/signUp")
+  public ResponseEntity<String> signUpForConsultingDate(@RequestParam(name = "id") String id,
+      @RequestParam(name = "userId") String userId) {
+    SignUpForConsultingDateIqRequest result = null;
+    try {
+      AbstractXMPPConnection connection = ejabberdUser.getConnection();
+      SignUpForConsultingDateIqRequest iq = new SignUpForConsultingDateIqRequest();
+      iq.setType(Type.set);
+      iq.setFrom(connection.getUser());
+      iq.setTo(JidCreate.from(SMARTCAMPUS_SMARTCAMPUS_SMARTCAMPUS));
+      iq.setConsultingHourId(Long.valueOf(id));
+      iq.setDuration("10 minutes");
+      iq.setUserId(userId);
+      iq.setReason("Cause I wanna talk man.");
+      StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
+      SignUpForConsultingDateIqRequest resultIq = collector.nextResultBlockForever();
+      result = resultIq;
+    } catch (NotConnectedException | InterruptedException | XmppStringprepException e) {
+      LOGGER.error("Error while sending IQ", e);
+      ResponseEntity.badRequest().body(e.getCause().getMessage());
+    }
+    return ResponseEntity.ok().body(result.getResponseMessage());
+  }
+
 
   /**
    * Sample endpoint.

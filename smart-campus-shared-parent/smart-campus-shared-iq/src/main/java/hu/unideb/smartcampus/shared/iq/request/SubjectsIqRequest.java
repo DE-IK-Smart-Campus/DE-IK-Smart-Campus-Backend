@@ -1,29 +1,28 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTOR;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTORID;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.INSTRUCTORS;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.NAME;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.STUDENT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.SUBJECT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.SubjectIqRequestFields.SUBJECTS;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.SubjectIqElement;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Subject Iq.
+ * Subject IQ request.
  */
 @Getter
 @Setter
-@EqualsAndHashCode
-@XmlRootElement(name = SubjectsIqRequest.ELEMENT, namespace = BaseSmartCampusIq.BASE_NAMESPACE)
-@XmlAccessorType(XmlAccessType.NONE)
-public class SubjectsIqRequest extends BaseSmartCampusIq {
+public class SubjectsIqRequest extends BaseSmartCampusIqRequest {
 
   /**
    * Element.
@@ -31,20 +30,17 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
   public static final String ELEMENT = "askSubjects";
 
   /**
-   * User.
+   * Student's username.
    */
-  @XmlElement
   private String student;
 
   /**
-   * Things to good to have.
+   * Student's subjects.
    */
-  @XmlElementWrapper
-  @XmlElement(name = "subject")
   private List<SubjectIqElement> subjects;
 
   /**
-   * Def contrcutros.
+   * Default constructor.
    */
   public SubjectsIqRequest() {
     super(ELEMENT);
@@ -61,24 +57,43 @@ public class SubjectsIqRequest extends BaseSmartCampusIq {
     this.subjects = subjects;
   }
 
+  protected String toXml() {
+    StringBuilder builder = new StringBuilder();
+    buildIq(builder);
+    return builder.toString();
+  }
+
+  private void buildIq(StringBuilder builder) {
+    builder.append(tag(STUDENT, student));
+    buildSubjects(builder);
+  }
+
+  private void buildSubjects(StringBuilder builder) {
+    if (subjects != null || !subjects.isEmpty()) {
+      builder.append(openTag(SUBJECTS));
+      for (SubjectIqElement subjectIqElement : subjects) {
+        builder.append(openTag(SUBJECT));
+        builder.append(tag(NAME, subjectIqElement.getSubjectName()));
+        builder.append(openTag(INSTRUCTORS));
+        buildInstructors(builder, subjectIqElement);
+        builder.append(closeTag(INSTRUCTORS));
+        builder.append(closeTag(SUBJECT));
+      }
+      builder.append(closeTag(SUBJECTS));
+    }
+  }
+
+  private void buildInstructors(StringBuilder builder, SubjectIqElement subjectIqElement) {
+    for (InstructorIqElement instructor : subjectIqElement.getInstructors()) {
+      builder.append(openTag(INSTRUCTOR));
+      builder.append(tag(INSTRUCTORID, instructor.getInstructorId()));
+      builder.append(tag(NAME, instructor.getName()));
+      builder.append(closeTag(INSTRUCTOR));
+    }
+  }
+
   @Override
-  protected String getElement() {
+  public String getElement() {
     return ELEMENT;
   }
-
-  @Override
-  protected BaseSmartCampusIq getInstance() {
-    return this;
-  }
-
-  @Override
-  protected Class<? extends BaseSmartCampusIq> getIqClass() {
-    return this.getClass();
-  }
-
-  public String toXml() {
-    return "SubjectsIqRequest [student=" + student + ", subjects=" + subjects + "]";
-  }
-
-
 }

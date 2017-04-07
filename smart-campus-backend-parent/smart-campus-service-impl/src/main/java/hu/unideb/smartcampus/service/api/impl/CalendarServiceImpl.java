@@ -1,19 +1,20 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import com.google.common.collect.Lists;
 
-import org.apache.http.HttpResponse;
+import net.fortuna.ical4j.data.CalendarBuilder;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.component.VEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import hu.unideb.smartcampus.service.api.CalendarEventType;
 import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.service.api.UnparsableCalendarEventSummaryException;
@@ -25,9 +26,6 @@ import hu.unideb.smartcampus.service.api.calendar.parser.CalendarSubjectDetailsP
 import hu.unideb.smartcampus.shared.exception.InputParseException;
 import hu.unideb.smartcampus.webservice.api.factory.HttpRequestType;
 import hu.unideb.smartcampus.webservice.api.provider.HttpResponseProvider;
-import net.fortuna.ical4j.data.CalendarBuilder;
-import net.fortuna.ical4j.data.ParserException;
-import net.fortuna.ical4j.model.component.VEvent;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {
@@ -45,15 +43,8 @@ public class CalendarServiceImpl implements CalendarService {
 
   @Override
   public List<SubjectEvent> downloadCalendar(String urlToParse) throws InputParseException {
-
-    HttpResponse httpResponse;
-    try {
-      httpResponse = httpResponseProvider.sendHttpRequest(urlToParse, HttpRequestType.HTTP_REQUEST_GET);
-    } catch (final IOException e) {
-      throw new InputParseException(e);
-    }
     final LinkedList<SubjectEvent> subjectEvents = Lists.newLinkedList();
-    try (final InputStream is = httpResponse.getEntity().getContent()) {
+    try (final InputStream is = httpResponseProvider.sendHttpRequest(urlToParse, HttpRequestType.HTTP_REQUEST_GET).getEntity().getContent()) {
       for (Object prop : new CalendarBuilder().build(is).getComponents()) {
           final VEvent event = (VEvent) prop;
           try {

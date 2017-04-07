@@ -31,4 +31,9 @@ public interface EjabberdUser {
    */
   AbstractXMPPConnection getConnection();
 
+  /**
+   * Reauthenticates the logged in user by principal.
+   */
+  void reauthenticate() throws XmppException;
+
 }

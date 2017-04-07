@@ -4082,11 +4082,6 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
     padding: 10px 15px
 }
 
-.nav > li > a:hover, .nav > li > a:focus {
-    text-decoration: none;
-    background-color: #eee
-}
-
 .nav > li.disabled > a {
     color: #777
 }
@@ -6878,7 +6873,7 @@ button.close {
     right: 0;
     bottom: 0;
     overflow: auto;
-    background: #3ca2e0;
+    background: linear-gradient(135deg, rgba(59, 103, 158, 1) 0%, rgba(43, 136, 217, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%);
     text-align: center;
     color: #fff;
     padding: 3em
@@ -6951,13 +6946,9 @@ button.close {
         padding: 0 20px 20px;
         overflow-x: hidden;
         overflow-y: auto;
-        background-color: #3ca2e0;
+        background: linear-gradient(135deg, rgba(59, 103, 158, 1) 0%, rgba(43, 136, 217, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%);
         border-right: 1px solid #eee
     }
-}
-
-.dashboard-page .nav > li > a:hover, .dashboard-page .nav > li > a:focus {
-    background: #2698dd
 }
 
 .dashboard-page .nav-sidebar {
@@ -6968,11 +6959,6 @@ button.close {
     color: #fff;
     padding-right: 20px;
     padding-left: 20px
-}
-
-.dashboard-page .nav-sidebar > .active > a, .dashboard-page .nav-sidebar > .active > a:hover, .dashboard-page .nav-sidebar > .active > a:focus {
-    color: #fff;
-    background-color: #2698dd
 }
 
 .dashboard-page .main {
@@ -7175,4 +7161,102 @@ button.close {
 
 html, body {
     overflow: hidden
+}
+
+/* Grow */
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    transition-duration: 0.3s;
+    transition-property: transform;
+}
+
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    transform: scale(1.1);
+}
+
+/* Sweep To Right */
+.hvr-sweep-to-right {
+    display: inline-block;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    position: relative;
+    transition-property: color;
+    transition-duration: 0.3s;
+}
+
+.hvr-sweep-to-right:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, .8);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+}
+
+.hvr-sweep-to-right:hover {
+    color: #243085 !important;
+}
+
+.hvr-sweep-to-right:hover:before {
+    transform: scaleX(1);
+}
+
+/* Fade */
+.hvr-fade {
+    display: inline-block;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    overflow: hidden;
+    transition-duration: 0.3s;
+    transition-property: color, background-color;
+}
+
+.hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+    background: #fff;
+    color: #243085 !important;
+}
+
+.error-title {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.error-subtitle {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.language-selector {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
+}
+
+.flag {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url('../images/flags.png') no-repeat;
+}
+
+
+.flag.flag-hu {
+    background-position: 0 0;
+}
+
+.flag.flag-us {
+    background-position: -32px 0;
 }

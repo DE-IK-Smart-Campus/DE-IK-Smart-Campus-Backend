@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="#{error.title}"></title>
+  <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
+</head>
+<body>
+<div class="ui-base login-page">
+  <div class="row">
+    <div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
+      <img th:src="@{/images/512x512_logo_white.png}" class="hvr-grow" width="256"/>
+      <div class="form-content">
+        <div class="error-title" th:text="#{error.page_title}"></div>
+        <div class="error-subtitle" th:text="#{error.page_subtitle}"></div>
+        <div th:text="#{error.content}"></div>
+      </div>
+      <div>
+        <div>
+          <a type="submit" class="hvr-fade btn btn-white btn-outline btn-lg btn-rounded" th:href="@{/logout}" th:text="#{error.to_login_button}"></a>
+        </div>
+        <span th:text="#{error.to_or}"></span>
+        <div>
+          <a type="submit" class="hvr-fade btn btn-white btn-outline btn-lg btn-rounded" th:href="@{/dashboard/home}"
+             th:text="#{error.to_home_button}"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/language-selector-frag :: language-selector-frag"/>
+</body>
+</html>

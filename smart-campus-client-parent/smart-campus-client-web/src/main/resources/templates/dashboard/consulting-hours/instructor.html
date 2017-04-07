@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="#{consulting_hours.instructor.title(${instructor.name})}"></title>
+  <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
+  <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
+</head>
+<body>
+<div class="dashboard-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div th:replace="fragments/dashboard-frag :: dashboard-frag"></div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <!--
+        TODO fix show sidebar button
+        <show-sidebar-button></show-sidebar-button>
+        -->
+        <h2 th:text="#{consulting_hours.instructor.page_title}"></h2>
+        <div class="jumbotron">
+          <div class="container">
+            <h1 th:text="${instructor.name}"></h1>
+            <h2 th:text="#{consulting_hours.instructor.available_dates}"></h2>
+            <div th:each="consultingDate : ${instructor.consultingDates}">
+              <!--
+              TODO set proper link + date format
+              -->
+              <a th:href="@{/dashboard/consulting-hours/instructor/__${instructor.id}__/consulting-date/__${consultingDate.id}__}"
+                 th:text="${consultingDate.from} + ' - ' + ${consultingDate.to}"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

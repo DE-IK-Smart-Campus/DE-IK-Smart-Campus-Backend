@@ -39,6 +39,20 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 					<ldap.userpattern></ldap.userpattern>
 					<ldap.groupsearchbase></ldap.groupsearchbase>
 					<ldap.groupfilter></ldap.groupfilter>
+					<backend.host></backend.host>
+					<backend.port></backend.port>
+					<backend.context></backend.context>
+					<mongo.host></mongo.host>
+        			<mongo.port></mongo.port>
+        			<mongo.database></mongo.database>
+					<neptun.grant.type></neptun.grant.type>
+					<neptun.client.id></neptun.client.id>
+					<neptun.client.secret.value></neptun.client.secret.value>
+					<neptun.url></neptun.url>
+					<neptun.token.endpoint></neptun.token.endpoint>
+					<converse.bosh.service.url></converse.bosh.service.url>
+					<converse.credentials.url></converse.credentials.url>
+					<converse.mucdomain></converse.mucdomain>
 			    </properties>
 		    </profile>
 	</profiles>
@@ -81,6 +95,8 @@ Running from the smart-campus-web module:
 With the run goal the server starts and deploys the .war.
 With start goal you can start the server.
 With deploy goal you can deploy the app and etc...
+
+If you want to run it in debug you have to run wildfly with -Pdebug maven profile.
 
 
 Test data:
