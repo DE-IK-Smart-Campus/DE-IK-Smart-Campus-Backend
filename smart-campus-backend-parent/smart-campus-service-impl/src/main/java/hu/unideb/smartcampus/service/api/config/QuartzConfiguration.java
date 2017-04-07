@@ -7,13 +7,30 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
+import hu.unideb.smartcampus.service.api.rss.RssPollerQuartzJob;
 import hu.unideb.smartcampus.service.api.xmpp.XmppLoginJob;
 
 @Configuration
 public class QuartzConfiguration {
 
   @Bean
-  public JobDetailFactoryBean jobDetailFactory() {
+  public JobDetailFactoryBean facebookRssJob() {
+    JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
+    jobDetailFactoryBean.setJobClass(RssPollerQuartzJob.class);
+    jobDetailFactoryBean.setDurability(true);
+    return jobDetailFactoryBean;
+  }
+
+  @Bean
+  public CronTriggerFactoryBean facebookRssTrigger() {
+    CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
+    cronTriggerFactoryBean.setJobDetail(facebookRssJob().getObject());
+    cronTriggerFactoryBean.setCronExpression("0 0/1 * * * ?");
+    return cronTriggerFactoryBean;
+  }
+  
+  @Bean
+  public JobDetailFactoryBean loginJob() {
     JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
     jobDetailFactoryBean.setJobClass(XmppLoginJob.class);
     jobDetailFactoryBean.setDurability(true);
@@ -21,9 +38,9 @@ public class QuartzConfiguration {
   }
 
   @Bean
-  public CronTriggerFactoryBean cronTriggerFactoryBean() {
+  public CronTriggerFactoryBean loginTrigger() {
     CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-    cronTriggerFactoryBean.setJobDetail(jobDetailFactory().getObject());
+    cronTriggerFactoryBean.setJobDetail(loginJob().getObject());
     cronTriggerFactoryBean.setCronExpression("0 0/1 * * * ?");
     return cronTriggerFactoryBean;
   }
@@ -32,8 +49,8 @@ public class QuartzConfiguration {
   public SchedulerFactoryBean schedulerFactoryBean() {
     SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
     schedulerFactoryBean.setJobFactory(springBeanJobFactory());
-    schedulerFactoryBean.setTriggers(cronTriggerFactoryBean().getObject());
-    schedulerFactoryBean.setJobDetails(jobDetailFactory().getObject());
+    schedulerFactoryBean.setTriggers(loginTrigger().getObject(),facebookRssTrigger().getObject());
+    schedulerFactoryBean.setJobDetails(loginJob().getObject(),facebookRssJob().getObject());
     
     return schedulerFactoryBean;
   }

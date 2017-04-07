@@ -426,6 +426,10 @@
                     value="@mongo.port@" />
                 <simple name="java:comp/env/spring.data.mongodb.database"
                     value="@mongo.database@" />
+                <simple name="java:global/facebook.clientsecretid"
+                    value="@facebook.clientsecretid@" />
+                <simple name="java:global/facebook.clientid"
+                    value="@facebook.clientid@" />
             </bindings>
             <remote-naming />
         </subsystem>
