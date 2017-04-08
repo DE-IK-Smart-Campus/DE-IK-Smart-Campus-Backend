@@ -29,6 +29,11 @@ public class ColumnName {
      * Password column.
      */
     public static final String COLUMN_NAME_PASSWORD = "password";
+    
+    /**
+     * Neptun identifier column.
+     */
+    public static final String COLUMN_NAME_NEPTUN_IDENTIFIER = "neptunIdentifier";
 
     /**
      * Role column.
@@ -51,6 +56,11 @@ public class ColumnName {
      * Room column.
      */
     public static final String COLUMN_NAME_ROOM = "room";
+    
+    /**
+     * Neptun identifier column.
+     */
+    public static final String COLUMN_NAME_NEPTUN_IDENTIFIER = "neptunIdentifier";
 
   }
 

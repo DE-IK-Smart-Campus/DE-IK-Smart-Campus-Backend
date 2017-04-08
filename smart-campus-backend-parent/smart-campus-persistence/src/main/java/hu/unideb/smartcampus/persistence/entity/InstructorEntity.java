@@ -1,11 +1,13 @@
 package hu.unideb.smartcampus.persistence.entity;
 
 import static hu.unideb.smartcampus.shared.table.ColumnName.InstructorColumnName.COLUMN_NAME_NAME;
+import static hu.unideb.smartcampus.shared.table.ColumnName.InstructorColumnName.COLUMN_NAME_NEPTUN_IDENTIFIER;
 import static hu.unideb.smartcampus.shared.table.ColumnName.InstructorColumnName.COLUMN_NAME_ROOM;
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_INSTRUCTOR;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,8 +49,16 @@ public class InstructorEntity extends BaseEntity<Long> {
    */
   @NotNull
   @Size(min = 2, max = 128)
-  @Column(name = COLUMN_NAME_NAME, unique = true)
+  @Column(name = COLUMN_NAME_NAME)
   private String name;
+
+  /**
+   * Neptun identifier of the user.
+   */
+  @NotNull
+  @Size(min = 1, max = 8)
+  @Column(name = COLUMN_NAME_NEPTUN_IDENTIFIER, unique = true)
+  private String neptunIdentifier;
 
   /**
    * Instructor's consulting hours.
@@ -61,8 +71,9 @@ public class InstructorEntity extends BaseEntity<Long> {
   /**
    * Subjects of the instructor.
    */
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "instructor_subject_details", joinColumns = @JoinColumn(name = "instructor_id", referencedColumnName = "id"),
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @JoinTable(name = "instructor_subject_details",
+      joinColumns = @JoinColumn(name = "instructor_id", referencedColumnName = "id"),
       inverseJoinColumns = {
           @JoinColumn(name = "subject_type", referencedColumnName = "subject_type"),
           @JoinColumn(name = "subject_name", referencedColumnName = "subject_name"),
@@ -84,12 +95,13 @@ public class InstructorEntity extends BaseEntity<Long> {
   @Builder
   public InstructorEntity(final Long id, final String name,
       final Set<ConsultingDateEntity> consultingDates, final Set<SubjectDetailsEntity> subjects,
-      final String room) {
+      final String room, final String neptunIdentifier) {
     super(id);
     this.name = name;
     this.consultingDates = consultingDates;
     this.subjects = subjects;
     this.room = room;
+    this.neptunIdentifier = neptunIdentifier;
   }
 
 

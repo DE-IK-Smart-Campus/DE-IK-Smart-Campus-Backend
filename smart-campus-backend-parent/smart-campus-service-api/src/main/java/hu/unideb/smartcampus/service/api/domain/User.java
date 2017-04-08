@@ -23,10 +23,22 @@ public class User extends BaseObject<Long> {
    * The username of the user.
    */
   private final String username;
+
   /**
    * The password of the user.
    */
   private final String password;
+
+  /**
+   * The name of the user.
+   */
+  private final String fullName;
+
+  /**
+   * Neptun identifier of the user.
+   */
+  private final String neptunIdentifier;
+
   /**
    * The role of the user.
    */
@@ -39,17 +51,22 @@ public class User extends BaseObject<Long> {
 
   /**
    * Builder pattern for creating user.
+   * 
    * @param id the id of the user
    * @param username the username of the user
    * @param password the password of the user
    * @param role the role of the user
    */
   @Builder
-  public User(final Long id, final String username, final String password, final Role role, final List<SubjectDetails> subjectDetailsList) {
+  public User(final Long id, final String username, final String password, final Role role,
+      final List<SubjectDetails> subjectDetailsList, final String fullName,
+      final String neptunIdentifier) {
     super(id);
     this.username = username;
     this.password = password;
     this.role = role;
     this.subjectDetailsList = subjectDetailsList;
+    this.fullName = fullName;
+    this.neptunIdentifier = neptunIdentifier;
   }
 }

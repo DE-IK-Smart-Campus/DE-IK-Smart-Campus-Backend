@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.slf4j.Logger;
@@ -34,12 +33,12 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
    * {@inheritDoc}.
    */
   @Override
-  public String getNeptunInfoByUid(String uid) throws IOException {
+  public NeptunInfo getNeptunInfoByUid(String uid) throws IOException {
     LOGGER.info("Requesting Neptun info for {}", uid);
     Client client = createClient();
     WebTarget target = client.target(getUrl("/neptunInfo/uid/", uid));
-    Response response = target.request().get();
-    return response.readEntity(String.class);
+    NeptunInfo neptunInfo = target.request().get(NeptunInfo.class);
+    return neptunInfo;
   }
 
 
@@ -52,26 +51,26 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
    * {@inheritDoc}.
    */
   @Override
-  public String getNeptunInfoByNeptunIdentifier(String neptunIdentifier) throws IOException {
+  public NeptunInfo getNeptunInfoByNeptunIdentifier(String neptunIdentifier) throws IOException {
     LOGGER.info("Requesting Neptun info by identifier: {}", neptunIdentifier);
     Client client = createClient();
     WebTarget target =
         client.target(getUrl("/neptunInfo/neptunIdentifier/", neptunIdentifier));
-    Response response = target.request().get();
-    return response.readEntity(String.class);
+    NeptunInfo neptunInfo = target.request().get(NeptunInfo.class);
+    return neptunInfo;
   }
 
   /**
    * {@inheritDoc}.
    */
   @Override
-  public String getStudentTimetable(String neptunIdentifier) throws IOException {
+  public StudentTimeTable getStudentTimetable(String neptunIdentifier) throws IOException {
     LOGGER.info("Requesting student time table by identifier {}", neptunIdentifier);
     Client client = createClient();
     WebTarget target =
         client.target(getUrl("/studentTimetable/neptunIdentifier/", neptunIdentifier));
-    Response response = target.request().get();
-    return response.readEntity(String.class);
+    StudentTimeTable studentTimeTable = target.request().get(StudentTimeTable.class);
+    return studentTimeTable;
   }
 
   private String getToken() throws IOException {

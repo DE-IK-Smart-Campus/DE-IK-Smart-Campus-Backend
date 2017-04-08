@@ -1,13 +1,13 @@
 package hu.unideb.smartcampus.service.api.converter.todomain;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
@@ -33,6 +33,8 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
         .id(userEntity.getId())
         .username(userEntity.getUsername())
         .password(userEntity.getPassword())
+        .fullName(userEntity.getFullName())
+        .neptunIdentifier(userEntity.getNeptunIdentifier())
         .role(userEntity.getRole())
         .subjectDetailsList(convertSubjectDetailsSetToSubjectDetailsEntitySet(userEntity.getActualSubjects()))
         .build();

@@ -92,7 +92,8 @@ public class CalendarSubjectsIqRequestHandlerTest {
           .subjectType(SubjectType.LABORATORY)
           .startPeriod(LocalDate.of(2017, 2, 20))
           .endPeriod(LocalDate.of(2017, 5, 26))
-          .teacherNames(TEACHER_NAMES).build();
+//          .teacherNames(TEACHER_NAMES)
+          .build();
 
   /**
    * Appointment list.

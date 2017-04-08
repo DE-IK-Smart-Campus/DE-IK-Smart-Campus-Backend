@@ -2,6 +2,7 @@ package hu.unideb.smartcampus.persistence.entity;
 
 import static hu.unideb.smartcampus.shared.exclusion.FieldExclusion.EXCLUDE_PASSWORD;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_FULLNAME;
+import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_NEPTUN_IDENTIFIER;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_PASSWORD;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_ROLE;
 import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUMN_NAME_USERNAME;
@@ -82,6 +83,14 @@ public class UserEntity extends BaseEntity<Long> {
   private String password;
 
   /**
+   * Neptun identifier of the user.
+   */
+  @NotNull
+  @Size(min = 6, max = 6)
+  @Column(name = COLUMN_NAME_NEPTUN_IDENTIFIER)
+  private String neptunIdentifier;
+
+  /**
    * The role of the user.
    */
   @NotNull
@@ -131,7 +140,7 @@ public class UserEntity extends BaseEntity<Long> {
   @Builder
   public UserEntity(final Long id, final String username, final String password, final Role role,
       final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
-      final List<String> mucChatList, final List<String> singleChatList, final String fullName) {
+      final List<String> mucChatList, final List<String> singleChatList, final String fullName, final String neptunIdentifier) {
     super(id);
     this.username = username;
     this.password = password;
@@ -139,5 +148,6 @@ public class UserEntity extends BaseEntity<Long> {
     this.actualSubjects = actualSubjects;
     this.customEvents = customEvents;
     this.fullName = fullName;
+    this.neptunIdentifier = neptunIdentifier;
   }
 }

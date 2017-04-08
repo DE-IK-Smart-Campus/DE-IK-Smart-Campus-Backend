@@ -1,17 +1,19 @@
 package hu.unideb.smartcampus.web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.service.api.InstructorService;
 import hu.unideb.smartcampus.service.api.SubjectDetailsService;
@@ -22,10 +24,14 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.Instructor;
 import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
+import hu.unideb.smartcampus.webservice.api.neptun.NeptunEndpointService;
+import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 
 
 @RestController
 public class SubjectEventController {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(SubjectEventController.class);
 
   @Autowired
   private SubjectEventService subjectEventService;
@@ -42,15 +48,23 @@ public class SubjectEventController {
   @Autowired
   private CalendarService calendarService;
 
-  @PostMapping(path = "/save/subjectEvents")
-  public ResponseEntity<Void> saveSubjectEvents(@RequestParam(name = "url") final String url, final Principal principal) throws IOException, InputParseException {
-    final List<SubjectEvent> result = calendarService.downloadCalendar(url);
+  @Autowired
+  private NeptunEndpointService neptun;
+
+  @GetMapping(path = "/save/subjectEvents")
+  public ResponseEntity<Void> saveSubjectEvents(
+      @RequestParam(name = "neptunIdentifier") final String neptunIdentifier,
+      @RequestParam(name = "user") final String userName) throws IOException, InputParseException {
+    StudentTimeTable studentTimetable = neptun.getStudentTimetable(neptunIdentifier);
+    final List<SubjectEvent> result = calendarService.downloadStudentTimeTable(studentTimetable);
     subjectEventService.save(result);
 
-    result.forEach(subjectEvent -> this.saveInstructorWithSubjectDetails(subjectEvent.getSubjectDetails()));
+    result.forEach(
+        subjectEvent -> this.saveInstructorWithSubjectDetails(subjectEvent.getSubjectDetails()));
 
-    final User user = userService.getByUsername(principal.getName()).get();
-    user.getSubjectDetailsList().addAll(result.parallelStream().map(subjectEvent -> subjectEvent.getSubjectDetails()).collect(Collectors.toList()));
+    final User user = userService.getByUsername(userName).get();
+    user.getSubjectDetailsList().addAll(result.parallelStream()
+        .map(subjectEvent -> subjectEvent.getSubjectDetails()).collect(Collectors.toList()));
 
     userService.save(user);
     return ResponseEntity.noContent().build();
@@ -74,16 +88,21 @@ public class SubjectEventController {
   }
 
   private void saveInstructorWithSubjectDetails(final SubjectDetails subjectDetails) {
-    subjectDetails.getTeacherNames()
-        .forEach(instructorName -> {
+    subjectDetails.getInstructors().stream().filter(p -> p.getNeptunIdentifier() != null)
+        .forEach(instr -> {
           Instructor instructor;
-          final Optional<Instructor> instructorOptional = this.instructorService.getInstructorByName(instructorName);
+          final Optional<Instructor> instructorOptional =
+              this.instructorService.getInstructorByNeptunIdentifier(instr.getNeptunIdentifier());
           if (instructorOptional.isPresent()) {
-             instructor = instructorOptional.get();
-             instructor.getSubjects().add(subjectDetails);
+            instructor = instructorOptional.get();
+            LOGGER.info("Instructor add {} to subjects:{}", subjectDetails,
+                instructor.getSubjects());
+            instructor.getSubjects().add(subjectDetails);
           } else {
+            LOGGER.info("Creating new instructor with name:{}", instr.getName());
             instructor = Instructor.builder()
-                .name(instructorName)
+                .name(instr.getName())
+                .neptunIdentifier(instr.getNeptunIdentifier())
                 .build();
           }
           this.instructorService.saveInstructor(instructor);

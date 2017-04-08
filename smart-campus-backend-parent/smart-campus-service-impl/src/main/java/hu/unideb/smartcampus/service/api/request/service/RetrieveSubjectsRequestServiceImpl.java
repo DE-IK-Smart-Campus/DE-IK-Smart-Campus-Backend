@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,10 +41,40 @@ public class RetrieveSubjectsRequestServiceImpl implements RetrieveSubjectsReque
    */
   @Override
   public List<SubjectWrapper> getSubjects(String userId) {
-    LOGGER.info("Retrieving user ({}) subjects.", userId);
-    Set<SubjectDetailsEntity> subjects = userRepositoy.getSubjectsByUsername(userId);
+    LocalDate from = getFrom();
+    LocalDate to = getTo();
+    LOGGER.info("Retrieving user ({}) subjects between {} and {}.", userId, from, to);
+    Set<SubjectDetailsEntity> subjects =
+        userRepositoy.getSubjectsWithinRangeByUsername(userId, from, to);
     List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
     return subjectsWrapper;
+  }
+
+  private LocalDate getTo() {
+    LocalDate now = LocalDate.now();
+    LocalDate result;
+    if (isFirstSemester(now)) {
+      result = LocalDate.now().withMonth(5).withDayOfMonth(31);
+    } else {
+      result = LocalDate.now().withMonth(12).withDayOfMonth(31);
+    }
+    return result;
+  }
+
+  private boolean isFirstSemester(LocalDate now) {
+    return now.compareTo(LocalDate.now().withMonth(1).withDayOfMonth(1))
+        * now.compareTo(LocalDate.now().withMonth(5).withDayOfMonth(1)) <= 0;
+  }
+
+  private LocalDate getFrom() {
+    LocalDate now = LocalDate.now();
+    LocalDate result;
+    if (isFirstSemester(now)) {
+      result = LocalDate.now().withMonth(1).withDayOfMonth(1);
+    } else {
+      result = LocalDate.now().withMonth(9).withDayOfMonth(1);
+    }
+    return result;
   }
 
   private List<InstructorWrapper> convertEntitiesToWrapper(Set<InstructorEntity> instructorSet) {
