@@ -291,27 +291,6 @@ public class Fields {
 
 
   /**
-   * MUC list.
-   */
-  public static class UserMucListIqRequestFields {
-
-    /**
-     * Student field.
-     */
-    public static final String STUDENT = "student";
-
-    /**
-     * Rooms tag.
-     */
-    public static final String ROOMS = "rooms";
-
-    /**
-     * Room field.
-     */
-    public static final String ROOM = "room";
-  }
-
-  /**
    * User chat list fields
    */
   public static class UserChatListIqRequestFields {
@@ -330,6 +309,16 @@ public class Fields {
      * Chat field.
      */
     public static final String CHAT = "chat";
+
+    /**
+     * Rooms tag.
+     */
+    public static final String ROOMS = "rooms";
+
+    /**
+     * Room field.
+     */
+    public static final String ROOM = "room";
   }
 
   /**
@@ -419,7 +408,7 @@ public class Fields {
      */
     public static final String TO = "to";
   }
-  
+
   /**
    * Student IQ element fields.
    */
@@ -465,7 +454,7 @@ public class Fields {
      * Student field.
      */
     public static final String STUDENT = "student";
-    
+
     /**
      * One week field.
      */

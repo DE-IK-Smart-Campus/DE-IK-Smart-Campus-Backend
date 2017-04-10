@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.CHAT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.ROOM;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.STUDENT;
 
 import java.util.ArrayList;
@@ -9,18 +10,19 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.ListUserChatIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.ListUserChatsIqRequest;
 
 /**
  * Chat listing provider.
  */
 @SuppressWarnings({"PMD"})
-public class UserChatListIqProvider extends BaseSmartCampusIqProvider<ListUserChatIqRequest> {
+public class UserChatListIqProvider extends BaseSmartCampusIqProvider<ListUserChatsIqRequest> {
 
   @Override
-  public ListUserChatIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
+  public ListUserChatsIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
     String student = null;
     List<String> chatList = new ArrayList<>();
+    List<String> mucChatList = new ArrayList<>();
     int eventType = parser.getEventType();
     String text = "";
     boolean done = false;
@@ -41,7 +43,9 @@ public class UserChatListIqProvider extends BaseSmartCampusIqProvider<ListUserCh
             student = text;
           } else if (tagname.equalsIgnoreCase(CHAT)) {
             chatList.add(text);
-          } else if (tagname.equals(ListUserChatIqRequest.ELEMENT)) {
+          } else if (tagname.equalsIgnoreCase(ROOM)) {
+            mucChatList.add(text);
+          } else if (tagname.equals(ListUserChatsIqRequest.ELEMENT)) {
             done = true;
           }
           break;
@@ -50,15 +54,16 @@ public class UserChatListIqProvider extends BaseSmartCampusIqProvider<ListUserCh
           break;
       }
     }
-    return ListUserChatIqRequest.builder()
+    return ListUserChatsIqRequest.builder()
         .student(student)
         .chatList(chatList)
+        .mucChatList(mucChatList)
         .build();
   }
 
   @Override
   public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
-    return ListUserChatIqRequest.class;
+    return ListUserChatsIqRequest.class;
   }
 
 }

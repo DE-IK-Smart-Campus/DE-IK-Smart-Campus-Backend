@@ -2,6 +2,8 @@ package hu.unideb.smartcampus.shared.iq.request;
 
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.CHAT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.CHATS;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.ROOM;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.ROOMS;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.UserChatListIqRequestFields.STUDENT;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class ListUserChatIqRequest extends BaseSmartCampusIqRequest {
+public class ListUserChatsIqRequest extends BaseSmartCampusIqRequest {
 
   /**
    * Element.
@@ -36,21 +38,28 @@ public class ListUserChatIqRequest extends BaseSmartCampusIqRequest {
   private List<String> chatList;
 
   /**
+   * Student's muc chat list.
+   */
+  private List<String> mucChatList;
+
+  /**
    * Default constructor.
    */
-  public ListUserChatIqRequest() {
+  public ListUserChatsIqRequest() {
     super(ELEMENT);
     chatList = new ArrayList<>();
+    mucChatList = new ArrayList<>();
   }
 
   /**
    * Constructs.
    */
   @Builder
-  public ListUserChatIqRequest(String student, List<String> chatList) {
+  public ListUserChatsIqRequest(String student, List<String> chatList, List<String> mucChatList) {
     super(ELEMENT);
     this.student = student;
     this.chatList = chatList;
+    this.mucChatList = mucChatList;
   }
 
   protected String toXml() {
@@ -61,14 +70,25 @@ public class ListUserChatIqRequest extends BaseSmartCampusIqRequest {
 
   private void buildIq(StringBuilder builder) {
     builder.append(tag(STUDENT, student));
-    buildEvents(builder);
+    buildSingleChats(builder);
+    buildMucChats(builder);
   }
 
-  private void buildEvents(StringBuilder builder) {
+  private void buildMucChats(StringBuilder builder) {
+    if (mucChatList != null) {
+      builder.append(openTag(ROOMS));
+      for (String muc : mucChatList) {
+        builder.append(tag(ROOM, muc));
+      }
+      builder.append(closeTag(ROOMS));
+    }
+  }
+
+  private void buildSingleChats(StringBuilder builder) {
     if (chatList != null) {
       builder.append(openTag(CHATS));
-      for (String muc : chatList) {
-        builder.append(tag(CHAT, muc));
+      for (String chat : chatList) {
+        builder.append(tag(CHAT, chat));
       }
       builder.append(closeTag(CHATS));
     }
