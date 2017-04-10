@@ -21,9 +21,18 @@
     </div>
 
     <ul class="nav nav-sidebar">
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/home}" th:text="#{dashboard.nav.home}"></a></li>
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/calendar}" th:text="#{dashboard.nav.calendar}"></a></li>
-      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/consulting-hours}" th:text="#{dashboard.nav.consulting_hours}"></a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/home}">
+        <span class="glyphicon glyphicon-home"></span>
+        <span th:text="#{dashboard.nav.home}"></span>
+      </a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/calendar}">
+        <span class="glyphicon glyphicon-calendar"></span>
+        <span th:text="#{dashboard.nav.calendar}"></span>
+      </a></li>
+      <li><a class="hvr-sweep-to-right" th:href="@{/dashboard/consulting-hours}">
+        <span class="glyphicon glyphicon-education"></span>
+        <span th:text="#{dashboard.nav.consulting_hours}"></span>
+      </a></li>
     </ul>
 
     <div th:replace="fragments/language-selector-frag :: language-selector-frag"/>

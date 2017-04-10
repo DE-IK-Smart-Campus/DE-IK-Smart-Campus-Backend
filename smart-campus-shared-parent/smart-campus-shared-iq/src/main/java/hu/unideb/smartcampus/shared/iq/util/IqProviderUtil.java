@@ -8,6 +8,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class IqProviderUtil {
 
+  private static final String NULL = "null";
+
   /**
    * Opens tag.
    */
@@ -27,6 +29,26 @@ public class IqProviderUtil {
    */
   public static String tag(String tagName, Object value) {
     return openTag(tagName) + value + closeTag(tagName);
+  }
+
+  /**
+   * Parse int.
+   */
+  public static Integer parseInt(String text) {
+    if (NULL.equals(text)) {
+      return 0;
+    }
+    return Integer.valueOf(text);
+  }
+
+  /**
+   * Parse long.
+   */
+  public static Long parseLong(String text) {
+    if (NULL.equals(text)) {
+      return 0L;
+    }
+    return Long.valueOf(text);
   }
 
 }
