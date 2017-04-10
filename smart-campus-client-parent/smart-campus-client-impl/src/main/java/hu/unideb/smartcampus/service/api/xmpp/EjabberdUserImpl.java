@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api.xmpp;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.annotation.PreDestroy;
 
@@ -9,6 +10,8 @@ import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
+import org.jivesoftware.smack.roster.Roster;
+import org.jivesoftware.smack.roster.RosterGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +51,11 @@ public class EjabberdUserImpl implements EjabberdUser {
 
   @Autowired
   private XmppClientConfigurationService connectionConfigurationService;
-  
+
   @Autowired
   private IqRegistrationService registartionService;
+
+  private Roster roster;
 
   @PreDestroy
   public void preDestroy() {
@@ -66,6 +71,11 @@ public class EjabberdUserImpl implements EjabberdUser {
     LOGGER.info("Logging in user {}", username);
     if (connection == null || !connection.isAuthenticated()) {
       initConnection(username, password);
+      roster = Roster.getInstanceFor(connection);
+      Collection<RosterGroup> groups = roster.getGroups();
+      for (RosterGroup rosterGroup : groups) {
+        LOGGER.info("Groups: {}", rosterGroup.getName());
+      }
     }
     LOGGER.info("Login succesfull.");
   }

@@ -12,28 +12,18 @@ import lombok.ToString;
  */
 @Data
 @ToString(callSuper = true)
-public class Instructor extends BaseObject<Long> {
+public class InstructorWrapper extends BaseObject<Long> {
 
   /**
    * Name of the instructor.
    */
   private final String name;
-  
+
   /**
    * Neptun identifier.
    */
   private final String neptunIdentifier;
 
-  /**
-   * Instructor's consulting hours.
-   */
-  private final Set<ConsultingDate> consultingDates;
-
-  /**
-   * Subjects of the instructor.
-   */
-  private final Set<SubjectDetails> subjects;
-  
   /**
    * Room.
    */
@@ -43,13 +33,11 @@ public class Instructor extends BaseObject<Long> {
    * Constructs instructor entity.
    */
   @Builder
-  public Instructor(final Long id, final String name, final Set<ConsultingDate> consultingDates,
-      final Set<SubjectDetails> subjects,final String neptunIdentifier,final String room) {
+  public InstructorWrapper(final Long id, final String name, final String neptunIdentifier,
+      final String room) {
     super(id);
     this.name = name;
     this.room = room;
-    this.subjects = subjects;
-    this.consultingDates = consultingDates;
     this.neptunIdentifier = neptunIdentifier;
   }
 

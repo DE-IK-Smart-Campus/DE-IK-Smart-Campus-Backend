@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
+import java.util.stream.Collectors;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,7 @@ public class SubjectDetailsToSubjectDetailsEntityConverter implements Converter<
         .subjectType(subjectDetails.getSubjectType().name())
         .startPeriod(subjectDetails.getStartPeriod())
         .endPeriod(subjectDetails.getEndPeriod())
-        .teacherNames(subjectDetails.getTeacherNames())
+        .teacherNames(subjectDetails.getInstructors().stream().map(p->p.getName()).collect(Collectors.toList()))
         .build();
   }
 }

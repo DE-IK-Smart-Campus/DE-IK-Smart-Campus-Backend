@@ -5,13 +5,6 @@ import static hu.unideb.smartcampus.shared.calendar.CaldendarConstants.CLASS_NAM
 import static hu.unideb.smartcampus.shared.calendar.CaldendarConstants.SUMMARY_REGEXP;
 import static hu.unideb.smartcampus.shared.calendar.CaldendarConstants.TEACHER_NAME;
 
-import com.google.common.collect.Lists;
-
-import net.fortuna.ical4j.model.component.VEvent;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -19,11 +12,19 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import com.google.common.collect.Lists;
+
 import hu.unideb.smartcampus.service.api.UnparsableCalendarEventSummaryException;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectType;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarLocalDateTimeParser;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarSubjectDetailsParser;
+import net.fortuna.ical4j.model.component.VEvent;
 
 @Component
 public class CalendarSubjectDetailsParserImpl implements CalendarSubjectDetailsParser {
@@ -52,7 +53,7 @@ public class CalendarSubjectDetailsParserImpl implements CalendarSubjectDetailsP
     return SubjectDetails.builder()
         .subjectName(createSubjectName(matcher))
         .subjectType(createSubjectType(matcher))
-        .teacherNames(createTeacherNames(matcher))
+//        .teacherNames(createTeacherNames(matcher))
         .startPeriod(createStartPeriod(event))
         .endPeriod(createEndPeriod(event))
         .build();

@@ -60,8 +60,8 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
 
   private String createDescriptionByTeachers(SubjectEvent subjectEvent) {
     StringBuilder builder = new StringBuilder();
-    List<String> teacherNames = subjectEvent.getSubjectDetails().getTeacherNames();
-    build(builder, teacherNames);
+//    List<String> teacherNames = subjectEvent.getSubjectDetails().getTeacherNames();
+//    build(builder, teacherNames);
     return builder.toString();
   }
 

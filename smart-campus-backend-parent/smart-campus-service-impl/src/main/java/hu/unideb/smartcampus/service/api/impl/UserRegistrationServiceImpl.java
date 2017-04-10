@@ -1,7 +1,10 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.io.IOException;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,9 +19,13 @@ import hu.unideb.smartcampus.shared.enumeration.Role;
 import hu.unideb.smartcampus.shared.exception.RegistrationFailedException;
 import hu.unideb.smartcampus.shared.exception.SmartCampusException;
 import hu.unideb.smartcampus.webservice.api.ejabberd.XmppUserService;
+import hu.unideb.smartcampus.webservice.api.neptun.NeptunEndpointService;
+import hu.unideb.smartcampus.webservice.api.neptun.NeptunInfo;
 
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationServiceImpl.class);
 
   @Autowired
   private XmppUserService xmppUserService;
@@ -28,6 +35,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
   @Autowired
   private UserAlreadyExistsRegistrationFailureHandlingStrategy registrationFailureHandlingStrategy;
+
+  @Autowired
+  private NeptunEndpointService neptunEndpointService;
 
   @Override
   @Transactional(rollbackFor = RegistrationFailedException.class,
@@ -52,10 +62,27 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
       throw new RegistrationFailedException(e);
     }
 
-    User user =
-        User.builder().username(username).password(generatedPassword).role(Role.USER).build();
 
-    userService.save(user);
+    User user;
+    try {
+      user = createUser(username, generatedPassword);
+      userService.save(user);
+    } catch (IOException e) {
+      throw new RegistrationFailedException("Failed to save user entity because of Neptun error.",
+          e);
+    }
+
+  }
+
+  private User createUser(String username, final String generatedPassword) throws IOException {
+    NeptunInfo neptunInfo = neptunEndpointService.getNeptunInfoByUid(username);
+    return User.builder()
+        .username(username)
+        .password(generatedPassword)
+        .neptunIdentifier(neptunInfo.getMemberInfo().getNeptunIdentifier())
+        .fullName(neptunInfo.getMemberInfo().getTeljnev())
+        .role(Role.USER)
+        .build();
   }
 
 }

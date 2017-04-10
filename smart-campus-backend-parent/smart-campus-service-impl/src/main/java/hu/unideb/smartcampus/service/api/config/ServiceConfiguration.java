@@ -13,7 +13,7 @@ import hu.unideb.smartcampus.persistence.config.PersistenceConfiguration;
  * Configuration class for service module.
  */
 @Configuration
-@Import(PersistenceConfiguration.class)
+@Import({PersistenceConfiguration.class, AsyncConfiguration.class})
 @ComponentScan("hu.unideb.smartcampus.service.api")
 public class ServiceConfiguration {
 

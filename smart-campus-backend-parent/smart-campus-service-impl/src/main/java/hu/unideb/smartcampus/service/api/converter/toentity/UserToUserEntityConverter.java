@@ -1,12 +1,12 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
@@ -33,6 +33,8 @@ public class UserToUserEntityConverter implements Converter<User, UserEntity> {
         .username(user.getUsername())
         .password(user.getPassword())
         .role(user.getRole())
+        .fullName(user.getFullName())
+        .neptunIdentifier(user.getNeptunIdentifier())
         .actualSubjects(convertSubjectDetailsSetToSubjectDetailsEntitySet(user.getSubjectDetailsList()))
         .build();
   }

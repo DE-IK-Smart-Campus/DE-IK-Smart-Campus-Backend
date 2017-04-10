@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,10 +41,39 @@ public class RetrieveSubjectsRequestServiceImpl implements RetrieveSubjectsReque
    */
   @Override
   public List<SubjectWrapper> getSubjects(String userId) {
-    LOGGER.info("Retrieving user ({}) subjects.", userId);
-    Set<SubjectDetailsEntity> subjects = userRepositoy.getSubjectsByUsername(userId);
-    List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
-    return subjectsWrapper;
+    LocalDate from = getFrom();
+    LocalDate to = getTo();
+    LOGGER.info("Retrieving user ({}) subjects between {} and {}.", userId, from, to);
+    Set<SubjectDetailsEntity> subjects =
+        userRepositoy.getSubjectsWithinRangeByUsername(userId, from, to);
+    return createSubjectsWrapper(subjects);
+  }
+
+  private LocalDate getTo() {
+    LocalDate now = LocalDate.now();
+    LocalDate result;
+    if (isFirstSemester(now)) {
+      result = LocalDate.now().withMonth(5).withDayOfMonth(31);
+    } else {
+      result = LocalDate.now().withMonth(12).withDayOfMonth(31);
+    }
+    return result;
+  }
+
+  private boolean isFirstSemester(LocalDate now) {
+    return now.compareTo(LocalDate.now().withMonth(1).withDayOfMonth(1))
+        * now.compareTo(LocalDate.now().withMonth(5).withDayOfMonth(1)) <= 0;
+  }
+
+  private LocalDate getFrom() {
+    LocalDate now = LocalDate.now();
+    LocalDate result;
+    if (isFirstSemester(now)) {
+      result = LocalDate.now().withMonth(1).withDayOfMonth(1);
+    } else {
+      result = LocalDate.now().withMonth(9).withDayOfMonth(1);
+    }
+    return result;
   }
 
   private List<InstructorWrapper> convertEntitiesToWrapper(Set<InstructorEntity> instructorSet) {
@@ -57,11 +87,12 @@ public class RetrieveSubjectsRequestServiceImpl implements RetrieveSubjectsReque
         Set<InstructorEntity> instructorSet =
             instructorRepository.getInstructorsBySubjectName(subjectEntity.getSubjectName());
         List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
-        result.add(SubjectWrapper.builder().name(subjectEntity.getSubjectName())
+        result.add(SubjectWrapper.builder()
+            .name(subjectEntity.getSubjectName())
             .instructors(instructors).build());
       });
     }
-    return result;
+    return result.stream().distinct().collect(Collectors.toList());
   }
 
   private InstructorWrapper toInstructorWrapper(InstructorEntity entity) {

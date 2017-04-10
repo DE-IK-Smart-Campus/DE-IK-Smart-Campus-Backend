@@ -19,6 +19,11 @@ public interface InstructorRepository extends JpaRepository<InstructorEntity, Lo
    * Find instructor by name.
    */
   InstructorEntity findByName(String name);
+  
+  /**
+   * Find instructor by neptun identifier..
+   */
+  InstructorEntity findByNeptunIdentifier(String neptunIdentifier);
 
   /**
    * Get instructor's consulting hours by instructor's name.
