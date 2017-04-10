@@ -55,15 +55,11 @@ public class InstructorServiceImpl implements InstructorService {
   @Override
   public void saveInstructor(final Instructor instructor) {
     Assert.notNull(instructor);
-    LOGGER.info("Saving instructor: {}", instructor.getName());
     if (instructor.getNeptunIdentifier() == null) {
-      LOGGER.info("Instructor has no NEPTUN ID, returning.");
+      LOGGER.debug("Instructor has no NEPTUN ID, returning.");
       return;
     }
     InstructorEntity entity = this.conversionService.convert(instructor, InstructorEntity.class);
-    LOGGER.info("Has instructor subjects:{}", !entity.getSubjects().isEmpty());
-    LOGGER.info("Subject:{}", entity.getSubjects());
-    LOGGER.info("Has instructor neptun identifier:{}", entity.getNeptunIdentifier() != null);
     if (entity.getNeptunIdentifier() != null) {
       this.instructorRepository
           .save(entity);

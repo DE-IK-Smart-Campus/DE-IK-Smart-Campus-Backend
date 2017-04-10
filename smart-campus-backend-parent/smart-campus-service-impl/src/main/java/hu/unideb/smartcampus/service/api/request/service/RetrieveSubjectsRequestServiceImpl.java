@@ -46,8 +46,7 @@ public class RetrieveSubjectsRequestServiceImpl implements RetrieveSubjectsReque
     LOGGER.info("Retrieving user ({}) subjects between {} and {}.", userId, from, to);
     Set<SubjectDetailsEntity> subjects =
         userRepositoy.getSubjectsWithinRangeByUsername(userId, from, to);
-    List<SubjectWrapper> subjectsWrapper = createSubjectsWrapper(subjects);
-    return subjectsWrapper;
+    return createSubjectsWrapper(subjects);
   }
 
   private LocalDate getTo() {
@@ -88,11 +87,12 @@ public class RetrieveSubjectsRequestServiceImpl implements RetrieveSubjectsReque
         Set<InstructorEntity> instructorSet =
             instructorRepository.getInstructorsBySubjectName(subjectEntity.getSubjectName());
         List<InstructorWrapper> instructors = convertEntitiesToWrapper(instructorSet);
-        result.add(SubjectWrapper.builder().name(subjectEntity.getSubjectName())
+        result.add(SubjectWrapper.builder()
+            .name(subjectEntity.getSubjectName())
             .instructors(instructors).build());
       });
     }
-    return result;
+    return result.stream().distinct().collect(Collectors.toList());
   }
 
   private InstructorWrapper toInstructorWrapper(InstructorEntity entity) {

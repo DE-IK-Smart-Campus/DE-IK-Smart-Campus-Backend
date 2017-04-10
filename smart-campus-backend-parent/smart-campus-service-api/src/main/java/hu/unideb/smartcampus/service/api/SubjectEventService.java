@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,4 +42,9 @@ public interface SubjectEventService {
    */
   List<SubjectEvent> getSubjectEventWithinRangeByUsername(String username, LocalDate from,
       LocalDate to);
+
+  /**
+   * Save subjects to student.
+   */
+  void saveSubjectEvents(final String neptunIdentifier, final String userName) throws IOException;
 }

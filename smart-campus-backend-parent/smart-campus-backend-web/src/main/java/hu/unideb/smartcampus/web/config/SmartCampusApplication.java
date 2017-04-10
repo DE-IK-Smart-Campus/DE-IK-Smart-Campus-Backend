@@ -27,4 +27,6 @@ public class SmartCampusApplication extends SpringBootServletInitializer {
   protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
     return application.sources(SmartCampusApplication.class);
   }
+
+
 }

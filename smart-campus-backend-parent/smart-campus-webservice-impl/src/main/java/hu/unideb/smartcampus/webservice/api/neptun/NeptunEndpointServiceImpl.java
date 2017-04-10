@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.slf4j.Logger;
@@ -42,12 +44,9 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
   @Override
   public NeptunInfo getNeptunInfoByNeptunIdentifier(String neptunIdentifier) throws IOException {
     LOGGER.info("Requesting Neptun info by identifier: {}", neptunIdentifier);
-    Client client = createClient();
-    WebTarget target =
-        client.target(getUrl(NEPTUN_INFO_BY_NEPTUN_IDENTIFIER, neptunIdentifier));
-    return target.request().get(NeptunInfo.class);
+    String url = getUrl(NEPTUN_INFO_BY_NEPTUN_IDENTIFIER, neptunIdentifier);
+    return fireRequest(url, NeptunInfo.class);
   }
-
 
   /**
    * {@inheritDoc}.
@@ -55,10 +54,8 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
   @Override
   public NeptunInfo getNeptunInfoByUid(String uid) throws IOException {
     LOGGER.info("Requesting Neptun info for {}", uid);
-    Client client = createClient();
-    WebTarget target = client.target(getUrl(NEPTUN_INFO_BY_UID, uid));
-    NeptunInfo neptunInfo = target.request().get(NeptunInfo.class);
-    return neptunInfo;
+    String url = getUrl(NEPTUN_INFO_BY_UID, uid);
+    return fireRequest(url, NeptunInfo.class);
   }
 
 
@@ -68,10 +65,8 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
   @Override
   public StudentTimeTable getStudentTimetable(String neptunIdentifier) throws IOException {
     LOGGER.info("Requesting student time table by identifier {}", neptunIdentifier);
-    Client client = createClient();
-    WebTarget target =
-        client.target(getUrl(STUDENT_TIMETABLE_BY_NEPTUN_IDENTIFIER, neptunIdentifier));
-    return target.request().get(StudentTimeTable.class);
+    String url = getUrl(STUDENT_TIMETABLE_BY_NEPTUN_IDENTIFIER, neptunIdentifier);
+    return fireRequest(url, StudentTimeTable.class);
   }
 
   private Client createClient() throws IOException {
@@ -82,6 +77,25 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
                 .builder()
                 .token(getToken())
                 .build());
+  }
+
+  private <T> T fireRequest(String url, Class<?> clazz)
+      throws IOException {
+    Client client = createClient();
+    WebTarget target = client.target(url);
+    Response response = target.request().get();
+    checkIfUnauthorizedIfYesGenerateTokenAndFireRequestAgain(url, clazz, response);
+    return (T) response.readEntity(clazz);
+  }
+
+  private void checkIfUnauthorizedIfYesGenerateTokenAndFireRequestAgain(String url, Class<?> clazz,
+      // XXX Good way?
+      Response response) throws IOException {
+    if (Status.UNAUTHORIZED.equals(response.getStatusInfo())) {
+      LOGGER.info("Access token is invalid, generating new.");
+      neptunTokenService.generateAccessToken();
+      fireRequest(url, clazz);
+    }
   }
 
   private String getToken() throws IOException {

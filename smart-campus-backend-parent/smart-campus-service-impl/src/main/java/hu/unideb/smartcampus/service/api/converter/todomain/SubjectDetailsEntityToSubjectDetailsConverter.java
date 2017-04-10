@@ -29,14 +29,14 @@ public class SubjectDetailsEntityToSubjectDetailsConverter implements Converter<
         .build();
   }
 
-  private List<InstructorWrapper> getTeachers(SubjectDetailsEntity subjectDetailsEntity) {
+  private List<InstructorWrapper> getTeachers(final SubjectDetailsEntity subjectDetailsEntity) {
     return subjectDetailsEntity.getTeacherNames()
         .stream()
         .map(this::toWrapper)
         .collect(Collectors.toList());
   }
   
-  private InstructorWrapper toWrapper(String teacher) {
+  private InstructorWrapper toWrapper(final String teacher) {
     return InstructorWrapper.builder()
         .name(teacher)
         .build();
