@@ -19,6 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class NeptunEndpointServiceImpl implements NeptunEndpointService {
 
+  private static final String STUDENT_TIMETABLE_BY_NEPTUN_IDENTIFIER =
+      "/studentTimetable/neptunIdentifier/";
+
+  private static final String NEPTUN_INFO_BY_NEPTUN_IDENTIFIER = "/neptunInfo/neptunIdentifier/";
+
+  private static final String NEPTUN_INFO_BY_UID = "/neptunInfo/uid/";
+
   private static final Logger LOGGER = LoggerFactory.getLogger(NeptunEndpointServiceImpl.class);
 
   private static final String PATH = "/eduid/rest";
@@ -33,17 +40,12 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
    * {@inheritDoc}.
    */
   @Override
-  public NeptunInfo getNeptunInfoByUid(String uid) throws IOException {
-    LOGGER.info("Requesting Neptun info for {}", uid);
+  public NeptunInfo getNeptunInfoByNeptunIdentifier(String neptunIdentifier) throws IOException {
+    LOGGER.info("Requesting Neptun info by identifier: {}", neptunIdentifier);
     Client client = createClient();
-    WebTarget target = client.target(getUrl("/neptunInfo/uid/", uid));
-    NeptunInfo neptunInfo = target.request().get(NeptunInfo.class);
-    return neptunInfo;
-  }
-
-
-  private String getUrl(String endpoint, String uid) {
-    return neptunUrl + PATH + endpoint + uid;
+    WebTarget target =
+        client.target(getUrl(NEPTUN_INFO_BY_NEPTUN_IDENTIFIER, neptunIdentifier));
+    return target.request().get(NeptunInfo.class);
   }
 
 
@@ -51,14 +53,14 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
    * {@inheritDoc}.
    */
   @Override
-  public NeptunInfo getNeptunInfoByNeptunIdentifier(String neptunIdentifier) throws IOException {
-    LOGGER.info("Requesting Neptun info by identifier: {}", neptunIdentifier);
+  public NeptunInfo getNeptunInfoByUid(String uid) throws IOException {
+    LOGGER.info("Requesting Neptun info for {}", uid);
     Client client = createClient();
-    WebTarget target =
-        client.target(getUrl("/neptunInfo/neptunIdentifier/", neptunIdentifier));
+    WebTarget target = client.target(getUrl(NEPTUN_INFO_BY_UID, uid));
     NeptunInfo neptunInfo = target.request().get(NeptunInfo.class);
     return neptunInfo;
   }
+
 
   /**
    * {@inheritDoc}.
@@ -68,13 +70,8 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
     LOGGER.info("Requesting student time table by identifier {}", neptunIdentifier);
     Client client = createClient();
     WebTarget target =
-        client.target(getUrl("/studentTimetable/neptunIdentifier/", neptunIdentifier));
-    StudentTimeTable studentTimeTable = target.request().get(StudentTimeTable.class);
-    return studentTimeTable;
-  }
-
-  private String getToken() throws IOException {
-    return neptunTokenService.getAccessToken();
+        client.target(getUrl(STUDENT_TIMETABLE_BY_NEPTUN_IDENTIFIER, neptunIdentifier));
+    return target.request().get(StudentTimeTable.class);
   }
 
   private Client createClient() throws IOException {
@@ -85,6 +82,14 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
                 .builder()
                 .token(getToken())
                 .build());
+  }
+
+  private String getToken() throws IOException {
+    return neptunTokenService.getAccessToken();
+  }
+
+  private String getUrl(String endpoint, String uid) {
+    return neptunUrl + PATH + endpoint + uid;
   }
 
 }
