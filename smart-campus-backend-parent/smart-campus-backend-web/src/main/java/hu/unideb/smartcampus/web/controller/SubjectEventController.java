@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Sets;
+
 import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.service.api.InstructorService;
 import hu.unideb.smartcampus.service.api.SubjectDetailsService;
@@ -103,6 +105,7 @@ public class SubjectEventController {
             instructor = Instructor.builder()
                 .name(instr.getName())
                 .neptunIdentifier(instr.getNeptunIdentifier())
+                .subjects(Sets.newHashSet(subjectDetails))
                 .build();
           }
           this.instructorService.saveInstructor(instructor);

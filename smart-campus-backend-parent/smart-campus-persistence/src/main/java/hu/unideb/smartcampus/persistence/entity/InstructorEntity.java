@@ -7,7 +7,6 @@ import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_INSTRUCTOR
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -71,7 +70,7 @@ public class InstructorEntity extends BaseEntity<Long> {
   /**
    * Subjects of the instructor.
    */
-  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "instructor_subject_details",
       joinColumns = @JoinColumn(name = "instructor_id", referencedColumnName = "id"),
       inverseJoinColumns = {
