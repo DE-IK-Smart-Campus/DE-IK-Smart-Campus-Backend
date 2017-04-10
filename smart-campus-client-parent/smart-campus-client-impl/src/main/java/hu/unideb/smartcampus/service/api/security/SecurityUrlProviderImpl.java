@@ -30,7 +30,7 @@ public class SecurityUrlProviderImpl implements SecurityUrlProvider {
     final String port = securityPropertyProvider.getProperty(SecurityProperty.PORT);
     final String context = securityPropertyProvider.getProperty(SecurityProperty.CONTEXT);
 
-    return "http://" + host + ":" + port + (context == null ? "" : context)
+    return host + ":" + port + (context == null ? "" : context)
         + SmartCampusSecurityConstants.USER_DATA_PATH;
   }
 
