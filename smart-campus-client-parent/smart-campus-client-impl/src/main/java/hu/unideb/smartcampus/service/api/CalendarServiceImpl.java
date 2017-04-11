@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import javax.annotation.Resource;
@@ -14,11 +15,12 @@ import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 
+@Service
 public class CalendarServiceImpl implements CalendarService{
   /**
    * Logger.
    */
-  private static final Logger LOGGER = LoggerFactory.getLogger(ConsultingHoursServiceImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(CalendarServiceImpl.class);
 
   /**
    * Domain for smartcampus user.
