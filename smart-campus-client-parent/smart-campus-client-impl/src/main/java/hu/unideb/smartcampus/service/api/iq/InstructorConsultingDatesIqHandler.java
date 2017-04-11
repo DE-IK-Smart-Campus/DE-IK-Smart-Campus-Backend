@@ -16,6 +16,6 @@ public class InstructorConsultingDatesIqHandler extends IqHandler<InstructorCons
     this.iq.setType(IQ.Type.get);
     this.iq.setFrom(connection.getUser());
     this.setSmartcampusUser(iq);
-    iq.setInstructorId(instructorId.toString());
+    this.iq.setInstructorId(instructorId.toString());
   }
 }

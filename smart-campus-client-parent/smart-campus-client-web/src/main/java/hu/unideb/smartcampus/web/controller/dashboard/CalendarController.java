@@ -31,6 +31,7 @@ public class CalendarController {
   public ModelAndView loadCalendarView(final Principal principal) {
     final ModelAndView modelAndView = new ModelAndView(CALENDAR_VIEW);
     final String name = principal.getName();
+
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
     return modelAndView;
   }
