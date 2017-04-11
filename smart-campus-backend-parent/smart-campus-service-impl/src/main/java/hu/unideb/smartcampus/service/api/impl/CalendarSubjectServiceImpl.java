@@ -86,7 +86,7 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
     return AppointmentTimeIqElement.builder()
         .from(appointmentTime.getStartDateTime().toEpochSecond(HUNGARIAN_OFFSET))
         .to(appointmentTime.getEndDateTime().toEpochSecond(HUNGARIAN_OFFSET)).when(appointmentTime
-            .getStartDateTime().toLocalDate().atStartOfDay().toEpochSecond(HUNGARIAN_OFFSET))
+            .getStartDateTime().toLocalDate().atStartOfDay().toEpochSecond(HUNGARIAN_OFFSET)*1000)
         .build();
   }
 

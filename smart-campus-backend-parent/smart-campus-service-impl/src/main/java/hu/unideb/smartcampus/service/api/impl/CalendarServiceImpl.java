@@ -140,7 +140,9 @@ public class CalendarServiceImpl implements CalendarService {
     List<StudentCourse> lastSemesterCourses = new ArrayList<>(
         getFilteredCourseList(bySemester.get(findLastSemesterKey(bySemester.keySet()))));
     for (StudentCourse studentCourse : lastSemesterCourses) {
+      
       SubjectDetails subjectDetails = createSubjectDetails(courses, studentCourse);
+      
       subjectBuilderListPopulator(events,
           SubjectEvent.builder()
               .subjectDetails(subjectDetails)

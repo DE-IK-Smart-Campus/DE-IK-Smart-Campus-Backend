@@ -135,12 +135,22 @@ public class UserEntity extends BaseEntity<Long> {
   private List<String> singleChatList;
 
   /**
+   * Course appointments.
+   */
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "user_course_appointment",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "course_appointment_id", referencedColumnName = "id"))
+  private List<CourseAppointmentEntity> courseAppointments;
+
+  /**
    * Builder pattern for creating user.
    */
   @Builder
   public UserEntity(final Long id, final String username, final String password, final Role role,
       final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
-      final List<String> mucChatList, final List<String> singleChatList, final String fullName, final String neptunIdentifier) {
+      final List<String> mucChatList, final List<String> singleChatList, final String fullName,
+      final String neptunIdentifier) {
     super(id);
     this.username = username;
     this.password = password;

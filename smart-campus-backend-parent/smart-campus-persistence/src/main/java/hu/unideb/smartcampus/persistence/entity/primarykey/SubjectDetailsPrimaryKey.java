@@ -2,7 +2,7 @@ package hu.unideb.smartcampus.persistence.entity.primarykey;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import lombok.Data;
 
 /**
