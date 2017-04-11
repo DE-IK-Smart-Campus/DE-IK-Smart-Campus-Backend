@@ -19,7 +19,8 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
   private final Converter<SubjectDetailsEntity, SubjectDetails> subjectDetailsConverter;
 
   @Autowired
-  public UserEntityToUserConverter(final Converter<SubjectDetailsEntity, SubjectDetails> subjectDetailsConverter) {
+  public UserEntityToUserConverter(
+      final Converter<SubjectDetailsEntity, SubjectDetails> subjectDetailsConverter) {
     this.subjectDetailsConverter = subjectDetailsConverter;
   }
 
@@ -36,12 +37,14 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
         .fullName(userEntity.getFullName())
         .neptunIdentifier(userEntity.getNeptunIdentifier())
         .role(userEntity.getRole())
-        .subjectDetailsList(convertSubjectDetailsSetToSubjectDetailsEntitySet(userEntity.getActualSubjects()))
+        .subjectDetailsList(
+            convertSubjectDetailsSetToSubjectDetailsEntitySet(userEntity.getActualSubjects()))
         .build();
   }
 
-  private List<SubjectDetails> convertSubjectDetailsSetToSubjectDetailsEntitySet(final List<SubjectDetailsEntity> subjectDetailsEntitySet) {
-    return subjectDetailsEntitySet == null ? null : subjectDetailsEntitySet.parallelStream()
+  private List<SubjectDetails> convertSubjectDetailsSetToSubjectDetailsEntitySet(
+      final List<SubjectDetailsEntity> subjectDetailsEntitySet) {
+    return subjectDetailsEntitySet == null ? null : subjectDetailsEntitySet.stream()
         .map(subjectDetailsEntity -> subjectDetailsConverter.convert(subjectDetailsEntity))
         .collect(Collectors.toList());
   }
