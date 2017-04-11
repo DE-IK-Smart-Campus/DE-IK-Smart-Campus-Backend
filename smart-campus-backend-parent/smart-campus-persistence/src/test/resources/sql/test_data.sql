@@ -124,17 +124,17 @@ values (2,'GUID-TO-DELETE','Test event','Test event description', 'Test place',D
 insert into user_custom_events(user_id,custom_event_id)
 values (1,1);
 
-insert into user_single_chat(user_entity_id,single_chat_list)
-values(1,'1234@asd.com');
+insert into user_single_chat(user_entity_id,single_chat_list,chat_id)
+values(1,'1234@asd.com',1);
 
-insert into user_single_chat(user_entity_id,single_chat_list)
-values(1,'1234@asd2323.com');
+insert into user_single_chat(user_entity_id,single_chat_list,chat_id)
+values(1,'1234@asd2323.com',2);
 
-insert into user_muc_chat(user_entity_id,muc_chat_list)
-values(1,'1234234234234234234@asd.com');
+insert into user_muc_chat(user_entity_id,muc_chat_list,muc_id)
+values(1,'1234234234234234234@asd.com',1);
 
-insert into user_muc_chat(user_entity_id,muc_chat_list)
-values(1,'1234234234@asd2323.com');
+insert into user_muc_chat(user_entity_id,muc_chat_list,muc_id)
+values(1,'1234234234@asd2323.com',2);
 
-insert into user_muc_chat(user_entity_id,muc_chat_list)
-values(1,'13434234234234@asd2323.com');
+insert into user_muc_chat(user_entity_id,muc_chat_list,muc_id)
+values(1,'13434234234234@asd2323.com',3);
