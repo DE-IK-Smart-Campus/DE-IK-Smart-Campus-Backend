@@ -120,7 +120,7 @@ public class SubjectEventServiceImpl implements SubjectEventService {
 
   private List<SubjectDetails> mapSubjectEventListToSubjectDetailsList(
       final List<SubjectEvent> subjectEvents) {
-    return subjectEvents.parallelStream()
+    return subjectEvents.stream()
         .map(subjectEvent -> subjectEvent.getSubjectDetails())
         .collect(Collectors.toList());
   }
@@ -155,8 +155,10 @@ public class SubjectEventServiceImpl implements SubjectEventService {
         subjectEvent -> this.saveInstructorWithSubjectDetails(subjectEvent.getSubjectDetails()));
 
     final User user = userService.getByUsername(userName).get();
-    user.getSubjectDetailsList().addAll(result.parallelStream()
-        .map(subjectEvent -> subjectEvent.getSubjectDetails()).collect(Collectors.toList()));
+    user.getSubjectDetailsList()
+        .addAll(result.stream()
+            .map(subjectEvent -> subjectEvent.getSubjectDetails())
+            .collect(Collectors.toList()));
 
     userService.save(user);
   }

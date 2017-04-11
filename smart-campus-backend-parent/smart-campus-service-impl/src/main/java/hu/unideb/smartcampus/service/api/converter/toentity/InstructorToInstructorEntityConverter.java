@@ -46,13 +46,13 @@ public class InstructorToInstructorEntityConverter implements Converter<Instruct
   }
 
   private Set<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(final Set<SubjectDetails> subjectDetailsSet) {
-    return subjectDetailsSet == null ? Sets.newHashSet() : subjectDetailsSet.parallelStream()
+    return subjectDetailsSet == null ? Sets.newHashSet() : subjectDetailsSet.stream()
         .map(subjectDetails -> subjectDetailsConverter.convert(subjectDetails))
         .collect(Collectors.toSet());
   }
 
   private Set<ConsultingDateEntity> convertConsultingDateSetToConsultingDateEntitySet(final Set<ConsultingDate> consultingDateSet) {
-    return consultingDateSet == null ? Sets.newHashSet() : consultingDateSet.parallelStream()
+    return consultingDateSet == null ? Sets.newHashSet() : consultingDateSet.stream()
         .map(consultingDate -> consultingDateConverter.convert(consultingDate))
         .collect(Collectors.toSet());
   }

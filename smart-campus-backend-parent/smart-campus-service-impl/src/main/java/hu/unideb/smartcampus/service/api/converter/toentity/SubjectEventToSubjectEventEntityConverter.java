@@ -1,12 +1,12 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import hu.unideb.smartcampus.persistence.entity.AppointmentTimeEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
@@ -47,7 +47,7 @@ public class SubjectEventToSubjectEventEntityConverter implements Converter<Subj
   }
 
   private List<AppointmentTimeEntity> convertAppointmentTimeListToAppointmentTimeEntityList(final List<AppointmentTime> appointmentTimeList) {
-    return appointmentTimeList == null ? null : appointmentTimeList.parallelStream()
+    return appointmentTimeList == null ? null : appointmentTimeList.stream()
         .map(appointmentTime -> appointmentTimeConverter.convert(appointmentTime))
         .collect(Collectors.toList());
   }
