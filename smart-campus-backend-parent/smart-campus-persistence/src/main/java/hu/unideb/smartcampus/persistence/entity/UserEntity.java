@@ -23,6 +23,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -125,6 +126,7 @@ public class UserEntity extends BaseEntity<Long> {
    */
   @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "user_muc_chat")
+  @OrderColumn(name = "muc_id")
   private List<String> mucChatList;
 
   /**
@@ -132,6 +134,7 @@ public class UserEntity extends BaseEntity<Long> {
    */
   @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "user_single_chat")
+  @OrderColumn(name = "chat_id")
   private List<String> singleChatList;
 
   /**
@@ -159,5 +162,7 @@ public class UserEntity extends BaseEntity<Long> {
     this.customEvents = customEvents;
     this.fullName = fullName;
     this.neptunIdentifier = neptunIdentifier;
+    this.mucChatList = mucChatList;
+    this.singleChatList = singleChatList;
   }
 }

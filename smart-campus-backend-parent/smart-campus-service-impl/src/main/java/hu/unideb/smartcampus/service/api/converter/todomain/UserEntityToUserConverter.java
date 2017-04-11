@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import hu.unideb.smartcampus.persistence.entity.CustomEventEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.service.api.domain.CustomEvent;
 import hu.unideb.smartcampus.service.api.domain.User;
 
 @Component
@@ -18,10 +20,14 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
 
   private final Converter<SubjectDetailsEntity, SubjectDetails> subjectDetailsConverter;
 
+  private final Converter<CustomEventEntity, CustomEvent> customEventConverter;
+
   @Autowired
   public UserEntityToUserConverter(
-      final Converter<SubjectDetailsEntity, SubjectDetails> subjectDetailsConverter) {
+      final Converter<SubjectDetailsEntity, SubjectDetails> subjectDetailsConverter,
+      final Converter<CustomEventEntity, CustomEvent> customEventConverter) {
     this.subjectDetailsConverter = subjectDetailsConverter;
+    this.customEventConverter = customEventConverter;
   }
 
   @Override
@@ -39,7 +45,18 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
         .role(userEntity.getRole())
         .subjectDetailsList(
             convertSubjectDetailsSetToSubjectDetailsEntitySet(userEntity.getActualSubjects()))
+        .mucChatList(userEntity.getMucChatList())
+        .singleChatList(userEntity.getSingleChatList())
+        .customEventList(
+            convertCustomEventListToCustomEventEntityList(userEntity.getCustomEvents()))
         .build();
+  }
+
+  private List<CustomEvent> convertCustomEventListToCustomEventEntityList(
+      List<CustomEventEntity> customEvents) {
+    return customEvents == null ? null : customEvents.stream()
+        .map(customEventEntity -> customEventConverter.convert(customEventEntity))
+        .collect(Collectors.toList());
   }
 
   private List<SubjectDetails> convertSubjectDetailsSetToSubjectDetailsEntitySet(
