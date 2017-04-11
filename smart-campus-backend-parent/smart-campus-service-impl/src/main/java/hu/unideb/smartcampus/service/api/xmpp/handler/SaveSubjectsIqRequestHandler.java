@@ -86,7 +86,7 @@ public class SaveSubjectsIqRequestHandler extends AbstractSmartCampusIqRequestHa
 
   private void pairStudentWithSubjects(SaveSubjectsIcsIqRequest iq, List<SubjectEvent> result) {
     final User user = userService.getByUsername(iq.getStudent()).get();
-    user.getSubjectDetailsList().addAll(result.parallelStream()
+    user.getSubjectDetailsList().addAll(result.stream()
         .map(subjectEvent -> subjectEvent.getSubjectDetails()).collect(Collectors.toList()));
     userService.save(user);
   }

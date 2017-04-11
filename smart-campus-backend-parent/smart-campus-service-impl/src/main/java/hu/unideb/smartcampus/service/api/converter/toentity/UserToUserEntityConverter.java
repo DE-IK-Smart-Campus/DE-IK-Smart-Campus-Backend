@@ -40,7 +40,7 @@ public class UserToUserEntityConverter implements Converter<User, UserEntity> {
   }
 
   private List<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(final List<SubjectDetails> subjectDetailsSet) {
-    return subjectDetailsSet == null ? null : subjectDetailsSet.parallelStream()
+    return subjectDetailsSet == null ? null : subjectDetailsSet.stream()
         .map(subjectDetails -> subjectDetailsConverter.convert(subjectDetails))
         .collect(Collectors.toList());
   }

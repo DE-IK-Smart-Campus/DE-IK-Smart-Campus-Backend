@@ -105,7 +105,7 @@ public class CalendarServiceImpl implements CalendarService {
 
   private void subjectBuilderListPopulator(final LinkedList<SubjectEvent> subjectEvents,
       final SubjectEvent subjectEvent, final AppointmentTime appointmentTime) {
-    final Optional<SubjectEvent> subjectEventOptional = subjectEvents.parallelStream()
+    final Optional<SubjectEvent> subjectEventOptional = subjectEvents.stream()
         .filter(actualSubjectEvent -> actualSubjectEvent.equals(subjectEvent))
         .findFirst();
 
@@ -119,7 +119,7 @@ public class CalendarServiceImpl implements CalendarService {
 
   private void subjectBuilderListPopulator(final List<SubjectEvent> subjectEvents,
       final SubjectEvent subjectEvent, final List<AppointmentTime> appointmentTime) {
-    final Optional<SubjectEvent> subjectEventOptional = subjectEvents.parallelStream()
+    final Optional<SubjectEvent> subjectEventOptional = subjectEvents.stream()
         .filter(actualSubjectEvent -> actualSubjectEvent.equals(subjectEvent))
         .findFirst();
 
