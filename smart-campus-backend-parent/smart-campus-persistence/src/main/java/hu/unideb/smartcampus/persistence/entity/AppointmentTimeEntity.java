@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Builder;
@@ -29,36 +27,29 @@ public class AppointmentTimeEntity extends BaseEntity<Long> implements Serializa
   /**
    * Start date time.
    */
-  @Column(name = "startDate")
+  @Column(name = "start_date")
   private LocalDateTime startDateTime;
 
   /**
    * End date time.
    */
-  @Column(name = "endDate")
+  @Column(name = "end_date")
   private LocalDateTime endDateTime;
 
   /**
    * Was present.
    */
-  @Column(name = "wasPresent")
+  @Column(name = "was_present")
   private Boolean wasPresent;
-
-  /**
-   * User who has this appointement.
-   */
-  @ManyToOne(fetch = FetchType.LAZY)
-  private UserEntity user;
 
   /**
    * Builder.
    */
   @Builder
   public AppointmentTimeEntity(final LocalDateTime startDateTime, final LocalDateTime endDateTime,
-      final Boolean wasPresent, final UserEntity user) {
+      final Boolean wasPresent) {
     this.startDateTime = startDateTime;
     this.endDateTime = endDateTime;
     this.wasPresent = wasPresent;
-    this.user = user;
   }
 }

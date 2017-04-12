@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api;
 import java.util.List;
 
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
 import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 
@@ -24,6 +25,6 @@ public interface CalendarService {
    * Download student time table and convert it to subject event.
    * @param studentTimeTable student time table from Neptun.
    */
-  List<SubjectEvent> downloadStudentTimeTable(StudentTimeTable studentTimeTable);
+  StudentTimeTableInfo downloadStudentTimeTable(StudentTimeTable studentTimeTable);
 
 }

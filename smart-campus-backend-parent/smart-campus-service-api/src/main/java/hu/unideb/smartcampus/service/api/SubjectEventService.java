@@ -26,6 +26,11 @@ public interface SubjectEventService {
    * Save.
    */
   void save(SubjectEvent subjectEvent);
+  
+  /**
+   * Save if not exists in db.
+   */
+  void saveIfNotExists(SubjectEvent subjectEvent);
 
   /**
    * Save.

@@ -9,7 +9,9 @@ import static hu.unideb.smartcampus.shared.table.ColumnName.UserColumnName.COLUM
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_USER;
 
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -110,7 +112,7 @@ public class UserEntity extends BaseEntity<Long> {
           @JoinColumn(name = "subject_name", referencedColumnName = "subject_name"),
           @JoinColumn(name = "start_period", referencedColumnName = "start_period"),
           @JoinColumn(name = "end_period", referencedColumnName = "end_period")})
-  private List<SubjectDetailsEntity> actualSubjects;
+  private Set<SubjectDetailsEntity> actualSubjects;
 
   /**
    * User custom events.
@@ -140,20 +142,20 @@ public class UserEntity extends BaseEntity<Long> {
   /**
    * Course appointments.
    */
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
   @JoinTable(name = "user_course_appointment",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "course_appointment_id", referencedColumnName = "id"))
-  private List<CourseAppointmentEntity> courseAppointments;
+  private Set<CourseAppointmentEntity> courseAppointments;
 
   /**
    * Builder pattern for creating user.
    */
   @Builder
   public UserEntity(final Long id, final String username, final String password, final Role role,
-      final List<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
+      final Set<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
       final List<String> mucChatList, final List<String> singleChatList, final String fullName,
-      final String neptunIdentifier) {
+      final String neptunIdentifier, final Set<CourseAppointmentEntity> courseAppointments) {
     super(id);
     this.username = username;
     this.password = password;
@@ -164,5 +166,6 @@ public class UserEntity extends BaseEntity<Long> {
     this.neptunIdentifier = neptunIdentifier;
     this.mucChatList = mucChatList;
     this.singleChatList = singleChatList;
+    this.courseAppointments = courseAppointments;
   }
 }

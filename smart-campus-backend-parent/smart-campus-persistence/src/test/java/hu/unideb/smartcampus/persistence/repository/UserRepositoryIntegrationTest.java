@@ -10,7 +10,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +17,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.collect.Sets;
 
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
@@ -40,7 +41,7 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
    */
   private final UserEntity adminUser =
       UserEntity.builder().id(USER_ID_ADMIN).username(USERNAME_ADMIN).password(PASSWORD_ADMIN)
-          .actualSubjects(Arrays.asList(sampleSubject)).role(Role.ADMIN).build();
+          .actualSubjects(Sets.newHashSet(sampleSubject)).role(Role.ADMIN).build();
 
   /**
    * UserRepository.

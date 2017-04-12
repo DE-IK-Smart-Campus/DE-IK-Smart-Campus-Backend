@@ -4,10 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 
-import hu.unideb.smartcampus.persistence.listener.CustomEventEntityListener;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,10 +19,15 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(exclude = {"wasPresent", "id"})
 @Table(name = "course_appointment")
-@EntityListeners(CustomEventEntityListener.class)
 public class CourseAppointmentEntity extends BaseEntity<Long> {
+
+  /**
+   * Course code.
+   */
+  @Column(name = "course_code")
+  private String courseCode;
 
   /**
    * Start date
@@ -48,13 +51,12 @@ public class CourseAppointmentEntity extends BaseEntity<Long> {
    * Constructs a course appointment entity.
    */
   @Builder
-  public CourseAppointmentEntity(LocalDateTime startDate, LocalDateTime endDate,
-      Boolean wasPresent) {
+  public CourseAppointmentEntity(Long id, LocalDateTime startDate, LocalDateTime endDate,
+      Boolean wasPresent, String courseCode) {
+    super(id);
     this.startDate = startDate;
     this.endDate = endDate;
     this.wasPresent = wasPresent;
+    this.courseCode = courseCode;
   }
-
-
-
 }

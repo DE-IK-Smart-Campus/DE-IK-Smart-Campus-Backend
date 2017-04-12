@@ -2,16 +2,19 @@ package hu.unideb.smartcampus.service.api.converter.todomain;
 
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import hu.unideb.smartcampus.persistence.entity.CourseAppointmentEntity;
 import hu.unideb.smartcampus.persistence.entity.CustomEventEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.service.api.domain.CustomEvent;
 import hu.unideb.smartcampus.service.api.domain.User;
 
@@ -22,12 +25,16 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
 
   private final Converter<CustomEventEntity, CustomEvent> customEventConverter;
 
+  private final Converter<CourseAppointmentEntity, CourseAppointment> courseConverter;
+
   @Autowired
   public UserEntityToUserConverter(
       final Converter<SubjectDetailsEntity, SubjectDetails> subjectDetailsConverter,
-      final Converter<CustomEventEntity, CustomEvent> customEventConverter) {
+      final Converter<CustomEventEntity, CustomEvent> customEventConverter,
+      final Converter<CourseAppointmentEntity, CourseAppointment> courseConverter) {
     this.subjectDetailsConverter = subjectDetailsConverter;
     this.customEventConverter = customEventConverter;
+    this.courseConverter = courseConverter;
   }
 
   @Override
@@ -49,7 +56,16 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
         .singleChatList(userEntity.getSingleChatList())
         .customEventList(
             convertCustomEventListToCustomEventEntityList(userEntity.getCustomEvents()))
+        .courseAppointmentList(
+            convertCourseAppointmentToCourseAppointmentEntity(userEntity.getCourseAppointments()))
         .build();
+  }
+
+  private List<CourseAppointment> convertCourseAppointmentToCourseAppointmentEntity(
+      Set<CourseAppointmentEntity> courseAppointments) {
+    return courseAppointments == null ? null : courseAppointments.stream()
+        .map(course -> courseConverter.convert(course))
+        .collect(Collectors.toList());
   }
 
   private List<CustomEvent> convertCustomEventListToCustomEventEntityList(
@@ -60,9 +76,10 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
   }
 
   private List<SubjectDetails> convertSubjectDetailsSetToSubjectDetailsEntitySet(
-      final List<SubjectDetailsEntity> subjectDetailsEntitySet) {
+      final Set<SubjectDetailsEntity> subjectDetailsEntitySet) {
     return subjectDetailsEntitySet == null ? null : subjectDetailsEntitySet.stream()
         .map(subjectDetailsEntity -> subjectDetailsConverter.convert(subjectDetailsEntity))
         .collect(Collectors.toList());
   }
+
 }

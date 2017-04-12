@@ -33,7 +33,9 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectType;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarAppointmentDateTimeParser;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarSubjectDetailsParser;
+import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.service.api.domain.InstructorWrapper;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
 import hu.unideb.smartcampus.webservice.api.factory.HttpRequestType;
 import hu.unideb.smartcampus.webservice.api.neptun.StudentCourse;
@@ -117,41 +119,36 @@ public class CalendarServiceImpl implements CalendarService {
     }
   }
 
-  private void subjectBuilderListPopulator(final List<SubjectEvent> subjectEvents,
-      final SubjectEvent subjectEvent, final List<AppointmentTime> appointmentTime) {
-    final Optional<SubjectEvent> subjectEventOptional = subjectEvents.stream()
-        .filter(actualSubjectEvent -> actualSubjectEvent.equals(subjectEvent))
-        .findFirst();
-
-    if (subjectEventOptional.isPresent()) {
-      subjectEventOptional.get().getAppointmentTimeList().addAll(appointmentTime);
-    } else {
-      subjectEvent.getAppointmentTimeList().addAll(appointmentTime);
-      subjectEvents.add(subjectEvent);
-    }
-  }
-
   @Override
-  public List<SubjectEvent> downloadStudentTimeTable(StudentTimeTable studentTimeTable) {
-    List<SubjectEvent> events = new ArrayList<>();
+  public StudentTimeTableInfo downloadStudentTimeTable(StudentTimeTable studentTimeTable) {
     List<StudentCourse> courses = studentTimeTable.getCourses();
     Map<String, List<StudentCourse>> bySemester =
         courses.stream().collect(Collectors.groupingBy(StudentCourse::getSemester));
-    List<StudentCourse> lastSemesterCourses = new ArrayList<>(
+
+    List<StudentCourse> lastSemesterCourses =
+        new ArrayList<>(bySemester.get(findLastSemesterKey(bySemester.keySet())));
+    List<StudentCourse> filteredLastSemesterCourses = new ArrayList<>(
         getFilteredCourseList(bySemester.get(findLastSemesterKey(bySemester.keySet()))));
-    for (StudentCourse studentCourse : lastSemesterCourses) {
-      
+
+    List<CourseAppointment> courseAppointments = new ArrayList<>();
+    List<SubjectEvent> events = new ArrayList<>();
+    for (StudentCourse studentCourse : filteredLastSemesterCourses) {
       SubjectDetails subjectDetails = createSubjectDetails(courses, studentCourse);
-      
-      subjectBuilderListPopulator(events,
-          SubjectEvent.builder()
-              .subjectDetails(subjectDetails)
-              .roomLocation(getRoomLocation(studentCourse))
-              .appointmentTimeList(Lists.newArrayList())
-              .build(),
-          getAppointmentListByCourseCode(courses, studentCourse.getCourseCode()));
+      SubjectEvent subjectEvent = SubjectEvent.builder()
+          .subjectDetails(subjectDetails)
+          .roomLocation(getRoomLocation(studentCourse))
+          .appointmentTimeList(Lists.newArrayList())
+          .build();
+      events.add(subjectEvent);
+      courseAppointments.addAll(
+          getAppointmentListByCourseCode(lastSemesterCourses,
+              studentCourse.getCourseCode()));
     }
-    return events;
+
+    return StudentTimeTableInfo.builder()
+        .subjectEvents(events)
+        .courseAppointments(courseAppointments)
+        .build();
   }
 
   private SubjectDetails createSubjectDetails(List<StudentCourse> courses,
@@ -211,17 +208,29 @@ public class CalendarServiceImpl implements CalendarService {
         .orElse(SubjectType.OTHER);
   }
 
-  private List<AppointmentTime> getAppointmentListByCourseCode(List<StudentCourse> courses,
+  private List<CourseAppointment> getAppointmentListByCourseCode(List<StudentCourse> courses,
       String courseCode) {
-    List<AppointmentTime> result = new ArrayList<>();
+    List<CourseAppointment> result = new ArrayList<>();
     List<StudentCourse> filteredCourseList = filterCoursesByCourseCode(courses, courseCode);
     for (StudentCourse studentCourse : filteredCourseList) {
-      result.add(AppointmentTime.builder()
-          .startDateTime(parseDate(studentCourse.getStartTime()))
-          .endDateTime(parseDate(studentCourse.getEndTime()))
-          .build());
+      if (isRealCourse(studentCourse)) {
+        result.add(buildCourseAppointement(studentCourse));
+      }
     }
     return result;
+  }
+
+  private boolean isRealCourse(StudentCourse studentCourse) {
+    return studentCourse.getStartTime() != null && studentCourse.getEndTime() != null;
+  }
+
+  private CourseAppointment buildCourseAppointement(StudentCourse studentCourse) {
+    return CourseAppointment.builder()
+        .courseCode(studentCourse.getCourseCode())
+        .startDate(parseDate(studentCourse.getStartTime()))
+        .endDate(parseDate(studentCourse.getEndTime()))
+        .wasPresent(false)
+        .build();
   }
 
   private LocalDateTime parseDate(String date) {
