@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api;
 import java.util.List;
 
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
+import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
 import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
@@ -20,11 +21,21 @@ public interface CalendarService {
    * @throws InputParseException if any problem occours during the process
    */
   List<SubjectEvent> downloadCalendar(String url) throws InputParseException;
-  
+
   /**
    * Download student time table and convert it to subject event.
+   * 
    * @param studentTimeTable student time table from Neptun.
    */
   StudentTimeTableInfo downloadStudentTimeTable(StudentTimeTable studentTimeTable);
+
+  /**
+   * 
+   * @param studentTimeTable
+   * @param subjectEvents
+   * @return
+   */
+  List<CourseAppointment> pairEventWithAppointement(StudentTimeTable studentTimeTable,
+      List<SubjectEvent> subjectEvents);
 
 }

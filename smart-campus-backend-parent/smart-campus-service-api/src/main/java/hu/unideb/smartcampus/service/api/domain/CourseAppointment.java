@@ -2,6 +2,7 @@ package hu.unideb.smartcampus.service.api.domain;
 
 import java.time.LocalDateTime;
 
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -35,15 +36,21 @@ public class CourseAppointment extends BaseObject<Long> {
   private final Boolean wasPresent;
 
   /**
+   * Subject event.
+   */
+  private final SubjectEvent subjectEvent;
+
+  /**
    * Constructs a course appointment entity.
    */
   @Builder
   public CourseAppointment(Long id, LocalDateTime startDate, LocalDateTime endDate,
-      Boolean wasPresent, String courseCode) {
+      Boolean wasPresent, String courseCode, SubjectEvent subjectEvent) {
     super(id);
     this.startDate = startDate;
     this.endDate = endDate;
     this.wasPresent = wasPresent;
     this.courseCode = courseCode;
+    this.subjectEvent = subjectEvent;
   }
 }

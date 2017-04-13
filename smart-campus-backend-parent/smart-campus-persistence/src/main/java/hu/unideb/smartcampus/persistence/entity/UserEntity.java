@@ -58,7 +58,11 @@ import lombok.ToString;
     @NamedQuery(name = "UserEntity.getSingleChatListByUsername",
         query = "SELECT list FROM UserEntity u join u.singleChatList list WHERE u.username = ?1"),
     @NamedQuery(name = "UserEntity.getMucChatListByUsername",
-        query = "SELECT list FROM UserEntity u join u.mucChatList list WHERE u.username = ?1")})
+        query = "SELECT list FROM UserEntity u join u.mucChatList list WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getCourseAppointmensWithinRange",
+        query = "SELECT course FROM UserEntity u join u.courseAppointments course WHERE u.username = ?1 AND course.subjectEvent.subjectDetailsEntity.startPeriod BETWEEN ?2 AND ?3"),
+    @NamedQuery(name = "UserEntity.getCourseAppointmentsBySubjectEvent",
+        query = "SELECT course FROM UserEntity u join u.courseAppointments course WHERE u.username = ?1 AND course.subjectEvent = ?2")})
 public class UserEntity extends BaseEntity<Long> {
 
   /**

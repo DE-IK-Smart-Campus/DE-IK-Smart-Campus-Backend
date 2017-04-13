@@ -20,6 +20,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "subject_event_appointment")
+@Deprecated
 public class AppointmentTimeEntity extends BaseEntity<Long> implements Serializable {
 
   private static final long serialVersionUID = 1418512641975571834L;

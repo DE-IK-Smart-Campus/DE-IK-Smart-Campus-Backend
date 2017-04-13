@@ -13,7 +13,6 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import lombok.Builder;
 import lombok.Data;
@@ -38,14 +37,21 @@ public class SubjectEventEntity extends BaseEntity<Long> {
   /**
    * Room location.
    */
-  @NotNull
+//  @NotNull
   @Column(name = "room_location")
   private String roomLocation;
+  
+  /**
+   * Course code.
+   */
+//  @NotNull
+  @Column(name = "course_code")
+  private String courseCode;
 
   /**
    * Subject details entity.
    */
-  @NotNull
+//  @NotNull
   @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
   @JoinColumns({
       @JoinColumn(name = "subject_details_name", referencedColumnName = "subject_name"),
@@ -57,10 +63,10 @@ public class SubjectEventEntity extends BaseEntity<Long> {
   /**
    * Appointment times.
    */
-  @NotNull
   @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
   @JoinColumns({
       @JoinColumn(name = "subject_event_id", referencedColumnName = "id")})
+  @Deprecated
   private List<AppointmentTimeEntity> appointmentTimes;
 
   /**
@@ -69,10 +75,12 @@ public class SubjectEventEntity extends BaseEntity<Long> {
   @Builder
   public SubjectEventEntity(final Long id, final String roomLocation,
       final SubjectDetailsEntity subjectDetailsEntity,
-      final List<AppointmentTimeEntity> appointmentTimes) {
+      final List<AppointmentTimeEntity> appointmentTimes,
+      final String courseCode) {
     super(id);
     this.roomLocation = roomLocation;
     this.subjectDetailsEntity = subjectDetailsEntity;
     this.appointmentTimes = appointmentTimes;
+    this.courseCode = courseCode;
   }
 }

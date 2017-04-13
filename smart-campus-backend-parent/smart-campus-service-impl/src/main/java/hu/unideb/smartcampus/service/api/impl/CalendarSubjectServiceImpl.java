@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.service.api.CalendarSubjectService;
 import hu.unideb.smartcampus.service.api.SubjectEventService;
-import hu.unideb.smartcampus.service.api.calendar.domain.subject.AppointmentTime;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
+import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.AppointmentTimeIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
@@ -31,37 +31,39 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
   @Autowired
   private SubjectEventService subjectEventService;
 
-
   @Transactional(readOnly = true)
   @Override
   public List<CalendarSubjectIqElement> getSubjectEvents(CalendarSubjectsIqRequest iq) {
     List<SubjectEvent> allSubjectEventByUsername =
         subjectEventService.getAllSubjectEventByUsername(iq.getStudent());
-    List<CalendarSubjectIqElement> subjectEvents = convertToIqElements(allSubjectEventByUsername);
+    List<CalendarSubjectIqElement> subjectEvents =
+        convertToIqElements(allSubjectEventByUsername, iq.getStudent());
     return subjectEvents;
   }
 
   private List<CalendarSubjectIqElement> convertToIqElements(
-      List<SubjectEvent> allSubjectEventByUsername) {
-    List<CalendarSubjectIqElement> subjectEvents = new ArrayList<>();
+      List<SubjectEvent> allSubjectEventByUsername, String username) {
+    List<CalendarSubjectIqElement> calendarEvents = new ArrayList<>();
     for (SubjectEvent subjectEvent : allSubjectEventByUsername) {
-      subjectEvents.add(buildIqElement(subjectEvent));
+      calendarEvents.add(buildIqElement(subjectEvent, subjectEventService
+          .getCourseAppointmentByUsernameAndSubjectEvent(username, subjectEvent)));
     }
-    return subjectEvents;
+    return calendarEvents;
   }
 
-  private CalendarSubjectIqElement buildIqElement(SubjectEvent subjectEvent) {
+  private CalendarSubjectIqElement buildIqElement(SubjectEvent subjectEvent,
+      List<CourseAppointment> list) {
     return CalendarSubjectIqElement.builder()
         .subjectName(subjectEvent.getSubjectDetails().getSubjectName())
         .where(subjectEvent.getRoomLocation())
-        .appointmentTimes(convertToIqElement(subjectEvent.getAppointmentTimeList()))
+        .appointmentTimes(convertToIqElement(list))
         .description(createDescriptionByTeachers(subjectEvent)).build();
   }
 
   private String createDescriptionByTeachers(SubjectEvent subjectEvent) {
     StringBuilder builder = new StringBuilder();
-//    List<String> teacherNames = subjectEvent.getSubjectDetails().getTeacherNames();
-//    build(builder, teacherNames);
+    // List<String> teacherNames = subjectEvent.getSubjectDetails().getTeacherNames();
+    // build(builder, teacherNames);
     return builder.toString();
   }
 
@@ -78,15 +80,15 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
   }
 
   private List<AppointmentTimeIqElement> convertToIqElement(
-      List<AppointmentTime> appointmentTimeList) {
+      List<CourseAppointment> appointmentTimeList) {
     return appointmentTimeList.stream().map(this::convertToIqElement).collect(Collectors.toList());
   }
 
-  private AppointmentTimeIqElement convertToIqElement(AppointmentTime appointmentTime) {
+  private AppointmentTimeIqElement convertToIqElement(CourseAppointment appointmentTime) {
     return AppointmentTimeIqElement.builder()
-        .from(appointmentTime.getStartDateTime().toEpochSecond(HUNGARIAN_OFFSET))
-        .to(appointmentTime.getEndDateTime().toEpochSecond(HUNGARIAN_OFFSET)).when(appointmentTime
-            .getStartDateTime().toLocalDate().atStartOfDay().toEpochSecond(HUNGARIAN_OFFSET)*1000)
+        .from(appointmentTime.getStartDate().toEpochSecond(HUNGARIAN_OFFSET))
+        .to(appointmentTime.getEndDate().toEpochSecond(HUNGARIAN_OFFSET)).when(appointmentTime
+            .getStartDate().toLocalDate().atStartOfDay().toEpochSecond(HUNGARIAN_OFFSET) * 1000)
         .build();
   }
 
@@ -98,7 +100,8 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
     List<SubjectEvent> subjectsWithinRange =
         subjectEventService.getSubjectEventWithinRangeByUsername(iq.getStudent(), startPeriod,
             endPeriod);
-    List<CalendarSubjectIqElement> subjectEvents = convertToIqElements(subjectsWithinRange);
+    List<CalendarSubjectIqElement> subjectEvents =
+        convertToIqElements(subjectsWithinRange, iq.getStudent());
     return subjectEvents;
   }
 

@@ -27,4 +27,9 @@ public interface SubjectEventRepository extends JpaRepository<SubjectEventEntity
    * Find subject event by subject details entity.
    */
   List<SubjectEventEntity> findBySubjectDetailsEntityAndRoomLocation(SubjectDetailsEntity subjectDetailsEntity, String roomLocation);
+  
+  /**
+   * Find subject event by subject details entity.
+   */
+  List<SubjectEventEntity> findBySubjectDetailsEntityAndRoomLocationAndCourseCode(SubjectDetailsEntity subjectDetailsEntity, String roomLocation,String courseCode);
 }

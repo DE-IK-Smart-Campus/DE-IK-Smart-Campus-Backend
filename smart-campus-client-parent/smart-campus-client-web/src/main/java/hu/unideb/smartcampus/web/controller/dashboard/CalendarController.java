@@ -39,6 +39,7 @@ public class CalendarController {
 
   /**
    * TODO.
+   * 
    * @return asd
    */
   @GetMapping
@@ -46,13 +47,16 @@ public class CalendarController {
     final ModelAndView modelAndView = new ModelAndView(CALENDAR_VIEW);
     final String name = principal.getName();
 
-    final List<CalendarSubject> calendarSubjectList = calendarService.getCalendarSubjects(LocalDate.of(2017, 1, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2)), LocalDate.of(2017, 5, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2)));
-    for (CalendarSubject calendarSubject : calendarSubjectList) {
-      LOGGER.info(calendarSubject.toString());
-    }
+    final List<CalendarSubject> calendarSubjectList = calendarService.getCalendarSubjects(
+        LocalDate.of(2017, 1, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2)),
+        LocalDate.of(2017, 5, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2)));
+    LOGGER.info("Size:{}", calendarSubjectList.size());
+    // for (CalendarSubject calendarSubject : calendarSubjectList) {
+    // LOGGER.info(calendarSubject.toString());
+    // }
 
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
     return modelAndView;
   }
-  
+
 }

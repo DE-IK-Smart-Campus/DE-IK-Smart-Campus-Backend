@@ -36,6 +36,7 @@ public class SubjectEventToSubjectEventEntityConverter implements Converter<Subj
   private SubjectEventEntity convertSubjectEventToSubjectEventEntity(final SubjectEvent subjectEvent) {
     return SubjectEventEntity.builder()
         .id(subjectEvent.getId())
+        .courseCode(subjectEvent.getCourseCode())
         .roomLocation(subjectEvent.getRoomLocation())
         .subjectDetailsEntity(convertSubjectDetailsToSubjectDetailsEntity(subjectEvent.getSubjectDetails()))
         .appointmentTimes(convertAppointmentTimeListToAppointmentTimeEntityList(subjectEvent.getAppointmentTimeList()))

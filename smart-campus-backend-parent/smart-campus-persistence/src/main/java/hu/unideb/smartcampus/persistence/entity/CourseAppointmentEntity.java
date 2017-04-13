@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Builder;
@@ -22,6 +25,13 @@ import lombok.ToString;
 @EqualsAndHashCode(exclude = {"wasPresent", "id"})
 @Table(name = "course_appointment")
 public class CourseAppointmentEntity extends BaseEntity<Long> {
+
+  /**
+   * Subject Event entity.
+   */
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "subject_event_id")
+  private SubjectEventEntity subjectEvent;
 
   /**
    * Course code.
@@ -52,11 +62,12 @@ public class CourseAppointmentEntity extends BaseEntity<Long> {
    */
   @Builder
   public CourseAppointmentEntity(Long id, LocalDateTime startDate, LocalDateTime endDate,
-      Boolean wasPresent, String courseCode) {
+      Boolean wasPresent, String courseCode, SubjectEventEntity subjectEvent) {
     super(id);
-    this.startDate = startDate;
     this.endDate = endDate;
+    this.startDate = startDate;
     this.wasPresent = wasPresent;
     this.courseCode = courseCode;
+    this.subjectEvent = subjectEvent;
   }
 }

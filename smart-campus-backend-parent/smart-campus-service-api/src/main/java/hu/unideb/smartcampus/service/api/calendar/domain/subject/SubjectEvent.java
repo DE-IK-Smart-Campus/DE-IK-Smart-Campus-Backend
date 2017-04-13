@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api.calendar.domain.subject;
 
 import java.util.List;
+
 import hu.unideb.smartcampus.service.api.domain.BaseObject;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,11 @@ public class SubjectEvent extends BaseObject<Long> {
   private final String roomLocation;
 
   /**
+   * Course code.
+   */
+  private final String courseCode;
+
+  /**
    * Appointment time list.
    */
   private final List<AppointmentTime> appointmentTimeList;
@@ -33,10 +39,11 @@ public class SubjectEvent extends BaseObject<Long> {
    */
   @Builder
   public SubjectEvent(final Long id, final SubjectDetails subjectDetails, final String roomLocation,
-                      final List<AppointmentTime> appointmentTimeList) {
+      final List<AppointmentTime> appointmentTimeList, final String courseCode) {
     super(id);
     this.subjectDetails = subjectDetails;
     this.roomLocation = roomLocation;
     this.appointmentTimeList = appointmentTimeList;
+    this.courseCode = courseCode;
   }
 }

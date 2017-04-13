@@ -34,7 +34,7 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
    */
   private final SubjectDetailsEntity sampleSubject = SubjectDetailsEntity.builder()
       .subjectName("AI").subjectType("LABORATORY").startPeriod(LocalDate.of(2000, 02, 01))
-      .endPeriod(LocalDate.of(2000, 05, 31)).teacherNames(Collections.emptyList()).build();
+      .endPeriod(LocalDate.of(2000, 05, 31)).instructors(Collections.emptyList()).build();
 
   /**
    * Admin user.

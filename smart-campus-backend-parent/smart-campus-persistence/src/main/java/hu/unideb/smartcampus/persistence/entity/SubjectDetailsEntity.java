@@ -46,6 +46,10 @@ public class SubjectDetailsEntity implements Serializable {
   @Column(name = "subject_type")
   private String subjectType;
 
+
+  /**
+   * Instructors.
+   */
   @ElementCollection
   @CollectionTable(name = "subject_details_teacher_names_relation", joinColumns = {
       @JoinColumn(name = "subject_details_name", referencedColumnName = "subject_name"),
@@ -53,8 +57,7 @@ public class SubjectDetailsEntity implements Serializable {
       @JoinColumn(name = "subject_details_start_period", referencedColumnName = "start_period"),
       @JoinColumn(name = "subject_details_end_period", referencedColumnName = "end_period")
   })
-  @Column(name="teacher_name")
-  private List<String> teacherNames;
+  private List<InstructorEmbedded> instructors;
 
   /**
    * Start date time.
@@ -74,11 +77,12 @@ public class SubjectDetailsEntity implements Serializable {
    * Builder.
    */
   @Builder
-  public SubjectDetailsEntity(final String subjectName, final String subjectType, final List<String> teacherNames,
-                              final LocalDate startPeriod, final LocalDate endPeriod) {
+  public SubjectDetailsEntity(final String subjectName, final String subjectType,
+      final List<InstructorEmbedded> instructors,
+      final LocalDate startPeriod, final LocalDate endPeriod) {
     this.subjectName = subjectName;
     this.subjectType = subjectType;
-    this.teacherNames = teacherNames;
+    this.instructors = instructors;
     this.startPeriod = startPeriod;
     this.endPeriod = endPeriod;
   }
