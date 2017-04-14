@@ -33,7 +33,7 @@ public class CustomEventEntityToCustomEventIq
   private Long getInLong(LocalDateTime source) {
     if (source == null)
       return null;
-    return source.toEpochSecond(ZoneOffset.ofHours(0));
+    return source.toEpochSecond(ZoneOffset.ofHours(2));
   }
 
 }
