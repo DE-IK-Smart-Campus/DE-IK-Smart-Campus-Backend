@@ -2,7 +2,6 @@ package hu.unideb.smartcampus.service.api.impl;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,13 +100,11 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
     List<SubjectEvent> subjectsWithinRange =
         subjectEventService.getSubjectEventWithinRangeByUsername(iq.getStudent(), startPeriod,
             endPeriod);
-    List<CalendarSubjectIqElement> subjectEvents =
-        convertToIqElements(subjectsWithinRange, iq.getStudent());
-    return subjectEvents;
+    return convertToIqElements(subjectsWithinRange, iq.getStudent());
   }
 
   private LocalDate getInLocalDate(Long period) {
-    return Instant.ofEpochMilli(period * 1000).atZone(ZoneId.systemDefault()).toLocalDate();
+    return Instant.ofEpochMilli(period * 1000).atZone(HUNGARIAN_OFFSET).toLocalDate();
   }
 
 }

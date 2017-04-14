@@ -7,6 +7,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqReque
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_START;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_WHEN;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.GUID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.REMINDER;
 import static hu.unideb.smartcampus.shared.iq.util.IqProviderUtil.closeTag;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Custom event IQ element.
+ * IQ element for custom event.
  */
 @Data
 @NoArgsConstructor
@@ -28,37 +29,42 @@ import lombok.NoArgsConstructor;
 public class CustomEventIqElement {
 
   /**
-   * Event name.
+   * Name of the event.
    */
   private String eventName;
 
   /**
-   * Event description.
+   * Description of the event.
    */
   private String eventDescription;
 
   /**
-   * Event place.
+   * Place of the event.
    */
   private String eventPlace;
 
   /**
-   * Event start.
+   * When is the event will happen, it is in Long but represent a LocalDate.
+   */
+  private Long eventWhen;
+
+  /**
+   * When the event starts, it is in Long but represent a LocalDateTime.
    */
   private Long eventStart;
 
   /**
-   * Event end.
+   * When the event ends, it is in Long but represent a LocalDateTime.
    */
   private Long eventEnd;
 
   /**
-   * Event repeat.
+   * Repetion of the event.
    */
   private String eventRepeat;
 
   /**
-   * Reminder.
+   * Reminder for the event.
    */
   private String reminder;
 
@@ -73,7 +79,8 @@ public class CustomEventIqElement {
   @Builder
   public CustomEventIqElement(String eventName, String eventDescription,
       String eventPlace,
-      Long eventStart, Long eventEnd, String eventRepeat, String reminder, String guid) {
+      Long eventStart, Long eventEnd, String eventRepeat, String reminder, String guid,
+      Long eventWhen) {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
     this.eventPlace = eventPlace;
@@ -82,6 +89,7 @@ public class CustomEventIqElement {
     this.eventRepeat = eventRepeat;
     this.reminder = reminder;
     this.guid = guid;
+    this.eventWhen = eventWhen;
   }
 
   public String toXml() {
@@ -90,6 +98,7 @@ public class CustomEventIqElement {
     builder.append(tag(EVENT_NAME, eventName));
     builder.append(tag(EVENT_DESCRIPTION, eventDescription));
     builder.append(tag(EVENT_PLACE, eventPlace));
+    builder.append(tag(EVENT_WHEN, eventWhen));
     builder.append(tag(EVENT_START, eventStart));
     builder.append(tag(EVENT_END, eventEnd));
     builder.append(tag(EVENT_REPEAT, eventRepeat));

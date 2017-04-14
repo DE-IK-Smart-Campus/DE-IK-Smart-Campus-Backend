@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -38,8 +39,13 @@ public class CustomEventServiceImplTest {
   private static final LocalDateTime EVENT_END_LOCALDATETIME =
       LocalDateTime.now().plus(1, ChronoUnit.HOURS);
 
+  private static final LocalDate EVENT_WHEN_LOCALDATE = LocalDate.now();
+
   private static final Long EVENT_START =
       EVENT_START_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(2));
+  
+  private static final Long EVENT_WHEN =
+      EVENT_WHEN_LOCALDATE.atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2));
 
   private static final Long EVENT_END =
       EVENT_END_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(2));
@@ -57,6 +63,7 @@ public class CustomEventServiceImplTest {
       .eventName(EVENT_NAME)
       .eventPlace(EVENT_PLACE)
       .eventDescription(EVENT_DESCRIPTION)
+      .eventWhen(EVENT_WHEN)
       .eventRepeat(EVENT_REPEAT)
       .reminder(EVENT_REMINDER)
       .eventStart(EVENT_START)
@@ -76,6 +83,7 @@ public class CustomEventServiceImplTest {
           .eventPlace(EVENT_PLACE)
           .eventDescription(EVENT_DESCRIPTION)
           .eventRepeat(EVENT_REPEAT)
+          .eventWhen(EVENT_WHEN_LOCALDATE)
           .eventStart(EVENT_START_LOCALDATETIME)
           .eventEnd(EVENT_END_LOCALDATETIME)
           .reminder(EVENT_REMINDER)

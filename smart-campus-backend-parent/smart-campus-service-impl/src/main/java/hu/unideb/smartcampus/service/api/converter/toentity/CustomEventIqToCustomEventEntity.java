@@ -1,8 +1,9 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
+import static hu.unideb.smartcampus.shared.calendar.CaldendarConstants.HUNGARIAN_OFFSET;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ public class CustomEventIqToCustomEventEntity
         .eventPlace(source.getEventPlace())
         .eventDescription(source.getEventDescription())
         .eventRepeat(source.getEventRepeat())
+        .eventWhen(getLocalDateTime(source.getEventWhen()).toLocalDate())
         .eventStart(getLocalDateTime(source.getEventStart()))
         .eventEnd(getLocalDateTime(source.getEventEnd()))
         .reminder(source.getReminder())
@@ -33,7 +35,7 @@ public class CustomEventIqToCustomEventEntity
 
   private LocalDateTime getLocalDateTime(Long source) {
     return source != null
-        ? Instant.ofEpochMilli(source).atZone(ZoneOffset.ofHours(1)).toLocalDateTime()
+        ? Instant.ofEpochMilli(source).atZone(HUNGARIAN_OFFSET).toLocalDateTime()
         : LocalDateTime.MIN;
   }
 
