@@ -7,7 +7,9 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import hu.unideb.smartcampus.persistence.entity.CourseAppointmentEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 
 /**
@@ -46,6 +48,18 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
    * Get MUC chat list by username.
    */
   List<String> getMucChatListByUsername(String username);
+
+  /**
+   * Get actual course appointements between range.
+   */
+  Set<CourseAppointmentEntity> getCourseAppointmensWithinRange(String username, LocalDate from,
+      LocalDate to);
+
+  /**
+   * Get actual course appointements between range.
+   */
+  Set<CourseAppointmentEntity> getCourseAppointmentsBySubjectEvent(String username,
+      SubjectEventEntity subjectEvent);
 }
 
 

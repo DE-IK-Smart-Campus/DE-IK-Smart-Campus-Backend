@@ -65,6 +65,11 @@ public class User extends BaseObject<Long> {
   private final List<CustomEvent> customEventList;
 
   /**
+   * Course appointment list.
+   */
+  private final List<CourseAppointment> courseAppointmentList;
+
+  /**
    * Builder pattern for creating user.
    * 
    * @param id the id of the user
@@ -78,7 +83,8 @@ public class User extends BaseObject<Long> {
       final String neptunIdentifier,
       final List<String> mucChatList,
       final List<String> singleChatList,
-      final List<CustomEvent> customEventList) {
+      final List<CustomEvent> customEventList,
+      final List<CourseAppointment> courseAppointmentList) {
     super(id);
     this.username = username;
     this.password = password;
@@ -89,5 +95,6 @@ public class User extends BaseObject<Long> {
     this.mucChatList = mucChatList;
     this.singleChatList = singleChatList;
     this.customEventList = customEventList;
+    this.courseAppointmentList = courseAppointmentList;
   }
 }

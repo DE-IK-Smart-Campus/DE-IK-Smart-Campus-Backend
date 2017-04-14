@@ -20,10 +20,14 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
+import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
+import hu.unideb.smartcampus.persistence.repository.SubjectEventRepository;
 import hu.unideb.smartcampus.service.api.CalendarEventType;
 import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.service.api.UnparsableCalendarEventSummaryException;
@@ -33,7 +37,9 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectType;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarAppointmentDateTimeParser;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarSubjectDetailsParser;
+import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.service.api.domain.InstructorWrapper;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
 import hu.unideb.smartcampus.webservice.api.factory.HttpRequestType;
 import hu.unideb.smartcampus.webservice.api.neptun.StudentCourse;
@@ -68,6 +74,12 @@ public class CalendarServiceImpl implements CalendarService {
 
   @Autowired
   private CalendarSubjectDetailsParser calendarSubjectDetailsParser;
+
+  @Autowired
+  private SubjectEventRepository subjectEventRepository;
+
+  @Autowired
+  private ConversionService converter;
 
   @Override
   public List<SubjectEvent> downloadCalendar(String urlToParse) throws InputParseException {
@@ -117,39 +129,41 @@ public class CalendarServiceImpl implements CalendarService {
     }
   }
 
-  private void subjectBuilderListPopulator(final List<SubjectEvent> subjectEvents,
-      final SubjectEvent subjectEvent, final List<AppointmentTime> appointmentTime) {
-    final Optional<SubjectEvent> subjectEventOptional = subjectEvents.stream()
-        .filter(actualSubjectEvent -> actualSubjectEvent.equals(subjectEvent))
-        .findFirst();
-
-    if (subjectEventOptional.isPresent()) {
-      subjectEventOptional.get().getAppointmentTimeList().addAll(appointmentTime);
-    } else {
-      subjectEvent.getAppointmentTimeList().addAll(appointmentTime);
-      subjectEvents.add(subjectEvent);
-    }
-  }
-
   @Override
-  public List<SubjectEvent> downloadStudentTimeTable(StudentTimeTable studentTimeTable) {
-    List<SubjectEvent> events = new ArrayList<>();
+  public StudentTimeTableInfo downloadStudentTimeTable(StudentTimeTable studentTimeTable) {
     List<StudentCourse> courses = studentTimeTable.getCourses();
     Map<String, List<StudentCourse>> bySemester =
         courses.stream().collect(Collectors.groupingBy(StudentCourse::getSemester));
-    List<StudentCourse> lastSemesterCourses = new ArrayList<>(
+
+    List<StudentCourse> lastSemesterCourses =
+        new ArrayList<>(bySemester.get(findLastSemesterKey(bySemester.keySet())));
+    List<StudentCourse> filteredLastSemesterCourses = new ArrayList<>(
         getFilteredCourseList(bySemester.get(findLastSemesterKey(bySemester.keySet()))));
-    for (StudentCourse studentCourse : lastSemesterCourses) {
+
+    List<CourseAppointment> courseAppointments = new ArrayList<>();
+    List<SubjectEvent> events = new ArrayList<>();
+    List<SubjectDetails> subjectDetailsList = new ArrayList<>();
+
+    for (StudentCourse studentCourse : filteredLastSemesterCourses) {
+
       SubjectDetails subjectDetails = createSubjectDetails(courses, studentCourse);
-      subjectBuilderListPopulator(events,
-          SubjectEvent.builder()
-              .subjectDetails(subjectDetails)
-              .roomLocation(getRoomLocation(studentCourse))
-              .appointmentTimeList(Lists.newArrayList())
-              .build(),
-          getAppointmentListByCourseCode(courses, studentCourse.getCourseCode()));
+      subjectDetailsList.add(subjectDetails);
+      SubjectEvent subjectEvent = SubjectEvent.builder()
+          .subjectDetails(subjectDetails)
+          .roomLocation(getRoomLocation(studentCourse))
+          .courseCode(studentCourse.getCourseCode())
+          .appointmentTimeList(Lists.newArrayList())
+          .build();
+      events.add(subjectEvent);
+      courseAppointments.addAll(
+          getAppointmentListByCourseCode(lastSemesterCourses,
+              studentCourse.getCourseCode(), subjectEvent));
     }
-    return events;
+
+    return StudentTimeTableInfo.builder()
+        .subjectEvents(events)
+        .subjectDetails(subjectDetailsList)
+        .build();
   }
 
   private SubjectDetails createSubjectDetails(List<StudentCourse> courses,
@@ -209,17 +223,31 @@ public class CalendarServiceImpl implements CalendarService {
         .orElse(SubjectType.OTHER);
   }
 
-  private List<AppointmentTime> getAppointmentListByCourseCode(List<StudentCourse> courses,
-      String courseCode) {
-    List<AppointmentTime> result = new ArrayList<>();
+  private List<CourseAppointment> getAppointmentListByCourseCode(List<StudentCourse> courses,
+      String courseCode, SubjectEvent subjectEvent) {
+    List<CourseAppointment> result = new ArrayList<>();
     List<StudentCourse> filteredCourseList = filterCoursesByCourseCode(courses, courseCode);
     for (StudentCourse studentCourse : filteredCourseList) {
-      result.add(AppointmentTime.builder()
-          .startDateTime(parseDate(studentCourse.getStartTime()))
-          .endDateTime(parseDate(studentCourse.getEndTime()))
-          .build());
+      if (isRealCourse(studentCourse)) {
+        result.add(buildCourseAppointement(studentCourse, subjectEvent));
+      }
     }
     return result;
+  }
+
+  private boolean isRealCourse(StudentCourse studentCourse) {
+    return studentCourse.getStartTime() != null && studentCourse.getEndTime() != null;
+  }
+
+  private CourseAppointment buildCourseAppointement(StudentCourse studentCourse,
+      SubjectEvent subjectEvent) {
+    return CourseAppointment.builder()
+        .courseCode(studentCourse.getCourseCode())
+        .startDate(parseDate(studentCourse.getStartTime()))
+        .endDate(parseDate(studentCourse.getEndTime()))
+        .subjectEvent(subjectEvent)
+        .wasPresent(false)
+        .build();
   }
 
   private LocalDateTime parseDate(String date) {
@@ -272,6 +300,38 @@ public class CalendarServiceImpl implements CalendarService {
   private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
     Map<Object, Boolean> seen = new ConcurrentHashMap<>();
     return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+  }
+
+  @Override
+  public List<CourseAppointment> pairEventWithAppointement(StudentTimeTable studentTimeTable,
+      List<SubjectEvent> subjectEvents) {
+    List<StudentCourse> courses = studentTimeTable.getCourses();
+    Map<String, List<StudentCourse>> bySemester =
+        courses.stream().collect(Collectors.groupingBy(StudentCourse::getSemester));
+
+    List<StudentCourse> lastSemesterCourses =
+        new ArrayList<>(bySemester.get(findLastSemesterKey(bySemester.keySet())));
+    List<StudentCourse> filteredLastSemesterCourses = new ArrayList<>(
+        getFilteredCourseList(bySemester.get(findLastSemesterKey(bySemester.keySet()))));
+
+    List<CourseAppointment> courseAppointments = new ArrayList<>();
+
+    for (StudentCourse studentCourse : filteredLastSemesterCourses) {
+
+      SubjectDetails subjectDetails = createSubjectDetails(courses, studentCourse);
+      List<SubjectEventEntity> findBySubjectDetailsEntity =
+          subjectDetails == null ? null : subjectEventRepository.findBySubjectDetailsEntity(
+              converter.convert(subjectDetails, SubjectDetailsEntity.class));
+
+      if (findBySubjectDetailsEntity != null) {
+        findBySubjectDetailsEntity.forEach(subjectEventEntity -> courseAppointments.addAll(
+            getAppointmentListByCourseCode(lastSemesterCourses,
+                studentCourse.getCourseCode(),
+                converter.convert(subjectEventEntity, SubjectEvent.class))));
+      }
+    }
+    
+    return courseAppointments;
   }
 
 }

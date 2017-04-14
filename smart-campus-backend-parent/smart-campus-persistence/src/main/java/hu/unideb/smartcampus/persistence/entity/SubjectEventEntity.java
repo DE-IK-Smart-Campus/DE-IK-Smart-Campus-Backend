@@ -3,17 +3,17 @@ package hu.unideb.smartcampus.persistence.entity;
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_SUBJECT_EVENT_DETAILS;
 
 import java.util.List;
+
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,14 +37,21 @@ public class SubjectEventEntity extends BaseEntity<Long> {
   /**
    * Room location.
    */
-  @NotNull
+//  @NotNull
   @Column(name = "room_location")
   private String roomLocation;
+  
+  /**
+   * Course code.
+   */
+//  @NotNull
+  @Column(name = "course_code")
+  private String courseCode;
 
   /**
    * Subject details entity.
    */
-  @NotNull
+//  @NotNull
   @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
   @JoinColumns({
       @JoinColumn(name = "subject_details_name", referencedColumnName = "subject_name"),
@@ -56,20 +63,24 @@ public class SubjectEventEntity extends BaseEntity<Long> {
   /**
    * Appointment times.
    */
-  @NotNull
-  @ElementCollection
-  @CollectionTable(name = "subject_event_appointment", joinColumns = @JoinColumn(name = "subject_event_id", referencedColumnName = "id"))
+  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @JoinColumns({
+      @JoinColumn(name = "subject_event_id", referencedColumnName = "id")})
+  @Deprecated
   private List<AppointmentTimeEntity> appointmentTimes;
 
   /**
    * Builder.
    */
   @Builder
-  public SubjectEventEntity(final Long id, final String roomLocation, final SubjectDetailsEntity subjectDetailsEntity,
-                            final List<AppointmentTimeEntity> appointmentTimes) {
+  public SubjectEventEntity(final Long id, final String roomLocation,
+      final SubjectDetailsEntity subjectDetailsEntity,
+      final List<AppointmentTimeEntity> appointmentTimes,
+      final String courseCode) {
     super(id);
     this.roomLocation = roomLocation;
     this.subjectDetailsEntity = subjectDetailsEntity;
     this.appointmentTimes = appointmentTimes;
+    this.courseCode = courseCode;
   }
 }

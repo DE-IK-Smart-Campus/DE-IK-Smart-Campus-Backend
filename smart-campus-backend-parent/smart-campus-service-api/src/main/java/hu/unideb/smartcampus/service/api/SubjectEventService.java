@@ -6,6 +6,7 @@ import java.util.List;
 
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
+import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 
 /**
  * Subject event service.
@@ -24,13 +25,21 @@ public interface SubjectEventService {
 
   /**
    * Save.
+   * @return 
    */
-  void save(SubjectEvent subjectEvent);
+  SubjectEvent save(SubjectEvent subjectEvent);
+  
+  /**
+   * Save if not exists in db.
+   * @return 
+   */
+  SubjectEvent saveIfNotExists(SubjectEvent subjectEvent);
 
   /**
    * Save.
+   * @return 
    */
-  void save(List<SubjectEvent> subjectEvents);
+  List<SubjectEvent> save(List<SubjectEvent> subjectEvents);
 
   /**
    * Get all subject event by user name.
@@ -47,4 +56,6 @@ public interface SubjectEventService {
    * Save subjects to student.
    */
   void saveSubjectEvents(final String neptunIdentifier, final String userName) throws IOException;
+  
+  List<CourseAppointment> getCourseAppointmentByUsernameAndSubjectEvent(String username, SubjectEvent subjectEvent);
 }

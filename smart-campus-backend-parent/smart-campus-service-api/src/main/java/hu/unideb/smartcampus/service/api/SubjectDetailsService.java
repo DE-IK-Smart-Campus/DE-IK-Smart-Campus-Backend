@@ -17,13 +17,15 @@ public interface SubjectDetailsService {
 
   /**
    * Save.
+   * @return 
    */
-  void save(SubjectDetails subjectDetails);
+  SubjectDetails save(SubjectDetails subjectDetails);
 
   /**
    * Save.
+   * @return 
    */
-  void save(List<SubjectDetails> subjectDetailsList);
+  List<SubjectDetails> save(List<SubjectDetails> subjectDetailsList);
 
   /**
    * Get all subject details by username.

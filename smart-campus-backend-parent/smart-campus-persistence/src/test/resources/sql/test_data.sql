@@ -78,9 +78,18 @@ insert into subject_details(subject_name,subject_type, start_period, end_period)
 
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
+insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Mesterséges intelligencia alapjai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
+
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
+
+--subject event
+insert into subject_event(room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values ('IK-F01','Mesterséges intelligencia alapjai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
+
+insert into subject_event(room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values ('IK-123','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
+
+insert into subject_event(room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values ('IK-202','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
 ---------------------------------------------------------------------------------
 
