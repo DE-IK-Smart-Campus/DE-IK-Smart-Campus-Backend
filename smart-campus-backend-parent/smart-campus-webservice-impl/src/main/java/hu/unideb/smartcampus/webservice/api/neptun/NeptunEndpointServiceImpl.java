@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.annotation.Resource;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -82,8 +82,11 @@ public class NeptunEndpointServiceImpl implements NeptunEndpointService {
   private <T> T fireRequest(String url, Class<?> clazz)
       throws IOException {
     Client client = createClient();
-    WebTarget target = client.target(url);
-    Response response = target.request().get();
+    Response response = client
+        .register(JsonContentTypeResponseFilter.class)
+        .target(url)
+        .request(MediaType.APPLICATION_JSON)
+        .get();
     checkIfUnauthorizedIfYesGenerateTokenAndFireRequestAgain(url, clazz, response);
     return (T) response.readEntity(clazz);
   }

@@ -1,7 +1,5 @@
 package hu.unideb.smartcampus.service.api;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -43,21 +41,13 @@ public class CalendarServiceImpl implements CalendarService {
    */
   @Override
   public List<CalendarSubject> getCalendarSubjects(Long startPeriod, Long endPeriod) {
-    LocalDateTime now = LocalDateTime.now();
-    LOGGER.info("Getting calendar subjects for student");
-    LOGGER.info("Request started:{}", now);
+    LOGGER.info("Getting calendar subjects for student.");
     final CalendarSubjectsIqHandler iqHandler =
         new CalendarSubjectsIqHandler(ejabberdUser.getConnection(), domain, startPeriod, endPeriod);
     final CalendarSubjectsIqRequest iqRequest = iqHandler.getResult();
-    LOGGER.info("Response arrived at:{} dev:{}", LocalDateTime.now(),
-        ChronoUnit.MILLIS.between(LocalDateTime.now(), now));
     final Converter<List<CalendarSubjectIqElement>, List<CalendarSubject>> converter =
         new CalendarSubjectListConverter();
-    now = LocalDateTime.now();
-    LOGGER.info("Conversion started at:{}", now);
     List<CalendarSubject> convert = converter.convert(iqRequest.getSubjectEvents());
-    LOGGER.info("Conversion ended at:{} dev:{}", LocalDateTime.now(),
-        ChronoUnit.MILLIS.between(LocalDateTime.now(), now));
     return convert;
   }
 }

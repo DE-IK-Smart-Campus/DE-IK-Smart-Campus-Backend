@@ -51,10 +51,6 @@ public class CalendarController {
         LocalDate.of(2017, 1, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2)),
         LocalDate.of(2017, 5, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2)));
     LOGGER.info("Size:{}", calendarSubjectList.size());
-    // for (CalendarSubject calendarSubject : calendarSubjectList) {
-    // LOGGER.info(calendarSubject.toString());
-    // }
-
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
     return modelAndView;
   }

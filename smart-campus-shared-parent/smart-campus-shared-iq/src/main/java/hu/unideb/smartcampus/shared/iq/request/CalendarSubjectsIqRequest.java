@@ -35,7 +35,7 @@ public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
   /**
    * Element.
    */
-  public static final String ELEMENT = "calendarSubjects";
+  public static final String ELEMENT = "cS";
 
   /**
    * Student's username.
