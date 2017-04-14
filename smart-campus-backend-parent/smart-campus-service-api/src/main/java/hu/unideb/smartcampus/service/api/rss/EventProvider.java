@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface EventProvider {
 
-  List<Event> getNonExistingEvents();
+  List<Event> getEventsBetween(Long since, Long until);
   
 }

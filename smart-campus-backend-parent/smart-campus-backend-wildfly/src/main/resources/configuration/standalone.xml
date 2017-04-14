@@ -430,6 +430,8 @@
                     value="@facebook.clientsecretid@" />
                 <simple name="java:global/facebook.clientid"
                     value="@facebook.clientid@" />
+                <simple name="java:global/facebook.pageid"
+                    value="@facebook.pageid@" />
             </bindings>
             <remote-naming />
         </subsystem>

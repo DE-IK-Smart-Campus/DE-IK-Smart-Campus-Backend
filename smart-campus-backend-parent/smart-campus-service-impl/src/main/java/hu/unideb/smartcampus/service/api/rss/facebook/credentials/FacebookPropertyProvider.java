@@ -11,7 +11,7 @@ import com.google.common.collect.ImmutableMap;
 
 @Component
 public class FacebookPropertyProvider {
-  
+
   private Map<FacebookProperty, String> props;
 
   private FacebookPropertiesHolder properties;
@@ -24,13 +24,13 @@ public class FacebookPropertyProvider {
   @PostConstruct
   protected void initConfigProperties() {
     this.props = ImmutableMap.<FacebookProperty, String>builder()
-        .put(FacebookProperty.CLIENT_ID,properties.clientId)
-        .put(FacebookProperty.CLIENT_SECRET_ID,properties.clientSecretId)
-        .build();
+        .put(FacebookProperty.CLIENT_ID, properties.clientId)
+        .put(FacebookProperty.CLIENT_SECRET_ID, properties.clientSecretId)
+        .put(FacebookProperty.PAGE_ID, properties.pageId).build();
 
   }
 
   public String getProperty(FacebookProperty property) {
     return props.get(property);
-  }  
+  }
 }

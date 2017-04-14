@@ -13,4 +13,7 @@ public class FacebookPropertiesHolder {
   @Resource(lookup = "java:global/facebook.clientsecretid")
   String clientSecretId;
 
+  @Resource(lookup = "java:global/facebook.pageid")
+  String pageId;
+
 }

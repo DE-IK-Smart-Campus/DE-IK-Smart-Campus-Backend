@@ -1,63 +1,37 @@
 package hu.unideb.smartcampus.service.api.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.JobDetailFactoryBean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
-
-import hu.unideb.smartcampus.service.api.rss.RssPollerQuartzJob;
-import hu.unideb.smartcampus.service.api.xmpp.XmppLoginJob;
 
 @Configuration
 public class QuartzConfiguration {
 
-  @Bean
-  public JobDetailFactoryBean facebookRssJob() {
-    JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
-    jobDetailFactoryBean.setJobClass(RssPollerQuartzJob.class);
-    jobDetailFactoryBean.setDurability(true);
-    return jobDetailFactoryBean;
-  }
+  @Autowired
+  private DataSource dataSource;
 
-  @Bean
-  public CronTriggerFactoryBean facebookRssTrigger() {
-    CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-    cronTriggerFactoryBean.setJobDetail(facebookRssJob().getObject());
-    cronTriggerFactoryBean.setCronExpression("0 0/1 * * * ?");
-    return cronTriggerFactoryBean;
-  }
-  
-  @Bean
-  public JobDetailFactoryBean loginJob() {
-    JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
-    jobDetailFactoryBean.setJobClass(XmppLoginJob.class);
-    jobDetailFactoryBean.setDurability(true);
-    return jobDetailFactoryBean;
-  }
-
-  @Bean
-  public CronTriggerFactoryBean loginTrigger() {
-    CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-    cronTriggerFactoryBean.setJobDetail(loginJob().getObject());
-    cronTriggerFactoryBean.setCronExpression("0 0/1 * * * ?");
-    return cronTriggerFactoryBean;
-  }
+  @Autowired
+  private ResourceLoader resourceLoader;
 
   @Bean
   public SchedulerFactoryBean schedulerFactoryBean() {
     SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
     schedulerFactoryBean.setJobFactory(springBeanJobFactory());
-    schedulerFactoryBean.setTriggers(loginTrigger().getObject(),facebookRssTrigger().getObject());
-    schedulerFactoryBean.setJobDetails(loginJob().getObject(),facebookRssJob().getObject());
-    
+    Resource resource = resourceLoader.getResource("classpath:quartz.properties");
+    schedulerFactoryBean.setConfigLocation(resource);
+    schedulerFactoryBean.setDataSource(dataSource);
     return schedulerFactoryBean;
   }
 
   @Bean
-  public SpringBeanJobFactory springBeanJobFactory(){
+  public SpringBeanJobFactory springBeanJobFactory() {
     return new SpringBeanJobFactory();
   }
-  
+
 }
