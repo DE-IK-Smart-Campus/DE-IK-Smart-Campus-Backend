@@ -264,6 +264,11 @@ public class Fields {
     public static final String EVENT_PLACE = "eventPlace";
 
     /**
+     * Event when field.
+     */
+    public static final String EVENT_WHEN = "eventWhen";
+    
+    /**
      * Event start field.
      */
     public static final String EVENT_START = "eventStart";
