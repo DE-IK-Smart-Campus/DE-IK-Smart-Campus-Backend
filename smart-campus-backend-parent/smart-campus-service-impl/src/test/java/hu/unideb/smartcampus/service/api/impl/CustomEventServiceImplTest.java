@@ -39,10 +39,10 @@ public class CustomEventServiceImplTest {
       LocalDateTime.now().plus(1, ChronoUnit.HOURS);
 
   private static final Long EVENT_START =
-      EVENT_START_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(0));
+      EVENT_START_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(2));
 
   private static final Long EVENT_END =
-      EVENT_END_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(0));;
+      EVENT_END_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(2));
 
   private static final String EVENT_REPEAT = "EventRepeat";
 

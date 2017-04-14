@@ -20,6 +20,7 @@ public class CustomEventIqToCustomEventEntity
   @Override
   public CustomEventEntity convert(CustomEventIqElement source) {
     return CustomEventEntity.builder()
+        .guid(source.getGuid())
         .eventName(source.getEventName())
         .eventPlace(source.getEventPlace())
         .eventDescription(source.getEventDescription())
