@@ -36,7 +36,7 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
   public List<MucRoom> getMucRooms() {
     AbstractXMPPConnection connection = ejabberdUser.getConnection();
     // TODO : Use vCard to get nickname.
-    String nick = connection.getUser().toString();
+    String nick = connection.getUser().toString().split("@")[0];
     final MultiUserChatIqHandler handler =
         new MultiUserChatIqHandler(connection, domain);
     ListUserChatsIqRequest result = handler.getResult();
