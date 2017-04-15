@@ -7,6 +7,7 @@ import java.util.List;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
+import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 
 /**
  * Subject event service.
@@ -55,7 +56,7 @@ public interface SubjectEventService {
   /**
    * Save subjects to student.
    */
-  void saveSubjectEvents(final String neptunIdentifier, final String userName) throws IOException;
+  List<SubjectEvent> saveSubjectEvents(StudentTimeTable studentTimeTable, final String userName) throws IOException;
   
   List<CourseAppointment> getCourseAppointmentByUsernameAndSubjectEvent(String username, SubjectEvent subjectEvent);
 }

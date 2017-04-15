@@ -1,7 +1,6 @@
 package hu.unideb.smartcampus.persistence.repository;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -42,12 +41,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
   /**
    * Get single chat list by username.
    */
-  List<String> getSingleChatListByUsername(String username);
+  Set<String> getSingleChatListByUsername(String username);
 
   /**
    * Get MUC chat list by username.
    */
-  List<String> getMucChatListByUsername(String username);
+  Set<String> getMucChatListByUsername(String username);
 
   /**
    * Get actual course appointements between range.

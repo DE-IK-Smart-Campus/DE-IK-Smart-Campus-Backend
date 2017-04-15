@@ -2,6 +2,8 @@ package hu.unideb.smartcampus.webservice.api.ejabberd;
 
 import java.util.Map;
 
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.GetRoomOccupantsResponse;
+
 /**
  * Multi User Chat service.
  *
@@ -46,6 +48,11 @@ public interface MultiUserChatService {
    * @param roomName room to be destroyed.
    */
   void destroyRoom(String roomName);
-
-
+  
+  /**
+   * Get room occupants of given room.
+   * @param room room name.
+   * @return response object.
+   */
+  GetRoomOccupantsResponse getRoomOccupants(String room);
 }

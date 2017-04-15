@@ -11,7 +11,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -156,7 +155,7 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
    */
   @Test
   public void getMucChatListByUsername() throws Exception {
-    List<String> mucList = userRepository.getMucChatListByUsername(USERNAME_ADMIN);
+    Set<String> mucList = userRepository.getMucChatListByUsername(USERNAME_ADMIN);
     Assert.assertFalse(mucList.isEmpty());
     Assert.assertEquals(3, mucList.size());
   }
@@ -167,7 +166,7 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
    */
   @Test
   public void getSingleChatListByUsername() throws Exception {
-    List<String> singleChat = userRepository.getSingleChatListByUsername(USERNAME_ADMIN);
+    Set<String> singleChat = userRepository.getSingleChatListByUsername(USERNAME_ADMIN);
     Assert.assertFalse(singleChat.isEmpty());
     Assert.assertEquals(2, singleChat.size());
   }
