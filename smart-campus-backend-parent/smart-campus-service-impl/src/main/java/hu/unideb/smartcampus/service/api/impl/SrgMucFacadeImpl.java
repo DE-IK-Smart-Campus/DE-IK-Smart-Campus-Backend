@@ -46,7 +46,7 @@ public class SrgMucFacadeImpl implements SrgMucFacade {
   @Override
   public List<String> generateMuc(List<SubjectEvent> events, String user) {
     return events.stream()
-        .map(event -> createMuc(event))
+        .map(this::createMuc)
         .collect(Collectors.toList());
   }
 
@@ -93,8 +93,13 @@ public class SrgMucFacadeImpl implements SrgMucFacade {
     builder.append(event.getSubjectDetails().getSubjectName()).append(" - ");
     builder.append(event.getSubjectDetails().getSubjectType()).append(" - ");
     builder.append(event.getCourseCode()).append(" - ");
-    builder.append(event.getSubjectDetails().getSemester());
+    builder.append(returnRealString(event));
     return builder.toString();
+  }
+
+  private String returnRealString(SubjectEvent event) {
+    String semester = event.getSubjectDetails().getSemester();
+    return semester != null ? semester : "Unknown";
   }
 
   private String replaceAllUnknownChars(String name) {
