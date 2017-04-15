@@ -20,6 +20,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import hu.unideb.smartcampus.webservice.api.ejabberd.MultiUserChatService;
 import hu.unideb.smartcampus.webservice.api.ejabberd.domain.MucMember;
 import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.CreateRoomRequest;
@@ -79,7 +82,8 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
     if (statusValidator.isOk(response)) {
       LOGGER.info("Multi user chat room with name {} created.", roomName);
     } else {
-      LOGGER.info("Multi user chat room could not been created, status info:{}", response.getStatusInfo());
+      LOGGER.info("Multi user chat room could not been created, status info:{}",
+          response.getStatusInfo());
     }
   }
 
@@ -125,14 +129,27 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
   @Override
   public void createRoomWithOptions(String roomName, Map<String, String> options) {
     LOGGER.info("Creating new multi user chat (MUC) with name:{}, with options.", roomName);
-    final CreateRoomRequest createRoomRequest = CreateRoomRequest.builder().name(roomName)
-        .host(host).service(service).options(options).build();
+    final CreateRoomRequest createRoomRequest = CreateRoomRequest
+        .builder()
+        .name(roomName)
+        .host(host)
+        .service(service)
+        .options(options)
+        .build();
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      String writeValueAsString = mapper.writeValueAsString(createRoomRequest);
+      LOGGER.debug(writeValueAsString);
+    } catch (JsonProcessingException e) {
+      LOGGER.error("Error on creating JSON.", e);
+    }
     final Response response = this.clientResponseProvider
         .sendPostRequest(MULTI_USER_CHAT_CREATE_ROOM_WITH_OPT_COMMAND, createRoomRequest);
     if (statusValidator.isOk(response)) {
       LOGGER.info("Multi user chat room with name {} created with given options.", roomName);
     } else {
-      LOGGER.info("Multi user chat room could not been created, status info:{}", response.getStatusInfo());
+      LOGGER.info("Multi user chat room could not been created, status info:{}",
+          response.getStatusInfo());
     }
   }
 

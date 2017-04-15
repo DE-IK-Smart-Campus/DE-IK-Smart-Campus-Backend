@@ -37,8 +37,11 @@ public class SrgMucFacadeImpl implements SrgMucFacade {
   @Autowired
   private SharedRosterService sharedRosterService;
 
-  @Resource(lookup = "java:global/smartcampus.xmpp.domain")
-  private String domain;
+  /**
+   * MUC domain.
+   */
+  @Resource(lookup = "java:global/smartcampus.xmpp.mucservice")
+  private String mucDomain;
 
   /**
    * {@inheritDoc}.
@@ -73,7 +76,7 @@ public class SrgMucFacadeImpl implements SrgMucFacade {
   }
 
   private String getRoomNameById(String roomId) {
-    return roomId + AT + domain;
+    return roomId + AT + mucDomain;
   }
 
   private void createSharedRosterGroup(SubjectEvent event, String user) {
