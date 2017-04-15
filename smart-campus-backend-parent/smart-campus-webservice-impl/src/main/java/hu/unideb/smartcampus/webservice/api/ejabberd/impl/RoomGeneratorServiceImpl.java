@@ -43,7 +43,7 @@ public class RoomGeneratorServiceImpl implements RoomGeneratorService {
     options.put("allow_change_subj", FALSE);
     options.put("allow_query_users", TRUE);
     options.put("allow_private_messages", FALSE);
-    options.put("allow_private_messages_from_visitors", FALSE);
+    options.put("allow_private_messages_from_visitors", "anyone");
     options.put("allow_visitor_status", FALSE);
     options.put("allow_visitor_nickchange", FALSE);
     options.put("moderated", TRUE);
@@ -59,9 +59,9 @@ public class RoomGeneratorServiceImpl implements RoomGeneratorService {
     options.put("public_list", TRUE);
     options.put("mam", TRUE);
     options.put("persistent", TRUE);
+    options.put("logging", FALSE);
+    options.put("anonymous", TRUE);
     options.put("title", roomName);
-    options.put("description", roomName);
-    options.put("subject", roomName);
     return options;
   }
 
