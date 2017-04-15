@@ -1,12 +1,12 @@
 package hu.unideb.smartcampus.service.api;
 
 import java.util.List;
-import hu.unideb.smartcampus.domain.calendar.CalendarSubject;
+import hu.unideb.smartcampus.domain.calendar.CalendarEvent;
 
 /**
  * Calendar service to use IQ.
  */
 public interface CalendarService {
 
-  List<CalendarSubject> getCalendarSubjects(Long startPeriod, Long endPeriod);
+  List<CalendarEvent> getCalendarSubjectEvents(Long startPeriod, Long endPeriod);
 }

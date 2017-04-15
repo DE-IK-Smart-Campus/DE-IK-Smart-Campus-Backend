@@ -42,7 +42,7 @@ public class CalendarControllerTest extends AbstractControllerTest {
   @Test
   public void loadCalendarViewShouldLoadCalendarView() throws Exception {
     when(principal.getName()).thenReturn(PRINCIPAL_NAME);
-    when(calendarService.getCalendarSubjects(anyLong(), anyLong())).thenReturn(Collections.emptyList());
+    when(calendarService.getCalendarSubjectEvents(anyLong(), anyLong())).thenReturn(Collections.emptyList());
     this.mockMvc.perform(get(REQUEST_URL_DASHBOARD_CALENDAR).principal(principal))
         .andExpect(status().isOk())
         .andExpect(view().name(VIEW_NAME_DASHBOARD_CALENDAR))
