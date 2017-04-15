@@ -55,8 +55,8 @@ public class RoomGeneratorServiceImpl implements RoomGeneratorService {
     options.put("max_users", MAX_USERS);
     options.put("allow_voice_requests", FALSE);
     options.put("allow_subscription", FALSE);
-    options.put("public", FALSE);
-    options.put("public_list", FALSE);
+    options.put("public", TRUE);
+    options.put("public_list", TRUE);
     options.put("mam", TRUE);
     options.put("persistent", TRUE);
     options.put("title", roomName);
