@@ -1,7 +1,5 @@
 package hu.unideb.smartcampus.shared.iq.request.element;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
