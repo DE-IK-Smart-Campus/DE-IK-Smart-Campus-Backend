@@ -11,7 +11,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public abstract class AbstractParserTest {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractParserTest.class);
+//  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractParserTest.class);
 
   public <T> T getParsedObject(T object) throws Exception {
     XmlPullParser parser = new MXParser();
@@ -27,7 +27,7 @@ public abstract class AbstractParserTest {
     xml.append("<" + iq.getElement() + ">");
     xml.append(iq.toXml());
     xml.append("</" + iq.getElement() + ">");
-    LOGGER.debug(xml.toString());
+//    LOGGER.debug(xml.toString());
     return xml;
   }
 

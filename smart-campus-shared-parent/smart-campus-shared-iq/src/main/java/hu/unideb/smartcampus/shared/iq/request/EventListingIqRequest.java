@@ -13,7 +13,7 @@ public class EventListingIqRequest extends BaseSmartCampusIqRequest {
   public static final String TAG_NAME_UNTIL = "until";
   public static final String TAG_NAME_EVENTS = "events";
 
-  public static final String ELEMENT = "events";
+  public static final String ELEMENT = "outsourceevents";
 
   public EventListingIqRequest() {
     super(ELEMENT);

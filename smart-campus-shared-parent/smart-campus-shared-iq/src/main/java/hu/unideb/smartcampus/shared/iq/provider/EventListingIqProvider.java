@@ -35,6 +35,7 @@ public class EventListingIqProvider extends BaseSmartCampusIqProvider<EventListi
           switch (tagname) {
             case EventListingIqRequest.TAG_NAME_EVENTS:
               events = new ArrayList<>();
+              request.setEvents(events);
               break;
             case EventIqElement.TAG_NAME_EVENT:
               event = new EventIqElement();
@@ -52,6 +53,9 @@ public class EventListingIqProvider extends BaseSmartCampusIqProvider<EventListi
           break;
         case XmlPullParser.END_TAG:
           switch (tagname){
+            case EventListingIqRequest.ELEMENT:
+              done = true;
+              break;
             case EventListingIqRequest.TAG_NAME_SINCE:
               request.setSince(Long.parseLong(text));
               break;
@@ -66,6 +70,7 @@ public class EventListingIqProvider extends BaseSmartCampusIqProvider<EventListi
               break;
             case EventIqElement.TAG_NAME_NAME:
               event.setName(text);
+              break;
             case EventIqElement.TAG_NAME_START_TIME:
               event.setStartTime(Long.parseLong(text));
               break;
@@ -74,6 +79,7 @@ public class EventListingIqProvider extends BaseSmartCampusIqProvider<EventListi
               break;
             case EventIqElement.TAG_NAME_EVENT_ID:
               event.setEventId(text);
+              break;
             case LocationIqElement.TAG_NAME_LOCATION:
               event.setLocation(location);
               break;

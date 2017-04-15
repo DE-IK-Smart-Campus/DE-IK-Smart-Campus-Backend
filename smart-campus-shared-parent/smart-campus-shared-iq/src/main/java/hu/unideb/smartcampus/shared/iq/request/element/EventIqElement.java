@@ -37,7 +37,7 @@ public class EventIqElement extends BaseIqElement{
   
   private LocationIqElement location;
   
-  public String toXml(){
+  public String toString(){
     StringBuilder sb = new StringBuilder();
     sb.append(openTag(TAG_NAME_EVENT));
     sb.append(tagIfNotNull(TAG_NAME_DESCRIPTION, description));

@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api.rss;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalQueries;
 
@@ -25,12 +26,12 @@ public class FacebookEventConverter implements Converter<FacebookEvent, Event> {
         .location(locationConverter.convert(source.getPlace())).build();
   }
 
-  public LocalDateTime parseDate(String date){
+  public ZonedDateTime parseDate(String date){
     if (date == null){
       return null;
     }
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
-    return LocalDateTime.parse(date, formatter);  
+    return ZonedDateTime.parse(date,formatter);  
   }
 
 }
