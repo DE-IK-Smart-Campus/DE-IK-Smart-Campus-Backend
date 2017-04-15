@@ -3,12 +3,16 @@ package hu.unideb.smartcampus.webservice.api.ejabberd.impl;
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_CREATE_ROOM_COMMAND;
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_CREATE_ROOM_WITH_OPT_COMMAND;
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_DESTROY_ROOM_COMMAND;
+import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_ROOM_OCCUPANTS;
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_SUBSCRIBE_COMMAND;
 import static hu.unideb.smartcampus.shared.muc.MultiUserChatConstants.MULTI_USER_CHAT_UNSUBSCRIBE_COMMAND;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
@@ -17,8 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.webservice.api.ejabberd.MultiUserChatService;
+import hu.unideb.smartcampus.webservice.api.ejabberd.domain.MucMember;
 import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.CreateRoomRequest;
 import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.DestroyRoomRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.GetRoomOccupantsRequest;
+import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.GetRoomOccupantsResponse;
 import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.SubscribeRequest;
 import hu.unideb.smartcampus.webservice.api.ejabberd.request.muc.UnsubscribeRequest;
 import hu.unideb.smartcampus.webservice.api.provider.ClientResponseProvider;
@@ -72,7 +79,7 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
     if (statusValidator.isOk(response)) {
       LOGGER.info("Multi user chat room with name {} created.", roomName);
     } else {
-      LOGGER.info("Multi user chat room could not been created.", roomName);
+      LOGGER.info("Multi user chat room could not been created, status info:{}", response.getStatusInfo());
     }
   }
 
@@ -125,7 +132,7 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
     if (statusValidator.isOk(response)) {
       LOGGER.info("Multi user chat room with name {} created with given options.", roomName);
     } else {
-      LOGGER.info("Multi user chat room could not been created.", roomName);
+      LOGGER.info("Multi user chat room could not been created, status info:{}", response.getStatusInfo());
     }
   }
 
@@ -144,5 +151,32 @@ public class MultiUserChatServiceImpl implements MultiUserChatService {
     } else {
       LOGGER.info("Coud not destroy room:{}", roomName);
     }
+  }
+
+  @Override
+  public GetRoomOccupantsResponse getRoomOccupants(String room) {
+    LOGGER.info("Get room occupants:{}", room);
+    final GetRoomOccupantsRequest getRoomOccupants =
+        GetRoomOccupantsRequest.builder()
+            .name(room)
+            .service(service)
+            .build();
+    List<MucMember> members = new ArrayList<>();
+    boolean found = false;
+    final Response response = this.clientResponseProvider
+        .sendPostRequest(MULTI_USER_CHAT_ROOM_OCCUPANTS, getRoomOccupants);
+    if (statusValidator.isOk(response)) {
+      LOGGER.info("Room {} exists, getting occupants.", room);
+      members = response.readEntity(new GenericType<List<MucMember>>() {});
+      found = true;
+    } else if (statusValidator.isBadRequest(response)) {
+      LOGGER.warn("Room {} does not exists.", room);
+    } else {
+      LOGGER.info("Something went wrong, status info:", response.getStatusInfo());
+    }
+    return GetRoomOccupantsResponse.builder()
+        .members(members)
+        .found(found)
+        .build();
   }
 }

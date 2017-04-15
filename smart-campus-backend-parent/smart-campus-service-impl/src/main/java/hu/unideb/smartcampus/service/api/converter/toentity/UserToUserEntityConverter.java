@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,11 +52,17 @@ public class UserToUserEntityConverter implements Converter<User, UserEntity> {
         .neptunIdentifier(user.getNeptunIdentifier())
         .actualSubjects(
             convertSubjectDetailsSetToSubjectDetailsEntitySet(user.getSubjectDetailsList()))
-        .mucChatList(user.getMucChatList())
-        .singleChatList(user.getSingleChatList())
+        .mucChatList(toSet(user.getMucChatList()))
+        .singleChatList(toSet(user.getSingleChatList()))
         .customEvents(convertCustomEventListToCustomEventEntityList(user.getCustomEventList()))
         .courseAppointments(convertToEntity(user.getCourseAppointmentList()))
         .build();
+  }
+
+  private HashSet<String> toSet(List<String> list) {
+    if (list == null)
+      return new HashSet<>();
+    return new HashSet<>(list);
   }
 
   private Set<CourseAppointmentEntity> convertToEntity(

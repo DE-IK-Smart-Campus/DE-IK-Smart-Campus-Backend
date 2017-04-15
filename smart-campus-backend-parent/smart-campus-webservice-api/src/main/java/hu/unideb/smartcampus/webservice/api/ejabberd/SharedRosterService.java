@@ -34,7 +34,7 @@ public interface SharedRosterService {
    * @param group group id.
    * @return Map which contains the group's details.
    */
-  Map<String, String> getGroupInformation(String group);
+  Map<Object, Object> getGroupInformation(String group);
 
   /**
    * Add user to given group.

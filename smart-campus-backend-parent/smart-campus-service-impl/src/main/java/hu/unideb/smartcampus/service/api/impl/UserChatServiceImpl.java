@@ -1,6 +1,8 @@
 package hu.unideb.smartcampus.service.api.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +52,7 @@ public class UserChatServiceImpl implements UserChatService {
   private void addJidToUser(String user, String partnerJid) {
     LOGGER.info("Adding {} to user:{}", partnerJid, user);
     UserEntity userEntity = userRepository.findByUsername(user);
-    List<String> singleChatList = userEntity.getSingleChatList();
+    Set<String> singleChatList = userEntity.getSingleChatList();
     singleChatList.add(partnerJid);
     userRepository.save(userEntity);
   }
@@ -63,7 +65,7 @@ public class UserChatServiceImpl implements UserChatService {
   public void addMucToUser(String user, String mucJid) {
     LOGGER.info("Adding MUC room {} to user:{}", mucJid, user);
     UserEntity userEntity = userRepository.findByUsername(user);
-    List<String> mucChatList = userEntity.getMucChatList();
+    Set<String> mucChatList = userEntity.getMucChatList();
     mucChatList.add(mucJid);
     userRepository.save(userEntity);
   }
@@ -75,7 +77,7 @@ public class UserChatServiceImpl implements UserChatService {
   @Override
   public List<String> listUserChats(String user) {
     LOGGER.info("Listing partners for {}", user);
-    return userRepository.getSingleChatListByUsername(user);
+    return new ArrayList<>(userRepository.getSingleChatListByUsername(user));
   }
 
   /**
@@ -85,7 +87,7 @@ public class UserChatServiceImpl implements UserChatService {
   @Override
   public List<String> listUserMucRooms(String user) {
     LOGGER.info("Listing MUC rooms for {}", user);
-    return userRepository.getMucChatListByUsername(user);
+    return new ArrayList<>(userRepository.getMucChatListByUsername(user));
   }
 
 }

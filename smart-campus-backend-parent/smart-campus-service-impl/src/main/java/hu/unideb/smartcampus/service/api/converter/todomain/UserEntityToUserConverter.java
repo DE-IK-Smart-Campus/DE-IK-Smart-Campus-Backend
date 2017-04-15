@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api.converter.todomain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,13 +53,19 @@ public class UserEntityToUserConverter implements Converter<UserEntity, User> {
         .role(userEntity.getRole())
         .subjectDetailsList(
             convertSubjectDetailsSetToSubjectDetailsEntitySet(userEntity.getActualSubjects()))
-        .mucChatList(userEntity.getMucChatList())
-        .singleChatList(userEntity.getSingleChatList())
+        .mucChatList(createList(userEntity.getMucChatList()))
+        .singleChatList(createList(userEntity.getSingleChatList()))
         .customEventList(
             convertCustomEventListToCustomEventEntityList(userEntity.getCustomEvents()))
         .courseAppointmentList(
             convertCourseAppointmentToCourseAppointmentEntity(userEntity.getCourseAppointments()))
         .build();
+  }
+
+  private ArrayList<String> createList(Set<String> list) {
+    if (list == null)
+      return new ArrayList<>();
+    return new ArrayList<>(list);
   }
 
   private List<CourseAppointment> convertCourseAppointmentToCourseAppointmentEntity(

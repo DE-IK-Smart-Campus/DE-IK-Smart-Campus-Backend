@@ -35,4 +35,9 @@ public class MultiUserChatConstants {
    * Endpoint URL for destroying room.
    */
   public static final String MULTI_USER_CHAT_DESTROY_ROOM_COMMAND = "/destroy_room";
+  
+  /**
+   * Endpoint URL for getting room occupants.
+   */
+  public static final String MULTI_USER_CHAT_ROOM_OCCUPANTS = "/get_room_occupants";
 }
