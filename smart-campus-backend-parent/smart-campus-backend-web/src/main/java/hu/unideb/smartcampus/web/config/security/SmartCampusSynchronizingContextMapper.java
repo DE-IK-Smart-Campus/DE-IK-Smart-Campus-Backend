@@ -17,6 +17,7 @@ import hu.unideb.smartcampus.service.api.AsyncSubjectEventService;
 import hu.unideb.smartcampus.service.api.UserRegistrationService;
 import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.domain.User;
+import hu.unideb.smartcampus.service.api.util.RoleUtil;
 import hu.unideb.smartcampus.shared.exception.RegistrationFailedException;
 
 /**
@@ -37,6 +38,9 @@ public class SmartCampusSynchronizingContextMapper extends LdapUserDetailsMapper
   @Autowired
   private AsyncSubjectEventService asyncSubjectEventService;
 
+  @Autowired
+  private RoleUtil roleUtil;
+
   @Transactional
   @Override
   public UserDetails mapUserFromContext(DirContextOperations ctx, String username,
@@ -53,14 +57,21 @@ public class SmartCampusSynchronizingContextMapper extends LdapUserDetailsMapper
 
     final UserDetails userDetails = super.mapUserFromContext(ctx, username, authorities);
     Optional<User> user = userService.getByUsername(username);
+    synchronizeUseTimeTableIfRequired(user);
+    return new SmartCampusUserDetails(userDetails, user.isPresent() ? user.get() : null);
+  }
+
+  private void synchronizeUseTimeTableIfRequired(Optional<User> optionalUser) {
     try {
-      if (user.isPresent()) {
-        syncTimeTable(user.get());
+      if (optionalUser.isPresent()) {
+        User user = optionalUser.get();
+        if (roleUtil.isStudent(user)) {
+          syncTimeTable(user);
+        }
       }
     } catch (IOException e) {
       LOGGER.error("Error while syncing student time table, try again later.");
     }
-    return new SmartCampusUserDetails(userDetails, user.isPresent() ? user.get() : null);
   }
 
   protected boolean userRegistrationRequired(String username) {

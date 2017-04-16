@@ -20,6 +20,7 @@ $.ajax({
             muc_nickname_from_jid: true,
             hide_muc_server: true,
             auto_join_on_invite: true,
+            auto_subscribe: true,
             blacklisted_plugins: ['converse-notification'],
             visible_toolbar_buttons: {
                 call: false,

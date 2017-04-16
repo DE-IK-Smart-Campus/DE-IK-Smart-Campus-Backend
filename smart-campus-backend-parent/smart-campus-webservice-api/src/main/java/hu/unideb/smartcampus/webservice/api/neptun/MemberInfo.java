@@ -52,6 +52,18 @@ public class MemberInfo {
   private String unidebNotificationEmail;
 
   /**
+   * Person primary affiliation.
+   */
+  @JsonProperty("eduPersonPrimaryAffiliation")
+  private String eduPersonPrimaryAffiliation;
+
+  /**
+   * Organization Unit.
+   */
+  @JsonProperty("ou")
+  private String ou;
+
+  /**
    * JPEG photo in encoded Base64 string.
    */
   @JsonProperty("jpegPhoto")
@@ -99,7 +111,9 @@ public class MemberInfo {
   @Builder
   public MemberInfo(String uid, String neptunIdentifier, String unidebPersonStatus,
       String unidebFaculty, String mail, String unidebNotificationEmail, String jpegPhoto,
-      String neptunKod, String azonosito, String teljnev, String elotag, String vnev, String unev) {
+      String neptunKod, String azonosito, String teljnev, String elotag, String vnev, String unev,
+      String ou,
+      String eduPersonPrimaryAffiliation) {
     this.uid = uid;
     this.neptunIdentifier = neptunIdentifier;
     this.unidebPersonStatus = unidebPersonStatus;
@@ -113,6 +127,8 @@ public class MemberInfo {
     this.elotag = elotag;
     this.vnev = vnev;
     this.unev = unev;
+    this.ou = ou;
+    this.eduPersonPrimaryAffiliation = eduPersonPrimaryAffiliation;
   }
 
 
