@@ -1,5 +1,5 @@
 $.ajax({
-           url: location.origin + '/smartcampus-client/calendar/subject-event',
+           url: location.origin + '/smartcampus-client/calendar/events',
            type: 'GET'
        }).then(function (subjectEvents) {
            console.log(subjectEvents);

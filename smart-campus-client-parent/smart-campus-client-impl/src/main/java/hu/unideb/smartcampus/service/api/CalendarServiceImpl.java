@@ -13,12 +13,14 @@ import java.util.stream.Stream;
 import javax.annotation.Resource;
 import hu.unideb.smartcampus.domain.calendar.CalendarEvent;
 import hu.unideb.smartcampus.domain.calendar.CalendarSubject;
-import hu.unideb.smartcampus.service.api.converter.CalendarSubjectListConverter;
-import hu.unideb.smartcampus.service.api.converter.ListCustomEventConverter;
-import hu.unideb.smartcampus.service.api.iq.AddCustomEventIqHandler;
-import hu.unideb.smartcampus.service.api.iq.CalendarSubjectsIqHandler;
-import hu.unideb.smartcampus.service.api.iq.DeleteCustomEventIqHandler;
-import hu.unideb.smartcampus.service.api.iq.ListCustomEventIqHandler;
+import hu.unideb.smartcampus.domain.calendar.CustomEvent;
+import hu.unideb.smartcampus.service.api.converter.calendar.CalendarSubjectListConverter;
+import hu.unideb.smartcampus.service.api.converter.calendar.ListCustomEventConverter;
+import hu.unideb.smartcampus.service.api.converter.calendar.ListCustomEventToCalendarEventListConverter;
+import hu.unideb.smartcampus.service.api.iq.calendar.AddCustomEventIqHandler;
+import hu.unideb.smartcampus.service.api.iq.calendar.CalendarSubjectsIqHandler;
+import hu.unideb.smartcampus.service.api.iq.calendar.DeleteCustomEventIqHandler;
+import hu.unideb.smartcampus.service.api.iq.calendar.ListCustomEventIqHandler;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
@@ -45,11 +47,19 @@ public class CalendarServiceImpl implements CalendarService {
   private EjabberdUser ejabberdUser;
 
   @Override
-  public List<CalendarEvent> getCustomEvents() {
+  public List<CustomEvent> getCustomEventsAsCustomEventList() {
     final ListCustomEventIqHandler iqHandler = new ListCustomEventIqHandler(ejabberdUser.getConnection(), domain);
     final ListCustomEventIqRequest iqRequest = iqHandler.getResult();
-    final Converter<ListCustomEventIqRequest, List<CalendarEvent>> converter = new ListCustomEventConverter();
-    return converter.convert(iqRequest);
+    final Converter<List<CustomEventIqElement>, List<CustomEvent>> converter = new ListCustomEventConverter();
+    return converter.convert(iqRequest.getCustomEvents());
+  }
+
+  @Override
+  public List<CalendarEvent> getCustomEventsAsCalendarEventList() {
+    final ListCustomEventIqHandler iqHandler = new ListCustomEventIqHandler(ejabberdUser.getConnection(), domain);
+    final ListCustomEventIqRequest iqRequest = iqHandler.getResult();
+    final Converter<List<CustomEventIqElement>, List<CalendarEvent>> converter = new ListCustomEventToCalendarEventListConverter();
+    return converter.convert(iqRequest.getCustomEvents());
   }
 
   /**

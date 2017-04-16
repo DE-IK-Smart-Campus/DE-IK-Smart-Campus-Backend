@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.service.api.converter;
+package hu.unideb.smartcampus.service.api.converter.calendar;
 
 import org.springframework.core.convert.converter.Converter;
 
