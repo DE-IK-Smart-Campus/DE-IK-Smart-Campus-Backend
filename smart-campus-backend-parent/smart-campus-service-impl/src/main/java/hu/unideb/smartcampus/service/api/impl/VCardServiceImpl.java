@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.unideb.smartcampus.service.api.VCardService;
+import hu.unideb.smartcampus.service.api.util.RoleUtil;
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.exception.XmppException;
 import hu.unideb.smartcampus.webservice.api.neptun.MemberInfo;
@@ -40,6 +41,12 @@ public class VCardServiceImpl implements VCardService {
    */
   @Autowired
   private NeptunEndpointService neptunEndpointService;
+
+  /**
+   * Role util.
+   */
+  @Autowired
+  private RoleUtil roleUtil;
 
   @Override
   public void updatevCard(String user, String password) {
@@ -90,8 +97,11 @@ public class VCardServiceImpl implements VCardService {
     vcard.setEmailHome(memberInfo.getUnidebNotificationEmail());
     vcard.setEmailWork(memberInfo.getMail());
     vcard.setOrganization(memberInfo.getUnidebFaculty());
+    vcard.setOrganizationUnit(memberInfo.getOu());
     vcard.setNickName(memberInfo.getUid());
     vcard.setAvatar(memberInfo.getJpegPhoto(), MIME_TYPE);
+    vcard.setField("NICKNAME", memberInfo.getTeljnev());
+    vcard.setField("ROLE", roleUtil.getRoleByNeptunInfo(neptunInfoByUid).toString());
   }
 
   @Override
