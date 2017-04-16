@@ -2,6 +2,15 @@ $.ajax({
            url: location.origin + '/smartcampus-client/chat-properties',
            type: 'GET'
        }).then(function (chatProperties) {
+    converse.plugins.add('loginPlugin', {
+        overrides: {
+            logIn: function () {
+                var _converse = this;
+                _converse.logOut();
+                _converse.__super__.logIn.apply(this, arguments);
+            }
+        }
+    });
     converse.initialize(
         {
             bosh_service_url: chatProperties.bosh_service_url,
@@ -22,6 +31,7 @@ $.ajax({
             auto_join_on_invite: true,
             auto_subscribe: true,
             blacklisted_plugins: ['converse-notification'],
+            whitelisted_plugins: ['loginPlugin'],
             visible_toolbar_buttons: {
                 call: false,
                 clear: true,
