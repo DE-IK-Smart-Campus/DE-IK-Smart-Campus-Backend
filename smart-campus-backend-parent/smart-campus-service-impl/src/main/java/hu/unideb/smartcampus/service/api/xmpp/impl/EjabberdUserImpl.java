@@ -11,7 +11,6 @@ import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
 import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.packet.Presence.Mode;
 import org.jivesoftware.smack.packet.Presence.Type;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
@@ -104,6 +103,7 @@ public class EjabberdUserImpl implements EjabberdUser {
   public void logout() {
     LOGGER.info("Logging out user.");
     if (connection != null) {
+      sendUnavailablePresence();
       disconnectAndClearConnection();
     }
     LOGGER.info("Logout was succesfull.");
@@ -166,10 +166,15 @@ public class EjabberdUserImpl implements EjabberdUser {
   }
 
   private void sendSmartCampusPresence() throws NotConnectedException, InterruptedException {
-    Presence presence = new Presence(Type.probe, "Smart Campus Presence", 10, Mode.dnd);
-    connection.sendStanza(presence);
+    connection.sendStanza(new Presence(Type.probe));
   }
 
-
+  private void sendUnavailablePresence() {
+    try {
+      connection.sendStanza(new Presence(Type.unavailable));
+    } catch (NotConnectedException | InterruptedException e) {
+      LOGGER.error("Error on setting presence to unavailable.", e);
+    }
+  }
 
 }

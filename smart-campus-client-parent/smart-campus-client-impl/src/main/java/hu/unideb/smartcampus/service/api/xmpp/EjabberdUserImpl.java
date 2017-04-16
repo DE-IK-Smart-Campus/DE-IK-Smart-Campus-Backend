@@ -7,9 +7,12 @@ import javax.annotation.PreDestroy;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
+import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.Presence.Type;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterGroup;
 import org.slf4j.Logger;
@@ -57,10 +60,12 @@ public class EjabberdUserImpl implements EjabberdUser {
 
   private Roster roster;
 
-  @PreDestroy
-  public void preDestroy() {
-    LOGGER.info("Logging out user on session destroy.");
-    logout();
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public AbstractXMPPConnection getConnection() {
+    return connection;
   }
 
   /**
@@ -87,22 +92,54 @@ public class EjabberdUserImpl implements EjabberdUser {
   public void logout() {
     LOGGER.info("Logging out user.");
     if (connection != null) {
+      sendUnavailablePresence();
       disconnectAndClearConnection();
     }
     LOGGER.info("Logout was succesfull.");
   }
 
-  /**
-   * {@inheritDoc}.
-   */
+  @PreDestroy
+  public void preDestroy() {
+    LOGGER.info("Logging out user on session destroy.");
+    logout();
+  }
+
   @Override
-  public AbstractXMPPConnection getConnection() {
-    return connection;
+  public void reauthenticate() throws XmppException {
+    SmartCampusUserDetails authentication = getAuthentication();
+    login(authentication.getUsername(), authentication.getPassword());
+  }
+
+  private void connect() throws ConnectionException {
+    try {
+      connection.connect();
+      LOGGER.info("Connected:{}", connection.isConnected());
+    } catch (SmackException | IOException | XMPPException | InterruptedException e) {
+      resetConnection();
+      LOGGER.error("Connection could not been established.", e);
+      throw new ConnectionException("Error on connection to Ejabberd server.", e);
+    }
   }
 
   private void disconnectAndClearConnection() {
     connection.disconnect();
     resetConnection();
+  }
+
+  private void doLogin() throws LoginException {
+    try {
+      connection.login();
+      sendSmartCampusPresence();
+    } catch (XMPPException | SmackException | IOException | InterruptedException e) {
+      resetConnection();
+      LOGGER.error("User could not log in.", e);
+      throw new LoginException("Error on logging in to Ejabberd server.", e);
+    }
+  }
+
+  private SmartCampusUserDetails getAuthentication() {
+    return (SmartCampusUserDetails) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal();
   }
 
   private void initConnection(String username, String password) throws XmppException {
@@ -127,40 +164,20 @@ public class EjabberdUserImpl implements EjabberdUser {
     }
   }
 
-  private void connect() throws ConnectionException {
-    try {
-      connection.connect();
-      LOGGER.info("Connected:{}", connection.isConnected());
-    } catch (SmackException | IOException | XMPPException | InterruptedException e) {
-      resetConnection();
-      LOGGER.error("Connection could not been established.", e);
-      throw new ConnectionException("Error on connection to Ejabberd server.", e);
-    }
-  }
-
   private void resetConnection() {
     connection = null;
   }
 
-  private void doLogin() throws LoginException {
+  private void sendSmartCampusPresence() throws NotConnectedException, InterruptedException {
+    connection.sendStanza(new Presence(Type.probe));
+  }
+
+  private void sendUnavailablePresence() {
     try {
-      connection.login();
-    } catch (XMPPException | SmackException | IOException | InterruptedException e) {
-      resetConnection();
-      LOGGER.error("User could not log in.", e);
-      throw new LoginException("Error on logging in to Ejabberd server.", e);
+      connection.sendStanza(new Presence(Type.unavailable));
+    } catch (NotConnectedException | InterruptedException e) {
+      LOGGER.error("Error on setting presence to unavailable.", e);
     }
-  }
-
-  @Override
-  public void reauthenticate() throws XmppException {
-    SmartCampusUserDetails authentication = getAuthentication();
-    login(authentication.getUsername(), authentication.getPassword());
-  }
-
-  private SmartCampusUserDetails getAuthentication() {
-    return (SmartCampusUserDetails) SecurityContextHolder.getContext().getAuthentication()
-        .getPrincipal();
   }
 
 }
