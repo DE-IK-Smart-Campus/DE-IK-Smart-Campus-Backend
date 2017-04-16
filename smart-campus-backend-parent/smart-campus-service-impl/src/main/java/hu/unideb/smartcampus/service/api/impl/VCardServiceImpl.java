@@ -26,6 +26,12 @@ import hu.unideb.smartcampus.webservice.api.neptun.NeptunInfo;
 @Service
 public class VCardServiceImpl implements VCardService {
 
+  private static final String ROLE_FIELD = "ROLE";
+
+  private static final String NICKNAME_FIELD = "NICKNAME";
+
+  private static final String V_CARD_SYNC = "vCard-sync";
+
   private static final String MIME_TYPE = "image/jpeg";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(VCardServiceImpl.class);
@@ -84,9 +90,9 @@ public class VCardServiceImpl implements VCardService {
 
   private void login(String user, String password) {
     try {
-      ejabberdUser.login(user, password);
-    } catch (XmppException e1) {
-      LOGGER.error("Error on logging into {} account to update vCard.", user);
+      ejabberdUser.login(user, password, V_CARD_SYNC, false);
+    } catch (XmppException e) {
+      LOGGER.error("Error on logging into {} account to update vCard.", user, e);
     }
   }
 
@@ -100,8 +106,8 @@ public class VCardServiceImpl implements VCardService {
     vcard.setOrganizationUnit(memberInfo.getOu());
     vcard.setNickName(memberInfo.getUid());
     vcard.setAvatar(memberInfo.getJpegPhoto(), MIME_TYPE);
-    vcard.setField("NICKNAME", memberInfo.getTeljnev());
-    vcard.setField("ROLE", roleUtil.getRoleByNeptunInfo(neptunInfoByUid).toString());
+    vcard.setField(NICKNAME_FIELD, memberInfo.getTeljnev());
+    vcard.setField(ROLE_FIELD, roleUtil.getRoleByNeptunInfo(neptunInfoByUid).toString());
   }
 
   @Override

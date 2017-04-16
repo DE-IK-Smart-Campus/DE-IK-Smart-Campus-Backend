@@ -6,9 +6,15 @@ import javax.annotation.PreDestroy;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
+import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.Presence.Mode;
+import org.jivesoftware.smack.packet.Presence.Type;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.jivesoftware.smackx.disco.ServiceDiscoveryManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,15 +50,17 @@ public class EjabberdUserImpl implements EjabberdUser {
   /**
    * XMPP connection to Ejabberd server.
    */
-  private XMPPBOSHConnection connection;
+  private AbstractXMPPConnection connection;
 
   @Autowired
   private XmppClientConfigurationService connectionConfigurationService;
 
-  @PreDestroy
-  public void preDestroy() {
-    LOGGER.info("Logging out user on session destroy.");
-    logout();
+  /**
+   * {@inheritDoc}.
+   */
+  @Override
+  public AbstractXMPPConnection getConnection() {
+    return connection;
   }
 
   /**
@@ -69,11 +77,24 @@ public class EjabberdUserImpl implements EjabberdUser {
     LOGGER.info("Login succesfull.");
   }
 
-  private void initFeatures() {
-    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(SubjectsIqRequest.ELEMENT);
+  @Override
+  public void login(String username, String password, String resource) throws XmppException {
+    final XMPPTCPConnectionConfiguration conf = connectionConfigurationService
+        .getXmppConfigurationByUserNameAndPasswordAndResource(username, password, resource);
+    connection = new XMPPTCPConnection(conf);
+    connect();
+    doLogin();
   }
 
-  private void initIqHandler() {
+  @Override
+  public void login(String username, String password, String resource, boolean sendPresence)
+      throws XmppException {
+    final XMPPTCPConnectionConfiguration conf = connectionConfigurationService
+        .getXmppConfigurationByUserNameAndPasswordAndResource(username, password, resource,
+            sendPresence);
+    connection = new XMPPTCPConnection(conf);
+    connect();
+    doLogin();
   }
 
   /**
@@ -88,17 +109,37 @@ public class EjabberdUserImpl implements EjabberdUser {
     LOGGER.info("Logout was succesfull.");
   }
 
-  /**
-   * {@inheritDoc}.
-   */
-  @Override
-  public AbstractXMPPConnection getConnection() {
-    return connection;
+  @PreDestroy
+  public void preDestroy() {
+    LOGGER.info("Logging out user on session destroy.");
+    logout();
+  }
+
+  private void connect() throws ConnectionException {
+    try {
+      connection.connect();
+      LOGGER.info("Connected:{}", connection.isConnected());
+    } catch (SmackException | IOException | XMPPException | InterruptedException e) {
+      resetConnection();
+      LOGGER.error("Connection could not been established.", e);
+      throw new ConnectionException("Error on connection to Ejabberd server.", e);
+    }
   }
 
   private void disconnectAndClearConnection() {
     connection.disconnect();
     resetConnection();
+  }
+
+  private void doLogin() throws LoginException {
+    try {
+      connection.login();
+      sendSmartCampusPresence();
+    } catch (XMPPException | SmackException | IOException | InterruptedException e) {
+      resetConnection();
+      LOGGER.error("User could not log in.", e);
+      throw new LoginException("Error on logging in to Ejabberd server.", e);
+    }
   }
 
   private void initConnection(String username, String password) throws XmppException {
@@ -114,29 +155,21 @@ public class EjabberdUserImpl implements EjabberdUser {
     doLogin();
   }
 
-  private void connect() throws ConnectionException {
-    try {
-      connection.connect();
-      LOGGER.info("Connected:{}", connection.isConnected());
-    } catch (SmackException | IOException | XMPPException | InterruptedException e) {
-      resetConnection();
-      LOGGER.error("Connection could not been established.", e);
-      throw new ConnectionException("Error on connection to Ejabberd server.", e);
-    }
+  private void initFeatures() {
+    ServiceDiscoveryManager.getInstanceFor(connection).addFeature(SubjectsIqRequest.ELEMENT);
   }
+
+  private void initIqHandler() {}
 
   private void resetConnection() {
     connection = null;
   }
 
-  private void doLogin() throws LoginException {
-    try {
-      connection.login();
-    } catch (XMPPException | SmackException | IOException | InterruptedException e) {
-      resetConnection();
-      LOGGER.error("User could not log in.", e);
-      throw new LoginException("Error on logging in to Ejabberd server.", e);
-    }
+  private void sendSmartCampusPresence() throws NotConnectedException, InterruptedException {
+    Presence presence = new Presence(Type.probe, "Smart Campus Presence", 10, Mode.dnd);
+    connection.sendStanza(presence);
   }
+
+
 
 }
