@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 import hu.unideb.smartcampus.service.api.UserAlreadyExistsRegistrationFailureHandlingStrategy;
 import hu.unideb.smartcampus.service.api.UserRegistrationService;
 import hu.unideb.smartcampus.service.api.UserService;
+import hu.unideb.smartcampus.service.api.VCardService;
 import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.shared.enumeration.Role;
 import hu.unideb.smartcampus.shared.exception.RegistrationFailedException;
@@ -38,6 +39,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
   @Autowired
   private NeptunEndpointService neptunEndpointService;
+
+  @Autowired
+  private VCardService vCardService;
 
   @Override
   @Transactional(rollbackFor = RegistrationFailedException.class,
@@ -76,6 +80,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
   private User createUser(String username, final String generatedPassword) throws IOException {
     NeptunInfo neptunInfo = neptunEndpointService.getNeptunInfoByUid(username);
+    vCardService.updatevCard(username, generatedPassword, neptunInfo);
     return User.builder()
         .username(username)
         .password(generatedPassword)
