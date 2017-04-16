@@ -2,7 +2,6 @@ $.ajax({
            url: location.origin + '/smartcampus-client/calendar/events',
            type: 'GET'
        }).then(function (subjectEvents) {
-           console.log(subjectEvents);
     $('#calendar').fullCalendar({
                                     header: {
                                         left: 'title',
