@@ -64,11 +64,11 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
           .setPort(boshPort)
           .setSecurityMode(SecurityMode.disabled)
           .setUsernameAndPassword(username, password)
-//          .setDebuggerEnabled(true)
+          // .setDebuggerEnabled(true)
           .build();
     } catch (XmppStringprepException e) {
-      LOGGER.error("Error on creating BOSH configuration.",e);
-      throw new XmppException("Error on creating BOSH configuration.",e);
+      LOGGER.error("Error on creating BOSH configuration.", e);
+      throw new XmppException("Error on creating BOSH configuration.", e);
     }
   }
 
@@ -77,19 +77,49 @@ public class XmppClientConfigurationServiceImpl implements XmppClientConfigurati
       String password) throws XmppException {
     LOGGER.info("Creating XMPP configuration to host:{} on port:{}", host, tcpPort);
     try {
-      return XMPPTCPConnectionConfiguration.builder()
-          .setHost(host)
-          .setXmppDomain(service)
-          .setPort(tcpPort)
-          .setResource(RESOURCE)
-          .setSecurityMode(SecurityMode.disabled)
-//          .setDebuggerEnabled(true) 
-          .setUsernameAndPassword(username, password)
-          .build();
+      return initTcpConfiguration(username, password, RESOURCE, true);
     } catch (XmppStringprepException e) {
-      LOGGER.error("Error on creating TCP configuration.",e);
-      throw new XmppException("Error on creating TCP configuration.",e);
+      LOGGER.error("Error on creating TCP configuration.", e);
+      throw new XmppException("Error on creating TCP configuration.", e);
     }
+  }
+
+  @Override
+  public XMPPTCPConnectionConfiguration getXmppConfigurationByUserNameAndPasswordAndResource(
+      String username, String password, String resource) throws XmppException {
+    LOGGER.info("Creating XMPP configuration to host:{} on port:{}", host, tcpPort);
+    try {
+      return initTcpConfiguration(username, password, resource, true);
+    } catch (XmppStringprepException e) {
+      LOGGER.error("Error on creating TCP configuration.", e);
+      throw new XmppException("Error on creating TCP configuration.", e);
+    }
+  }
+
+  @Override
+  public XMPPTCPConnectionConfiguration getXmppConfigurationByUserNameAndPasswordAndResource(
+      String username, String password, String resource, boolean sendPresence)
+      throws XmppException {
+    LOGGER.info("Creating XMPP configuration to host:{} on port:{}", host, tcpPort);
+    try {
+      return initTcpConfiguration(username, password, resource, sendPresence);
+    } catch (XmppStringprepException e) {
+      LOGGER.error("Error on creating TCP configuration.", e);
+      throw new XmppException("Error on creating TCP configuration.", e);
+    }
+  }
+
+  private XMPPTCPConnectionConfiguration initTcpConfiguration(String username, String password,
+      String resource, boolean sendPresence) throws XmppStringprepException {
+    return XMPPTCPConnectionConfiguration.builder()
+        .setHost(host)
+        .setXmppDomain(service)
+        .setPort(tcpPort)
+        .setSecurityMode(SecurityMode.disabled)
+        .setResource(resource)
+        .setUsernameAndPassword(username, password)
+        .setSendPresence(sendPresence)
+        .build();
   }
 
 }

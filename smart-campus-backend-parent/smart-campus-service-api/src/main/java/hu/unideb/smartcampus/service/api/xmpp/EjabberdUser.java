@@ -20,6 +20,27 @@ public interface EjabberdUser {
   void login(String username, String password) throws XmppException;
 
   /**
+   * Login user with credentials.
+   *
+   * @param username username.
+   * @param password password.
+   * @param resource resource.
+   * @throws XmppException thrown when SmackException occoured.
+   */
+  void login(String username, String password, String resource) throws XmppException;
+  
+  /**
+   * Login user with credentials.
+   *
+   * @param username username.
+   * @param password password.
+   * @param resource resource.
+   * @param sendPresence send presence or not.
+   * @throws XmppException thrown when SmackException occoured.
+   */
+  void login(String username, String password, String resource,boolean sendPresence) throws XmppException;
+
+  /**
    * Logout user.
    */
   void logout();
