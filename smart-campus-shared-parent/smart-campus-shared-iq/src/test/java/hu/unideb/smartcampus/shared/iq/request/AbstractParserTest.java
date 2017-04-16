@@ -4,8 +4,6 @@ import java.io.CharArrayReader;
 import java.io.Reader;
 
 import org.jivesoftware.smack.provider.IQProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xmlpull.mxp1.MXParser;
 import org.xmlpull.v1.XmlPullParser;
 
@@ -27,7 +25,6 @@ public abstract class AbstractParserTest {
     xml.append("<" + iq.getElement() + ">");
     xml.append(iq.toXml());
     xml.append("</" + iq.getElement() + ">");
-//    LOGGER.debug(xml.toString());
     return xml;
   }
 
