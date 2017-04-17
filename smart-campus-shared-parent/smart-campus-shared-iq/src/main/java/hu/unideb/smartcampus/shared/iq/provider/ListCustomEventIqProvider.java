@@ -7,6 +7,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqReque
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_START;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_WHEN;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.GUID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.REMINDER;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.STUDENT;
@@ -77,10 +78,12 @@ public class ListCustomEventIqProvider
       customEvent.setEventDescription(text);
     } else if (tagname.equalsIgnoreCase(EVENT_PLACE)) {
       customEvent.setEventPlace(text);
+    } else if (tagname.equalsIgnoreCase(EVENT_WHEN)) {
+      customEvent.setEventWhen(getLongValue(text));
     } else if (tagname.equalsIgnoreCase(EVENT_START)) {
-      customEvent.setEventStart(Long.valueOf(text));
+      customEvent.setEventStart(getLongValue(text));
     } else if (tagname.equalsIgnoreCase(EVENT_END)) {
-      customEvent.setEventEnd(Long.valueOf(text));
+      customEvent.setEventEnd(getLongValue(text));
     } else if (tagname.equalsIgnoreCase(EVENT_REPEAT)) {
       customEvent.setEventRepeat(text);
     } else if (tagname.equalsIgnoreCase(REMINDER)) {
@@ -89,6 +92,14 @@ public class ListCustomEventIqProvider
       customEvent.setGuid(text);
     } else if (tagname.equals(ListCustomEventIqRequest.ELEMENT)) {
       done = true;
+    }
+  }
+
+  private Long getLongValue(String text) {
+    try {
+      return Long.valueOf(text);
+    } catch (NumberFormatException e) {
+      return 1L;
     }
   }
 

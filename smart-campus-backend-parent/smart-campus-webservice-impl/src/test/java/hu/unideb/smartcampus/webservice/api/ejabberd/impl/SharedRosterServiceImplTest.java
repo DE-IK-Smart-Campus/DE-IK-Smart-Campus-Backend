@@ -87,7 +87,7 @@ public class SharedRosterServiceImplTest {
   /**
    * Displayed groups with endline character.
    */
-  private static final String DISPLAYED_GROUPS_PARAM = DISPLAYED_GROUPS + ENDLINE;
+  private static final String DISPLAYED_GROUPS_PARAM = DISPLAYED_GROUPS;
 
   /**
    * Test description.
@@ -280,7 +280,7 @@ public class SharedRosterServiceImplTest {
     final InformationRequest informationRequest =
         InformationRequest.builder().host(SMARTCAMPUS).group(TEST_GROUP).build();
 
-    Map<String, String> entity = new HashMap<>();
+    Map<Object, Object> entity = new HashMap<>();
     entity.put(TEST_KEY, TEST_VALUE);
 
     given(clientResponseProvider.sendPostRequest(
@@ -289,7 +289,7 @@ public class SharedRosterServiceImplTest {
     given(response.readEntity(sharedRosterService.MAP_GENERIC_TYPE)).willReturn(entity);
 
     // when
-    Map<String, String> groupInformation = sharedRosterService.getGroupInformation(TEST_GROUP);
+    Map<Object, Object> groupInformation = sharedRosterService.getGroupInformation(TEST_GROUP);
 
     // then
     Assert.assertEquals(TEST_VALUE, groupInformation.get(TEST_KEY));

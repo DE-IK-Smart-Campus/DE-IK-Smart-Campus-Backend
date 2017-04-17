@@ -43,5 +43,10 @@ public class SubjectDetails {
    * End date time.
    */
   private LocalDate endPeriod;
+  
+  /**
+   * Semester for creating MUC chat room and Shared roster group.
+   */
+  private String semester;
 
 }

@@ -7,15 +7,17 @@ import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_INFO_COMMAND;
 import static hu.unideb.smartcampus.shared.srg.SharedRosterGroupConstants.SHARED_ROSTER_GROUP_LIST_COMMAND;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
 import hu.unideb.smartcampus.webservice.api.ejabberd.SharedRosterService;
 import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.AddUserRequest;
 import hu.unideb.smartcampus.webservice.api.ejabberd.request.sharedroster.CreateGroupRequest;
@@ -37,7 +39,7 @@ import hu.unideb.smartcampus.webservice.api.validator.ResponseStatusValidator;
 @Service
 public class SharedRosterServiceImpl implements SharedRosterService {
   private static final Logger LOGGER = LoggerFactory.getLogger(SharedRosterServiceImpl.class);
-  protected static final GenericType<Map<String, String>> MAP_GENERIC_TYPE = new GenericType<Map<String, String>>() {
+  protected static final GenericType<Map<Object, Object>> MAP_GENERIC_TYPE = new GenericType<Map<Object, Object>>() {
   };
   protected static final GenericType<List<String>> LIST_GENERIC_TYPE = new GenericType<List<String>>() {
   };
@@ -121,7 +123,7 @@ public class SharedRosterServiceImpl implements SharedRosterService {
    * {@inheritDoc}.
    */
   @Override
-  public Map<String, String> getGroupInformation(String group) {
+  public Map<Object, Object> getGroupInformation(String group) {
     LOGGER.info("Getting group information, {}.", group);
 
     final InformationRequest informationRequest = InformationRequest.builder()
@@ -148,7 +150,7 @@ public class SharedRosterServiceImpl implements SharedRosterService {
 
   private String getDisplayedGroups(List<String> displayedGroups) {
     StringBuilder builder = new StringBuilder();
-    displayedGroups.stream().forEach(p -> builder.append(p).append("\n"));
+    displayedGroups.stream().forEach(p -> builder.append(p));
     return builder.toString();
   }
 

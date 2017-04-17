@@ -7,6 +7,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqReque
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_PLACE;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_REPEAT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_START;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.EVENT_WHEN;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.GUID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.REMINDER;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CustomEventIqRequestFields.STUDENT;
@@ -73,6 +74,8 @@ public class AddCustomEventIqProvider
       customEvent.setEventDescription(text);
     } else if (tagname.equalsIgnoreCase(EVENT_PLACE)) {
       customEvent.setEventPlace(text);
+    } else if (tagname.equalsIgnoreCase(EVENT_WHEN)) {
+      customEvent.setEventWhen(getLongValue(text));
     } else if (tagname.equalsIgnoreCase(EVENT_START)) {
       customEvent.setEventStart(getLongValue(text));
     } else if (tagname.equalsIgnoreCase(EVENT_END)) {

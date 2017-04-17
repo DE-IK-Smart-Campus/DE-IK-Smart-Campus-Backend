@@ -29,4 +29,29 @@ public interface XmppClientConfigurationService {
    */
   XMPPTCPConnectionConfiguration getXmppConfigurationByUserNameAndPassword(String username,
       String password) throws XmppException;
+
+  /**
+   * Creates XMPP TCP client configuration.
+   *
+   * @param username username.
+   * @param password password
+   * @param resource resource.
+   * @return XMPPTCPConnection configuration.
+   */
+  XMPPTCPConnectionConfiguration getXmppConfigurationByUserNameAndPasswordAndResource(
+      String username,
+      String password, String resource) throws XmppException;
+  
+  /**
+   * Creates XMPP TCP client configuration.
+   *
+   * @param username username.
+   * @param password password
+   * @param resource resource.
+   * @param sendPresence sending presence or not.
+   * @return XMPPTCPConnection configuration.
+   */
+  XMPPTCPConnectionConfiguration getXmppConfigurationByUserNameAndPasswordAndResource(
+      String username,
+      String password, String resource, boolean sendPresence) throws XmppException;
 }

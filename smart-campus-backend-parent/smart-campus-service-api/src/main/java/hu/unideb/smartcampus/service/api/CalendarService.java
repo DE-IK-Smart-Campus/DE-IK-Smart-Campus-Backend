@@ -4,9 +4,9 @@ import java.util.List;
 
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.CourseInfoWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
-import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 
 /**
  * A service for Calendar realted operations.
@@ -27,7 +27,7 @@ public interface CalendarService {
    * 
    * @param studentTimeTable student time table from Neptun.
    */
-  StudentTimeTableInfo downloadStudentTimeTable(StudentTimeTable studentTimeTable);
+  StudentTimeTableInfo downloadStudentTimeTable(CourseInfoWrapper courseInfoWrapper);
 
   /**
    * 
@@ -35,7 +35,6 @@ public interface CalendarService {
    * @param subjectEvents
    * @return
    */
-  List<CourseAppointment> pairEventWithAppointement(StudentTimeTable studentTimeTable,
-      List<SubjectEvent> subjectEvents);
+  List<CourseAppointment> pairEventWithAppointement(CourseInfoWrapper courseInfoWrapper);
 
 }

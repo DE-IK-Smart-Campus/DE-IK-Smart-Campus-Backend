@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,11 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.service.api.domain.Instructor;
 import hu.unideb.smartcampus.service.api.domain.User;
+import hu.unideb.smartcampus.service.api.domain.response.wrapper.CourseInfoWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
+import hu.unideb.smartcampus.service.api.util.StudentCourseUtil;
+import hu.unideb.smartcampus.webservice.api.ejabberd.MultiUserChatService;
+import hu.unideb.smartcampus.webservice.api.ejabberd.SharedRosterService;
 import hu.unideb.smartcampus.webservice.api.neptun.NeptunEndpointService;
 import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 
@@ -38,6 +44,9 @@ import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 public class SubjectEventServiceImpl implements SubjectEventService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SubjectEventServiceImpl.class);
+
+  @Resource(lookup = "java:global/smartcampus.xmpp.domain")
+  private String domain;
 
   private final SubjectEventRepository subjectEventRepository;
 
@@ -51,22 +60,24 @@ public class SubjectEventServiceImpl implements SubjectEventService {
 
   private final CalendarService calendarService;
 
-  private final NeptunEndpointService neptun;
+  private final StudentCourseUtil studentCourseUtil;
 
   /**
    */
   @Autowired
   public SubjectEventServiceImpl(SubjectEventRepository subjectEventRepository,
       SubjectDetailsService subjectDetailsService, ConversionService conversionService,
-      InstructorService instructorService,
-      UserService userService, CalendarService calendarService, NeptunEndpointService neptun) {
+      InstructorService instructorService, UserService userService, CalendarService calendarService,
+      NeptunEndpointService neptun, SharedRosterService sharedRosterService,
+      MultiUserChatService multiUserChatService,
+      StudentCourseUtil studentCourseUtil) {
     this.subjectEventRepository = subjectEventRepository;
     this.subjectDetailsService = subjectDetailsService;
     this.conversionService = conversionService;
     this.instructorService = instructorService;
     this.userService = userService;
     this.calendarService = calendarService;
-    this.neptun = neptun;
+    this.studentCourseUtil = studentCourseUtil;
   }
 
   @Transactional(readOnly = true)
@@ -110,7 +121,8 @@ public class SubjectEventServiceImpl implements SubjectEventService {
   @Override
   public List<SubjectEvent> save(final List<SubjectEvent> subjectEvents) {
     Assert.notNull(subjectEvents);
-    return subjectEvents.stream().map(subjectEvent -> saveIfNotExists(subjectEvent))
+    return subjectEvents.stream()
+        .map(subjectEvent -> saveIfNotExists(subjectEvent))
         .collect(Collectors.toList());
   }
 
@@ -133,22 +145,27 @@ public class SubjectEventServiceImpl implements SubjectEventService {
 
   @Transactional
   @Override
-  public void saveSubjectEvents(
-      final String neptunIdentifier,
+  public List<SubjectEvent> saveSubjectEvents(
+      final StudentTimeTable studentTimeTable,
       final String userName) throws IOException {
-    StudentTimeTable studentTimetable = neptun.getStudentTimetable(neptunIdentifier);
-    final StudentTimeTableInfo result = calendarService.downloadStudentTimeTable(studentTimetable);
 
-    List<SubjectDetails> saveSubjectDetailsFromTimeTable = saveSubjectDetailsFromTimeTable(result);
+    CourseInfoWrapper courseInfo =
+        studentCourseUtil.getCourseInfosByStudentTimeTable(studentTimeTable);
 
+    final StudentTimeTableInfo result = calendarService.downloadStudentTimeTable(courseInfo);
     final User user = userService.getByUsername(userName).get();
-    user.getSubjectDetailsList()
-        .addAll(saveSubjectDetailsFromTimeTable);
 
-    List<SubjectEvent> savedEvents = save(result.getSubjectEvents());
-    List<CourseAppointment> pairEventWithAppointement = calendarService.pairEventWithAppointement(studentTimetable, savedEvents);
+    final List<SubjectDetails> saveSubjectDetailsFromTimeTable =
+        saveSubjectDetailsFromTimeTable(result);
+    save(result.getSubjectEvents());
+    final List<CourseAppointment> pairEventWithAppointement =
+        calendarService.pairEventWithAppointement(courseInfo);
+    user.getSubjectDetailsList().addAll(saveSubjectDetailsFromTimeTable);
     user.getCourseAppointmentList().addAll(pairEventWithAppointement);
+
     userService.save(user);
+
+    return result.getSubjectEvents();
   }
 
   private List<SubjectDetails> saveSubjectDetailsFromTimeTable(final StudentTimeTableInfo result) {

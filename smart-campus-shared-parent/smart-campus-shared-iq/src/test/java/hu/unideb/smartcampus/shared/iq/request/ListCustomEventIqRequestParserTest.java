@@ -31,12 +31,15 @@ public class ListCustomEventIqRequestParserTest extends AbstractParserTest {
 
   private static final String EVENT_NAME = "EventName";
 
+  private static final Long EVENT_WHEN = 3L;
+
   private static final CustomEventIqElement CUSTOM_EVENT_IQ_ELEMENT = CustomEventIqElement.builder()
       .guid(GUID)
       .eventName(EVENT_NAME)
       .eventPlace(EVENT_PLACE)
       .eventDescription(EVENT_DESCRIPTION)
       .eventRepeat(EVENT_REPEAT)
+      .eventWhen(EVENT_WHEN)
       .eventStart(EVENT_START)
       .eventEnd(EVENT_END)
       .reminder(EVENT_REMINDER)
