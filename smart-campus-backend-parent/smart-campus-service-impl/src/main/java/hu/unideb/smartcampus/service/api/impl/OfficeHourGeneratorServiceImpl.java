@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -100,7 +99,6 @@ public class OfficeHourGeneratorServiceImpl implements OfficeHourGeneratorServic
   }
 
   private Timestamp getTimestamp(LocalDateTime time) {
-    return new Timestamp(time.atZone(ZoneOffset.ofHours(HUNGARIAN_PLUS_HOURS)).toEpochSecond() * 1000);
+    return Timestamp.valueOf(time);
   }
-
 }
