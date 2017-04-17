@@ -21,6 +21,7 @@ import hu.unideb.smartcampus.persistence.repository.CustomEventRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.converter.toentity.CustomEventIqToCustomEventEntity;
 import hu.unideb.smartcampus.service.api.converter.toiq.CustomEventEntityToCustomEventIq;
+import hu.unideb.smartcampus.service.api.util.DateUtil;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
@@ -43,7 +44,7 @@ public class CustomEventServiceImplTest {
 
   private static final Long EVENT_START =
       EVENT_START_LOCALDATETIME.toEpochSecond(ZoneOffset.ofHours(2));
-  
+
   private static final Long EVENT_WHEN =
       EVENT_WHEN_LOCALDATE.atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2));
 
@@ -104,10 +105,15 @@ public class CustomEventServiceImplTest {
   private CustomEventRepository customEventRepository;
 
   @Spy
-  private CustomEventEntityToCustomEventIq entityToIqConverter;
+  private DateUtil dateUtil = new DateUtil();
 
   @Spy
-  private CustomEventIqToCustomEventEntity iqToEntityConverter;
+  private CustomEventEntityToCustomEventIq entityToIqConverter =
+      new CustomEventEntityToCustomEventIq(dateUtil);
+
+  @Spy
+  private CustomEventIqToCustomEventEntity iqToEntityConverter =
+      new CustomEventIqToCustomEventEntity(dateUtil);
 
   /**
    * Test get custom events by IQ.

@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.web.controller.dashboard;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
@@ -71,6 +72,7 @@ public class CalendarController {
         eventPlace,
         eventStart,
         eventEnd,
+        null,
         null,
         null,
         null
