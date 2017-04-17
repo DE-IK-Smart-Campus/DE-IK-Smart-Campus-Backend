@@ -6,6 +6,7 @@
   <thymeleaf th:replace="fragments/js-locale-frag :: js-locale-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: calendar-head-frag"/>
+  <thymeleaf th:replace="fragments/head-frag :: datetimepicker-head-frag"/>
 </head>
 <body>
 <div class="dashboard-page">
@@ -51,5 +52,6 @@
   </div>
 </div>
 <script type="text/javascript" th:src="@{/js/calendar.js}"></script>
+<script type="text/javascript" th:src="@{/js/datetimepicker.js}"></script>
 </body>
 </html>

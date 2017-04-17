@@ -93,13 +93,16 @@ public class CalendarServiceImpl implements CalendarService {
 
   private Stream<CalendarEvent> buildCalendarEventsFromCalendarSubject(CalendarSubject calendarSubject) {
     return calendarSubject.getAppointmentTimes().stream()
-        .map(appointmentTime -> {
-              return new CalendarEvent(
-                  calendarSubject.getSubjectName(),
-                  LocalDateTime.of(appointmentTime.getWhen().toLocalDateTime().toLocalDate(),DateUtil.getInLocalTimeByEpochSecond(appointmentTime.getFrom())).format(DateTimeFormatter.ISO_DATE_TIME),
-                  LocalDateTime.of(appointmentTime.getWhen().toLocalDateTime().toLocalDate(),DateUtil.getInLocalTimeByEpochSecond(appointmentTime.getTo())).format(DateTimeFormatter.ISO_DATE_TIME)
-              );
-            }
+        .map(appointmentTime ->
+            new CalendarEvent(
+                calendarSubject.getSubjectName(),
+                LocalDateTime
+                    .of(appointmentTime.getWhen().toLocalDateTime().toLocalDate(), DateUtil.getInLocalTimeByEpochSecond(appointmentTime.getFrom()))
+                    .format(DateTimeFormatter.ISO_DATE_TIME),
+                LocalDateTime
+                    .of(appointmentTime.getWhen().toLocalDateTime().toLocalDate(), DateUtil.getInLocalTimeByEpochSecond(appointmentTime.getTo()))
+                    .format(DateTimeFormatter.ISO_DATE_TIME)
+            )
         );
   }
 }

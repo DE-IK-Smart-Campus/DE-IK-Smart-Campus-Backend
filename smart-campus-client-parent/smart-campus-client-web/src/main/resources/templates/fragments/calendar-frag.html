@@ -24,13 +24,23 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" th:text="#{calendar.custom_events.add.event_start}"></label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" th:placeholder="#{calendar.custom_events.add.event_start}" name="eventStart"/>
+            <div class='input-group date' id='datetimepickerstart'>
+              <input type='text' class="form-control" name="eventStart"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" th:text="#{calendar.custom_events.add.event_end}"></label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" th:placeholder="#{calendar.custom_events.add.event_end}" name="eventEnd"/>
+            <div class='input-group date' id='datetimepickerend'>
+              <input type='text' class="form-control" name="eventEnd"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">

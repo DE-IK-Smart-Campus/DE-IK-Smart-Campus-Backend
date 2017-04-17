@@ -1,7 +1,5 @@
 package hu.unideb.smartcampus.web.controller.dashboard;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 
 /**
  * TODO.
@@ -62,16 +64,16 @@ public class CalendarController {
       @RequestParam final String eventName,
       @RequestParam final String eventDescription,
       @RequestParam final String eventPlace,
-      @RequestParam final Long eventStart,
-      @RequestParam final Long eventEnd
+      @RequestParam final String eventStart,
+      @RequestParam final String eventEnd
   ) {
     final ModelAndView modelAndView = new ModelAndView(REDIRECT_URL_TO_CALENDAR_VIEW);
     calendarService.addCustomEvent(new CustomEventIqElement(
         eventName,
         eventDescription,
         eventPlace,
-        eventStart,
-        eventEnd,
+        DateUtil.getInEpochLongByLocalDateTime(LocalDateTime.parse(eventStart, DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm"))),
+        DateUtil.getInEpochLongByLocalDateTime(LocalDateTime.parse(eventEnd, DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm"))),
         null,
         null,
         null,
