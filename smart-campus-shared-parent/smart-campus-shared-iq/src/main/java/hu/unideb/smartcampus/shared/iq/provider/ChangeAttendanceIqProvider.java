@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
+import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ChangeAttendanceIqRequest;
 
 /**
@@ -14,6 +15,11 @@ public class ChangeAttendanceIqProvider
    */
   public ChangeAttendanceIqProvider() {
     super(ChangeAttendanceIqRequest.class);
+  }
+  
+  @Override
+  public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
+    return ChangeAttendanceIqRequest.class;
   }
 
 }

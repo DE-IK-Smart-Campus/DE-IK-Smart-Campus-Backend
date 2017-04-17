@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
+import hu.unideb.smartcampus.shared.iq.provider.BaseSmartCampusIqIntrospectionProvider;
 import hu.unideb.smartcampus.shared.iq.provider.BaseSmartCampusIqProvider;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 
@@ -36,11 +37,19 @@ public final class IqClassContext {
    */
   private static final Class<? extends BaseSmartCampusIqProvider>[] IQ_PROVIDER_CLASSES;
 
+  /**
+   * IQ introspection provider classes.
+   */
+  private static final Class<? extends BaseSmartCampusIqIntrospectionProvider>[] IQ_INTROSPECTION_PROVIDER_CLASSES;
+
   static {
     Set<Class<? extends BaseSmartCampusIqRequest>> iqs = getIqs();
     Set<Class<? extends BaseSmartCampusIqProvider>> providers = getProviderClasses();
+    Set<Class<? extends BaseSmartCampusIqIntrospectionProvider>> introspectionProviders =
+        getIntrospectionProviderClasses();
     IQ_CLASSES = convertToClasses(iqs);
     IQ_PROVIDER_CLASSES = convertToClasses(providers);
+    IQ_INTROSPECTION_PROVIDER_CLASSES = convertToClasses(introspectionProviders);
   }
 
   /**
@@ -52,8 +61,21 @@ public final class IqClassContext {
     return IQ_PROVIDER_CLASSES.clone();
   }
 
+  /**
+   * Get introspection provider classes.
+   * 
+   * @return IQ provider classes.
+   */
+  public static Class<? extends BaseSmartCampusIqIntrospectionProvider>[] getIqIntrospectionProviderClasses() {
+    return IQ_INTROSPECTION_PROVIDER_CLASSES.clone();
+  }
+
   private static Set<Class<? extends BaseSmartCampusIqProvider>> getProviderClasses() {
     return getByClass(CONTEXT_PATH_PROVIDER, BaseSmartCampusIqProvider.class);
+  }
+
+  private static Set<Class<? extends BaseSmartCampusIqIntrospectionProvider>> getIntrospectionProviderClasses() {
+    return getByClass(CONTEXT_PATH_PROVIDER, BaseSmartCampusIqIntrospectionProvider.class);
   }
 
   /**
@@ -105,8 +127,25 @@ public final class IqClassContext {
     return result;
   }
 
+  /**
+   * IQ's with providers in map.
+   * 
+   * @return IQ's with providers.
+   * @throws InstantiationException when provider could not instanciated.
+   * @throws IllegalAccessException when something goes wrong.
+   */
+  public static Map<Class<? extends BaseSmartCampusIqRequest>, Class<? extends BaseSmartCampusIqIntrospectionProvider>> getIqWithIntrospectionProvider()
+      throws InstantiationException, IllegalAccessException {
+    Map<Class<? extends BaseSmartCampusIqRequest>, Class<? extends BaseSmartCampusIqIntrospectionProvider>> result =
+        new HashMap<>();
+    for (Class<? extends BaseSmartCampusIqIntrospectionProvider> clazz : IQ_INTROSPECTION_PROVIDER_CLASSES) {
+      BaseSmartCampusIqIntrospectionProvider instance = clazz.newInstance();
+      result.put(instance.getHandledIq(), clazz);
+    }
+    return result;
+  }
+
   private IqClassContext() {
     // for PMD
   }
-
 }

@@ -16,4 +16,8 @@ public class BaseSmartCampusIqIntrospectionProvider<T extends BaseSmartCampusIqR
   protected BaseSmartCampusIqIntrospectionProvider(Class<T> elementClass) {
     super(elementClass);
   }
+  
+  public Class<? extends BaseSmartCampusIqRequest> getHandledIq() {
+    return BaseSmartCampusIqRequest.class;
+  } 
 }
