@@ -26,19 +26,22 @@ public interface SubjectEventService {
 
   /**
    * Save.
-   * @return 
+   * 
+   * @return
    */
   SubjectEvent save(SubjectEvent subjectEvent);
-  
+
   /**
    * Save if not exists in db.
-   * @return 
+   * 
+   * @return
    */
   SubjectEvent saveIfNotExists(SubjectEvent subjectEvent);
 
   /**
    * Save.
-   * @return 
+   * 
+   * @return
    */
   List<SubjectEvent> save(List<SubjectEvent> subjectEvents);
 
@@ -56,7 +59,16 @@ public interface SubjectEventService {
   /**
    * Save subjects to student.
    */
-  List<SubjectEvent> saveSubjectEvents(StudentTimeTable studentTimeTable, final String userName) throws IOException;
-  
-  List<CourseAppointment> getCourseAppointmentByUsernameAndSubjectEvent(String username, SubjectEvent subjectEvent);
+  List<SubjectEvent> saveSubjectEvents(StudentTimeTable studentTimeTable, final String userName)
+      throws IOException;
+
+  /**
+   * Get course appointment list by username and subject event.
+   * 
+   * @param username student's username.
+   * @param subjectEvent subject event.
+   * @return list of user course appointments.
+   */
+  List<CourseAppointment> getCourseAppointmentByUsernameAndSubjectEvent(String username,
+      SubjectEvent subjectEvent);
 }

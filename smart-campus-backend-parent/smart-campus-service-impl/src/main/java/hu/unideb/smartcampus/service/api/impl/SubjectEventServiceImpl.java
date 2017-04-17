@@ -216,7 +216,8 @@ public class SubjectEventServiceImpl implements SubjectEventService {
     }
     return SubjectEvent.builder().build();
   }
-
+  
+  @Transactional(readOnly = true)
   @Override
   public List<CourseAppointment> getCourseAppointmentByUsernameAndSubjectEvent(String username,
       SubjectEvent subjectEvent) {

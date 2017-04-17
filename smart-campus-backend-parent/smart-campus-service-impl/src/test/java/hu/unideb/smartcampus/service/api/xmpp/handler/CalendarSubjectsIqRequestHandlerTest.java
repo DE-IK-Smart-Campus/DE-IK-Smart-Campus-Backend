@@ -33,7 +33,7 @@ public class CalendarSubjectsIqRequestHandlerTest {
   /**
    * Date zone offset.
    */
-  private static final ZoneOffset HUNGARIAN_OFFSET = ZoneOffset.ofHours(1);
+  private static final ZoneOffset HUNGARIAN_OFFSET = ZoneOffset.ofHours(2);
 
   /**
    * Room location.

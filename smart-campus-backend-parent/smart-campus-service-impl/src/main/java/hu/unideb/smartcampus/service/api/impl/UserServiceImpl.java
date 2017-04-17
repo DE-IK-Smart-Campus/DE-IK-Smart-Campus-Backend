@@ -91,14 +91,19 @@ public class UserServiceImpl implements UserService {
         .collect(Collectors.toSet());
   }
 
+  @Transactional(readOnly = true)
   @Override
   public List<CourseAppointment> getCourseAppointmentsByUsernameAndSubjectEvent(String username,
       SubjectEvent subjectEvent) {
-    SubjectEventEntity subjectEventEntity = conversionService.convert(subjectEvent, SubjectEventEntity.class);
-    Set<CourseAppointmentEntity> courseAppointments = userRepository.getCourseAppointmentsBySubjectEvent(username, subjectEventEntity);
-    return courseAppointments.stream().map(this::toCourseAppointment).collect(Collectors.toList());
+    SubjectEventEntity subjectEventEntity =
+        conversionService.convert(subjectEvent, SubjectEventEntity.class);
+    Set<CourseAppointmentEntity> courseAppointments =
+        userRepository.getCourseAppointmentsBySubjectEvent(username, subjectEventEntity);
+    return courseAppointments.stream()
+        .map(this::toCourseAppointment)
+        .collect(Collectors.toList());
   }
-  
+
   private CourseAppointment toCourseAppointment(CourseAppointmentEntity entity) {
     return conversionService.convert(entity, CourseAppointment.class);
   }

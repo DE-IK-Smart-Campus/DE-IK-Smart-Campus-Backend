@@ -103,7 +103,9 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
 
   private List<AppointmentTimeIqElement> convertToIqElement(
       List<CourseAppointment> appointmentTimeList) {
-    return appointmentTimeList.stream().map(this::convertToIqElement).collect(Collectors.toList());
+    return appointmentTimeList.stream()
+        .map(this::convertToIqElement)
+        .collect(Collectors.toList());
   }
 
   private List<CalendarSubjectIqElement> convertToIqElements(
