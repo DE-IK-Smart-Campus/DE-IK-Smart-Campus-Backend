@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {
@@ -92,16 +94,10 @@ public class CalendarServiceImpl implements CalendarService {
   private Stream<CalendarEvent> buildCalendarEventsFromCalendarSubject(CalendarSubject calendarSubject) {
     return calendarSubject.getAppointmentTimes().stream()
         .map(appointmentTime -> {
-              LOGGER.info(
-                  "Building calendar event with when, from and to: {} - {} - {}",
-                  appointmentTime.getWhen().toLocalDateTime().format(DateTimeFormatter.ISO_DATE_TIME),
-                  appointmentTime.getFrom(),
-                  appointmentTime.getTo()
-              );
               return new CalendarEvent(
                   calendarSubject.getSubjectName(),
-                  appointmentTime.getWhen().toLocalDateTime().withHour(0).plusNanos(appointmentTime.getFrom()).format(DateTimeFormatter.ISO_DATE_TIME),
-                  appointmentTime.getWhen().toLocalDateTime().withHour(0).plusNanos(appointmentTime.getTo()).format(DateTimeFormatter.ISO_DATE_TIME)
+                  LocalDateTime.of(appointmentTime.getWhen().toLocalDateTime().toLocalDate(),DateUtil.getInLocalTimeByEpochSecond(appointmentTime.getFrom())).format(DateTimeFormatter.ISO_DATE_TIME),
+                  LocalDateTime.of(appointmentTime.getWhen().toLocalDateTime().toLocalDate(),DateUtil.getInLocalTimeByEpochSecond(appointmentTime.getTo())).format(DateTimeFormatter.ISO_DATE_TIME)
               );
             }
         );

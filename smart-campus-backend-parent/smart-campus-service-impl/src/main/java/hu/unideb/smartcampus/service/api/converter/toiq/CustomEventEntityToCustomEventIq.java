@@ -1,14 +1,12 @@
 package hu.unideb.smartcampus.service.api.converter.toiq;
 
-import java.time.LocalDateTime;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import hu.unideb.smartcampus.persistence.entity.CustomEventEntity;
-import hu.unideb.smartcampus.service.api.util.DateUtil;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 
 /**
  * Custom event entity to Custom event IQ.
@@ -16,17 +14,6 @@ import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 @Component
 public class CustomEventEntityToCustomEventIq
     implements Converter<CustomEventEntity, CustomEventIqElement> {
-
-
-  private final DateUtil dateUtil;
-
-  /**
-   * Constructor.
-   */
-  @Autowired
-  public CustomEventEntityToCustomEventIq(DateUtil dateUtil) {
-    this.dateUtil = dateUtil;
-  }
 
   @Override
   public CustomEventIqElement convert(CustomEventEntity source) {
@@ -46,7 +33,7 @@ public class CustomEventEntityToCustomEventIq
   private Long getInLong(LocalDateTime source) {
     if (source == null)
       return null;
-    return dateUtil.getInEpochLongByLocalDateTime(source);
+    return DateUtil.getInEpochLongByLocalDateTime(source);
   }
 
 }

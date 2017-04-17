@@ -1,22 +1,21 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import hu.unideb.smartcampus.service.api.CalendarSubjectService;
 import hu.unideb.smartcampus.service.api.SubjectEventService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
-import hu.unideb.smartcampus.service.api.util.DateUtil;
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.AppointmentTimeIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 
 /**
  * Calendar subject service implementation.
@@ -26,9 +25,6 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
 
   @Autowired
   private SubjectEventService subjectEventService;
-
-  @Autowired
-  private DateUtil dateUtil;
 
   @Transactional(readOnly = true)
   @Override
@@ -85,9 +81,9 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
 
   private AppointmentTimeIqElement convertToIqElement(CourseAppointment appointmentTime) {
     return AppointmentTimeIqElement.builder()
-        .from(dateUtil.getInEpochLongByLocalDateTime(appointmentTime.getStartDate()))
-        .to(dateUtil.getInEpochLongByLocalDateTime(appointmentTime.getEndDate()))
-        .when(dateUtil.getInEpochLongByLocalDateTime(appointmentTime
+        .from(DateUtil.getInEpochLongByLocalDateTime(appointmentTime.getStartDate()))
+        .to(DateUtil.getInEpochLongByLocalDateTime(appointmentTime.getEndDate()))
+        .when(DateUtil.getInEpochLongByLocalDateTime(appointmentTime
             .getStartDate()
             .toLocalDate()
             .atStartOfDay()))
@@ -97,8 +93,8 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
   @Transactional(readOnly = true)
   @Override
   public List<CalendarSubjectIqElement> getSubjectEventsWithinPeriod(CalendarSubjectsIqRequest iq) {
-    LocalDate startPeriod = dateUtil.getInLocalDateByEpochSecond(iq.getStartPeriod());
-    LocalDate endPeriod = dateUtil.getInLocalDateByEpochSecond(iq.getEndPeriod());
+    LocalDate startPeriod = DateUtil.getInLocalDateByEpochSecond(iq.getStartPeriod());
+    LocalDate endPeriod = DateUtil.getInLocalDateByEpochSecond(iq.getEndPeriod());
     List<SubjectEvent> subjectsWithinRange =
         subjectEventService.getSubjectEventWithinRangeByUsername(iq.getStudent(), startPeriod,
             endPeriod);
