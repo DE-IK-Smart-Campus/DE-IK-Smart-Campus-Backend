@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.shared.calendar;
 
+import java.time.ZoneOffset;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -31,4 +33,9 @@ public class CaldendarConstants {
    * Group name for teacher name.
    */
   public static final String TEACHER_NAME = "teacherName";
+
+  /**
+   * Offset for Hungarian zone.
+   */
+  public static final ZoneOffset HUNGARIAN_OFFSET = ZoneOffset.ofHours(2);
 }

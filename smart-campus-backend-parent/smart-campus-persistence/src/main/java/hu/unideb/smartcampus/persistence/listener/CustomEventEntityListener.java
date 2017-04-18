@@ -16,10 +16,14 @@ public class CustomEventEntityListener {
    */
   @PrePersist
   public void beforePersist(CustomEventEntity entity) {
-    if (entity.getGuid() == null) {
+    if (isNull(entity)) {
       entity.setGuid(UUID.randomUUID().toString());
     }
 
+  }
+
+  private boolean isNull(CustomEventEntity entity) {
+    return entity.getGuid() == null || "null".equals(entity.getGuid());
   }
 
 }

@@ -43,25 +43,27 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
     final User user = userService.getById(userId)
         .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
-    return user.getSubjectDetailsList();
+    return user.getSubjectEventList()
+        .stream()
+        .map(event -> event.getSubjectDetails())
+        .collect(Collectors.toList());
   }
 
   @Transactional
   @Override
-  public void save(final SubjectDetails subjectDetails) {
+  public SubjectDetails save(final SubjectDetails subjectDetails) {
     Assert.notNull(subjectDetails);
-
-    subjectDetailsRepository
+    SubjectDetailsEntity entity = subjectDetailsRepository
         .save(conversionService.convert(subjectDetails, SubjectDetailsEntity.class));
+    return conversionService.convert(entity, SubjectDetails.class);
   }
 
   @Transactional
   @Override
-  public void save(final List<SubjectDetails> subjectDetailsList) {
+  public List<SubjectDetails> save(final List<SubjectDetails> subjectDetailsList) {
     Assert.notNull(subjectDetailsList);
-
-    subjectDetailsList.forEach(subjectDetails -> save(subjectDetails));
-    subjectDetailsRepository.flush();
+    return subjectDetailsList.stream().map(subjectDetails -> save(subjectDetails))
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
@@ -75,6 +77,7 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
   @Override
   public List<SubjectDetails> getSubjectDetailsWithinRangeByUsername(LocalDate from, LocalDate to,
       String username) {
-    return userService.getSubjectsWithinRangeByUsername(username, from, to).stream().collect(Collectors.toList());
+    return userService.getSubjectsWithinRangeByUsername(username, from, to).stream()
+        .collect(Collectors.toList());
   }
 }

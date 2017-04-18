@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import javax.annotation.Resource;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -80,11 +83,35 @@ public class NeptunTokenServiceImpl implements NeptunTokenService {
   private String TOKEN_ENDPOINT;
 
   /**
+   * Cached access token
+   */
+  private String cachedAccessToken;
+
+  /**
+   * Token creation time.
+   */
+  private LocalDateTime tokenCreationTime;
+
+  /**
    * {@inheritDoc}.
    */
   @Override
   public String getAccessToken() throws IOException {
-    LOGGER.info("Generating new token for Neptun REST access.");
+    if (cachedAccessToken == null || isOverOneHour()) {
+      LOGGER.info("Generating new token for Neptun REST access.");
+      generateAccessToken();
+    }
+    return cachedAccessToken;
+  }
+
+  private boolean isOverOneHour() {
+    return ChronoUnit.MINUTES.between(tokenCreationTime, LocalDateTime.now()) >= 60;
+  }
+
+  public void generateAccessToken() throws UnsupportedEncodingException, IOException,
+      ClientProtocolException, JsonParseException, JsonMappingException {
+    tokenCreationTime = LocalDateTime.now();
+    LOGGER.debug("Token created at:{}", tokenCreationTime);
     HttpPost post = new HttpPost(URL + TOKEN_ENDPOINT);
     List<NameValuePair> params = createParams();
     post.setEntity(createParams(params));
@@ -93,7 +120,7 @@ public class NeptunTokenServiceImpl implements NeptunTokenService {
     BufferedReader rd = createReaderByResponse(response);
     String string = readResult(rd);
     AccessToken parsedObject = getAccessTokenObject(string);
-    return parsedObject.getAccessToken();
+    cachedAccessToken = parsedObject.getAccessToken();
   }
 
   private CloseableHttpClient createClient() {

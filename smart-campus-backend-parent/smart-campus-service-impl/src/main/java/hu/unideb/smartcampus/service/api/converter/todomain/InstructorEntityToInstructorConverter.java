@@ -1,13 +1,14 @@
 package hu.unideb.smartcampus.service.api.converter.todomain;
 
-import com.google.common.collect.Sets;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.google.common.collect.Sets;
+
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
@@ -38,6 +39,7 @@ public class InstructorEntityToInstructorConverter implements Converter<Instruct
     return Instructor.builder()
         .id(instructorEntity.getId())
         .name(instructorEntity.getName())
+        .neptunIdentifier(instructorEntity.getNeptunIdentifier())
         .subjects(convertSubjectDetailsEntitySetToSubjectDetailsSet(instructorEntity.getSubjects()))
         .consultingDates(convertConsultingDateEntitySetToConsultingDateSet(instructorEntity.getConsultingDates()))
         .build();

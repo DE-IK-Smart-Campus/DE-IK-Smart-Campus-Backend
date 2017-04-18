@@ -24,5 +24,15 @@ public class RegistrationFailedException extends Exception {
     super(cause);
   }
 
+  /**
+   * Constructor with message and cause parameter.
+   * 
+   * @param message the message of the exception
+   * @param cause the cause of the exception
+   */
+  public RegistrationFailedException(String message, Throwable cause) {
+    super(message, cause);
+  }
+
 
 }

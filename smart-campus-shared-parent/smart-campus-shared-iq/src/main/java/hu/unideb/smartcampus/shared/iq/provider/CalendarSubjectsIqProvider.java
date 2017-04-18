@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.shared.iq.provider;
 
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.APPOINTMENT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.APPOINTMENTS;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.DESCRIPTION;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.END_PERIOD;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.FROM;
@@ -29,20 +30,16 @@ import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 public class CalendarSubjectsIqProvider
     extends BaseSmartCampusIqProvider<CalendarSubjectsIqRequest> {
 
-  private Long startPeriod;
-  private Long endPeriod;
-  private List<CalendarSubjectIqElement> subjectEvents;
-  private List<AppointmentTimeIqElement> appointmentTimes;
-  private String student;
-  private boolean done;
-  private CalendarSubjectIqElement subject;
-  private AppointmentTimeIqElement appointmentTime;
-
   @Override
   public CalendarSubjectsIqRequest parse(XmlPullParser parser, int initialDepth) throws Exception {
-    subjectEvents = new ArrayList<>();
-    appointmentTimes = new ArrayList<>();
-    done = false;
+    Long startPeriod = 0L;
+    Long endPeriod = 0L;
+    List<CalendarSubjectIqElement> subjectEvents = new ArrayList<>();
+    List<AppointmentTimeIqElement> appointmentTimes = new ArrayList<>();
+    String student = "";
+    boolean done = false;
+    CalendarSubjectIqElement subject = new CalendarSubjectIqElement();
+    AppointmentTimeIqElement appointmentTime = new AppointmentTimeIqElement();
     int eventType = parser.getEventType();
     String text = "";
     while (!done) {
@@ -50,56 +47,50 @@ public class CalendarSubjectsIqProvider
       String tagname = parser.getName();
       switch (eventType) {
         case XmlPullParser.START_TAG:
-          parseStartTag(tagname);
+          if (tagname.equalsIgnoreCase(SUBJECT)) {
+            subject = new CalendarSubjectIqElement();
+          } else if (tagname.equalsIgnoreCase(APPOINTMENT)) {
+            appointmentTime = new AppointmentTimeIqElement();
+          } else if (tagname.equalsIgnoreCase(APPOINTMENTS)) {
+            appointmentTimes = new ArrayList<>();
+          }
           break;
         case XmlPullParser.TEXT:
           text = parser.getText();
           break;
         case XmlPullParser.END_TAG:
-          parseEndTag(text, tagname);
+          if (tagname.equalsIgnoreCase(SUBJECT)) {
+            subject.setAppointmentTimes(appointmentTimes);
+            subjectEvents.add(subject);
+          } else if (tagname.equalsIgnoreCase(STUDENT)) {
+            student = text;
+          } else if (tagname.equalsIgnoreCase(APPOINTMENT)) {
+            appointmentTimes.add(appointmentTime);
+          } else if (tagname.equalsIgnoreCase(FROM)) {
+            appointmentTime.setFrom(Long.valueOf(text));
+          } else if (tagname.equalsIgnoreCase(TO)) {
+            appointmentTime.setTo(Long.valueOf(text));
+          } else if (tagname.equalsIgnoreCase(WHEN)) {
+            appointmentTime.setWhen(Long.valueOf(text));
+          } else if (tagname.equalsIgnoreCase(WHERE)) {
+            subject.setWhere(text);
+          } else if (tagname.equalsIgnoreCase(SUBJECT_NAME)) {
+            subject.setSubjectName(text);
+          } else if (tagname.equalsIgnoreCase(DESCRIPTION)) {
+            subject.setDescription(text);
+          } else if (tagname.equalsIgnoreCase(START_PERIOD)) {
+            startPeriod = Long.valueOf(text);
+          } else if (tagname.equalsIgnoreCase(END_PERIOD)) {
+            endPeriod = Long.valueOf(text);
+          } else if (tagname.equals(CalendarSubjectsIqRequest.ELEMENT)) {
+            done = true;
+          }
           break;
         default:
           break;
       }
     }
     return new CalendarSubjectsIqRequest(student, subjectEvents, startPeriod, endPeriod);
-  }
-
-  private void parseStartTag(String tagname) {
-    if (tagname.equalsIgnoreCase(SUBJECT)) {
-      subject = new CalendarSubjectIqElement();
-    } else if (tagname.equalsIgnoreCase(APPOINTMENT)) {
-      appointmentTime = new AppointmentTimeIqElement();
-    }
-  }
-
-  private void parseEndTag(String text, String tagname) {
-    if (tagname.equalsIgnoreCase(SUBJECT)) {
-      subject.setAppointmentTimes(appointmentTimes);
-      subjectEvents.add(subject);
-    } else if (tagname.equalsIgnoreCase(STUDENT)) {
-      student = text;
-    } else if (tagname.equalsIgnoreCase(APPOINTMENT)) {
-      appointmentTimes.add(appointmentTime);
-    } else if (tagname.equalsIgnoreCase(FROM)) {
-      appointmentTime.setFrom(Long.valueOf(text));
-    } else if (tagname.equalsIgnoreCase(TO)) {
-      appointmentTime.setTo(Long.valueOf(text));
-    } else if (tagname.equalsIgnoreCase(WHEN)) {
-      appointmentTime.setWhen(Long.valueOf(text));
-    } else if (tagname.equalsIgnoreCase(WHERE)) {
-      subject.setWhere(text);
-    } else if (tagname.equalsIgnoreCase(SUBJECT_NAME)) {
-      subject.setSubjectName(text);
-    } else if (tagname.equalsIgnoreCase(DESCRIPTION)) {
-      subject.setDescription(text);
-    } else if (tagname.equalsIgnoreCase(START_PERIOD)) {
-      startPeriod = Long.valueOf(text);
-    } else if (tagname.equalsIgnoreCase(END_PERIOD)) {
-      endPeriod = Long.valueOf(text);
-    } else if (tagname.equals(CalendarSubjectsIqRequest.ELEMENT)) {
-      done = true;
-    }
   }
 
   @Override

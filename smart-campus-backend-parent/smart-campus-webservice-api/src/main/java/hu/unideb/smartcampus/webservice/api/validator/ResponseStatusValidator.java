@@ -15,4 +15,12 @@ public interface ResponseStatusValidator {
    * @return true if status code is 200, otherwise false.
    */
   boolean isOk(Response response);
+  
+  /**
+   * Checks if a response's status is Bad Request.
+   *
+   * @param response given response.
+   * @return true if status code is 400, otherwise false.
+   */
+  boolean isBadRequest(Response response);
 }

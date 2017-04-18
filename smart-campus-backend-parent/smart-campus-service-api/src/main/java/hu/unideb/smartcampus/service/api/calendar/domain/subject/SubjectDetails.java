@@ -1,8 +1,9 @@
 package hu.unideb.smartcampus.service.api.calendar.domain.subject;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
+
+import hu.unideb.smartcampus.service.api.domain.InstructorWrapper;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,6 +20,11 @@ public class SubjectDetails {
   private final String subjectName;
 
   /**
+   * Course code.
+   */
+  private String courseCode;
+
+  /**
    * Subject type.
    */
   private final SubjectType subjectType;
@@ -26,7 +32,7 @@ public class SubjectDetails {
   /**
    * Teacher names.
    */
-  private List<String> teacherNames;
+  private List<InstructorWrapper> instructors;
 
   /**
    * Start date time.
@@ -37,5 +43,10 @@ public class SubjectDetails {
    * End date time.
    */
   private LocalDate endPeriod;
+  
+  /**
+   * Semester for creating MUC chat room and Shared roster group.
+   */
+  private String semester;
 
 }

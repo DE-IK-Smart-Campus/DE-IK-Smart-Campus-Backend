@@ -51,7 +51,7 @@ public abstract class IqHandler<T extends BaseSmartCampusIqRequest> {
     T resultIq;
     try {
       StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
-      resultIq = collector.nextResult(10000);
+      resultIq = collector.nextResultBlockForever();
     } catch (SmackException.NotConnectedException | InterruptedException e) {
       throw new RuntimeException(e);
     }

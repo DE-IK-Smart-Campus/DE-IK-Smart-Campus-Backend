@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -155,7 +156,8 @@ public class RetrieveSubjectsRequestServiceImplTest {
     // given
 
     // when
-    Mockito.when(userRepository.getSubjectsByUsername(USER_ID)).thenReturn(SUBJECTS);
+    // FIXME Mock date!!!
+    Mockito.when(userRepository.getSubjectsWithinRangeByUsername(USER_ID,LocalDate.of(2017, 1, 1),LocalDate.of(2017, 5, 31))).thenReturn(SUBJECTS);
 
     // then
     List<SubjectWrapper> requestedSubjects = service.getSubjects(USER_ID);

@@ -42,13 +42,21 @@ public class IntegrationCredentialProviderRestController {
   }
 
   private PublicUser convertToPublic(SmartCampusUserDetails auth) {
-    return PublicUser.builder().roles(auth.getAuthorities().stream()
-        .map((GrantedAuthority authority) -> authority.getAuthority()).collect(Collectors.toList()))
-        .username(auth.getUsername()).xmppPassword(auth.getUser().getPassword()).build();
+    return PublicUser.builder()
+        .roles(
+            auth.getAuthorities()
+                .stream()
+                .map((GrantedAuthority authority) -> authority.getAuthority())
+                .collect(Collectors.toList()))
+        .username(auth.getUsername())
+        .xmppPassword(auth.getUser().getPassword())
+        .build();
   }
 
   private SmartCampusUserDetails retrieveAuthentication() {
-    return (SmartCampusUserDetails) SecurityContextHolder.getContext().getAuthentication()
+    return (SmartCampusUserDetails) SecurityContextHolder
+        .getContext()
+        .getAuthentication()
         .getPrincipal();
   }
 }

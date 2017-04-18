@@ -1,5 +1,6 @@
 package hu.unideb.smartcampus.web.controller.dashboard;
 
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
@@ -13,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.security.Principal;
+import java.util.Collections;
+import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.web.controller.AbstractControllerTest;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,6 +31,9 @@ public class CalendarControllerTest extends AbstractControllerTest {
   @Mock
   private Principal principal;
 
+  @Mock
+  private CalendarService calendarService;
+
   @Override
   protected Object[] controllerUnderTest() {
     return new Object[]{this.calendarController};
@@ -36,6 +42,7 @@ public class CalendarControllerTest extends AbstractControllerTest {
   @Test
   public void loadCalendarViewShouldLoadCalendarView() throws Exception {
     when(principal.getName()).thenReturn(PRINCIPAL_NAME);
+    when(calendarService.getCalendarSubjectEvents(anyLong(), anyLong())).thenReturn(Collections.emptyList());
     this.mockMvc.perform(get(REQUEST_URL_DASHBOARD_CALENDAR).principal(principal))
         .andExpect(status().isOk())
         .andExpect(view().name(VIEW_NAME_DASHBOARD_CALENDAR))

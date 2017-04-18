@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api.impl;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,11 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import hu.unideb.smartcampus.persistence.entity.CourseAppointmentEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
+import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.service.api.domain.User;
 
 /**
@@ -84,5 +89,70 @@ public class UserServiceImpl implements UserService {
     return subjects.stream()
         .map(subjectDetails -> conversionService.convert(subjectDetails, SubjectDetails.class))
         .collect(Collectors.toSet());
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<CourseAppointment> getCourseAppointmentsByUsernameAndSubjectEvent(String username,
+      SubjectEvent subjectEvent) {
+    SubjectEventEntity subjectEventEntity =
+        conversionService.convert(subjectEvent, SubjectEventEntity.class);
+    Set<CourseAppointmentEntity> courseAppointments =
+        userRepository.getCourseAppointmentsBySubjectEvent(username, subjectEventEntity);
+    return courseAppointments.stream()
+        .map(this::toCourseAppointment)
+        .collect(Collectors.toList());
+  }
+
+  private CourseAppointment toCourseAppointment(CourseAppointmentEntity entity) {
+    return conversionService.convert(entity, CourseAppointment.class);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<CourseAppointment> getCourseAppointmensWithinRange(String username, LocalDate from,
+      LocalDate to) {
+    Set<CourseAppointmentEntity> courseAppointmensWithinRange =
+        userRepository.getCourseAppointmensWithinRange(username, from, to);
+    return courseAppointmensWithinRange.stream()
+        .map(courseAppointment -> conversionService.convert(courseAppointment,
+            CourseAppointment.class))
+        .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<CourseAppointment> getCourseAppointmentsByUsername(String username) {
+    Set<CourseAppointmentEntity> courseAppointmensWithinRange =
+        userRepository.getCourseAppointmentsByUsername(username);
+    return courseAppointmensWithinRange.stream()
+        .map(courseAppointment -> conversionService.convert(courseAppointment,
+            CourseAppointment.class))
+        .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectEvent> getSubjectEventsByUsername(String username) {
+    Set<SubjectEventEntity> subjectEventEntityList =
+        userRepository.getSubjectEventsByUsername(username);
+    return convertSubjectEventEntitySetToSubjectEventList(subjectEventEntityList);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectEvent> getSubjectEventsWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to) {
+    Set<SubjectEventEntity> subjectEventEntityList =
+        userRepository.getSubjectEventsWithinRangeByUsername(username, from, to);
+    return convertSubjectEventEntitySetToSubjectEventList(subjectEventEntityList);
+  }
+
+  private List<SubjectEvent> convertSubjectEventEntitySetToSubjectEventList(
+      Set<SubjectEventEntity> subjectEventsByUsername) {
+    return subjectEventsByUsername.stream()
+        .map(subjectEvent -> conversionService.convert(subjectEvent,
+            SubjectEvent.class))
+        .collect(Collectors.toList());
   }
 }

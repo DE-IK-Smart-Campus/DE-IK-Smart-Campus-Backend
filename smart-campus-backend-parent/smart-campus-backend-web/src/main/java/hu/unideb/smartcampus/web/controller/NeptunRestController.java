@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.webservice.api.neptun.NeptunEndpointService;
+import hu.unideb.smartcampus.webservice.api.neptun.NeptunInfo;
+import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 
 /**
  * Neptun REST controller.
@@ -29,14 +31,13 @@ public class NeptunRestController {
    * Get neptun info by UID.
    */
   @GetMapping("/neptunInfo/uid/{uid}")
-  public ResponseEntity<String> getNeptunInfoByUid(@PathVariable("uid") String uid) {
-    ResponseEntity<String> ret;
-    String result;
+  public ResponseEntity<NeptunInfo> getNeptunInfoByUid(@PathVariable("uid") String uid) {
+    ResponseEntity<NeptunInfo> ret;
+    NeptunInfo result = null;
     try {
       result = neptunEndpointService.getNeptunInfoByUid(uid);
       ret = ResponseEntity.ok(result);
     } catch (IOException e) {
-      result = e.getCause().getMessage();
       ret = ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(result);
     }
     return ret;
@@ -46,15 +47,14 @@ public class NeptunRestController {
    * Get neptun info by identifier.
    */
   @GetMapping("/neptunInfo/identifier/{identifier}")
-  public ResponseEntity<String> getNeptunInfoByIdentifier(
+  public ResponseEntity<NeptunInfo> getNeptunInfoByIdentifier(
       @PathVariable("identifier") String identifier) {
-    ResponseEntity<String> ret;
-    String result;
+    ResponseEntity<NeptunInfo> ret;
+    NeptunInfo result = null;
     try {
       result = neptunEndpointService.getNeptunInfoByNeptunIdentifier(identifier);
       ret = ResponseEntity.ok(result);
     } catch (IOException e) {
-      result = e.getCause().getMessage();
       ret = ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(result);
     }
     return ret;
@@ -64,14 +64,14 @@ public class NeptunRestController {
    * Get time table.
    */
   @GetMapping("/timetable/{identifier}")
-  public ResponseEntity<String> getStudentTimetable(@PathVariable("identifier") String identifier) {
-    ResponseEntity<String> ret;
-    String result;
+  public ResponseEntity<StudentTimeTable> getStudentTimetable(
+      @PathVariable("identifier") String identifier) {
+    ResponseEntity<StudentTimeTable> ret;
+    StudentTimeTable result = null;
     try {
       result = neptunEndpointService.getStudentTimetable(identifier);
       ret = ResponseEntity.ok(result);
     } catch (IOException e) {
-      result = e.getCause().getMessage();
       ret = ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(result);
     }
     return ret;

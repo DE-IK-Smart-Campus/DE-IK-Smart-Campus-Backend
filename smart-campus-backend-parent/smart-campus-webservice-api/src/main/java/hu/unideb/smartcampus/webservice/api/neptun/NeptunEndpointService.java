@@ -12,17 +12,17 @@ public interface NeptunEndpointService {
    * 
    * @param uid neptun UID.
    */
-  String getNeptunInfoByUid(String uid) throws IOException;
+  NeptunInfo getNeptunInfoByUid(String uid) throws IOException;
 
   /**
    * Get neptun info by neptun identifier.
    * 
    * @param neptunIdentifier neptun identifier.
    */
-  String getNeptunInfoByNeptunIdentifier(String neptunIdentifier) throws IOException;
+  NeptunInfo getNeptunInfoByNeptunIdentifier(String neptunIdentifier) throws IOException;
 
   /**
    * Get student timetable in string.
    */
-  String getStudentTimetable(String neptunIdentifier) throws IOException;
+  StudentTimeTable getStudentTimetable(String neptunIdentifier) throws IOException;
 }
