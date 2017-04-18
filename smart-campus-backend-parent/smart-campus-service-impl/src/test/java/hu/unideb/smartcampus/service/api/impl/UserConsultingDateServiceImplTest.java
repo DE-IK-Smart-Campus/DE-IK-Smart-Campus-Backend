@@ -21,6 +21,7 @@ import hu.unideb.smartcampus.persistence.entity.UserConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
 import hu.unideb.smartcampus.service.api.converter.toiq.UserConsultingDateEntityToStudentIqElementConverter;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
 
 /**
@@ -51,6 +52,7 @@ public class UserConsultingDateServiceImplTest {
                   .build())
           .consultingDate(
               ConsultingDateEntity.builder()
+                  .id(1L)
                   .date(DATE)
                   .fromToDate(
                       FromToDateEmbeddedEntity.builder()
@@ -63,11 +65,18 @@ public class UserConsultingDateServiceImplTest {
           .reason(THESIS)
           .build());
 
-  private static final List<StudentIqElement> EXPECTED_LIST =
+  private static final List<StudentIqElement> STUDENTS =
       Arrays.asList(StudentIqElement.builder()
           .studentName(FULL_NAME)
           .reason(THESIS)
           .duration(DURATION)
+          .build());
+
+  private static final List<InstructorConsultingDateIqElement> EXPECTED_LIST =
+      Arrays.asList(InstructorConsultingDateIqElement.builder()
+          .students(STUDENTS)
+          .day(DATE)
+          .consultingDateId(1L)
           .build());
 
   @InjectMocks
@@ -95,11 +104,12 @@ public class UserConsultingDateServiceImplTest {
     PowerMockito.when(LocalDateTime.now()).thenReturn(fromLocalDateTime);
     PowerMockito.when(LocalDateTime.now().plusWeeks(1)).thenReturn(toLocalDateTime);
     PowerMockito.when(userConsultingDateRepository
-        .getUserConsultingDatesByInstructorIdBetweenRange(INSTRUCTORID, fromLocalDateTime, toLocalDateTime))
+        .getUserConsultingDatesByInstructorIdBetweenRange(INSTRUCTORID, fromLocalDateTime,
+            toLocalDateTime))
         .thenReturn(RETURNED_LIST);
 
     // then
-    List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek =
+    List<InstructorConsultingDateIqElement> findSignedStudentByInstructorIdWithinOneWeek =
         service.findSignedStudentByInstructorIdWithinOneWeek(INSTRUCTORID);
     Assert.assertEquals(EXPECTED_LIST, findSignedStudentByInstructorIdWithinOneWeek);
   }
@@ -118,7 +128,7 @@ public class UserConsultingDateServiceImplTest {
         .thenReturn(RETURNED_LIST);
 
     // then
-    List<StudentIqElement> listSignedStudentByInstructorId =
+    List<InstructorConsultingDateIqElement> listSignedStudentByInstructorId =
         service.listSignedStudentByInstructorId(INSTRUCTORID);
     Assert.assertEquals(EXPECTED_LIST, listSignedStudentByInstructorId);
   }

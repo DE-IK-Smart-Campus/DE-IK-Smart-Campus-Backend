@@ -13,8 +13,12 @@ import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.ConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
+import hu.unideb.smartcampus.service.api.CustomEventService;
+import hu.unideb.smartcampus.shared.iq.request.AddCustomEventIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 import hu.unideb.smartcampus.shared.requestmessages.SignUpForConsultingHourRequest;
 import hu.unideb.smartcampus.shared.requestmessages.constants.RequestMessagesConstants;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 import hu.unideb.smartcampus.shared.wrapper.SignUpForConsultingHourWrapper;
 
 /**
@@ -44,6 +48,9 @@ public class SignUpForConsultingDateRequestServiceImpl
   @Autowired
   private UserConsultingDateRepository userConsultingDateRepository;
 
+  @Autowired
+  private CustomEventService customEventService;
+
 
   /**
    * {@inheritDoc}.
@@ -59,12 +66,32 @@ public class SignUpForConsultingDateRequestServiceImpl
       userEntity = userRepository.findByUsername(request.getUserId());
       if (userEntity != null) {
         incrementAndSaveConsultingSignUp(request, dateEntity, userEntity);
+        addCustomEvent(dateEntity, userEntity);
         status = OK;
       }
     }
     return SignUpForConsultingHourWrapper.builder()
         .messageType(RequestMessagesConstants.SIGN_UP_FOR_CONSULTING_HOUR_RESPONSE).status(status)
         .build();
+  }
+
+  private void addCustomEvent(ConsultingDateEntity dateEntity, UserEntity userEntity) {
+    customEventService.addCustomEntityByIq(AddCustomEventIqRequest.builder()
+        .student(userEntity.getUsername())
+        .customEvent(CustomEventIqElement.builder()
+            .eventWhen(DateUtil.getInEpochLongByLocalDateTime(dateEntity.getFromToDate()
+                .getFromDate()
+                .toLocalDate()
+                .atStartOfDay()))
+            .eventStart(
+                DateUtil.getInEpochLongByLocalDateTime(dateEntity.getFromToDate().getFromDate()))
+            .eventEnd(
+                DateUtil.getInEpochLongByLocalDateTime(dateEntity.getFromToDate().getToDate()))
+            .eventName("Meeting")
+            .eventDescription("Meeting")
+            .eventPlace("Meeting")
+            .build())
+        .build());
   }
 
   private UserConsultingDateEntity createUserConsultingDateEntityByRequest(
