@@ -224,6 +224,79 @@ public class Fields {
   }
 
   /**
+   * User attendance IQ request.
+   */
+  public static class ListUserAttendanceFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "st";
+
+    /**
+     * Subjects tag.
+     */
+    public static final String SUBJECT_EVENTS = "subs";
+
+    /**
+     * Appointments tag.
+     */
+    public static final String APPOINTMENTS = "apps";
+
+    /**
+     * Appointments field.
+     */
+    public static final String APPOINTMENT = "app";
+
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT = "sub";
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT_NAME = "na";
+
+    /**
+     * When field.
+     */
+    public static final String WHEN = "wn";
+
+    /**
+     * Where field.
+     */
+    public static final String WHERE = "wr";
+
+    /**
+     * Description field.
+     */
+    public static final String DESCRIPTION = "dc";
+
+    /**
+     * From field.
+     */
+    public static final String FROM = "f";
+
+    /**
+     * To field.
+     */
+    public static final String TO = "t";
+
+    /**
+     * Present field.
+     */
+    public static final String PRESENT = "present";
+
+    /**
+     * ID field.
+     */
+    public static final String ID = "id";
+
+  }
+
+  /**
    * Custom event IQ request fields.
    */
   public static class CustomEventIqRequestFields {
@@ -267,7 +340,7 @@ public class Fields {
      * Event when field.
      */
     public static final String EVENT_WHEN = "eventWhen";
-    
+
     /**
      * Event start field.
      */
@@ -340,6 +413,27 @@ public class Fields {
      * Room field.
      */
     public static final String ROOM = "room";
+  }
+
+  /**
+   * MUC list.
+   */
+  public static class ChangeAttendanceIqFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Appointment ID.
+     */
+    public static final String APPOINTMENT_ID = "appointmentId";
+
+    /**
+     * Present.
+     */
+    public static final String PRESENT = "present";
   }
 
   /**

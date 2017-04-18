@@ -160,7 +160,6 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
     Assert.assertEquals(3, mucList.size());
   }
   
-
   /**
    * Test get single chat list. 
    */
