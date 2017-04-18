@@ -143,7 +143,7 @@ public class UserEntity extends BaseEntity<Long> {
   /**
    * Course appointments.
    */
-  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
   @JoinTable(name = "user_course_appointment",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "course_appointment_id", referencedColumnName = "id"))

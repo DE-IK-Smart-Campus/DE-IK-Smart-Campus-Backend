@@ -36,30 +36,19 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
     return subjectEvents;
   }
 
-  private List<CalendarSubjectIqElement> convertToIqElements(
-      List<SubjectEvent> allSubjectEventByUsername, String username) {
-    List<CalendarSubjectIqElement> calendarEvents = new ArrayList<>();
-    for (SubjectEvent subjectEvent : allSubjectEventByUsername) {
-      calendarEvents.add(buildIqElement(subjectEvent, subjectEventService
-          .getCourseAppointmentByUsernameAndSubjectEvent(username, subjectEvent)));
-    }
-    return calendarEvents;
+  @Transactional(readOnly = true)
+  @Override
+  public List<CalendarSubjectIqElement> getSubjectEventsWithinPeriod(CalendarSubjectsIqRequest iq) {
+    LocalDate startPeriod = DateUtil.getInLocalDateByEpochSecond(iq.getStartPeriod());
+    LocalDate endPeriod = DateUtil.getInLocalDateByEpochSecond(iq.getEndPeriod());
+    List<SubjectEvent> subjectsWithinRange =
+        subjectEventService.getSubjectEventWithinRangeByUsername(iq.getStudent(), startPeriod,
+            endPeriod);
+    return convertToIqElements(subjectsWithinRange, iq.getStudent());
   }
 
-  private CalendarSubjectIqElement buildIqElement(SubjectEvent subjectEvent,
-      List<CourseAppointment> list) {
-    return CalendarSubjectIqElement.builder()
-        .subjectName(subjectEvent.getSubjectDetails().getSubjectName())
-        .where(subjectEvent.getRoomLocation())
-        .appointmentTimes(convertToIqElement(list))
-        .description(createDescriptionByTeachers(subjectEvent)).build();
-  }
-
-  private String createDescriptionByTeachers(SubjectEvent subjectEvent) {
-    StringBuilder builder = new StringBuilder();
-    // List<String> teacherNames = subjectEvent.getSubjectDetails().getTeacherNames();
-    // build(builder, teacherNames);
-    return builder.toString();
+  private String appendColonOrWhiteSpace(List<String> teacherNames, Integer counter) {
+    return counter.equals(teacherNames.size()) ? "" : ", ";
   }
 
   private void build(StringBuilder builder, List<String> teacherNames) {
@@ -70,13 +59,13 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
     }
   }
 
-  private String appendColonOrWhiteSpace(List<String> teacherNames, Integer counter) {
-    return counter.equals(teacherNames.size()) ? "" : ", ";
-  }
-
-  private List<AppointmentTimeIqElement> convertToIqElement(
-      List<CourseAppointment> appointmentTimeList) {
-    return appointmentTimeList.stream().map(this::convertToIqElement).collect(Collectors.toList());
+  private CalendarSubjectIqElement buildIqElement(SubjectEvent subjectEvent,
+      List<CourseAppointment> list) {
+    return CalendarSubjectIqElement.builder()
+        .subjectName(subjectEvent.getSubjectDetails().getSubjectName())
+        .where(subjectEvent.getRoomLocation())
+        .appointmentTimes(convertToIqElement(list))
+        .description(createDescriptionByTeachers(subjectEvent)).build();
   }
 
   private AppointmentTimeIqElement convertToIqElement(CourseAppointment appointmentTime) {
@@ -90,14 +79,25 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
         .build();
   }
 
-  @Transactional(readOnly = true)
-  @Override
-  public List<CalendarSubjectIqElement> getSubjectEventsWithinPeriod(CalendarSubjectsIqRequest iq) {
-    LocalDate startPeriod = DateUtil.getInLocalDateByEpochSecond(iq.getStartPeriod());
-    LocalDate endPeriod = DateUtil.getInLocalDateByEpochSecond(iq.getEndPeriod());
-    List<SubjectEvent> subjectsWithinRange =
-        subjectEventService.getSubjectEventWithinRangeByUsername(iq.getStudent(), startPeriod,
-            endPeriod);
-    return convertToIqElements(subjectsWithinRange, iq.getStudent());
+  private List<AppointmentTimeIqElement> convertToIqElement(
+      List<CourseAppointment> appointmentTimeList) {
+    return appointmentTimeList.stream().map(this::convertToIqElement).collect(Collectors.toList());
+  }
+
+  private List<CalendarSubjectIqElement> convertToIqElements(
+      List<SubjectEvent> allSubjectEventByUsername, String username) {
+    List<CalendarSubjectIqElement> calendarEvents = new ArrayList<>();
+    for (SubjectEvent subjectEvent : allSubjectEventByUsername) {
+      calendarEvents.add(buildIqElement(subjectEvent, subjectEventService
+          .getCourseAppointmentByUsernameAndSubjectEvent(username, subjectEvent)));
+    }
+    return calendarEvents;
+  }
+
+  private String createDescriptionByTeachers(SubjectEvent subjectEvent) {
+    StringBuilder builder = new StringBuilder();
+    // List<String> teacherNames = subjectEvent.getSubjectDetails().getTeacherNames();
+    // build(builder, teacherNames);
+    return builder.toString();
   }
 }
