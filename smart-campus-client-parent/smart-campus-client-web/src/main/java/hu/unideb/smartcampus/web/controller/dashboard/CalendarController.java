@@ -27,6 +27,10 @@ public class CalendarController {
   /**
    * TODO.
    */
+  private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm");
+  /**
+   * TODO.
+   */
   private static final String CALENDAR_VIEW = "dashboard/calendar";
   /**
    * TODO.
@@ -68,17 +72,16 @@ public class CalendarController {
       @RequestParam final String eventEnd
   ) {
     final ModelAndView modelAndView = new ModelAndView(REDIRECT_URL_TO_CALENDAR_VIEW);
-    calendarService.addCustomEvent(new CustomEventIqElement(
-        eventName,
-        eventDescription,
-        eventPlace,
-        DateUtil.getInEpochLongByLocalDateTime(LocalDateTime.parse(eventStart, DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm"))),
-        DateUtil.getInEpochLongByLocalDateTime(LocalDateTime.parse(eventEnd, DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm"))),
-        null,
-        null,
-        null,
-        null
-    ));
+    calendarService.addCustomEvent(
+        CustomEventIqElement.builder()
+            .eventName(eventName)
+            .eventDescription(eventDescription)
+            .eventPlace(eventPlace)
+            .eventStart(DateUtil.getInEpochLongByLocalDateTime(LocalDateTime.parse(eventStart, dateTimeFormatter)))
+            .eventEnd(DateUtil.getInEpochLongByLocalDateTime(LocalDateTime.parse(eventEnd, dateTimeFormatter)))
+            .eventWhen(DateUtil.getInEpochLongByLocalDate(LocalDateTime.parse(eventStart, dateTimeFormatter).toLocalDate()))
+            .build()
+    );
     return modelAndView;
   }
 
