@@ -1,8 +1,6 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +13,7 @@ import hu.unideb.smartcampus.service.api.CalendarSubjectService;
 import hu.unideb.smartcampus.service.api.SubjectEventService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
+import hu.unideb.smartcampus.service.api.util.DateUtil;
 import hu.unideb.smartcampus.service.api.util.SemesterUtil;
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListUserAttendanceIqRequest;
@@ -27,15 +26,14 @@ import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 @Service
 public class CalendarSubjectServiceImpl implements CalendarSubjectService {
 
-  private static final ZoneOffset ZERO_OFFSET = ZoneOffset.ofHours(0);
-
-  private static final ZoneOffset HUNGARIAN_OFFSET = ZoneOffset.ofHours(2);
-
   @Autowired
   private SubjectEventService subjectEventService;
 
   @Autowired
   private SemesterUtil semesterUtil;
+  
+  @Autowired
+  private DateUtil dateUtil;
 
   @Transactional(readOnly = true)
   @Override
@@ -91,13 +89,12 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
     return AppointmentTimeIqElement.builder()
         .id(appointmentTime.getId())
         .present(appointmentTime.getWasPresent())
-        .from(appointmentTime.getStartDate().toEpochSecond(HUNGARIAN_OFFSET))
-        .to(appointmentTime.getEndDate().toEpochSecond(HUNGARIAN_OFFSET))
-        .when(appointmentTime
+        .from(dateUtil.getInEpochLongByLocalDateTime(appointmentTime.getStartDate()))
+        .to(dateUtil.getInEpochLongByLocalDateTime(appointmentTime.getEndDate()))
+        .when(dateUtil.getInEpochLongByLocalDateTime(appointmentTime
             .getStartDate()
             .toLocalDate()
-            .atStartOfDay()
-            .toEpochSecond(ZERO_OFFSET))
+            .atStartOfDay()))
         .build();
   }
 
@@ -125,17 +122,12 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
     return builder.toString();
   }
 
-  private LocalDate getInLocalDate(Long period) {
-    return Instant.ofEpochMilli(period * 1000).atZone(HUNGARIAN_OFFSET).toLocalDate();
-  }
-
   private List<SubjectEvent> getSubjectsInRange(Long startPeriodLong, Long endPeriodLong,
       String student) {
-    LocalDate startPeriod = getInLocalDate(startPeriodLong);
-    LocalDate endPeriod = getInLocalDate(endPeriodLong);
+    LocalDate startPeriod = dateUtil.getInLocalDateByEpochSecond(startPeriodLong);
+    LocalDate endPeriod = dateUtil.getInLocalDateByEpochSecond(endPeriodLong);
     return subjectEventService.getSubjectEventWithinRangeByUsername(student,
         startPeriod,
         endPeriod);
   }
-
 }
