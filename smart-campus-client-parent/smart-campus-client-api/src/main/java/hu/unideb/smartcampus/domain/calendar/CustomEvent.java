@@ -1,5 +1,7 @@
 package hu.unideb.smartcampus.domain.calendar;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,12 +30,17 @@ public class CustomEvent {
   /**
    * Event start.
    */
-  private final Long eventStart;
+  private final LocalDateTime eventStart;
 
   /**
    * Event end.
    */
-  private final Long eventEnd;
+  private final LocalDateTime eventEnd;
+
+  /**
+   * Event end.
+   */
+  private final LocalDate eventWhen;
 
   /**
    * Event repeat.
@@ -52,7 +59,7 @@ public class CustomEvent {
   public CustomEvent(final String guid, final String eventName,
                      final String eventDescription,
                      final String eventPlace,
-                     final Long eventStart, final Long eventEnd,
+                     final LocalDateTime eventStart, final LocalDateTime eventEnd, final LocalDate eventWhen,
                      final String eventRepeat,
                      final String reminder) {
     this.guid = guid;
@@ -61,6 +68,7 @@ public class CustomEvent {
     this.eventPlace = eventPlace;
     this.eventStart = eventStart;
     this.eventEnd = eventEnd;
+    this.eventWhen = eventWhen;
     this.eventRepeat = eventRepeat;
     this.reminder = reminder;
   }

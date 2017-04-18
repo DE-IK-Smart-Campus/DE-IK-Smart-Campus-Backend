@@ -4,6 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 
 import hu.unideb.smartcampus.domain.calendar.CustomEvent;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 
 public class CustomEventConverter implements Converter<CustomEventIqElement, CustomEvent> {
   @Override
@@ -13,8 +14,9 @@ public class CustomEventConverter implements Converter<CustomEventIqElement, Cus
         customEventIqElement.getEventName(),
         customEventIqElement.getEventDescription(),
         customEventIqElement.getEventPlace(),
-        customEventIqElement.getEventStart(),
-        customEventIqElement.getEventEnd(),
+        DateUtil.getInLocalDateTimeByEpochSecond(customEventIqElement.getEventStart()),
+        DateUtil.getInLocalDateTimeByEpochSecond(customEventIqElement.getEventEnd()),
+        DateUtil.getInLocalDateByEpochSecond(customEventIqElement.getEventWhen()),
         customEventIqElement.getEventRepeat(),
         customEventIqElement.getReminder()
     );
