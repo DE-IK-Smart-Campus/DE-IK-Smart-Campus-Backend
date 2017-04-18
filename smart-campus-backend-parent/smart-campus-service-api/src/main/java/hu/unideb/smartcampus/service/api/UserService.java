@@ -32,16 +32,40 @@ public interface UserService {
    * @return the persisted entity with its id set
    */
   User save(User user);
-  
+
   /**
    * Get id by username.
    */
   Long getIdByUsername(String username);
-  
+
   /**
    * Get user actual subjects in range.
    */
-  Set<SubjectDetails> getSubjectsWithinRangeByUsername(String username, LocalDate from, LocalDate to);
-  
-  List<CourseAppointment> getCourseAppointmentsByUsernameAndSubjectEvent(String username, SubjectEvent subjectEvent);
+  Set<SubjectDetails> getSubjectsWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to);
+
+  List<CourseAppointment> getCourseAppointmentsByUsernameAndSubjectEvent(String username,
+      SubjectEvent subjectEvent);
+
+  List<CourseAppointment> getCourseAppointmensWithinRange(String username, LocalDate from,
+      LocalDate to);
+
+  /**
+   * Get course appointments by username.
+   * 
+   * @param username user's username.
+   * @return user's course appointments.
+   */
+  List<CourseAppointment> getCourseAppointmentsByUsername(String username);
+
+  /**
+   * Get user subject events.
+   */
+  List<SubjectEvent> getSubjectEventsByUsername(String username);
+
+  /**
+   * Get user subject events within range.
+   */
+  List<SubjectEvent> getSubjectEventsWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to);
 }

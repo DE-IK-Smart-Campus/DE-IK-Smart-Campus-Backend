@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api;
 import java.util.List;
 
 import hu.unideb.smartcampus.shared.iq.request.CalendarSubjectsIqRequest;
+import hu.unideb.smartcampus.shared.iq.request.ListUserAttendanceIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
 
 /**
@@ -19,5 +20,10 @@ public interface CalendarSubjectService {
    * Get subject events within period by IQ request.
    */
   List<CalendarSubjectIqElement> getSubjectEventsWithinPeriod(CalendarSubjectsIqRequest iq);
+  
+  /**
+   * Get subject events within period by IQ request.
+   */
+  List<CalendarSubjectIqElement> getSubjectEventsWithinPeriod(ListUserAttendanceIqRequest iq);
   
 }

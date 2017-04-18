@@ -3,7 +3,7 @@ package hu.unideb.smartcampus.service.api;
 import java.util.List;
 
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
-import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
+import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.CourseInfoWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.shared.exception.InputParseException;
@@ -35,6 +35,6 @@ public interface CalendarService {
    * @param subjectEvents
    * @return
    */
-  List<CourseAppointment> pairEventWithAppointement(CourseInfoWrapper courseInfoWrapper);
+  void pairEventWithAppointementByStudent(CourseInfoWrapper courseInfoWrapper, User user);
 
 }

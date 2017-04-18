@@ -49,9 +49,9 @@ import lombok.ToString;
     uniqueConstraints = @UniqueConstraint(columnNames = COLUMN_NAME_USERNAME))
 @NamedQueries({
     @NamedQuery(name = "UserEntity.getSubjectsByUsername",
-        query = "SELECT u.actualSubjects FROM UserEntity u WHERE u.username = ?1"),
+        query = "SELECT actual FROM UserEntity u join u.actualEvents events join events.subjectDetailsEntity actual WHERE u.username = ?1"),
     @NamedQuery(name = "UserEntity.getSubjectsWithinRangeByUsername",
-        query = "SELECT actual FROM UserEntity u join u.actualSubjects actual WHERE u.username = ?1 AND actual.startPeriod BETWEEN ?2 AND ?3"),
+        query = "SELECT actual FROM UserEntity u join u.actualEvents events join events.subjectDetailsEntity actual WHERE u.username = ?1 AND actual.startPeriod BETWEEN ?2 AND ?3"),
     @NamedQuery(name = "UserEntity.getIdByUsername",
         query = "SELECT u.id FROM UserEntity u WHERE u.username = ?1"),
     @NamedQuery(name = "UserEntity.getSingleChatListByUsername",
@@ -60,6 +60,12 @@ import lombok.ToString;
         query = "SELECT list FROM UserEntity u join u.mucChatList list WHERE u.username = ?1"),
     @NamedQuery(name = "UserEntity.getCourseAppointmensWithinRange",
         query = "SELECT course FROM UserEntity u join u.courseAppointments course WHERE u.username = ?1 AND course.subjectEvent.subjectDetailsEntity.startPeriod BETWEEN ?2 AND ?3"),
+    @NamedQuery(name = "UserEntity.getCourseAppointmentsByUsername",
+        query = "SELECT course FROM UserEntity u join u.courseAppointments course WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getSubjectEventsByUsername",
+        query = "SELECT events FROM UserEntity u join u.actualEvents events WHERE u.username = ?1"),
+    @NamedQuery(name = "UserEntity.getSubjectEventsWithinRangeByUsername",
+        query = "SELECT events FROM UserEntity u join u.actualEvents events WHERE u.username = ?1 AND events.subjectDetailsEntity.startPeriod BETWEEN ?2 AND ?3"),
     @NamedQuery(name = "UserEntity.getCourseAppointmentsBySubjectEvent",
         query = "SELECT course FROM UserEntity u join u.courseAppointments course WHERE u.username = ?1 AND course.subjectEvent = ?2")})
 public class UserEntity extends BaseEntity<Long> {
@@ -108,14 +114,11 @@ public class UserEntity extends BaseEntity<Long> {
    * Actual semester subjects.
    */
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "user_subject_details_relation",
+  @JoinTable(name = "user_subject_event_relation",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = {
-          @JoinColumn(name = "subject_type", referencedColumnName = "subject_type"),
-          @JoinColumn(name = "subject_name", referencedColumnName = "subject_name"),
-          @JoinColumn(name = "start_period", referencedColumnName = "start_period"),
-          @JoinColumn(name = "end_period", referencedColumnName = "end_period")})
-  private Set<SubjectDetailsEntity> actualSubjects;
+          @JoinColumn(name = "subject_event_id", referencedColumnName = "id")})
+  private Set<SubjectEventEntity> actualEvents;
 
   /**
    * User custom events.
@@ -143,7 +146,7 @@ public class UserEntity extends BaseEntity<Long> {
   /**
    * Course appointments.
    */
-  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
   @JoinTable(name = "user_course_appointment",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "course_appointment_id", referencedColumnName = "id"))
@@ -154,14 +157,14 @@ public class UserEntity extends BaseEntity<Long> {
    */
   @Builder
   public UserEntity(final Long id, final String username, final String password, final Role role,
-      final Set<SubjectDetailsEntity> actualSubjects, final List<CustomEventEntity> customEvents,
+      final Set<SubjectEventEntity> actualEvents, final List<CustomEventEntity> customEvents,
       final Set<String> mucChatList, final Set<String> singleChatList, final String fullName,
       final String neptunIdentifier, final Set<CourseAppointmentEntity> courseAppointments) {
     super(id);
     this.username = username;
     this.password = password;
     this.role = role;
-    this.actualSubjects = actualSubjects;
+    this.actualEvents = actualEvents;
     this.customEvents = customEvents;
     this.fullName = fullName;
     this.neptunIdentifier = neptunIdentifier;

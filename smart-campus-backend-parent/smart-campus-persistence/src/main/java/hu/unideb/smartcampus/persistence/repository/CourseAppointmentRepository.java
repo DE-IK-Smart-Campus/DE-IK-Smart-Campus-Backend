@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import hu.unideb.smartcampus.persistence.entity.CourseAppointmentEntity;
 
 /**
- * User repository.
+ * Course appointment repository.
  */
 @Repository
 public interface CourseAppointmentRepository extends JpaRepository<CourseAppointmentEntity, Long> {

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.collect.Sets;
 
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.shared.enumeration.Role;
 
@@ -35,12 +36,18 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
       .subjectName("AI").subjectType("LABORATORY").startPeriod(LocalDate.of(2000, 02, 01))
       .endPeriod(LocalDate.of(2000, 05, 31)).instructors(Collections.emptyList()).build();
 
+  private final SubjectEventEntity eventEntity = SubjectEventEntity.builder()
+      .subjectDetailsEntity(sampleSubject)
+      .courseCode("TEST-COURSE")
+      .build();
+  
   /**
    * Admin user.
    */
   private final UserEntity adminUser =
       UserEntity.builder().id(USER_ID_ADMIN).username(USERNAME_ADMIN).password(PASSWORD_ADMIN)
-          .actualSubjects(Sets.newHashSet(sampleSubject)).role(Role.ADMIN).build();
+          .actualEvents(Sets.newHashSet(eventEntity))
+          .role(Role.ADMIN).build();
 
   /**
    * UserRepository.
@@ -160,7 +167,6 @@ public class UserRepositoryIntegrationTest extends BaseRepositoryIntegrationTest
     Assert.assertEquals(3, mucList.size());
   }
   
-
   /**
    * Test get single chat list. 
    */

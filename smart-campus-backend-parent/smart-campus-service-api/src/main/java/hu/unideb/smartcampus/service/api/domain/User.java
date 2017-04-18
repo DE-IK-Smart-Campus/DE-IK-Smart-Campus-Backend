@@ -4,7 +4,7 @@ import static hu.unideb.smartcampus.shared.exclusion.FieldExclusion.EXCLUDE_PASS
 
 import java.util.List;
 
-import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.shared.enumeration.Role;
 import lombok.Builder;
 import lombok.Data;
@@ -47,7 +47,7 @@ public class User extends BaseObject<Long> {
   /**
    * Subject details list.
    */
-  private final List<SubjectDetails> subjectDetailsList;
+  private final List<SubjectEvent> subjectEventList;
 
   /**
    * MUC chat list.
@@ -79,7 +79,7 @@ public class User extends BaseObject<Long> {
    */
   @Builder
   public User(final Long id, final String username, final String password, final Role role,
-      final List<SubjectDetails> subjectDetailsList, final String fullName,
+      final List<SubjectEvent> subjectEventList, final String fullName,
       final String neptunIdentifier,
       final List<String> mucChatList,
       final List<String> singleChatList,
@@ -89,7 +89,7 @@ public class User extends BaseObject<Long> {
     this.username = username;
     this.password = password;
     this.role = role;
-    this.subjectDetailsList = subjectDetailsList;
+    this.subjectEventList = subjectEventList;
     this.fullName = fullName;
     this.neptunIdentifier = neptunIdentifier;
     this.mucChatList = mucChatList;

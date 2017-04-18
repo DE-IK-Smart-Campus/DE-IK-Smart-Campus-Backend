@@ -43,7 +43,10 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
     final User user = userService.getById(userId)
         .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
-    return user.getSubjectDetailsList();
+    return user.getSubjectEventList()
+        .stream()
+        .map(event -> event.getSubjectDetails())
+        .collect(Collectors.toList());
   }
 
   @Transactional

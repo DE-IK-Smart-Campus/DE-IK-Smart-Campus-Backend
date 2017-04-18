@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
-import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.repository.SubjectEventRepository;
 import hu.unideb.smartcampus.service.api.CalendarEventType;
 import hu.unideb.smartcampus.service.api.CalendarService;
@@ -27,6 +25,7 @@ import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarAppointmentDateTimeParser;
 import hu.unideb.smartcampus.service.api.calendar.parser.CalendarSubjectDetailsParser;
 import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
+import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.CourseInfoWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.service.api.util.CourseAppointmentUtil;
@@ -143,43 +142,27 @@ public class CalendarServiceImpl implements CalendarService {
   }
 
   @Override
-  public List<CourseAppointment> pairEventWithAppointement(CourseInfoWrapper courseInfoWrapper) {
+  public void pairEventWithAppointementByStudent(CourseInfoWrapper courseInfoWrapper, User user) {
+    List<CourseAppointment> courseAppointmentList = user.getCourseAppointmentList();
 
-    List<CourseAppointment> courseAppointments = new ArrayList<>();
-
-    for (StudentCourse studentCourse : courseInfoWrapper.getFilteredLastSemesterCourses()) {
-
-      SubjectDetails subjectDetails =
-          createSubjectDetails(courseInfoWrapper.getCourses(), studentCourse);
-
-      List<SubjectEventEntity> findBySubjectDetailsEntity =
-          findSubjectsBySubjectDetails(subjectDetails);
-
-      if (findBySubjectDetailsEntity != null) {
-        findBySubjectDetailsEntity
-            .forEach(subjectEventEntity -> courseAppointments
-                .addAll(
-                    getCourseAppointementsByInfoAndCourseAndEvent(courseInfoWrapper, studentCourse,
-                        subjectEventEntity)));
+    List<SubjectEvent> subjectEvents = user.getSubjectEventList();
+    for (SubjectEvent event : subjectEvents) {
+      if (event != null) {
+        courseAppointmentList
+            .addAll(
+                getCourseAppointementsByInfoAndCourseAndEvent(courseInfoWrapper,
+                    event));
       }
     }
-
-    return courseAppointments;
   }
 
   private List<CourseAppointment> getCourseAppointementsByInfoAndCourseAndEvent(
-      CourseInfoWrapper courseInfoWrapper,
-      StudentCourse studentCourse, SubjectEventEntity subjectEventEntity) {
+      CourseInfoWrapper courseInfoWrapper, SubjectEvent subjectEvent) {
 
     return courseAppointmentUtil.getAppointmentListByCourseCode(
         courseInfoWrapper.getLastSemesterCourses(),
-        studentCourse.getCourseCode(),
-        converter.convert(subjectEventEntity, SubjectEvent.class));
-  }
-
-  private List<SubjectEventEntity> findSubjectsBySubjectDetails(SubjectDetails subjectDetails) {
-    return subjectDetails == null ? null : subjectEventRepository.findBySubjectDetailsEntity(
-        converter.convert(subjectDetails, SubjectDetailsEntity.class));
+        subjectEvent.getCourseCode(),
+        subjectEvent);
   }
 
   private SubjectDetails createSubjectDetails(List<StudentCourse> courses,
@@ -194,7 +177,6 @@ public class CalendarServiceImpl implements CalendarService {
         .instructors(teacherUtil.getTeachersByCourseCode(courses, studentCourse))
         .build();
   }
-
 
   private String getRoomLocation(StudentCourse studentCourse) {
     String classroomCode = studentCourse.getClassroomCode();
