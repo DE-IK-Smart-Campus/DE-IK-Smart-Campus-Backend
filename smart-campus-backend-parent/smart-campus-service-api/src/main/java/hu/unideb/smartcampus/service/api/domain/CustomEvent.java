@@ -12,7 +12,6 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 public class CustomEvent extends BaseObject<Long> {
-
   /**
    * Global unique identifier.
    */

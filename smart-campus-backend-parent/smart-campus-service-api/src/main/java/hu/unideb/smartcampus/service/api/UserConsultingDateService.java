@@ -12,10 +12,10 @@ public interface UserConsultingDateService {
   /**
    * List signed users within one week by instructor id.
    */
-  List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek(Long instructorId);
+  List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek(String neptunIdentifier);
 
   /**
    * List all signed users by instructor id.
    */
-  List<StudentIqElement> listSignedStudentByInstructorId(Long instructorId);
+  List<StudentIqElement> listSignedStudentByInstructorId(String neptunIdentifier);
 }

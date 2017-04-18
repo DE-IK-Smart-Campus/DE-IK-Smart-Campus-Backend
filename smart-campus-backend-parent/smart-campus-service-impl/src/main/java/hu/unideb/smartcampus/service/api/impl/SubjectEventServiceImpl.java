@@ -36,6 +36,7 @@ import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.CourseInfoWrapper;
 import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTableInfo;
 import hu.unideb.smartcampus.service.api.util.StudentCourseUtil;
+import hu.unideb.smartcampus.shared.primarykey.SubjectDetailsPrimaryKey;
 import hu.unideb.smartcampus.webservice.api.ejabberd.MultiUserChatService;
 import hu.unideb.smartcampus.webservice.api.ejabberd.SharedRosterService;
 import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
@@ -179,7 +180,7 @@ public class SubjectEventServiceImpl implements SubjectEventService {
   private List<SubjectDetails> saveInstructorsFromDetails(List<SubjectDetails> subjectDetails) {
     List<SubjectDetails> saveSubjectDetails = saveSubjectDetails(subjectDetails);
     saveSubjectDetails
-        .forEach(subjectDetail -> this.saveInstructorWithSubjectDetails(subjectDetail));
+        .forEach(this::saveInstructorWithSubjectDetails);
     return saveSubjectDetails;
   }
 
@@ -234,5 +235,14 @@ public class SubjectEventServiceImpl implements SubjectEventService {
   public List<CourseAppointment> getCourseAppointmentByUsernameAndSubjectEvent(String username,
       SubjectEvent subjectEvent) {
     return userService.getCourseAppointmentsByUsernameAndSubjectEvent(username, subjectEvent);
+  }
+
+  private SubjectDetailsPrimaryKey createKeyBySubjectDetails(SubjectDetails subjectDetails) {
+    SubjectDetailsPrimaryKey key = new SubjectDetailsPrimaryKey();
+    key.setSubjectName(subjectDetails.getSubjectName());
+    key.setSubjectType(subjectDetails.getSubjectType().toString());
+    key.setStartPeriod(subjectDetails.getStartPeriod());
+    key.setEndPeriod(subjectDetails.getEndPeriod());
+    return key;
   }
 }

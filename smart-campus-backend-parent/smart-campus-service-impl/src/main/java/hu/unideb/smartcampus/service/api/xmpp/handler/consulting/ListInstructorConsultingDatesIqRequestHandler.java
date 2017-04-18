@@ -49,14 +49,14 @@ public class ListInstructorConsultingDatesIqRequestHandler
   public IQ handleIQRequest(IQ iqRequest) {
     ListInstructorConsultingDatesIqRequest iq =
         (ListInstructorConsultingDatesIqRequest) super.handleIQRequest(iqRequest);
-    Long instructorId = iq.getInstructorId();
+    String instructorId = iq.getInstructorId();
     List<StudentIqElement> students = getStudents(iq, instructorId);
     iq.setStudents(students);
     return iq;
   }
 
   private List<StudentIqElement> getStudents(ListInstructorConsultingDatesIqRequest iq,
-      Long instructorId) {
+      String instructorId) {
     return iq.isOneWeek()
         ? service.findSignedStudentByInstructorIdWithinOneWeek(iq.getInstructorId())
         : service.listSignedStudentByInstructorId(instructorId);

@@ -11,12 +11,14 @@ import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
 import hu.unideb.smartcampus.service.api.domain.FromToDate;
 
 @Component
-public class ConsultingDateEntityToConsultingDateConverter implements Converter<ConsultingDateEntity, ConsultingDate> {
+public class ConsultingDateEntityToConsultingDateConverter
+    implements Converter<ConsultingDateEntity, ConsultingDate> {
 
   private final Converter<FromToDateEmbeddedEntity, FromToDate> fromToDateConverter;
 
   @Autowired
-  public ConsultingDateEntityToConsultingDateConverter(final Converter<FromToDateEmbeddedEntity, FromToDate> fromToDateConverter) {
+  public ConsultingDateEntityToConsultingDateConverter(
+      final Converter<FromToDateEmbeddedEntity, FromToDate> fromToDateConverter) {
     this.fromToDateConverter = fromToDateConverter;
   }
 
@@ -26,8 +28,11 @@ public class ConsultingDateEntityToConsultingDateConverter implements Converter<
         : convertConsultingDateEntityToConsultingDate(consultingDateEntity);
   }
 
-  private ConsultingDate convertConsultingDateEntityToConsultingDate(final ConsultingDateEntity consultingDateEntity) {
+  private ConsultingDate convertConsultingDateEntityToConsultingDate(
+      final ConsultingDateEntity consultingDateEntity) {
     return ConsultingDate.builder()
+        .id(consultingDateEntity.getId())
+        .date(consultingDateEntity.getDateInString())
         .fromToDate(fromToDateConverter.convert(consultingDateEntity.getFromToDate()))
         .sum(consultingDateEntity.getSum())
         .build();

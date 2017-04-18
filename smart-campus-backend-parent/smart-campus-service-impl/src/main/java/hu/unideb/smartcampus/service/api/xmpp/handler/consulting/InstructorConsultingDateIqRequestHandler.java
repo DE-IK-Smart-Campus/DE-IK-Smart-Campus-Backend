@@ -64,13 +64,17 @@ public class InstructorConsultingDateIqRequestHandler extends AbstractSmartCampu
   }
 
   private ConsultingDateIqElement toIqElement(ConsultingDateWrapper wrapper) {
-    return ConsultingDateIqElement.builder().consultingHourId(wrapper.getConsultingDateId())
+    return ConsultingDateIqElement.builder()
+        .consultingHourId(wrapper.getConsultingDateId())
         .reservedSum(wrapper.getReservedSum())
-        .fromToDates(convertFromToDate(wrapper.getFromToDates())).build();
+        .fromToDates(convertFromToDate(wrapper.getFromToDates()))
+        .build();
   }
 
   private FromToDateIqElement convertFromToDate(FromToDateWrapper fromToDates) {
-    return FromToDateIqElement.builder().from(fromToDates.getFrom()).to(fromToDates.getTo())
+    return FromToDateIqElement.builder()
+        .from(fromToDates.getFrom())
+        .to(fromToDates.getTo())
         .build();
   }
 

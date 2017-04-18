@@ -1,6 +1,5 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +40,7 @@ public class UserConsultingDateServiceImplTest {
 
   private static final String DURATION = "10 minutes";
 
-  private static final Long INSTRUCTORID = 1L;
+  private static final String INSTRUCTORID = "ABC123";
 
   private static final List<UserConsultingDateEntity> RETURNED_LIST =
       Arrays.asList(UserConsultingDateEntity.builder()
@@ -55,8 +54,8 @@ public class UserConsultingDateServiceImplTest {
                   .date(DATE)
                   .fromToDate(
                       FromToDateEmbeddedEntity.builder()
-                          .fromDate(Timestamp.valueOf(LocalDateTime.now()))
-                          .toDate(Timestamp.valueOf(LocalDateTime.now()))
+                          .fromDate(LocalDateTime.now())
+                          .toDate(LocalDateTime.now())
                           .build())
                   .sum(0)
                   .build())
@@ -90,15 +89,13 @@ public class UserConsultingDateServiceImplTest {
     // given
     LocalDateTime fromLocalDateTime = LocalDateTime.of(2000, 1, 1, 8, 0);
     LocalDateTime toLocalDateTime = LocalDateTime.of(2000, 1, 8, 8, 0);
-    Timestamp from = Timestamp.valueOf(fromLocalDateTime);
-    Timestamp to = Timestamp.valueOf(toLocalDateTime);
 
     // when
     PowerMockito.mockStatic(LocalDateTime.class);
     PowerMockito.when(LocalDateTime.now()).thenReturn(fromLocalDateTime);
     PowerMockito.when(LocalDateTime.now().plusWeeks(1)).thenReturn(toLocalDateTime);
     PowerMockito.when(userConsultingDateRepository
-        .getUserConsultingDatesByInstructorIdBetweenRange(INSTRUCTORID, from, to))
+        .getUserConsultingDatesByInstructorIdBetweenRange(INSTRUCTORID, fromLocalDateTime, toLocalDateTime))
         .thenReturn(RETURNED_LIST);
 
     // then

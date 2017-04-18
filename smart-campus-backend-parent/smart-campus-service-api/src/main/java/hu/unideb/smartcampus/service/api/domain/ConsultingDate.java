@@ -11,6 +11,11 @@ import lombok.Data;
 public class ConsultingDate {
 
   /**
+   * Id.
+   */
+  private Long id;
+
+  /**
    * Date of the consulting hours.
    */
   private String dateInString;
@@ -29,7 +34,9 @@ public class ConsultingDate {
    * Constructs consulting date.
    */
   @Builder
-  public ConsultingDate(final String date, final FromToDate fromToDate, final Integer sum) {
+  public ConsultingDate(final Long id, final String date, final FromToDate fromToDate,
+      final Integer sum) {
+    this.id = id;
     this.dateInString = date;
     this.fromToDate = fromToDate;
     this.sum = sum;

@@ -34,10 +34,10 @@ import lombok.ToString;
     query = "SELECT uc FROM UserConsultingDateEntity uc WHERE uc.consultingDate.id IN (?1)"),
     @NamedQuery(
         name = "UserConsultingDateEntity.getUserConsultingDatesByInstructorId",
-        query = "SELECT uc FROM UserConsultingDateEntity uc, InstructorEntity instr join instr.consultingDates icd WHERE instr.id = ?1 AND uc.consultingDate.id in (icd)"),
+        query = "SELECT uc FROM UserConsultingDateEntity uc, InstructorEntity instr join instr.consultingDates icd WHERE instr.neptunIdentifier = ?1 AND uc.consultingDate.id in (icd)"),
     @NamedQuery(
         name = "UserConsultingDateEntity.getUserConsultingDatesByInstructorIdBetweenRange",
-        query = "SELECT uc FROM UserConsultingDateEntity uc, InstructorEntity instr join instr.consultingDates icd WHERE instr.id = ?1 AND uc.consultingDate.id in (icd) AND uc.consultingDate.fromToDate.fromDate BETWEEN ?2 AND ?3")})
+        query = "SELECT uc FROM UserConsultingDateEntity uc, InstructorEntity instr join instr.consultingDates icd WHERE instr.neptunIdentifier = ?1 AND uc.consultingDate.id in (icd) AND uc.consultingDate.fromToDate.fromDate BETWEEN ?2 AND ?3")})
 public class UserConsultingDateEntity extends BaseEntity<Long> {
 
   /**

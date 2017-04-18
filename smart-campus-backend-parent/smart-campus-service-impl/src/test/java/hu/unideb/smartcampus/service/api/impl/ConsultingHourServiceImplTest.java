@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api.impl;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,7 @@ import hu.unideb.smartcampus.service.api.domain.ConsultingDate;
 import hu.unideb.smartcampus.service.api.domain.FromToDate;
 import hu.unideb.smartcampus.shared.officehour.OfficeHour;
 import hu.unideb.smartcampus.shared.officehour.OfficeHourIntervall;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 
 
 /**
@@ -42,12 +44,12 @@ public class ConsultingHourServiceImplTest {
   /**
    * To timestamp date.
    */
-  private static final Timestamp TO_DATE = new Timestamp(15);
+  private static final LocalDateTime TO_DATE = DateUtil.getInLocalDateTimeByEpochSecond(15L);
 
   /**
    * From timestamp date.
    */
-  private static final Timestamp FROM_DATE = new Timestamp(10);
+  private static final LocalDateTime FROM_DATE = DateUtil.getInLocalDateTimeByEpochSecond(10L);
 
   /**
    * Date in string.

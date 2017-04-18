@@ -16,7 +16,7 @@ import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
 public class ListInstructorConsultingDatesIqParserTest extends AbstractParserTest {
 
   private static final Boolean ONE_WEEK = true;
-  private static final Long INSTRUCTORID = 1L;
+  private static final String INSTRUCTORID = "ABC123";
   private static final List<StudentIqElement> STUDENTS = Arrays.asList(
       StudentIqElement.builder()
           .studentName("Erik")

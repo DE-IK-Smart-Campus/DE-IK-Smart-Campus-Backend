@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.shared.primarykey.SubjectDetailsPrimaryKey;
 
 /**
  * Subject details service.
@@ -36,4 +37,6 @@ public interface SubjectDetailsService {
    * Get subject details within range by username.
    */
   List<SubjectDetails> getSubjectDetailsWithinRangeByUsername(LocalDate from, LocalDate to, String username);
+  
+  SubjectDetails getByKey(SubjectDetailsPrimaryKey key);
 }

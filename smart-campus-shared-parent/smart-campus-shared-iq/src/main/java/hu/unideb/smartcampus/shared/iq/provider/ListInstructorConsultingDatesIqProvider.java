@@ -28,7 +28,7 @@ public class ListInstructorConsultingDatesIqProvider
   public ListInstructorConsultingDatesIqRequest parse(XmlPullParser parser, int initialDepth)
       throws Exception {
     Boolean oneWeek = false;
-    Long instructorId = 0L;
+    String neptunIdentifier = "";
     StudentIqElement student = new StudentIqElement();
     List<StudentIqElement> students = new ArrayList<>();
     int eventType = parser.getEventType();
@@ -50,7 +50,7 @@ public class ListInstructorConsultingDatesIqProvider
           if (tagname.equalsIgnoreCase(STUDENT)) {
             students.add(student);
           } else if (tagname.equalsIgnoreCase(INSTRUCTORID)) {
-            instructorId = Long.valueOf(text);
+            neptunIdentifier = text;
           } else if (tagname.equalsIgnoreCase(STUDENT_NAME)) {
             student.setStudentName(text);
           } else if (tagname.equalsIgnoreCase(NEPTUN_IDENTIFIER)) {
@@ -70,7 +70,7 @@ public class ListInstructorConsultingDatesIqProvider
       }
     }
     return ListInstructorConsultingDatesIqRequest.builder()
-        .instructorId(instructorId)
+        .instructorId(neptunIdentifier)
         .students(students)
         .oneWeek(oneWeek)
         .build();

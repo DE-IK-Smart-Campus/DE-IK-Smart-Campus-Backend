@@ -29,8 +29,8 @@ public class ListInstructorSignedConsultingDates {
   @Autowired
   private EjabberdUser ejabberdUser;
 
-  @GetMapping("/list/instructorSignedStudentStudents/{instructorId}")
-  public ResponseEntity<List<StudentIqElement>> listStudents(@PathVariable Long instructorId) {
+  @GetMapping("/list/instructorSignedStudentStudents/{neptunIdentifier}")
+  public ResponseEntity<List<StudentIqElement>> listStudents(@PathVariable String neptunIdentifier) {
     ListInstructorConsultingDatesIqRequest resultIq = null;
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
@@ -38,7 +38,7 @@ public class ListInstructorSignedConsultingDates {
       iq.setType(Type.get);
       iq.setFrom(connection.getUser());
       iq.setTo(JidCreate.from("smartcampus@smartcampus/Smartcampus"));
-      iq.setInstructorId(instructorId);
+      iq.setInstructorId(neptunIdentifier);
       iq.setOneWeek(false);
       StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
       resultIq = collector.nextResultBlockForever();

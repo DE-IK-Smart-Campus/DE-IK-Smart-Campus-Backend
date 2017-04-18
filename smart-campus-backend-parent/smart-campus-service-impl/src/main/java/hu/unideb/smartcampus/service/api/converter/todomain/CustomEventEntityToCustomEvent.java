@@ -13,6 +13,7 @@ public class CustomEventEntityToCustomEvent implements Converter<CustomEventEnti
   @Override
   public CustomEvent convert(CustomEventEntity source) {
     return CustomEvent.builder()
+        .id(source.getId())
         .guid(source.getGuid())
         .eventName(source.getEventName())
         .eventDescription(source.getEventDescription())

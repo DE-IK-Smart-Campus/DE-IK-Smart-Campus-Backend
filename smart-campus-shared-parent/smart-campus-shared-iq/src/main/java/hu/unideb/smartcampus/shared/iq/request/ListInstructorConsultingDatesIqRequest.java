@@ -28,7 +28,7 @@ public class ListInstructorConsultingDatesIqRequest extends BaseSmartCampusIqReq
   /**
    * Instructor id.
    */
-  private Long instructorId;
+  private String instructorId;
 
   /**
    * Student's subjects.
@@ -52,7 +52,7 @@ public class ListInstructorConsultingDatesIqRequest extends BaseSmartCampusIqReq
    * Constructs.
    */
   @Builder
-  public ListInstructorConsultingDatesIqRequest(Long instructorId,
+  public ListInstructorConsultingDatesIqRequest(String instructorId,
       List<StudentIqElement> students, boolean oneWeek) {
     super(ELEMENT);
     this.oneWeek = oneWeek;

@@ -9,6 +9,7 @@ import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_END_DATE;
 import static hu.unideb.smartcampus.shared.test.property.InstructorTestProperty.MONDAY_START_DATE;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -83,17 +84,13 @@ public class RetrieveInsturctorConsultingHoursServiceImplTest {
     Set<ConsultingDateEntity> consultingDates =
         Sets.newSet(fridayConsultingDate, mondayConsultingDate);
 
-    Calendar from = Calendar.getInstance();
-    from.set(2017, Calendar.JANUARY, 1, 0, 0, 0);
-    Calendar to = (Calendar) Calendar.getInstance().clone();
-    to.set(2017, Calendar.JANUARY, 8, 0, 0, 0);
-
+    LocalDateTime from = LocalDateTime.of(2017, 1,1,0,0,0);
+    LocalDateTime to = LocalDateTime.of(2017, 1,8,0,0,0);
     // when
     PowerMockito.when(instructorRepositoy
-        .getInstructorConsultingDatesByIdAndGivenDate(INSTRUCTOR_ID, from.getTime(), to.getTime()))
+        .getInstructorConsultingDatesByIdAndGivenDate(INSTRUCTOR_ID, from, to))
         .thenReturn(consultingDates);
     PowerMockito.mockStatic(Calendar.class, Calendar.class);
-    PowerMockito.when(Calendar.getInstance()).thenReturn(from);
 
     // then
     List<ConsultingDateWrapper> consultingDatesByInstructorId =

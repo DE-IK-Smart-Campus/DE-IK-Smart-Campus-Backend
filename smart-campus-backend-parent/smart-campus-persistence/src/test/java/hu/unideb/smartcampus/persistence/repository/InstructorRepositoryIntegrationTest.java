@@ -19,7 +19,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.junit.Test;
@@ -166,15 +167,13 @@ public class InstructorRepositoryIntegrationTest extends BaseRepositoryIntegrati
   @Test
   public void getInstructorConsultingDatesByIdAndGivenDateShouldReturnConsultingDatesAfterGivenDate() {
     // Given
-    Calendar from = Calendar.getInstance();
-    from.set(2017, 2, 7);
+    LocalDateTime from = LocalDate.of(2017, 3, 7).atStartOfDay();
 
-    Calendar to = Calendar.getInstance();
-    to.set(2017, 2, 14);
+    LocalDateTime to = LocalDate.of(2017, 3, 14).atStartOfDay();
 
     // When
     Set<ConsultingDateEntity> consultingDates = instructorRepository
-        .getInstructorConsultingDatesByIdAndGivenDate(1L, from.getTime(), to.getTime());
+        .getInstructorConsultingDatesByIdAndGivenDate(1L, from, to);
 
     // Then
     assertThat(ASSERTION_EQUAL_TO_ERROR_MESSAGE, consultingDates,

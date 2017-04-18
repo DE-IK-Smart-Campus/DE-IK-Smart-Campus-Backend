@@ -25,20 +25,20 @@ values (8, 'gabai', '$2y$10$.D6nvZNahkSXVSRLHrtI5u0RERS6rdBqwMH/uja1Yi7DVfiHukzj
 ----------------------------------------------------------------------------------------------------
 
 -- instructors
-insert into instructor (id, name)
-values (1, 'instructor');
+insert into instructor (id, name,neptun_identifier)
+values (1, 'instructor','asd123');
 
-insert into instructor (id, name)
-values (2, 'Dr. Gál Zoltán');
+insert into instructor (id, name, neptun_identifier)
+values (2, 'Dr. Gál Zoltán','123qwe');
 
-insert into instructor (id, name)
-values (3, 'Dr. Szilágyi Szabolcs');
+insert into instructor (id, name, neptun_identifier)
+values (3, 'Dr. Szilágyi Szabolcs','123qwz');
 
-insert into instructor (id, name)
-values (4, 'Vas Ádám');
+insert into instructor (id, name, neptun_identifier)
+values (4, 'Vas Ádám','123qwu');
 
-insert into instructor (id, name)
-values (5, 'Dr. Jeszenszky Péter');
+insert into instructor (id, name, neptun_identifier)
+values (5, 'Dr. Jeszenszky Péter','123qwp');
 
 -------------------------------
 

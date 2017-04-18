@@ -17,6 +17,7 @@ import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.shared.exception.UserNotFoundException;
+import hu.unideb.smartcampus.shared.primarykey.SubjectDetailsPrimaryKey;
 
 
 @Service
@@ -62,7 +63,8 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
   @Override
   public List<SubjectDetails> save(final List<SubjectDetails> subjectDetailsList) {
     Assert.notNull(subjectDetailsList);
-    return subjectDetailsList.stream().map(subjectDetails -> save(subjectDetails))
+    return subjectDetailsList.stream()
+        .map(this::saveIfNotExists)
         .collect(Collectors.toList());
   }
 
@@ -79,5 +81,34 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
       String username) {
     return userService.getSubjectsWithinRangeByUsername(username, from, to).stream()
         .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public SubjectDetails getByKey(SubjectDetailsPrimaryKey key) {
+    SubjectDetailsEntity findOne = subjectDetailsRepository.findOne(key);
+    return conversionService.convert(findOne, SubjectDetails.class);
+  }
+
+  private SubjectDetails saveIfNotExists(final SubjectDetails subjectDetails) {
+    Assert.notNull(subjectDetails);
+    SubjectDetails byKey = getByKey(createKeyBySubjectDetails(subjectDetails));
+    SubjectDetailsEntity entity;
+    if (byKey == null) {
+      entity = subjectDetailsRepository
+          .save(conversionService.convert(subjectDetails, SubjectDetailsEntity.class));
+    } else {
+      entity = conversionService.convert(byKey, SubjectDetailsEntity.class);
+    }
+    return conversionService.convert(entity, SubjectDetails.class);
+  }
+
+  private SubjectDetailsPrimaryKey createKeyBySubjectDetails(SubjectDetails subjectDetails) {
+    SubjectDetailsPrimaryKey key = new SubjectDetailsPrimaryKey();
+    key.setSubjectName(subjectDetails.getSubjectName());
+    key.setSubjectType(subjectDetails.getSubjectType().toString());
+    key.setStartPeriod(subjectDetails.getStartPeriod());
+    key.setEndPeriod(subjectDetails.getEndPeriod());
+    return key;
   }
 }

@@ -1,6 +1,5 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,12 +35,12 @@ public class UserConsultingDateServiceImpl implements UserConsultingDateService 
    */
   @Transactional(readOnly = true)
   @Override
-  public List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek(Long instructorId) {
-    LOGGER.info("Find user consulting dates for instructor {} within a week.", instructorId);
-    Timestamp from = Timestamp.valueOf(LocalDateTime.now());
-    Timestamp to = Timestamp.valueOf(LocalDateTime.now().plusWeeks(1));
+  public List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek(String neptunIdentifier) {
+    LOGGER.info("Find user consulting dates for instructor {} within a week.", neptunIdentifier);
+    LocalDateTime from = LocalDateTime.now();
+    LocalDateTime to = LocalDateTime.now().plusWeeks(1);
     List<UserConsultingDateEntity> userConsultingDates =
-        userConsultingDateRepository.getUserConsultingDatesByInstructorIdBetweenRange(instructorId,
+        userConsultingDateRepository.getUserConsultingDatesByInstructorIdBetweenRange(neptunIdentifier,
             from, to);
     LOGGER.debug("Found dates:{}.", userConsultingDates.size());
     return toList(userConsultingDates);
@@ -52,10 +51,10 @@ public class UserConsultingDateServiceImpl implements UserConsultingDateService 
    */
   @Transactional(readOnly = true)
   @Override
-  public List<StudentIqElement> listSignedStudentByInstructorId(Long instructorId) {
-    LOGGER.info("Find all user consulting dates for instructor {}.", instructorId);
+  public List<StudentIqElement> listSignedStudentByInstructorId(String neptunIdentifier) {
+    LOGGER.info("Find all user consulting dates for instructor {}.", neptunIdentifier);
     List<UserConsultingDateEntity> userConsultingDates =
-        userConsultingDateRepository.getUserConsultingDatesByInstructorId(instructorId);
+        userConsultingDateRepository.getUserConsultingDatesByInstructorId(neptunIdentifier);
     LOGGER.debug("Found dates:{}.", userConsultingDates.size());
     return toList(userConsultingDates);
   }
