@@ -21,6 +21,7 @@ import com.google.common.collect.Sets;
 
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
+import hu.unideb.smartcampus.persistence.repository.CourseAppointmentRepository;
 import hu.unideb.smartcampus.persistence.repository.SubjectEventRepository;
 import hu.unideb.smartcampus.service.api.CalendarService;
 import hu.unideb.smartcampus.service.api.InstructorService;
@@ -37,7 +38,6 @@ import hu.unideb.smartcampus.service.api.domain.response.wrapper.StudentTimeTabl
 import hu.unideb.smartcampus.service.api.util.StudentCourseUtil;
 import hu.unideb.smartcampus.webservice.api.ejabberd.MultiUserChatService;
 import hu.unideb.smartcampus.webservice.api.ejabberd.SharedRosterService;
-import hu.unideb.smartcampus.webservice.api.neptun.NeptunEndpointService;
 import hu.unideb.smartcampus.webservice.api.neptun.StudentTimeTable;
 
 @Service
@@ -62,15 +62,18 @@ public class SubjectEventServiceImpl implements SubjectEventService {
 
   private final StudentCourseUtil studentCourseUtil;
 
+  private final CourseAppointmentRepository courseAppointmentRepository;
+
   /**
    */
   @Autowired
   public SubjectEventServiceImpl(SubjectEventRepository subjectEventRepository,
       SubjectDetailsService subjectDetailsService, ConversionService conversionService,
       InstructorService instructorService, UserService userService, CalendarService calendarService,
-      NeptunEndpointService neptun, SharedRosterService sharedRosterService,
+      SharedRosterService sharedRosterService,
       MultiUserChatService multiUserChatService,
-      StudentCourseUtil studentCourseUtil) {
+      StudentCourseUtil studentCourseUtil,
+      CourseAppointmentRepository courseAppointmentRepository) {
     this.subjectEventRepository = subjectEventRepository;
     this.subjectDetailsService = subjectDetailsService;
     this.conversionService = conversionService;
@@ -78,6 +81,7 @@ public class SubjectEventServiceImpl implements SubjectEventService {
     this.userService = userService;
     this.calendarService = calendarService;
     this.studentCourseUtil = studentCourseUtil;
+    this.courseAppointmentRepository = courseAppointmentRepository;
   }
 
   @Transactional(readOnly = true)
@@ -122,7 +126,8 @@ public class SubjectEventServiceImpl implements SubjectEventService {
   public List<SubjectEvent> save(final List<SubjectEvent> subjectEvents) {
     Assert.notNull(subjectEvents);
     return subjectEvents.stream()
-        .map(subjectEvent -> saveIfNotExists(subjectEvent))
+        .map(this::saveIfNotExists)
+        .filter(event -> event != null)
         .collect(Collectors.toList());
   }
 
@@ -151,17 +156,15 @@ public class SubjectEventServiceImpl implements SubjectEventService {
 
     CourseInfoWrapper courseInfo =
         studentCourseUtil.getCourseInfosByStudentTimeTable(studentTimeTable);
+    courseInfo.setUsername(userName);
 
     final StudentTimeTableInfo result = calendarService.downloadStudentTimeTable(courseInfo);
     final User user = userService.getByUsername(userName).get();
 
-    final List<SubjectDetails> saveSubjectDetailsFromTimeTable =
-        saveSubjectDetailsFromTimeTable(result);
-    save(result.getSubjectEvents());
-    final List<CourseAppointment> pairEventWithAppointement =
-        calendarService.pairEventWithAppointement(courseInfo);
-    user.getSubjectDetailsList().addAll(saveSubjectDetailsFromTimeTable);
-    user.getCourseAppointmentList().addAll(pairEventWithAppointement);
+    saveSubjectDetailsFromTimeTable(result);
+    final List<SubjectEvent> savedEvents = save(result.getSubjectEvents());
+    user.getSubjectEventList().addAll(savedEvents);
+    calendarService.pairEventWithAppointementByStudent(courseInfo, user);
 
     userService.save(user);
 
@@ -170,6 +173,10 @@ public class SubjectEventServiceImpl implements SubjectEventService {
 
   private List<SubjectDetails> saveSubjectDetailsFromTimeTable(final StudentTimeTableInfo result) {
     List<SubjectDetails> subjectDetails = result.getSubjectDetails();
+    return saveInstructorsFromDetails(subjectDetails);
+  }
+
+  private List<SubjectDetails> saveInstructorsFromDetails(List<SubjectDetails> subjectDetails) {
     List<SubjectDetails> saveSubjectDetails = saveSubjectDetails(subjectDetails);
     saveSubjectDetails
         .forEach(subjectDetail -> this.saveInstructorWithSubjectDetails(subjectDetail));
@@ -205,18 +212,23 @@ public class SubjectEventServiceImpl implements SubjectEventService {
   public SubjectEvent saveIfNotExists(SubjectEvent subjectEvent) {
     SubjectEventEntity eventEntity =
         conversionService.convert(subjectEvent, SubjectEventEntity.class);
-    List<SubjectEventEntity> findBySubjectDetailsEntity =
+    List<SubjectEventEntity> subjectEventEntityList =
         subjectEventRepository.findBySubjectDetailsEntityAndRoomLocationAndCourseCode(
             eventEntity.getSubjectDetailsEntity(), subjectEvent.getRoomLocation(),
             subjectEvent.getCourseCode());
-    if (findBySubjectDetailsEntity.isEmpty()) {
+    if (subjectEventEntityList.isEmpty()) {
       LOGGER.info("Saving {} with {} code.", subjectEvent.getSubjectDetails().getSubjectName(),
           subjectEvent.getCourseCode());
       return save(subjectEvent);
+    } else {
+      SubjectEventEntity subjectEventEntity = subjectEventEntityList.get(0);
+      if (subjectEventEntity != null) {
+        return conversionService.convert(subjectEventEntity, SubjectEvent.class);
+      }
     }
-    return SubjectEvent.builder().build();
+    return null;
   }
-  
+
   @Transactional(readOnly = true)
   @Override
   public List<CourseAppointment> getCourseAppointmentByUsernameAndSubjectEvent(String username,

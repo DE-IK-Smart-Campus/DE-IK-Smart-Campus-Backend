@@ -107,4 +107,38 @@ public class UserServiceImpl implements UserService {
   private CourseAppointment toCourseAppointment(CourseAppointmentEntity entity) {
     return conversionService.convert(entity, CourseAppointment.class);
   }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<CourseAppointment> getCourseAppointmensWithinRange(String username, LocalDate from,
+      LocalDate to) {
+    Set<CourseAppointmentEntity> courseAppointmensWithinRange =
+        userRepository.getCourseAppointmensWithinRange(username, from, to);
+    return courseAppointmensWithinRange.stream()
+        .map(courseAppointment -> conversionService.convert(courseAppointment,
+            CourseAppointment.class))
+        .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<CourseAppointment> getCourseAppointmentsByUsername(String username) {
+    Set<CourseAppointmentEntity> courseAppointmensWithinRange =
+        userRepository.getCourseAppointmentsByUsername(username);
+    return courseAppointmensWithinRange.stream()
+        .map(courseAppointment -> conversionService.convert(courseAppointment,
+            CourseAppointment.class))
+        .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectEvent> getSubjectEventsByUsername(String username) {
+    Set<SubjectEventEntity> subjectEventsByUsername =
+        userRepository.getSubjectEventsByUsername(username);
+    return subjectEventsByUsername.stream()
+        .map(subjectEvent -> conversionService.convert(subjectEvent,
+            SubjectEvent.class))
+        .collect(Collectors.toList());
+  }
 }

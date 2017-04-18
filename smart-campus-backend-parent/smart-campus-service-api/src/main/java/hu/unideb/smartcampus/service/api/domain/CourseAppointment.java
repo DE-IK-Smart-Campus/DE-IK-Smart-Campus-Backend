@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -12,6 +13,7 @@ import lombok.ToString;
  */
 @Data
 @ToString(callSuper = true)
+@EqualsAndHashCode(exclude = {"wasPresent"})
 public class CourseAppointment extends BaseObject<Long> {
 
 

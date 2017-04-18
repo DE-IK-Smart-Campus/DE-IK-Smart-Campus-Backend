@@ -28,15 +28,22 @@ public class CourseInfoWrapper {
   private List<StudentCourse> filteredLastSemesterCourses;
 
   /**
+   * Student's username.
+   */
+  private String username;
+
+  /**
    * Constructor.
    */
   @Builder
   public CourseInfoWrapper(List<StudentCourse> courses,
       List<StudentCourse> lastSemesterCourses,
-      List<StudentCourse> filteredLastSemesterCourses) {
+      List<StudentCourse> filteredLastSemesterCourses,
+      String username) {
     this.courses = courses;
     this.lastSemesterCourses = lastSemesterCourses;
     this.filteredLastSemesterCourses = filteredLastSemesterCourses;
+    this.username = username;
   }
 
 

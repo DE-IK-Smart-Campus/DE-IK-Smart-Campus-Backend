@@ -2,8 +2,6 @@ package hu.unideb.smartcampus.persistence.entity;
 
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_SUBJECT_EVENT_DETAILS;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Builder;
@@ -61,26 +58,15 @@ public class SubjectEventEntity extends BaseEntity<Long> {
   private SubjectDetailsEntity subjectDetailsEntity;
 
   /**
-   * Appointment times.
-   */
-  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-  @JoinColumns({
-      @JoinColumn(name = "subject_event_id", referencedColumnName = "id")})
-  @Deprecated
-  private List<AppointmentTimeEntity> appointmentTimes;
-
-  /**
    * Builder.
    */
   @Builder
   public SubjectEventEntity(final Long id, final String roomLocation,
       final SubjectDetailsEntity subjectDetailsEntity,
-      final List<AppointmentTimeEntity> appointmentTimes,
       final String courseCode) {
     super(id);
     this.roomLocation = roomLocation;
     this.subjectDetailsEntity = subjectDetailsEntity;
-    this.appointmentTimes = appointmentTimes;
     this.courseCode = courseCode;
   }
 }

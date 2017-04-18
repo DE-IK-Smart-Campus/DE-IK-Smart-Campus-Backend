@@ -85,11 +85,11 @@ insert into subject_details(subject_name, subject_type, start_period, end_period
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
 --subject event
-insert into subject_event(room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values ('IK-F01','Mesterséges intelligencia alapjai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
+insert into subject_event(id,room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values (1,'IK-F01','Mesterséges intelligencia alapjai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
-insert into subject_event(room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values ('IK-123','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
+insert into subject_event(id,room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values (2,'IK-123','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
-insert into subject_event(room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values ('IK-202','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
+insert into subject_event(id,room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values (3,'IK-202','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
 ---------------------------------------------------------------------------------
 
@@ -111,17 +111,14 @@ values (5, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-0
 --------------------------------------------------------
 
 -- User actual subjects
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (1, 'AI', 'LABORATORY', DATE '2017-02-01', DATE '2017-05-31');
+insert into user_subject_event_relation(user_id,subject_event_id)
+values (2, 1);
 
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE'2000-05-31');
+insert into user_subject_event_relation(user_id,subject_event_id)
+values (2, 2);
 
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
-
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01',DATE'2000-05-31');
+insert into user_subject_event_relation(user_id,subject_event_id)
+values (2, 3);
 
 -- User custom events
 insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)
