@@ -33,11 +33,11 @@
             <div th:each="event : ${customEvents}">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h2 th:text="${event.eventName} + ' - ' + ${event.eventPlace}"></h2>
+                  <div th:text="${event.eventName} + ' - ' + ${event.eventPlace}"></div>
                 </div>
                 <div class="panel-body">
-                  <h3 th:text="${event.eventStart} + ' - ' + ${event.eventEnd}"></h3>
-                  <h3 th:text="${event.eventDescription}"></h3>
+                  <div th:text="${event.eventStart} + ' - ' + ${event.eventEnd}"></div>
+                  <div th:text="${event.eventDescription}"></div>
                   <form th:action="@{/dashboard/calendar/removecustomevent/__${event.guid}__}" th:method="DELETE">
                     <input type="hidden" name="_method" value="delete"/>
                     <button type="submit" class="btn btn-danger" th:text="#{calendar.custom_events.remove_button}"></button>
