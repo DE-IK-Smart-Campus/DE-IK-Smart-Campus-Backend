@@ -134,8 +134,22 @@ public class UserServiceImpl implements UserService {
   @Transactional(readOnly = true)
   @Override
   public List<SubjectEvent> getSubjectEventsByUsername(String username) {
-    Set<SubjectEventEntity> subjectEventsByUsername =
+    Set<SubjectEventEntity> subjectEventEntityList =
         userRepository.getSubjectEventsByUsername(username);
+    return convertSubjectEventEntitySetToSubjectEventList(subjectEventEntityList);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<SubjectEvent> getSubjectEventsWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to) {
+    Set<SubjectEventEntity> subjectEventEntityList =
+        userRepository.getSubjectEventsWithinRangeByUsername(username, from, to);
+    return convertSubjectEventEntitySetToSubjectEventList(subjectEventEntityList);
+  }
+
+  private List<SubjectEvent> convertSubjectEventEntitySetToSubjectEventList(
+      Set<SubjectEventEntity> subjectEventsByUsername) {
     return subjectEventsByUsername.stream()
         .map(subjectEvent -> conversionService.convert(subjectEvent,
             SubjectEvent.class))

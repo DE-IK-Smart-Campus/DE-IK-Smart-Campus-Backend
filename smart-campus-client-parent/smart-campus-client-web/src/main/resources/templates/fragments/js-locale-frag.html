@@ -1,0 +1,9 @@
+<thymeleaf xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+           th:fragment="js-locale-frag" th:remove="tag">
+  <script th:if="__${#locale}__ == 'hu'">
+      var currentLocale = 'hu';
+  </script>
+  <script th:if="__${#locale}__ == 'en'">
+      var currentLocale = 'en';
+  </script>
+</thymeleaf>

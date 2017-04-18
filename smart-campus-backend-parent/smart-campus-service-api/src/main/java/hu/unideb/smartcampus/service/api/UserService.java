@@ -57,9 +57,15 @@ public interface UserService {
    * @return user's course appointments.
    */
   List<CourseAppointment> getCourseAppointmentsByUsername(String username);
-  
+
   /**
    * Get user subject events.
    */
   List<SubjectEvent> getSubjectEventsByUsername(String username);
+
+  /**
+   * Get user subject events within range.
+   */
+  List<SubjectEvent> getSubjectEventsWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to);
 }

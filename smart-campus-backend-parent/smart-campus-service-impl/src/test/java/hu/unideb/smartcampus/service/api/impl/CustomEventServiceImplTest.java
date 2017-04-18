@@ -1,12 +1,5 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,12 +9,17 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
 import hu.unideb.smartcampus.persistence.entity.CustomEventEntity;
 import hu.unideb.smartcampus.persistence.repository.CustomEventRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.converter.toentity.CustomEventIqToCustomEventEntity;
 import hu.unideb.smartcampus.service.api.converter.toiq.CustomEventEntityToCustomEventIq;
-import hu.unideb.smartcampus.service.api.util.DateUtil;
 import hu.unideb.smartcampus.shared.iq.request.ListCustomEventIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 
@@ -105,15 +103,12 @@ public class CustomEventServiceImplTest {
   private CustomEventRepository customEventRepository;
 
   @Spy
-  private DateUtil dateUtil = new DateUtil();
-
-  @Spy
   private CustomEventEntityToCustomEventIq entityToIqConverter =
-      new CustomEventEntityToCustomEventIq(dateUtil);
+      new CustomEventEntityToCustomEventIq();
 
   @Spy
   private CustomEventIqToCustomEventEntity iqToEntityConverter =
-      new CustomEventIqToCustomEventEntity(dateUtil);
+      new CustomEventIqToCustomEventEntity();
 
   /**
    * Test get custom events by IQ.
