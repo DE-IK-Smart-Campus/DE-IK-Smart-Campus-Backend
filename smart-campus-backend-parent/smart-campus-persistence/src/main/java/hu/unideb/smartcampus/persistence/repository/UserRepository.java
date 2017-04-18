@@ -57,8 +57,18 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
   /**
    * Get actual course appointements between range.
    */
+  Set<CourseAppointmentEntity> getCourseAppointmentsByUsername(String username);
+
+  /**
+   * Get actual course appointements between range.
+   */
   Set<CourseAppointmentEntity> getCourseAppointmentsBySubjectEvent(String username,
       SubjectEventEntity subjectEvent);
+
+  /**
+   * Get user subject events.
+   */
+  Set<SubjectEventEntity> getSubjectEventsByUsername(String username);
 }
 
 

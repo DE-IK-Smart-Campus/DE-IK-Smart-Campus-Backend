@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.persistence.entity.CourseAppointmentEntity;
 import hu.unideb.smartcampus.persistence.entity.CustomEventEntity;
-import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
-import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
+import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectEvent;
 import hu.unideb.smartcampus.service.api.domain.CourseAppointment;
 import hu.unideb.smartcampus.service.api.domain.CustomEvent;
 import hu.unideb.smartcampus.service.api.domain.User;
@@ -21,7 +21,7 @@ import hu.unideb.smartcampus.service.api.domain.User;
 @Component
 public class UserToUserEntityConverter implements Converter<User, UserEntity> {
 
-  private final Converter<SubjectDetails, SubjectDetailsEntity> subjectDetailsConverter;
+  private final Converter<SubjectEvent, SubjectEventEntity> subjectEventConverter;
 
   private final Converter<CustomEvent, CustomEventEntity> customEventConverter;
 
@@ -29,10 +29,10 @@ public class UserToUserEntityConverter implements Converter<User, UserEntity> {
 
   @Autowired
   public UserToUserEntityConverter(
-      final Converter<SubjectDetails, SubjectDetailsEntity> subjectDetailsConverter,
+      final Converter<SubjectEvent, SubjectEventEntity> subjectEventConverter,
       final Converter<CustomEvent, CustomEventEntity> customEventConverter,
       final Converter<CourseAppointment, CourseAppointmentEntity> courseConverter) {
-    this.subjectDetailsConverter = subjectDetailsConverter;
+    this.subjectEventConverter = subjectEventConverter;
     this.customEventConverter = customEventConverter;
     this.courseConverter = courseConverter;
   }
@@ -50,8 +50,8 @@ public class UserToUserEntityConverter implements Converter<User, UserEntity> {
         .role(user.getRole())
         .fullName(user.getFullName())
         .neptunIdentifier(user.getNeptunIdentifier())
-        .actualSubjects(
-            convertSubjectDetailsSetToSubjectDetailsEntitySet(user.getSubjectDetailsList()))
+        .actualEvents(
+            convertSubjectDetailsSetToSubjectDetailsEntitySet(user.getSubjectEventList()))
         .mucChatList(toSet(user.getMucChatList()))
         .singleChatList(toSet(user.getSingleChatList()))
         .customEvents(convertCustomEventListToCustomEventEntityList(user.getCustomEventList()))
@@ -79,10 +79,10 @@ public class UserToUserEntityConverter implements Converter<User, UserEntity> {
         .collect(Collectors.toList());
   }
 
-  private Set<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(
-      final List<SubjectDetails> subjectDetailsSet) {
-    return subjectDetailsSet == null ? null : subjectDetailsSet.stream()
-        .map(subjectDetails -> subjectDetailsConverter.convert(subjectDetails))
+  private Set<SubjectEventEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(
+      final List<SubjectEvent> list) {
+    return list == null ? null : list.stream()
+        .map(subjectEvent -> subjectEventConverter.convert(subjectEvent))
         .collect(Collectors.toSet());
   }
 }
