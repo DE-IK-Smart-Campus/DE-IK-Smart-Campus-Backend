@@ -40,6 +40,9 @@ public class CalendarSubjectsIqRequestTest extends AbstractParserTest {
   
   private static final String STUDENT = "ExampleStudent";
   
+
+  private static final Long SUBJECT_ID = 100L;
+
   private static final String SUBJECTNAME = "AI";
   
   private static final List<AppointmentTimeIqElement> APPOINTMENTTIMES =
