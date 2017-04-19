@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.IQ.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,14 @@ import hu.unideb.smartcampus.shared.iq.request.element.EventIqElement;
 @Service
 public class EventListingIqReqestHandler extends AbstractSmartCampusIqRequestHandler {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(EventListingIqReqestHandler.class);
+
   @Autowired
   private EventProvider eventProvider;
-  
+
   @Autowired
   private EventToEventIqElementConverter eventConveter;
-  
+
   public EventListingIqReqestHandler() {
     super(EventListingIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.get,
         Mode.sync);
@@ -36,17 +40,20 @@ public class EventListingIqReqestHandler extends AbstractSmartCampusIqRequestHan
   @Override
   public IQ handleIQRequest(IQ iqRequest) {
     EventListingIqRequest request = (EventListingIqRequest) super.handleIQRequest(iqRequest);
-    
+
     List<Event> events = eventProvider.getEventsBetween(request.getSince(), request.getUntil());
-    
+
     List<EventIqElement> resultList = new LinkedList<>();
-    for(Event event:events){
+    for (Event event : events) {
       resultList.add(eventConveter.convert(event));
     }
-    
-    
+
+
     request.setEvents(resultList);
-    
+
+    LOGGER.info("Between {} and {} there are {} events.", request.getSince(), request.getUntil(),
+        request.getEvents().size());
+
     return request;
   }
 

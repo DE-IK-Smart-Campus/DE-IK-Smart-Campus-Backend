@@ -14,21 +14,24 @@ public class EventToEventIqElementConverter implements Converter<Event, EventIqE
 
   @Autowired
   private LocationToLocationIqElementConverter locationConverter;
-  
+
   @Override
   public EventIqElement convert(Event source) {
-    LocationIqElement location = locationConverter.convert(source.getLocation());
-    return EventIqElement.builder()
-        .description(source.getDescription())
+    LocationIqElement location = null;
+    if (source.getLocation() != null) {
+      location = locationConverter.convert(source.getLocation());
+    }
+
+    return EventIqElement.builder().description(source.getDescription())
         .endTime(eventTimeToLong(source.getEndTime()))
-        .startTime(eventTimeToLong(source.getStartTime()))
-        .eventId(source.getEventId())
-        .name(source.getName())
-        .location(location)
-        .build();
+        .startTime(eventTimeToLong(source.getStartTime())).eventId(source.getEventId())
+        .name(source.getName()).location(location).build();
   }
 
   private Long eventTimeToLong(ZonedDateTime date) {
+    if (date == null) {
+      return null;
+    }
     return date.toEpochSecond();
   }
 
