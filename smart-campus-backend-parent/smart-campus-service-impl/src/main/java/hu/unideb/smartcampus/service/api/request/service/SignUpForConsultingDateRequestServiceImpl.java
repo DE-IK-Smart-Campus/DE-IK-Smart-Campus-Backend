@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
+import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.UserConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.ConsultingDateRepository;
+import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
 import hu.unideb.smartcampus.persistence.repository.UserRepository;
 import hu.unideb.smartcampus.service.api.CustomEventService;
@@ -51,6 +53,8 @@ public class SignUpForConsultingDateRequestServiceImpl
   @Autowired
   private CustomEventService customEventService;
 
+  @Autowired
+  private InstructorRepository instructorRepository;
 
   /**
    * {@inheritDoc}.
@@ -66,7 +70,7 @@ public class SignUpForConsultingDateRequestServiceImpl
       userEntity = userRepository.findByUsername(request.getUserId());
       if (userEntity != null) {
         incrementAndSaveConsultingSignUp(request, dateEntity, userEntity);
-        addCustomEvent(dateEntity, userEntity);
+        addCustomEvent(request, dateEntity, userEntity);
         status = OK;
       }
     }
@@ -75,7 +79,10 @@ public class SignUpForConsultingDateRequestServiceImpl
         .build();
   }
 
-  private void addCustomEvent(ConsultingDateEntity dateEntity, UserEntity userEntity) {
+  private void addCustomEvent(SignUpForConsultingHourRequest request,
+      ConsultingDateEntity dateEntity, UserEntity userEntity) {
+    InstructorEntity instructorEntity =
+        instructorRepository.getInstructorByConsultingDateId(dateEntity.getId());
     customEventService.addCustomEntityByIq(AddCustomEventIqRequest.builder()
         .student(userEntity.getUsername())
         .customEvent(CustomEventIqElement.builder()
@@ -87,9 +94,10 @@ public class SignUpForConsultingDateRequestServiceImpl
                 DateUtil.getInEpochLongByLocalDateTime(dateEntity.getFromToDate().getFromDate()))
             .eventEnd(
                 DateUtil.getInEpochLongByLocalDateTime(dateEntity.getFromToDate().getToDate()))
-            .eventName("Meeting")
-            .eventDescription("Meeting")
-            .eventPlace("Meeting")
+            .eventName("Meeting - " + instructorEntity.getName())
+            .eventDescription(
+                "Meeting with " + instructorEntity.getName() + ", " + request.getReason())
+            .eventPlace(instructorEntity.getRoom() != null ? instructorEntity.getRoom() : "Szoba")
             .build())
         .build());
   }

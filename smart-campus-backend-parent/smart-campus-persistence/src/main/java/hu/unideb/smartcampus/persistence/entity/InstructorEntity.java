@@ -41,6 +41,8 @@ import lombok.ToString;
         query = "SELECT instr.consultingDates FROM InstructorEntity instr WHERE instr.name = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectName",
         query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.subjectName = ?1"),
+    @NamedQuery(name = "InstructorEntity.getInstructorByConsultingDateId",
+        query = "SELECT instr FROM InstructorEntity instr join instr.consultingDates s WHERE s.id = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorConsultingDatesByIdAndGivenDate",
         query = "SELECT c FROM InstructorEntity instr join instr.consultingDates c WHERE instr.id = ?1 AND c.fromToDate.fromDate BETWEEN ?2 AND ?3")})
 public class InstructorEntity extends BaseEntity<Long> {

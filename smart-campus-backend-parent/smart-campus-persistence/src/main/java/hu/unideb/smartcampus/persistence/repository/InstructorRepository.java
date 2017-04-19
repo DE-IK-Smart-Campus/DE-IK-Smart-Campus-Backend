@@ -39,4 +39,9 @@ public interface InstructorRepository extends JpaRepository<InstructorEntity, Lo
    * Get instructors consulting dates from given date.
    */
   Set<ConsultingDateEntity> getInstructorConsultingDatesByIdAndGivenDate(Long instructorId, LocalDateTime from, LocalDateTime to);
+  
+  /**
+   * Get instrcutor by consulting date id.
+   */
+  InstructorEntity getInstructorByConsultingDateId(Long consultingDateId);
 }

@@ -3,6 +3,7 @@ package hu.unideb.smartcampus.service.api.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -70,17 +71,20 @@ public class UserConsultingDateServiceImpl implements UserConsultingDateService 
   private List<InstructorConsultingDateIqElement> create(List<ConsultingDateEntity> consultingDates,
       List<UserConsultingDateEntity> userConsultingDates) {
     List<InstructorConsultingDateIqElement> result = new ArrayList<>();
-    for (ConsultingDateEntity consultingDate : consultingDates) {
-      List<UserConsultingDateEntity> collect = userConsultingDates.stream()
-          .filter(p -> p.getConsultingDate().equals(consultingDate)).collect(Collectors.toList());
+    Map<ConsultingDateEntity, List<UserConsultingDateEntity>> map = userConsultingDates.stream()
+        .collect(Collectors.groupingBy(UserConsultingDateEntity::getConsultingDate));
+
+    for (ConsultingDateEntity dateEntity : map.keySet()) {
+      List<UserConsultingDateEntity> collect = map.get(dateEntity);
       List<StudentIqElement> students =
           collect.stream().map(this::toStudentIqElement).collect(Collectors.toList());
       result.add(InstructorConsultingDateIqElement.builder()
-          .consultingDateId(consultingDate.getId())
-          .day(consultingDate.getDateInString())
+          .consultingDateId(dateEntity.getId())
+          .day(dateEntity.getDateInString())
           .students(students)
           .build());
     }
+
     return result;
   }
 
