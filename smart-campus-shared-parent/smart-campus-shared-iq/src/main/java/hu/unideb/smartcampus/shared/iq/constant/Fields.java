@@ -297,6 +297,11 @@ public class Fields {
     /**
      * ID field.
      */
+    public static final String SUBJECT_ID = "subjectId";
+    
+    /**
+     * ID field.
+     */
     public static final String ID = "id";
 
   }

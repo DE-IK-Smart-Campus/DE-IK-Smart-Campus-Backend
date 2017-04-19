@@ -80,7 +80,8 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
 
   private CalendarSubjectIqElement buildIqElement(SubjectEvent subjectEvent,
       List<CourseAppointment> list) {
-    return CalendarSubjectIqElement.builder().id(subjectEvent.getId())
+    return CalendarSubjectIqElement.builder()
+        .id(subjectEvent.getId())
         .subjectName(subjectEvent.getSubjectDetails().getSubjectName())
         .where(subjectEvent.getRoomLocation())
         .appointmentTimes(convertToIqElement(list))

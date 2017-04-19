@@ -49,7 +49,7 @@ public class CalendarSubjectsIqRequestTest extends AbstractParserTest {
       Arrays.asList(APPOINTMENT_TIME_IQ_ELEMENT, APPOINTMENT_TIME_IQ_ELEMENT_SECOND);
   
   private static final List<CalendarSubjectIqElement> SUBJECTEVENTS =
-      Arrays.asList(CalendarSubjectIqElement.builder().subjectName(SUBJECTNAME)
+      Arrays.asList(CalendarSubjectIqElement.builder().id(SUBJECT_ID).subjectName(SUBJECTNAME)
           .appointmentTimes(APPOINTMENTTIMES).description(DESCRIPTION).where(WHERE).build());
 
   @Test
