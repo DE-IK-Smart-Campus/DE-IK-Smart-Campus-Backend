@@ -3,6 +3,7 @@
 <head>
   <title th:text="#{attendance.title}"></title>
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
+  <thymeleaf th:replace="fragments/js-locale-frag :: js-locale-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
 </head>
 <body>
@@ -18,8 +19,10 @@
         <h2 th:text="#{attendance.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <div class="col-md-8">
-
+            <h1 th:text="#{attendance.current_subjects}"></h1>
+            <div th:each="subject : ${subjects}">
+              <a th:class="${subject.appointmentTimes.size() < 1} ? 'disabled'" th:href="@{/dashboard/attendance/__${subject.subjectName}__}"
+                 th:text="${subject.subjectName}"></a>
             </div>
           </div>
         </div>
