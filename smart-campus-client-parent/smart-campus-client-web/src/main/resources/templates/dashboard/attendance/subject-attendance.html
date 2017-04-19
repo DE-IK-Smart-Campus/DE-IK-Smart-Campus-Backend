@@ -20,7 +20,7 @@
         <div class="jumbotron">
           <div class="container">
             <h1 th:text="${subjectModel.subject.subjectName}"></h1>
-            <form th:action="@{/dashboard/attendance/}" method="POST" th:object="${subjectModel}">
+            <form th:action="@{/dashboard/attendance}" method="POST" th:object="${subjectModel}">
               <div th:each="index : ${#numbers.sequence(0, (subjectModel.subject.appointmentTimes.size() - 1))}">
                 <label>
                   <input type="checkbox" th:field="*{subjectModel.subject.appointmentTimes[__${index}__].present}" value="true"

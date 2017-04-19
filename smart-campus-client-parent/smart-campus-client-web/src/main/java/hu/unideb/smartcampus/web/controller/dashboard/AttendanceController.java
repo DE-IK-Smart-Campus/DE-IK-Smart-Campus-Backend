@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
 import hu.unideb.smartcampus.domain.SubjectModel;
+import hu.unideb.smartcampus.domain.calendar.CalendarSubject;
 import hu.unideb.smartcampus.service.api.AttendanceService;
 
 /**
@@ -64,7 +66,8 @@ public class AttendanceController {
     final ModelAndView modelAndView = new ModelAndView(ATTENDANCE_VIEW);
     final String name = principal.getName();
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
-    modelAndView.addObject(SUBJECTS_MODEL_OBJECT_NAME, attendanceService.listSubjectsWithAttendance());
+    List<CalendarSubject> subjects = attendanceService.listSubjectsWithAttendance();
+    modelAndView.addObject(SUBJECTS_MODEL_OBJECT_NAME, subjects);
     return modelAndView;
   }
 

@@ -21,7 +21,7 @@
           <div class="container">
             <h1 th:text="#{attendance.current_subjects}"></h1>
             <div th:each="subject : ${subjects}">
-              <a th:class="${subject.appointmentTimes.size() < 1} ? 'disabled'" th:href="@{/dashboard/attendance/__${subject.id}__}"
+              <a th:class="(${subject.appointmentTimes.size() lt 1} ? 'hidden')" th:href="@{/dashboard/attendance/__${subject.id}__}"
                  th:text="${subject.subjectName}"></a>
             </div>
           </div>
