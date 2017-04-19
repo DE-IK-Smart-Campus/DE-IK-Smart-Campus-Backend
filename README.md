@@ -53,6 +53,9 @@ First configure your settings.xml in your .m2 folder with this profile, you can 
 					<converse.bosh.service.url></converse.bosh.service.url>
 					<converse.credentials.url></converse.credentials.url>
 					<converse.mucdomain></converse.mucdomain>
+					<facebook.clientid></facebook.clientid>
+        			<facebook.clientsecretid></facebook.clientsecretid>
+        			<facebook.pageid></facebook.pageid>
 			    </properties>
 		    </profile>
 	</profiles>

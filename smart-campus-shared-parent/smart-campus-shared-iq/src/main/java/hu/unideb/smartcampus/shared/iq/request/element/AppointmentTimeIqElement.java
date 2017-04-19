@@ -12,9 +12,11 @@ import lombok.NoArgsConstructor;
  * <pre>
  * {@code
  * 
+ * <id>1</id>
  * <when>456</when> <!--in long-->
  * <from>123</from> <!--in long-->
  * <to>321</to> <!--in long-->
+ * <present>true</present>
  * 
  *  }
  * </pre>
@@ -24,6 +26,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AppointmentTimeIqElement {
+
+  /**
+   * ID of the appointment.
+   */
+  private Long id;
 
   /**
    * From in Long from timestamp.
@@ -41,18 +48,30 @@ public class AppointmentTimeIqElement {
   private Long when;
 
   /**
-   * Constructrs an IQ element.
+   * Is present?
+   */
+  private boolean present;
+
+  /**
+   * Constructs an IQ element.
    * 
    * @param when when.
    * @param from from.
    * @param to to.
+   * @param id id of the appointment object.
+   * @param present true if the student was there, otherwise false.
    */
   @Builder
-  public AppointmentTimeIqElement(Long when, Long from, Long to) {
+  public AppointmentTimeIqElement(
+      Long when,
+      Long from,
+      Long to,
+      Long id,
+      boolean present) {
     this.from = from;
     this.to = to;
     this.when = when;
+    this.id = id;
+    this.present = present;
   }
-
-
 }

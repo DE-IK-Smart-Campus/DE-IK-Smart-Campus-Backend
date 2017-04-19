@@ -1,15 +1,14 @@
 package hu.unideb.smartcampus.service.api.converter.toentity;
 
-import com.google.common.collect.Sets;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.google.common.collect.Sets;
+
 import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
@@ -40,19 +39,20 @@ public class InstructorToInstructorEntityConverter implements Converter<Instruct
     return InstructorEntity.builder()
         .id(instructor.getId())
         .name(instructor.getName())
+        .neptunIdentifier(instructor.getNeptunIdentifier())
         .subjects(convertSubjectDetailsSetToSubjectDetailsEntitySet(instructor.getSubjects()))
         .consultingDates(convertConsultingDateSetToConsultingDateEntitySet(instructor.getConsultingDates()))
         .build();
   }
 
   private Set<SubjectDetailsEntity> convertSubjectDetailsSetToSubjectDetailsEntitySet(final Set<SubjectDetails> subjectDetailsSet) {
-    return subjectDetailsSet == null ? Sets.newHashSet() : subjectDetailsSet.parallelStream()
+    return subjectDetailsSet == null ? Sets.newHashSet() : subjectDetailsSet.stream()
         .map(subjectDetails -> subjectDetailsConverter.convert(subjectDetails))
         .collect(Collectors.toSet());
   }
 
   private Set<ConsultingDateEntity> convertConsultingDateSetToConsultingDateEntitySet(final Set<ConsultingDate> consultingDateSet) {
-    return consultingDateSet == null ? Sets.newHashSet() : consultingDateSet.parallelStream()
+    return consultingDateSet == null ? Sets.newHashSet() : consultingDateSet.stream()
         .map(consultingDate -> consultingDateConverter.convert(consultingDate))
         .collect(Collectors.toSet());
   }

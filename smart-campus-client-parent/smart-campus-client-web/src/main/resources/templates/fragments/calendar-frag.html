@@ -1,0 +1,54 @@
+<thymeleaf xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+           th:fragment="add-custom-event-frag" th:remove="tag">
+  <form class="form-horizontal" th:action="@{/dashboard/calendar/addcustomevent}" method="POST">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" th:text="#{calendar.custom_events.add.event_name}"></label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" th:placeholder="#{calendar.custom_events.add.event_name}" name="eventName"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" th:text="#{calendar.custom_events.add.event_description}"></label>
+          <div class="col-sm-10">
+            <textarea class="form-control" th:placeholder="#{calendar.custom_events.add.event_description}" name="eventDescription"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" th:text="#{calendar.custom_events.add.event_place}"></label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" th:placeholder="#{calendar.custom_events.add.event_place}" name="eventPlace"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" th:text="#{calendar.custom_events.add.event_start}"></label>
+          <div class="col-sm-10">
+            <div class='input-group date' id='datetimepickerstart'>
+              <input type='text' class="form-control" name="eventStart"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" th:text="#{calendar.custom_events.add.event_end}"></label>
+          <div class="col-sm-10">
+            <div class='input-group date' id='datetimepickerend'>
+              <input type='text' class="form-control" name="eventEnd"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" th:text="#{calendar.custom_events.add.add_button}"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</thymeleaf>

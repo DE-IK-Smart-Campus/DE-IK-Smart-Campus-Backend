@@ -10,7 +10,7 @@ import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 public interface RetrieveSubjectsRequestService {
 
   /**
-   * Get user subjects. 
+   * Get user subjects in the actual semester.
    */
   List<SubjectWrapper> getSubjects(String userId);
   

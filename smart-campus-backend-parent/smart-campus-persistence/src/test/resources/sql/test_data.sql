@@ -25,20 +25,20 @@ values (8, 'gabai', '$2y$10$.D6nvZNahkSXVSRLHrtI5u0RERS6rdBqwMH/uja1Yi7DVfiHukzj
 ----------------------------------------------------------------------------------------------------
 
 -- instructors
-insert into instructor (id, name)
-values (1, 'instructor');
+insert into instructor (id, name,neptun_identifier)
+values (1, 'instructor','asd123');
 
-insert into instructor (id, name)
-values (2, 'Dr. Gál Zoltán');
+insert into instructor (id, name, neptun_identifier)
+values (2, 'Dr. Gál Zoltán','123qwe');
 
-insert into instructor (id, name)
-values (3, 'Dr. Szilágyi Szabolcs');
+insert into instructor (id, name, neptun_identifier)
+values (3, 'Dr. Szilágyi Szabolcs','123qwz');
 
-insert into instructor (id, name)
-values (4, 'Vas Ádám');
+insert into instructor (id, name, neptun_identifier)
+values (4, 'Vas Ádám','123qwu');
 
-insert into instructor (id, name)
-values (5, 'Dr. Jeszenszky Péter');
+insert into instructor (id, name, neptun_identifier)
+values (5, 'Dr. Jeszenszky Péter','123qwp');
 
 -------------------------------
 
@@ -78,9 +78,18 @@ insert into subject_details(subject_name,subject_type, start_period, end_period)
 
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
+insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Mesterséges intelligencia alapjai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
+
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
 
 insert into subject_details(subject_name, subject_type, start_period, end_period) values ('Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
+
+--subject event
+insert into subject_event(id,room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values (1,'IK-F01','Mesterséges intelligencia alapjai', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
+
+insert into subject_event(id,room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values (2,'IK-123','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
+
+insert into subject_event(id,room_location,subject_details_name, subject_details_type, subject_details_start_period, subject_details_end_period) values (3,'IK-202','Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE '2000-05-31');
 
 ---------------------------------------------------------------------------------
 
@@ -102,17 +111,14 @@ values (5, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-0
 --------------------------------------------------------
 
 -- User actual subjects
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (1, 'AI', 'LABORATORY', DATE '2017-02-01', DATE '2017-05-31');
+insert into user_subject_event_relation(user_id,subject_event_id)
+values (2, 1);
 
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Mesterséges intelligencia alapjai', 'LABORATORY', DATE '2000-02-01', DATE'2000-05-31');
+insert into user_subject_event_relation(user_id,subject_event_id)
+values (2, 2);
 
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Hálózati architektúrák és protokollok', 'LECTURE', DATE '2000-02-01', DATE '2000-05-31');
-
-insert into user_subject_details_relation(user_id,subject_name, subject_type, start_period, end_period)
-values (2, 'Az internet eszközei és szolgáltatásai', 'LECTURE', DATE '2000-02-01',DATE'2000-05-31');
+insert into user_subject_event_relation(user_id,subject_event_id)
+values (2, 3);
 
 -- User custom events
 insert into custom_event(id,guid,event_name, event_description, event_place, event_start,event_end,event_repeat,reminder)

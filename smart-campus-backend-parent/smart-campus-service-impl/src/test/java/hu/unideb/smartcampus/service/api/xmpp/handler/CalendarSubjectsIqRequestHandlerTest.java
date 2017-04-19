@@ -33,7 +33,7 @@ public class CalendarSubjectsIqRequestHandlerTest {
   /**
    * Date zone offset.
    */
-  private static final ZoneOffset HUNGARIAN_OFFSET = ZoneOffset.ofHours(1);
+  private static final ZoneOffset HUNGARIAN_OFFSET = ZoneOffset.ofHours(2);
 
   /**
    * Room location.
@@ -92,7 +92,8 @@ public class CalendarSubjectsIqRequestHandlerTest {
           .subjectType(SubjectType.LABORATORY)
           .startPeriod(LocalDate.of(2017, 2, 20))
           .endPeriod(LocalDate.of(2017, 5, 26))
-          .teacherNames(TEACHER_NAMES).build();
+//          .teacherNames(TEACHER_NAMES)
+          .build();
 
   /**
    * Appointment list.

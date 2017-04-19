@@ -2,6 +2,7 @@ package hu.unideb.smartcampus.persistence.entity;
 
 import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_CUSTOM_EVENT;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -59,6 +60,12 @@ public class CustomEventEntity extends BaseEntity<Long> {
   private String eventPlace;
 
   /**
+   * Event when.
+   */
+  @Column(name = "event_when")
+  private LocalDate eventWhen;
+
+  /**
    * Event start.
    */
   @Column(name = "event_start")
@@ -86,9 +93,16 @@ public class CustomEventEntity extends BaseEntity<Long> {
    * Constructs custom event entity.
    */
   @Builder
-  public CustomEventEntity(String guid, String eventName, String eventDescription,
-      String eventPlace,
-      LocalDateTime eventStart, LocalDateTime eventEnd, String eventRepeat, String reminder) {
+  public CustomEventEntity(final Long id, final String guid,
+      final String eventName,
+      final String eventDescription,
+      final String eventPlace,
+      final LocalDateTime eventStart,
+      final LocalDateTime eventEnd,
+      final String eventRepeat,
+      final String reminder,
+      final LocalDate eventWhen) {
+    super(id);
     this.guid = guid;
     this.eventName = eventName;
     this.eventDescription = eventDescription;
@@ -97,6 +111,7 @@ public class CustomEventEntity extends BaseEntity<Long> {
     this.eventEnd = eventEnd;
     this.eventRepeat = eventRepeat;
     this.reminder = reminder;
+    this.eventWhen = eventWhen;
   }
 
 

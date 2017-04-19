@@ -1,14 +1,14 @@
 package hu.unideb.smartcampus.shared.iq.request;
 
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListInstructorConsultingDatesIqFields.DATE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListInstructorConsultingDatesIqFields.DATES;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListInstructorConsultingDatesIqFields.INSTRUCTORID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListInstructorConsultingDatesIqFields.ONE_WEEK;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListInstructorConsultingDatesIqFields.STUDENT;
-import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListInstructorConsultingDatesIqFields.STUDENTS;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,12 +28,12 @@ public class ListInstructorConsultingDatesIqRequest extends BaseSmartCampusIqReq
   /**
    * Instructor id.
    */
-  private Long instructorId;
+  private String instructorId;
 
   /**
    * Student's subjects.
    */
-  private List<StudentIqElement> students;
+  private List<InstructorConsultingDateIqElement> dates;
 
   /**
    * Set true if you want to list only the upcoming 7 days consulting dates.
@@ -45,18 +45,18 @@ public class ListInstructorConsultingDatesIqRequest extends BaseSmartCampusIqReq
    */
   public ListInstructorConsultingDatesIqRequest() {
     super(ELEMENT);
-    students = new ArrayList<>();
+    dates = new ArrayList<>();
   }
 
   /**
    * Constructs.
    */
   @Builder
-  public ListInstructorConsultingDatesIqRequest(Long instructorId,
-      List<StudentIqElement> students, boolean oneWeek) {
+  public ListInstructorConsultingDatesIqRequest(String instructorId,
+      List<InstructorConsultingDateIqElement> dates, boolean oneWeek) {
     super(ELEMENT);
     this.oneWeek = oneWeek;
-    this.students = students;
+    this.dates = dates;
     this.instructorId = instructorId;
   }
 
@@ -69,21 +69,20 @@ public class ListInstructorConsultingDatesIqRequest extends BaseSmartCampusIqReq
   }
 
   private void buildIq(StringBuilder builder) {
-    buildStudents(builder);
+    buildDates(builder);
   }
 
-  private void buildStudents(StringBuilder builder) {
-    if (students != null || !students.isEmpty()) {
-      builder.append(openTag(STUDENTS));
-      for (StudentIqElement student : students) {
-        builder.append(openTag(STUDENT));
-        builder.append(student.toXml());
-        builder.append(closeTag(STUDENT));
+  private void buildDates(StringBuilder builder) {
+    if (dates != null || !dates.isEmpty()) {
+      builder.append(openTag(DATES));
+      for (InstructorConsultingDateIqElement date : dates) {
+        builder.append(openTag(DATE));
+        builder.append(date.toXml());
+        builder.append(closeTag(DATE));
       }
-      builder.append(closeTag(STUDENTS));
+      builder.append(closeTag(DATES));
     }
   }
-
   @Override
   public String getElement() {
     return ELEMENT;

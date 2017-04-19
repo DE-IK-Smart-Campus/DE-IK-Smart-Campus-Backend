@@ -3,8 +3,10 @@
 <head>
   <title th:text="#{calendar.title}"></title>
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
+  <thymeleaf th:replace="fragments/js-locale-frag :: js-locale-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: calendar-head-frag"/>
+  <thymeleaf th:replace="fragments/head-frag :: datetimepicker-head-frag"/>
 </head>
 <body>
 <div class="dashboard-page">
@@ -19,8 +21,29 @@
         <h2 th:text="#{calendar.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <div class="col-md-8">
-              <div id="calendar"></div>
+            <div id="calendar"></div>
+            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#add-custom-event">
+              <span th:text="#{calendar.custom_events.add_button}"></span>
+              <span class="caret"></span>
+            </button>
+            <div id="add-custom-event" class="collapse">
+              <thymeleaf th:replace="fragments/calendar-frag :: add-custom-event-frag"></thymeleaf>
+            </div>
+            <h2 th:text="#{calendar.custom_events.custom_events}"></h2>
+            <div th:each="event : ${customEvents}">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div th:text="${event.eventName} + ' - ' + ${event.eventPlace}"></div>
+                </div>
+                <div class="panel-body">
+                  <div th:text="${event.eventStart} + ' - ' + ${event.eventEnd}"></div>
+                  <div th:text="${event.eventDescription}"></div>
+                  <form th:action="@{/dashboard/calendar/removecustomevent/__${event.guid}__}" th:method="DELETE">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn btn-danger" th:text="#{calendar.custom_events.remove_button}"></button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -29,5 +52,6 @@
   </div>
 </div>
 <script type="text/javascript" th:src="@{/js/calendar.js}"></script>
+<script type="text/javascript" th:src="@{/js/datetimepicker.js}"></script>
 </body>
 </html>

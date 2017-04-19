@@ -26,7 +26,8 @@ public class SignUpForConsultingDateRequestHandler extends AbstractSmartCampusIq
    * Ctor.
    */
   public SignUpForConsultingDateRequestHandler() {
-    super(SignUpForConsultingDateIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE, Type.set,
+    super(SignUpForConsultingDateIqRequest.ELEMENT, BaseSmartCampusIqRequest.BASE_NAMESPACE,
+        Type.set,
         Mode.async);
   }
 
@@ -46,8 +47,11 @@ public class SignUpForConsultingDateRequestHandler extends AbstractSmartCampusIq
     SignUpForConsultingDateIqRequest iq =
         (SignUpForConsultingDateIqRequest) super.handleIQRequest(iqRequest);
     SignUpForConsultingHourRequest request =
-        SignUpForConsultingHourRequest.builder().consultingHourId(iq.getConsultingHourId())
-            .duration(iq.getDuration()).reason(iq.getReason()).userId(iq.getUserId()).build();
+        SignUpForConsultingHourRequest.builder()
+            .consultingHourId(iq.getConsultingHourId())
+            .duration(iq.getDuration())
+            .reason(iq.getReason())
+            .userId(iq.getUserId()).build();
     SignUpForConsultingHourWrapper response = service.signUpByRequest(request);
     iq.setResponseMessage(response.getStatus());
     return iq;

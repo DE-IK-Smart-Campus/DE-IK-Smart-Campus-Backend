@@ -12,4 +12,9 @@ public interface NeptunTokenService {
    */
   String getAccessToken() throws IOException;
   
+  /**
+   * Generate access token and cache it.
+   */
+  void generateAccessToken() throws IOException;
+  
 }

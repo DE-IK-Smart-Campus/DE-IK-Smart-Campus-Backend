@@ -159,68 +159,141 @@ public class Fields {
     /**
      * Student field.
      */
-    public static final String STUDENT = "student";
+    public static final String STUDENT = "st";
 
     /**
      * Subjects tag.
      */
-    public static final String SUBJECT_EVENTS = "subjects";
+    public static final String SUBJECT_EVENTS = "subs";
 
     /**
      * Appointments tag.
      */
-    public static final String APPOINTMENTS = "appointments";
+    public static final String APPOINTMENTS = "apps";
 
     /**
      * Appointments field.
      */
-    public static final String APPOINTMENT = "appointment";
+    public static final String APPOINTMENT = "app";
 
 
     /**
      * Subject field.
      */
-    public static final String SUBJECT = "subject";
+    public static final String SUBJECT = "sub";
 
     /**
      * Subject field.
      */
-    public static final String SUBJECT_NAME = "subjectName";
+    public static final String SUBJECT_NAME = "na";
 
     /**
      * When field.
      */
-    public static final String WHEN = "when";
+    public static final String WHEN = "wn";
 
     /**
      * Where field.
      */
-    public static final String WHERE = "where";
+    public static final String WHERE = "wr";
 
     /**
      * Description field.
      */
-    public static final String DESCRIPTION = "description";
+    public static final String DESCRIPTION = "dc";
 
     /**
      * From field.
      */
-    public static final String FROM = "from";
+    public static final String FROM = "f";
 
     /**
      * To field.
      */
-    public static final String TO = "to";
+    public static final String TO = "t";
 
     /**
      * Start period field.
      */
-    public static final String START_PERIOD = "startPeriod";
+    public static final String START_PERIOD = "str";
 
     /**
      * End period field.
      */
-    public static final String END_PERIOD = "endPeriod";
+    public static final String END_PERIOD = "end";
+  }
+
+  /**
+   * User attendance IQ request.
+   */
+  public static class ListUserAttendanceFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "st";
+
+    /**
+     * Subjects tag.
+     */
+    public static final String SUBJECT_EVENTS = "subs";
+
+    /**
+     * Appointments tag.
+     */
+    public static final String APPOINTMENTS = "apps";
+
+    /**
+     * Appointments field.
+     */
+    public static final String APPOINTMENT = "app";
+
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT = "sub";
+
+    /**
+     * Subject field.
+     */
+    public static final String SUBJECT_NAME = "na";
+
+    /**
+     * When field.
+     */
+    public static final String WHEN = "wn";
+
+    /**
+     * Where field.
+     */
+    public static final String WHERE = "wr";
+
+    /**
+     * Description field.
+     */
+    public static final String DESCRIPTION = "dc";
+
+    /**
+     * From field.
+     */
+    public static final String FROM = "f";
+
+    /**
+     * To field.
+     */
+    public static final String TO = "t";
+
+    /**
+     * Present field.
+     */
+    public static final String PRESENT = "present";
+
+    /**
+     * ID field.
+     */
+    public static final String ID = "id";
+
   }
 
   /**
@@ -264,6 +337,11 @@ public class Fields {
     public static final String EVENT_PLACE = "eventPlace";
 
     /**
+     * Event when field.
+     */
+    public static final String EVENT_WHEN = "eventWhen";
+
+    /**
      * Event start field.
      */
     public static final String EVENT_START = "eventStart";
@@ -291,27 +369,6 @@ public class Fields {
 
 
   /**
-   * MUC list.
-   */
-  public static class UserMucListIqRequestFields {
-
-    /**
-     * Student field.
-     */
-    public static final String STUDENT = "student";
-
-    /**
-     * Rooms tag.
-     */
-    public static final String ROOMS = "rooms";
-
-    /**
-     * Room field.
-     */
-    public static final String ROOM = "room";
-  }
-
-  /**
    * User chat list fields
    */
   public static class UserChatListIqRequestFields {
@@ -330,6 +387,16 @@ public class Fields {
      * Chat field.
      */
     public static final String CHAT = "chat";
+
+    /**
+     * Rooms tag.
+     */
+    public static final String ROOMS = "rooms";
+
+    /**
+     * Room field.
+     */
+    public static final String ROOM = "room";
   }
 
   /**
@@ -346,6 +413,27 @@ public class Fields {
      * Room field.
      */
     public static final String ROOM = "room";
+  }
+
+  /**
+   * MUC list.
+   */
+  public static class ChangeAttendanceIqFields {
+
+    /**
+     * Student field.
+     */
+    public static final String STUDENT = "student";
+
+    /**
+     * Appointment ID.
+     */
+    public static final String APPOINTMENT_ID = "appointmentId";
+
+    /**
+     * Present.
+     */
+    public static final String PRESENT = "present";
   }
 
   /**
@@ -419,7 +507,7 @@ public class Fields {
      */
     public static final String TO = "to";
   }
-  
+
   /**
    * Student IQ element fields.
    */
@@ -456,6 +544,12 @@ public class Fields {
      */
     public static final String INSTRUCTORID = "instructorId";
 
+
+    /**
+     * Instructor ID field.
+     */
+    public static final String CONSULTING_DATE_ID = "consultingDateId";
+
     /**
      * Students tag.
      */
@@ -465,10 +559,25 @@ public class Fields {
      * Student field.
      */
     public static final String STUDENT = "student";
-    
+
+    /**
+     * Students tag.
+     */
+    public static final String DATES = "dates";
+
+    /**
+     * Student field.
+     */
+    public static final String DATE = "date";
+
     /**
      * One week field.
      */
     public static final String ONE_WEEK = "oneWeek";
+
+    /**
+     * Day field.
+     */
+    public static final String DAY = "day";
   }
 }

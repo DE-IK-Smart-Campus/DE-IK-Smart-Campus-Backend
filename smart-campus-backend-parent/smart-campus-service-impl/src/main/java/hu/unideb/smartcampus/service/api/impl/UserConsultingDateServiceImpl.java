@@ -1,8 +1,9 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -11,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.UserConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
 import hu.unideb.smartcampus.service.api.UserConsultingDateService;
-import hu.unideb.smartcampus.service.api.converter.toiq.UserConsultingDateEntityToStudentIqElementConverter;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
 
 /**
@@ -28,23 +30,25 @@ public class UserConsultingDateServiceImpl implements UserConsultingDateService 
   @Autowired
   private UserConsultingDateRepository userConsultingDateRepository;
 
-  @Autowired
-  private UserConsultingDateEntityToStudentIqElementConverter converter;
-
   /**
    * {@inheritDoc}.
    */
   @Transactional(readOnly = true)
   @Override
-  public List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek(Long instructorId) {
-    LOGGER.info("Find user consulting dates for instructor {} within a week.", instructorId);
-    Timestamp from = Timestamp.valueOf(LocalDateTime.now());
-    Timestamp to = Timestamp.valueOf(LocalDateTime.now().plusWeeks(1));
+  public List<InstructorConsultingDateIqElement> findSignedStudentByInstructorIdWithinOneWeek(
+      String neptunIdentifier) {
+    LOGGER.info("Find user consulting dates for instructor {} within a week.", neptunIdentifier);
+    LocalDateTime from = LocalDateTime.now();
+    LocalDateTime to = LocalDateTime.now().plusWeeks(1);
     List<UserConsultingDateEntity> userConsultingDates =
-        userConsultingDateRepository.getUserConsultingDatesByInstructorIdBetweenRange(instructorId,
+        userConsultingDateRepository.getUserConsultingDatesByInstructorIdBetweenRange(
+            neptunIdentifier,
             from, to);
+    List<ConsultingDateEntity> consultingDates = userConsultingDates.stream()
+        .map(consultingDate -> consultingDate.getConsultingDate()).collect(Collectors.toList());
+
     LOGGER.debug("Found dates:{}.", userConsultingDates.size());
-    return toList(userConsultingDates);
+    return create(consultingDates, userConsultingDates);
   }
 
   /**
@@ -52,17 +56,45 @@ public class UserConsultingDateServiceImpl implements UserConsultingDateService 
    */
   @Transactional(readOnly = true)
   @Override
-  public List<StudentIqElement> listSignedStudentByInstructorId(Long instructorId) {
-    LOGGER.info("Find all user consulting dates for instructor {}.", instructorId);
+  public List<InstructorConsultingDateIqElement> listSignedStudentByInstructorId(
+      String neptunIdentifier) {
+    LOGGER.info("Find all user consulting dates for instructor {}.", neptunIdentifier);
     List<UserConsultingDateEntity> userConsultingDates =
-        userConsultingDateRepository.getUserConsultingDatesByInstructorId(instructorId);
+        userConsultingDateRepository.getUserConsultingDatesByInstructorId(neptunIdentifier);
+    List<ConsultingDateEntity> consultingDates = userConsultingDates.stream()
+        .map(consultingDate -> consultingDate.getConsultingDate()).collect(Collectors.toList());
     LOGGER.debug("Found dates:{}.", userConsultingDates.size());
-    return toList(userConsultingDates);
+    return create(consultingDates, userConsultingDates);
   }
 
 
-  private List<StudentIqElement> toList(List<UserConsultingDateEntity> userConsultingDates) {
-    return userConsultingDates.stream().map(converter::convert).collect(Collectors.toList());
+  private List<InstructorConsultingDateIqElement> create(List<ConsultingDateEntity> consultingDates,
+      List<UserConsultingDateEntity> userConsultingDates) {
+    List<InstructorConsultingDateIqElement> result = new ArrayList<>();
+    Map<ConsultingDateEntity, List<UserConsultingDateEntity>> map = userConsultingDates.stream()
+        .collect(Collectors.groupingBy(UserConsultingDateEntity::getConsultingDate));
+
+    for (ConsultingDateEntity dateEntity : map.keySet()) {
+      List<UserConsultingDateEntity> collect = map.get(dateEntity);
+      List<StudentIqElement> students =
+          collect.stream().map(this::toStudentIqElement).collect(Collectors.toList());
+      result.add(InstructorConsultingDateIqElement.builder()
+          .consultingDateId(dateEntity.getId())
+          .day(dateEntity.getDateInString())
+          .students(students)
+          .build());
+    }
+
+    return result;
+  }
+
+  private StudentIqElement toStudentIqElement(UserConsultingDateEntity entity) {
+    return StudentIqElement.builder()
+        .studentName(entity.getUser().getFullName())
+        .neptunIdentifier(entity.getUser().getNeptunIdentifier())
+        .reason(entity.getReason())
+        .duration(entity.getDuration())
+        .build();
   }
 
 }

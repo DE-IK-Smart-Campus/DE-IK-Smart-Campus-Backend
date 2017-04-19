@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.service.api.domain;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,18 +17,18 @@ public class FromToDate {
   /**
    * From date.
    */
-  private Timestamp fromDate;
+  private LocalDateTime fromDate;
 
   /**
    * To date.
    */
-  private Timestamp toDate;
+  private LocalDateTime toDate;
 
   /**
    * Constructs a FromToDate instance.
    */
   @Builder
-  public FromToDate(final Timestamp fromDate, final Timestamp toDate) {
+  public FromToDate(final LocalDateTime fromDate, final LocalDateTime toDate) {
     this.fromDate = fromDate;
     this.toDate = toDate;
   }

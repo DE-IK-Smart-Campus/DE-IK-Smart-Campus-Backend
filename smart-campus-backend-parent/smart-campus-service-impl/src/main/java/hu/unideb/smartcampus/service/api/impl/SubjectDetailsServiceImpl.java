@@ -17,6 +17,7 @@ import hu.unideb.smartcampus.service.api.UserService;
 import hu.unideb.smartcampus.service.api.calendar.domain.subject.SubjectDetails;
 import hu.unideb.smartcampus.service.api.domain.User;
 import hu.unideb.smartcampus.shared.exception.UserNotFoundException;
+import hu.unideb.smartcampus.shared.primarykey.SubjectDetailsPrimaryKey;
 
 
 @Service
@@ -43,25 +44,28 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
     final User user = userService.getById(userId)
         .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
-    return user.getSubjectDetailsList();
+    return user.getSubjectEventList()
+        .stream()
+        .map(event -> event.getSubjectDetails())
+        .collect(Collectors.toList());
   }
 
   @Transactional
   @Override
-  public void save(final SubjectDetails subjectDetails) {
+  public SubjectDetails save(final SubjectDetails subjectDetails) {
     Assert.notNull(subjectDetails);
-
-    subjectDetailsRepository
+    SubjectDetailsEntity entity = subjectDetailsRepository
         .save(conversionService.convert(subjectDetails, SubjectDetailsEntity.class));
+    return conversionService.convert(entity, SubjectDetails.class);
   }
 
   @Transactional
   @Override
-  public void save(final List<SubjectDetails> subjectDetailsList) {
+  public List<SubjectDetails> save(final List<SubjectDetails> subjectDetailsList) {
     Assert.notNull(subjectDetailsList);
-
-    subjectDetailsList.forEach(subjectDetails -> save(subjectDetails));
-    subjectDetailsRepository.flush();
+    return subjectDetailsList.stream()
+        .map(this::saveIfNotExists)
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
@@ -75,6 +79,36 @@ public class SubjectDetailsServiceImpl implements SubjectDetailsService {
   @Override
   public List<SubjectDetails> getSubjectDetailsWithinRangeByUsername(LocalDate from, LocalDate to,
       String username) {
-    return userService.getSubjectsWithinRangeByUsername(username, from, to).stream().collect(Collectors.toList());
+    return userService.getSubjectsWithinRangeByUsername(username, from, to).stream()
+        .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public SubjectDetails getByKey(SubjectDetailsPrimaryKey key) {
+    SubjectDetailsEntity findOne = subjectDetailsRepository.findOne(key);
+    return conversionService.convert(findOne, SubjectDetails.class);
+  }
+
+  private SubjectDetails saveIfNotExists(final SubjectDetails subjectDetails) {
+    Assert.notNull(subjectDetails);
+    SubjectDetails byKey = getByKey(createKeyBySubjectDetails(subjectDetails));
+    SubjectDetailsEntity entity;
+    if (byKey == null) {
+      entity = subjectDetailsRepository
+          .save(conversionService.convert(subjectDetails, SubjectDetailsEntity.class));
+    } else {
+      entity = conversionService.convert(byKey, SubjectDetailsEntity.class);
+    }
+    return conversionService.convert(entity, SubjectDetails.class);
+  }
+
+  private SubjectDetailsPrimaryKey createKeyBySubjectDetails(SubjectDetails subjectDetails) {
+    SubjectDetailsPrimaryKey key = new SubjectDetailsPrimaryKey();
+    key.setSubjectName(subjectDetails.getSubjectName());
+    key.setSubjectType(subjectDetails.getSubjectType().toString());
+    key.setStartPeriod(subjectDetails.getStartPeriod());
+    key.setEndPeriod(subjectDetails.getEndPeriod());
+    return key;
   }
 }

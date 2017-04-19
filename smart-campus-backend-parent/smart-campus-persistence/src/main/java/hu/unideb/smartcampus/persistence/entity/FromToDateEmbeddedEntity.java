@@ -1,7 +1,7 @@
 package hu.unideb.smartcampus.persistence.entity;
 
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -24,20 +24,20 @@ public class FromToDateEmbeddedEntity {
    */
   @NotNull
   @Column(name = "START_DATE")
-  private Timestamp fromDate;
+  private LocalDateTime fromDate;
 
   /**
    * To date.
    */
   @NotNull
   @Column(name = "END_DATE")
-  private Timestamp toDate;
+  private LocalDateTime toDate;
 
   /**
    * Constructs a FromToDateEmbeddedEntity entity.
    */
   @Builder
-  public FromToDateEmbeddedEntity(final Timestamp fromDate, final Timestamp toDate) {
+  public FromToDateEmbeddedEntity(final LocalDateTime fromDate, final LocalDateTime toDate) {
     this.fromDate = fromDate;
     this.toDate = toDate;
   }

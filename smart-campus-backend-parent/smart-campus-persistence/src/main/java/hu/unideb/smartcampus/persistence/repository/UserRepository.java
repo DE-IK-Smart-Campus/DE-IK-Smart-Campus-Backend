@@ -1,13 +1,14 @@
 package hu.unideb.smartcampus.persistence.repository;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import hu.unideb.smartcampus.persistence.entity.CourseAppointmentEntity;
 import hu.unideb.smartcampus.persistence.entity.SubjectDetailsEntity;
+import hu.unideb.smartcampus.persistence.entity.SubjectEventEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 
 /**
@@ -40,12 +41,40 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
   /**
    * Get single chat list by username.
    */
-  List<String> getSingleChatListByUsername(String username);
+  Set<String> getSingleChatListByUsername(String username);
 
   /**
    * Get MUC chat list by username.
    */
-  List<String> getMucChatListByUsername(String username);
+  Set<String> getMucChatListByUsername(String username);
+
+  /**
+   * Get actual course appointements between range.
+   */
+  Set<CourseAppointmentEntity> getCourseAppointmensWithinRange(String username, LocalDate from,
+      LocalDate to);
+
+  /**
+   * Get actual course appointements between range.
+   */
+  Set<CourseAppointmentEntity> getCourseAppointmentsByUsername(String username);
+
+  /**
+   * Get actual course appointements between range.
+   */
+  Set<CourseAppointmentEntity> getCourseAppointmentsBySubjectEvent(String username,
+      SubjectEventEntity subjectEvent);
+
+  /**
+   * Get user subject events.
+   */
+  Set<SubjectEventEntity> getSubjectEventsByUsername(String username);
+
+  /**
+   * Get user subject events within range.
+   */
+  Set<SubjectEventEntity> getSubjectEventsWithinRangeByUsername(String username, LocalDate from,
+      LocalDate to);
 }
 
 

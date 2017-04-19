@@ -1,6 +1,5 @@
 package hu.unideb.smartcampus.persistence.repository;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
@@ -24,7 +23,7 @@ public class UserConsultingDateIntegrationTest extends BaseRepositoryIntegration
 
   private static final Long ADMIN_ID = 1L;
 
-  private static final Long INSTRUCTOR_ID = 2L;
+  private static final String INSTRUCTOR_ID = "123qwe";
 
   /**
    * Test getUserConsultingDatesByConsultingDateId.
@@ -61,8 +60,8 @@ public class UserConsultingDateIntegrationTest extends BaseRepositoryIntegration
     List<UserConsultingDateEntity> instructorConsultingDate =
         userConsultingDateRepository
             .getUserConsultingDatesByInstructorIdBetweenRange(INSTRUCTOR_ID,
-                Timestamp.valueOf(LocalDateTime.of(2017, Month.APRIL, 10, 8, 0)),
-                Timestamp.valueOf(LocalDateTime.of(2017, Month.APRIL, 10, 10, 0)));
+                LocalDateTime.of(2017, Month.APRIL, 10, 8, 0),
+                LocalDateTime.of(2017, Month.APRIL, 10, 10, 0));
     Assert.assertEquals(1, instructorConsultingDate.size());
     Assert.assertEquals(MONDAY_10_12,
         instructorConsultingDate.get(0).getConsultingDate().getDateInString());
