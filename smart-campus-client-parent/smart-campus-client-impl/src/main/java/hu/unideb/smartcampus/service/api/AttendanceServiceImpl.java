@@ -44,9 +44,9 @@ public class AttendanceServiceImpl implements AttendanceService {
   }
 
   @Override
-  public CalendarSubject getSubjectWithAttendanceByName(String name) {
+  public CalendarSubject getSubjectWithAttendanceById(Long id) {
     return listSubjectsWithAttendance().stream()
-        .filter(calendarSubject -> calendarSubject.getSubjectName().equals(name))
+        .filter(calendarSubject -> calendarSubject.getId().equals(id))
         .findFirst()
         .orElse(null);
   }

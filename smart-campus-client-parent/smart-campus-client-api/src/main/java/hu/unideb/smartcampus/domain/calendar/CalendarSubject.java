@@ -7,6 +7,9 @@ import lombok.Data;
 
 @Data
 public class CalendarSubject {
+
+  private Long id;
+
   /**
    * SubjectsModel name.
    */
@@ -35,8 +38,9 @@ public class CalendarSubject {
    * Constructs a CalendarSubjectIqElement instance.
    */
   @Builder
-  public CalendarSubject(String subjectName, String where, String description,
+  public CalendarSubject(Long id, String subjectName, String where, String description,
                          List<AppointmentTime> appointmentTimes) {
+    this.id = id;
     this.subjectName = subjectName;
     this.where = where;
     this.description = description;

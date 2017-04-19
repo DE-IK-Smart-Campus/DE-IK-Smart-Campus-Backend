@@ -5,6 +5,6 @@ import hu.unideb.smartcampus.domain.calendar.CalendarSubject;
 
 public interface AttendanceService {
   List<CalendarSubject> listSubjectsWithAttendance();
-  CalendarSubject getSubjectWithAttendanceByName(String name);
+  CalendarSubject getSubjectWithAttendanceById(Long id);
   void updateAppointmentById(Long id, Boolean present);
 }

@@ -50,7 +50,7 @@ public class AttendanceController {
   /**
    * TODO.
    */
-  private static final String SUBJECT_MODEL_OBJECT_NAME = "subject";
+  private static final String SUBJECT_MODEL_OBJECT_NAME = "subjectModel";
 
   @Autowired
   private AttendanceService attendanceService;
@@ -68,26 +68,26 @@ public class AttendanceController {
     return modelAndView;
   }
 
-  @GetMapping(path = "/{subjectName}")
-  public ModelAndView loadSubjectAttendanceView(final Principal principal, @RequestParam String subjectName) {
+  @GetMapping(path = "/{id}")
+  public ModelAndView loadSubjectAttendanceView(final Principal principal, @RequestParam String id) {
     final ModelAndView modelAndView = new ModelAndView(SUBJECT_ATTENDANCE_VIEW);
     final String name = principal.getName();
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
     SubjectModel subjectModel = new SubjectModel();
-    subjectModel.setSubject(attendanceService.getSubjectWithAttendanceByName(subjectName));
+    subjectModel.setSubject(attendanceService.getSubjectWithAttendanceById(Long.parseLong(id)));
     modelAndView.addObject(SUBJECT_MODEL_OBJECT_NAME, subjectModel);
     return modelAndView;
   }
 
-  @PostMapping(path = "/{subjectName}")
+  @PostMapping
   public ModelAndView updateAttendances(@ModelAttribute SubjectModel subjectModel) {
     final ModelAndView modelAndView = new ModelAndView(REDIRECT_URL_TO_ATTENDANCE_VIEW);
     // set all false
-    attendanceService.getSubjectWithAttendanceByName(subjectModel.getSubject().getSubjectName()).getAppointmentTimes()
+    attendanceService.getSubjectWithAttendanceById(subjectModel.getSubject().getId()).getAppointmentTimes()
         .forEach(appointmentTime -> attendanceService.updateAppointmentById(appointmentTime.getId(), false));
     // set true the ones which came back
     subjectModel.getSubject().getAppointmentTimes()
-        .forEach(appointmentTime -> attendanceService.updateAppointmentById(appointmentTime.getId(), appointmentTime.isPresent()));
+        .forEach(appointmentTime -> attendanceService.updateAppointmentById(appointmentTime.getId(), true));
     return modelAndView;
   }
 }
