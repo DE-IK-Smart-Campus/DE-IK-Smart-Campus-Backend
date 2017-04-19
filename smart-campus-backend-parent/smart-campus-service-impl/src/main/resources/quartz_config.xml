@@ -23,19 +23,19 @@
 			</cron>
 		</trigger>
 
-		<job>
-			<name>RssPollerJob</name>
-			<group>RssPollerJobGroup</group>
-			<description>Polls external sources</description>
-			<job-class>hu.unideb.smartcampus.service.api.rss.RssPollerQuartzJob</job-class>
-		</job>
-		<trigger>
-			<cron>
-				<name>RssPollerJobTrigger</name>
-				<job-name>RssPollerJob</job-name>
-				<job-group>RssPollerJobGroup</job-group>
-				<cron-expression>0 0/1 * * * ?</cron-expression>
-			</cron>
+<!-- 		<job> -->
+<!-- 			<name>RssPollerJob</name> -->
+<!-- 			<group>RssPollerJobGroup</group> -->
+<!-- 			<description>Polls external sources</description> -->
+<!-- 			<job-class>hu.unideb.smartcampus.service.api.rss.RssPollerQuartzJob</job-class> -->
+<!-- 		</job> -->
+<!-- 		<trigger> -->
+<!-- 			<cron> -->
+<!-- 				<name>RssPollerJobTrigger</name> -->
+<!-- 				<job-name>RssPollerJob</job-name> -->
+<!-- 				<job-group>RssPollerJobGroup</job-group> -->
+<!-- 				<cron-expression>0 0/1 * * * ?</cron-expression> -->
+<!-- 			</cron> -->
 		</trigger>
 	</schedule>
 
