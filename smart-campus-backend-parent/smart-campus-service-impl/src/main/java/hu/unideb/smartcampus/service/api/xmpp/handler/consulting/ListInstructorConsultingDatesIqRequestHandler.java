@@ -11,7 +11,7 @@ import hu.unideb.smartcampus.service.api.UserConsultingDateService;
 import hu.unideb.smartcampus.service.api.xmpp.handler.AbstractSmartCampusIqRequestHandler;
 import hu.unideb.smartcampus.shared.iq.request.BaseSmartCampusIqRequest;
 import hu.unideb.smartcampus.shared.iq.request.ListInstructorConsultingDatesIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 
 
 /**
@@ -49,14 +49,14 @@ public class ListInstructorConsultingDatesIqRequestHandler
   public IQ handleIQRequest(IQ iqRequest) {
     ListInstructorConsultingDatesIqRequest iq =
         (ListInstructorConsultingDatesIqRequest) super.handleIQRequest(iqRequest);
-    Long instructorId = iq.getInstructorId();
-    List<StudentIqElement> students = getStudents(iq, instructorId);
-    iq.setStudents(students);
+    String instructorId = iq.getInstructorId();
+    iq.setDates(getDates(iq, instructorId));
     return iq;
   }
 
-  private List<StudentIqElement> getStudents(ListInstructorConsultingDatesIqRequest iq,
-      Long instructorId) {
+  private List<InstructorConsultingDateIqElement> getDates(
+      ListInstructorConsultingDatesIqRequest iq,
+      String instructorId) {
     return iq.isOneWeek()
         ? service.findSignedStudentByInstructorIdWithinOneWeek(iq.getInstructorId())
         : service.listSignedStudentByInstructorId(instructorId);

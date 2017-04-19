@@ -1,4 +1,4 @@
-package hu.unideb.smartcampus.persistence.entity.primarykey;
+package hu.unideb.smartcampus.shared.primarykey;
 
 import java.io.Serializable;
 import java.time.LocalDate;

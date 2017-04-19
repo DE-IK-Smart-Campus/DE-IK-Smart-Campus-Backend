@@ -27,8 +27,10 @@ public class ConsultingDateToConsultingDateEntityConverter
   private ConsultingDateEntity convertConsultingDateToConsultingDateEntity(
       final ConsultingDate consultingDate) {
     return ConsultingDateEntity.builder()
+        .id(consultingDate.getId())
         .date(consultingDate.getDateInString())
         .fromToDate(fromToDateConverter.convert(consultingDate.getFromToDate()))
-        .sum(consultingDate.getSum()).build();
+        .sum(consultingDate.getSum())
+        .build();
   }
 }

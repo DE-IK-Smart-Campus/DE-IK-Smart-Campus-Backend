@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.persistence.repository;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,11 +24,11 @@ public interface UserConsultingDateRepository
   /**
    * Get user consulting date entites by instructor id.
    */
-  List<UserConsultingDateEntity> getUserConsultingDatesByInstructorId(Long instructorId);
+  List<UserConsultingDateEntity> getUserConsultingDatesByInstructorId(String neptunIdentifier);
   
   /**
    * Get user consulting date entites by instructor id.
    */
-  List<UserConsultingDateEntity> getUserConsultingDatesByInstructorIdBetweenRange(Long instructorId, Timestamp from, Timestamp to);
+  List<UserConsultingDateEntity> getUserConsultingDatesByInstructorIdBetweenRange(String neptunIdentifier, LocalDateTime from, LocalDateTime to);
 
 }

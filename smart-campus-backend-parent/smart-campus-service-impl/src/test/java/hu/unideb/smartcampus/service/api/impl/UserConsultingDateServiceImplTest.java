@@ -1,6 +1,5 @@
 package hu.unideb.smartcampus.service.api.impl;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +21,7 @@ import hu.unideb.smartcampus.persistence.entity.UserConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.UserEntity;
 import hu.unideb.smartcampus.persistence.repository.UserConsultingDateRepository;
 import hu.unideb.smartcampus.service.api.converter.toiq.UserConsultingDateEntityToStudentIqElementConverter;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
 
 /**
@@ -41,7 +41,7 @@ public class UserConsultingDateServiceImplTest {
 
   private static final String DURATION = "10 minutes";
 
-  private static final Long INSTRUCTORID = 1L;
+  private static final String INSTRUCTORID = "ABC123";
 
   private static final List<UserConsultingDateEntity> RETURNED_LIST =
       Arrays.asList(UserConsultingDateEntity.builder()
@@ -52,11 +52,12 @@ public class UserConsultingDateServiceImplTest {
                   .build())
           .consultingDate(
               ConsultingDateEntity.builder()
+                  .id(1L)
                   .date(DATE)
                   .fromToDate(
                       FromToDateEmbeddedEntity.builder()
-                          .fromDate(Timestamp.valueOf(LocalDateTime.now()))
-                          .toDate(Timestamp.valueOf(LocalDateTime.now()))
+                          .fromDate(LocalDateTime.now())
+                          .toDate(LocalDateTime.now())
                           .build())
                   .sum(0)
                   .build())
@@ -64,11 +65,18 @@ public class UserConsultingDateServiceImplTest {
           .reason(THESIS)
           .build());
 
-  private static final List<StudentIqElement> EXPECTED_LIST =
+  private static final List<StudentIqElement> STUDENTS =
       Arrays.asList(StudentIqElement.builder()
           .studentName(FULL_NAME)
           .reason(THESIS)
           .duration(DURATION)
+          .build());
+
+  private static final List<InstructorConsultingDateIqElement> EXPECTED_LIST =
+      Arrays.asList(InstructorConsultingDateIqElement.builder()
+          .students(STUDENTS)
+          .day(DATE)
+          .consultingDateId(1L)
           .build());
 
   @InjectMocks
@@ -90,19 +98,18 @@ public class UserConsultingDateServiceImplTest {
     // given
     LocalDateTime fromLocalDateTime = LocalDateTime.of(2000, 1, 1, 8, 0);
     LocalDateTime toLocalDateTime = LocalDateTime.of(2000, 1, 8, 8, 0);
-    Timestamp from = Timestamp.valueOf(fromLocalDateTime);
-    Timestamp to = Timestamp.valueOf(toLocalDateTime);
 
     // when
     PowerMockito.mockStatic(LocalDateTime.class);
     PowerMockito.when(LocalDateTime.now()).thenReturn(fromLocalDateTime);
     PowerMockito.when(LocalDateTime.now().plusWeeks(1)).thenReturn(toLocalDateTime);
     PowerMockito.when(userConsultingDateRepository
-        .getUserConsultingDatesByInstructorIdBetweenRange(INSTRUCTORID, from, to))
+        .getUserConsultingDatesByInstructorIdBetweenRange(INSTRUCTORID, fromLocalDateTime,
+            toLocalDateTime))
         .thenReturn(RETURNED_LIST);
 
     // then
-    List<StudentIqElement> findSignedStudentByInstructorIdWithinOneWeek =
+    List<InstructorConsultingDateIqElement> findSignedStudentByInstructorIdWithinOneWeek =
         service.findSignedStudentByInstructorIdWithinOneWeek(INSTRUCTORID);
     Assert.assertEquals(EXPECTED_LIST, findSignedStudentByInstructorIdWithinOneWeek);
   }
@@ -121,7 +128,7 @@ public class UserConsultingDateServiceImplTest {
         .thenReturn(RETURNED_LIST);
 
     // then
-    List<StudentIqElement> listSignedStudentByInstructorId =
+    List<InstructorConsultingDateIqElement> listSignedStudentByInstructorId =
         service.listSignedStudentByInstructorId(INSTRUCTORID);
     Assert.assertEquals(EXPECTED_LIST, listSignedStudentByInstructorId);
   }

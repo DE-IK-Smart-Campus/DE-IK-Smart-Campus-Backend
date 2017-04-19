@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.service.api.request.service;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import hu.unideb.smartcampus.persistence.entity.ConsultingDateEntity;
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
 import hu.unideb.smartcampus.persistence.entity.InstructorEntity;
 import hu.unideb.smartcampus.persistence.repository.InstructorRepository;
+import hu.unideb.smartcampus.shared.util.DateUtil;
 import hu.unideb.smartcampus.shared.wrapper.inner.ConsultingDateWrapper;
 import hu.unideb.smartcampus.shared.wrapper.inner.FromToDateWrapper;
 
@@ -41,12 +43,10 @@ public class RetrieveInstructorsConsultingDatesRequestServiceImpl
    */
   @Override
   public List<ConsultingDateWrapper> getConsultingDatesByInstructorId(Long instructorId) {
-    Calendar from = Calendar.getInstance();
-    Calendar to = Calendar.getInstance();
-    to.add(Calendar.WEEK_OF_YEAR, 1);
-
+    LocalDateTime from = LocalDateTime.now();
+    LocalDateTime to = LocalDateTime.now().plus(7, ChronoUnit.DAYS);
     Set<ConsultingDateEntity> consultingDates = instructorRepository
-        .getInstructorConsultingDatesByIdAndGivenDate(instructorId, from.getTime(), to.getTime());
+        .getInstructorConsultingDatesByIdAndGivenDate(instructorId, from, to);
 
     return extractConsultingHour(consultingDates);
 
@@ -59,8 +59,10 @@ public class RetrieveInstructorsConsultingDatesRequestServiceImpl
   }
 
   private FromToDateWrapper convertToWrapperFromToDate(FromToDateEmbeddedEntity fromToDate) {
-    return FromToDateWrapper.builder().from(fromToDate.getFromDate().getTime())
-        .to(fromToDate.getToDate().getTime()).build();
+    return FromToDateWrapper.builder()
+        .from(DateUtil.getInEpochLongByLocalDateTime(fromToDate.getFromDate()))
+        .to(DateUtil.getInEpochLongByLocalDateTime(fromToDate.getToDate()))
+        .build();
   }
 
   private List<ConsultingDateWrapper> extractConsultingHour(

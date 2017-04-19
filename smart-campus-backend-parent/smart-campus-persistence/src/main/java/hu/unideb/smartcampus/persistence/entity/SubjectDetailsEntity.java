@@ -15,7 +15,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
-import hu.unideb.smartcampus.persistence.entity.primarykey.SubjectDetailsPrimaryKey;
+import hu.unideb.smartcampus.shared.primarykey.SubjectDetailsPrimaryKey;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

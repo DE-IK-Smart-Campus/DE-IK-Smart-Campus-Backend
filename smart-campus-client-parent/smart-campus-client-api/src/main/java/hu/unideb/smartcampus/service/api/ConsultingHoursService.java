@@ -1,7 +1,9 @@
 package hu.unideb.smartcampus.service.api;
 
 import java.util.List;
+
 import hu.unideb.smartcampus.domain.Instructor;
+import hu.unideb.smartcampus.domain.InstructorConsultingDate;
 import hu.unideb.smartcampus.domain.Subject;
 
 /**
@@ -26,4 +28,6 @@ public interface ConsultingHoursService {
    * @param reason the reason.
    */
   void signUpForConsultingDate(Long consultingHourId, Long duration, String reason);
+  
+  List<InstructorConsultingDate> listThisWeekSignedStudents();
 }

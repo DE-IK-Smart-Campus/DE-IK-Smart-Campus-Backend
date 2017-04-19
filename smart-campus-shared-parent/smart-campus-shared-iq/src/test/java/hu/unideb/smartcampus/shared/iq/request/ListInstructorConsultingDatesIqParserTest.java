@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import hu.unideb.smartcampus.shared.iq.provider.ListInstructorConsultingDatesIqProvider;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
 
 /**
@@ -15,8 +16,9 @@ import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
  */
 public class ListInstructorConsultingDatesIqParserTest extends AbstractParserTest {
 
+  private static final String MONDAY = "Monday";
   private static final Boolean ONE_WEEK = true;
-  private static final Long INSTRUCTORID = 1L;
+  private static final String INSTRUCTORID = "ABC123";
   private static final List<StudentIqElement> STUDENTS = Arrays.asList(
       StudentIqElement.builder()
           .studentName("Erik")
@@ -30,6 +32,12 @@ public class ListInstructorConsultingDatesIqParserTest extends AbstractParserTes
           .reason("TDK")
           .duration("10 minutes")
           .build());
+  private static final List<InstructorConsultingDateIqElement> DATES =
+      Arrays.asList(InstructorConsultingDateIqElement.builder()
+          .consultingDateId(1L)
+          .day(MONDAY)
+          .students(STUDENTS)
+          .build());
 
   /**
    * Test IQ provider.
@@ -39,12 +47,13 @@ public class ListInstructorConsultingDatesIqParserTest extends AbstractParserTes
     ListInstructorConsultingDatesIqRequest iq =
         ListInstructorConsultingDatesIqRequest.builder()
             .instructorId(INSTRUCTORID)
-            .students(STUDENTS)
+            .dates(DATES)
             .oneWeek(ONE_WEEK)
             .build();
     ListInstructorConsultingDatesIqRequest parse = getParsedObject(iq);
     Assert.assertEquals(INSTRUCTORID, parse.getInstructorId());
-    Assert.assertEquals(STUDENTS, parse.getStudents());
+    Assert.assertEquals(DATES, parse.getDates());
+    Assert.assertEquals(STUDENTS, parse.getDates().get(0).getStudents());
     Assert.assertEquals(ONE_WEEK, parse.isOneWeek());
   }
 

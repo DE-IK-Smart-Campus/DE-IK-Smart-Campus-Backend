@@ -1,6 +1,6 @@
 package hu.unideb.smartcampus.persistence.repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,5 +38,10 @@ public interface InstructorRepository extends JpaRepository<InstructorEntity, Lo
   /**
    * Get instructors consulting dates from given date.
    */
-  Set<ConsultingDateEntity> getInstructorConsultingDatesByIdAndGivenDate(Long instructorId, Date from, Date to);
+  Set<ConsultingDateEntity> getInstructorConsultingDatesByIdAndGivenDate(Long instructorId, LocalDateTime from, LocalDateTime to);
+  
+  /**
+   * Get instrcutor by consulting date id.
+   */
+  InstructorEntity getInstructorByConsultingDateId(Long consultingDateId);
 }
