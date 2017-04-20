@@ -93,10 +93,16 @@ public class CustomEventEntity extends BaseEntity<Long> {
    * Constructs custom event entity.
    */
   @Builder
-  public CustomEventEntity(String guid, String eventName, String eventDescription,
-      String eventPlace,
-      LocalDateTime eventStart, LocalDateTime eventEnd, String eventRepeat, String reminder,
-      LocalDate eventWhen) {
+  public CustomEventEntity(final Long id, final String guid,
+      final String eventName,
+      final String eventDescription,
+      final String eventPlace,
+      final LocalDateTime eventStart,
+      final LocalDateTime eventEnd,
+      final String eventRepeat,
+      final String reminder,
+      final LocalDate eventWhen) {
+    super(id);
     this.guid = guid;
     this.eventName = eventName;
     this.eventDescription = eventDescription;

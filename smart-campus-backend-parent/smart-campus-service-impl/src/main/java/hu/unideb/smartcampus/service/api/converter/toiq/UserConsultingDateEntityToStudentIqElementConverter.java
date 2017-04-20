@@ -4,23 +4,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.smartcampus.persistence.entity.UserConsultingDateEntity;
-import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 
 /**
  * User consulting date to student IQ element.
  */
 @Component
 public class UserConsultingDateEntityToStudentIqElementConverter
-    implements Converter<UserConsultingDateEntity, StudentIqElement> {
+    implements Converter<UserConsultingDateEntity, InstructorConsultingDateIqElement> {
 
   @Override
-  public StudentIqElement convert(UserConsultingDateEntity source) {
-    return StudentIqElement.builder()
-        .studentName(source.getUser().getFullName())
+  public InstructorConsultingDateIqElement convert(UserConsultingDateEntity source) {
+    return InstructorConsultingDateIqElement.builder()
         // FIXME neptun kódot majd itt beállítani.
         // .neptunIdentifier("XXX")
-        .duration(source.getDuration())
-        .reason(source.getReason())
         .build();
   }
 

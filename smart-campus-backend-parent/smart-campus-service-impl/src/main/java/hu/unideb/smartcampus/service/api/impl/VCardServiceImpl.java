@@ -26,6 +26,8 @@ import hu.unideb.smartcampus.webservice.api.neptun.NeptunInfo;
 @Service
 public class VCardServiceImpl implements VCardService {
 
+  private static final String UID = "UID";
+
   private static final String ROLE_FIELD = "ROLE";
 
   private static final String NICKNAME_FIELD = "NICKNAME";
@@ -108,6 +110,7 @@ public class VCardServiceImpl implements VCardService {
     vcard.setAvatar(memberInfo.getJpegPhoto(), MIME_TYPE);
     vcard.setField(NICKNAME_FIELD, memberInfo.getTeljnev());
     vcard.setField(ROLE_FIELD, roleUtil.getRoleByNeptunInfo(neptunInfoByUid).toString());
+    vcard.setField(UID, memberInfo.getNeptunIdentifier());
   }
 
   @Override

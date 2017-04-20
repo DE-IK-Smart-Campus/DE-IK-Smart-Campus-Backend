@@ -554,6 +554,12 @@ public class Fields {
      */
     public static final String INSTRUCTORID = "instructorId";
 
+
+    /**
+     * Instructor ID field.
+     */
+    public static final String CONSULTING_DATE_ID = "consultingDateId";
+
     /**
      * Students tag.
      */
@@ -565,8 +571,23 @@ public class Fields {
     public static final String STUDENT = "student";
 
     /**
+     * Students tag.
+     */
+    public static final String DATES = "dates";
+
+    /**
+     * Student field.
+     */
+    public static final String DATE = "date";
+
+    /**
      * One week field.
      */
     public static final String ONE_WEEK = "oneWeek";
+
+    /**
+     * Day field.
+     */
+    public static final String DAY = "day";
   }
 }

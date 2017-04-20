@@ -7,6 +7,7 @@ import static hu.unideb.smartcampus.shared.table.TableName.TABLE_NAME_INSTRUCTOR
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,7 +32,7 @@ import lombok.ToString;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true, exclude = {"consultingDates"})
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
 @Table(name = TABLE_NAME_INSTRUCTOR)
@@ -39,6 +41,8 @@ import lombok.ToString;
         query = "SELECT instr.consultingDates FROM InstructorEntity instr WHERE instr.name = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorsBySubjectName",
         query = "SELECT instr FROM InstructorEntity instr join instr.subjects s WHERE s.subjectName = ?1"),
+    @NamedQuery(name = "InstructorEntity.getInstructorByConsultingDateId",
+        query = "SELECT instr FROM InstructorEntity instr join instr.consultingDates s WHERE s.id = ?1"),
     @NamedQuery(name = "InstructorEntity.getInstructorConsultingDatesByIdAndGivenDate",
         query = "SELECT c FROM InstructorEntity instr join instr.consultingDates c WHERE instr.id = ?1 AND c.fromToDate.fromDate BETWEEN ?2 AND ?3")})
 public class InstructorEntity extends BaseEntity<Long> {
@@ -62,7 +66,7 @@ public class InstructorEntity extends BaseEntity<Long> {
   /**
    * Instructor's consulting hours.
    */
-  @ManyToMany(fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(joinColumns = @JoinColumn(name = "instructor_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "consulting_date_id", referencedColumnName = "id"))
   private Set<ConsultingDateEntity> consultingDates;

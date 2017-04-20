@@ -66,6 +66,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
   }
 
+  @Transactional(readOnly = true)
   @Override
   public Optional<Instructor> getInstructorByNeptunIdentifier(String neptunIdentifier) {
     Assert.notNull(neptunIdentifier);

@@ -1,6 +1,7 @@
 package hu.unideb.smartcampus.persistence.util;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import hu.unideb.smartcampus.persistence.entity.FromToDateEmbeddedEntity;
@@ -19,10 +20,10 @@ public class FromToDateUtil {
    * Creates an entity.
    */
   public FromToDateEmbeddedEntity createEntity(DateHelper fromDate, DateHelper toDate) {
-    Calendar from = createCalenderWithGivenOptions(fromDate);
-    Calendar to = createCalenderWithGivenOptions(toDate);
-    return FromToDateEmbeddedEntity.builder().fromDate(createTimestampWithZeroNanos(from))
-        .toDate(createTimestampWithZeroNanos(to)).build();
+    return FromToDateEmbeddedEntity.builder()
+        .fromDate(LocalDateTime.of(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay(), fromDate.getHour(), fromDate.getMinute(), fromDate.getSecond()))
+        .toDate(LocalDateTime.of(toDate.getYear(), toDate.getMonth(), toDate.getDay(), toDate.getHour(), toDate.getMinute(), toDate.getSecond()))
+        .build();
   }
 
   /**

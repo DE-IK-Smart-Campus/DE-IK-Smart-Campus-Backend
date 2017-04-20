@@ -79,9 +79,7 @@ public class OfficeHourGeneratorServiceImpl implements OfficeHourGeneratorServic
   private FromToDate createFromToDateEntity(LocalDate fromDate, OfficeHour officeHour) {
     LocalDateTime from = createLocalDate(fromDate, officeHour.getDay(), officeHour.getFrom());
     LocalDateTime to = createLocalDate(fromDate, officeHour.getDay(), officeHour.getTo());
-    Timestamp fromInTimestamp = getTimestamp(from);
-    Timestamp toInTimestamp = getTimestamp(to);
-    return FromToDate.builder().fromDate(fromInTimestamp).toDate(toInTimestamp).build();
+    return FromToDate.builder().fromDate(from).toDate(to).build();
   }
 
   private LocalDateTime createLocalDate(LocalDate fromDate, DayOfWeek day, String timeInString) {

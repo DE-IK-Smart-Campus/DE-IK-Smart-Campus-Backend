@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.smartcampus.service.api.xmpp.EjabberdUser;
 import hu.unideb.smartcampus.shared.iq.request.ListInstructorConsultingDatesIqRequest;
-import hu.unideb.smartcampus.shared.iq.request.element.StudentIqElement;
+import hu.unideb.smartcampus.shared.iq.request.element.InstructorConsultingDateIqElement;
 
 @RestController
 public class ListInstructorSignedConsultingDates {
@@ -29,8 +29,8 @@ public class ListInstructorSignedConsultingDates {
   @Autowired
   private EjabberdUser ejabberdUser;
 
-  @GetMapping("/list/instructorSignedStudentStudents/{instructorId}")
-  public ResponseEntity<List<StudentIqElement>> listStudents(@PathVariable Long instructorId) {
+  @GetMapping("/list/instructorSignedStudentStudents/{neptunIdentifier}")
+  public ResponseEntity<List<InstructorConsultingDateIqElement>> listStudents(@PathVariable String neptunIdentifier) {
     ListInstructorConsultingDatesIqRequest resultIq = null;
     try {
       AbstractXMPPConnection connection = ejabberdUser.getConnection();
@@ -38,7 +38,7 @@ public class ListInstructorSignedConsultingDates {
       iq.setType(Type.get);
       iq.setFrom(connection.getUser());
       iq.setTo(JidCreate.from("smartcampus@smartcampus/Smartcampus"));
-      iq.setInstructorId(instructorId);
+      iq.setInstructorId(neptunIdentifier);
       iq.setOneWeek(false);
       StanzaCollector collector = connection.createStanzaCollectorAndSend(iq);
       resultIq = collector.nextResultBlockForever();
@@ -46,6 +46,6 @@ public class ListInstructorSignedConsultingDates {
       LOGGER.error("Error while sending IQ", e);
       ResponseEntity.badRequest().body(e.getCause().getMessage());
     }
-    return ResponseEntity.ok().body(resultIq.getStudents());
+    return ResponseEntity.ok().body(resultIq.getDates());
   }
 }

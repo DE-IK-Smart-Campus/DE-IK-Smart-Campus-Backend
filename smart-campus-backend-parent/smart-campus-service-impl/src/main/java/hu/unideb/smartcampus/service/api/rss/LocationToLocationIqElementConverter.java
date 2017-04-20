@@ -12,13 +12,15 @@ public class LocationToLocationIqElementConverter
     implements Converter<Location, LocationIqElement> {
 
   @Autowired
-  PositionToPositionIqElementConverter positionConverter;
+  private PositionToPositionIqElementConverter positionConverter;
 
   @Override
   public LocationIqElement convert(Location source) {
 
-    PositionIqElement position = positionConverter.convert(source.getPosition());
-
+    PositionIqElement position = null;
+    if (source.getPosition() != null) {
+      position = positionConverter.convert(source.getPosition());
+    }
     return LocationIqElement.builder().id(source.getId()).name(source.getName()).position(position)
         .build();
   }
