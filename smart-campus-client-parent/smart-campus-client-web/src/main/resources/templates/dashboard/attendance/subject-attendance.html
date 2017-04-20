@@ -19,18 +19,22 @@
         <h2 th:text="#{attendance.subject.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <h1 th:text="${subjectModel.subject.subjectName}"></h1>
-            <form th:action="@{/dashboard/attendance}" method="POST" th:object="${subjectModel}">
-              <div th:each="index : ${#numbers.sequence(0, (subjectModel.subject.appointmentTimes.size() - 1))}">
-                <label>
-                  <input type="checkbox" th:field="*{subjectModel.subject.appointmentTimes[__${index}__].present}" value="true"
-                         th:checked="${subjectModel.subject.appointmentTimes[__${index}__].present}"/>
-                  <span
-                      th:text="${#dates.format(new java.util.Date(subjectModel.subject.appointmentTimes[__${index}__].when), 'yyyy-MM-dd')}"></span>
-                </label>
+            <h2 th:text="${subject.subjectName}"></h2>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div th:each="appointment : ${subject.appointmentTimes}">
+                  <form th:action="@{/dashboard/attendance/__${subject.id}__/__${appointment.id}__/__${appointment.present}__}" method="POST">
+                    <label>
+                      <button type="submit" th:class="${appointment.present ? 'btn btn-primary' : 'btn btn-danger'}">
+                        <span th:text="${appointment.present ? '&#10003;' : 'X'}"></span>
+                      </button>
+                      <span
+                          th:text="${#dates.format(new java.util.Date(appointment.when), 'yyyy-MM-dd')}"></span>
+                    </label>
+                  </form>
+                </div>
               </div>
-              <button type="submit" class="btn btn-primary" th:text="#{attendance.subject.submit_changes}"></button>
-            </form>
+            </div>
           </div>
         </div>
       </div>

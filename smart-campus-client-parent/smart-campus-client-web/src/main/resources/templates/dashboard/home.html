@@ -5,6 +5,7 @@
   <thymeleaf th:replace="fragments/head-frag :: basic-head-frag"/>
   <thymeleaf th:replace="fragments/js-locale-frag :: js-locale-frag"/>
   <thymeleaf th:replace="fragments/head-frag :: conversejs-head-frag"/>
+  <thymeleaf th:replace="fragments/head-frag :: calendar-head-frag"/>
 </head>
 <body>
 <div class="dashboard-page">
@@ -20,17 +21,13 @@
         <div class="jumbotron">
           <div class="container">
             <h1 th:text="#{home.welcome}"></h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus hendrerit orci vitae mattis. Donec in euismod nibh. Nam lobortis
-               tincidunt dui ut auctor. Nulla quis mauris et erat faucibus egestas in vitae risus. Aliquam ut lorem laoreet, lobortis purus sit amet,
-               cursus
-               massa. In varius mi dui, lobortis viverra nibh rutrum ut. Aenean mollis nisi neque, dapibus cursus sem imperdiet a. Morbi ultricies
-               turpis eu
-               gravida sollicitudin.</p>
+            <div id="calendar"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript" th:src="@{/js/calendar.js}"></script>
 </body>
 </html>

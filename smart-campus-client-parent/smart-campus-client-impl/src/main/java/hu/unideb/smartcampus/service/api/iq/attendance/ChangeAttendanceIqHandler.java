@@ -11,7 +11,7 @@ public class ChangeAttendanceIqHandler extends IqHandler<ChangeAttendanceIqReque
     this.connection = connection;
     this.domain = domain;
     this.iq = new ChangeAttendanceIqRequest();
-    this.iq.setType(IQ.Type.get);
+    this.iq.setType(IQ.Type.set);
     this.iq.setFrom(connection.getUser());
     this.setSmartcampusUser(iq);
     this.iq.setStudent(getUser(connection));

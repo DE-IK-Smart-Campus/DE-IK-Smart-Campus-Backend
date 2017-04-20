@@ -5,15 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.List;
-import hu.unideb.smartcampus.domain.SubjectModel;
 import hu.unideb.smartcampus.domain.calendar.CalendarSubject;
 import hu.unideb.smartcampus.service.api.AttendanceService;
 
@@ -40,7 +38,7 @@ public class AttendanceController {
   /**
    * TODO.
    */
-  private static final String REDIRECT_URL_TO_ATTENDANCE_VIEW = "redirect:/" + ATTENDANCE_VIEW;
+  private static final String REDIRECT_URL_TO_SUBJECT_ATTENDANCE_VIEW = "redirect:/" + ATTENDANCE_VIEW;
   /**
    * TODO.
    */
@@ -52,7 +50,7 @@ public class AttendanceController {
   /**
    * TODO.
    */
-  private static final String SUBJECT_MODEL_OBJECT_NAME = "subjectModel";
+  private static final String SUBJECT_MODEL_OBJECT_NAME = "subject";
 
   @Autowired
   private AttendanceService attendanceService;
@@ -71,26 +69,19 @@ public class AttendanceController {
     return modelAndView;
   }
 
-  @GetMapping(path = "/{id}")
-  public ModelAndView loadSubjectAttendanceView(final Principal principal, @RequestParam String id) {
+  @GetMapping(path = "/{subjectId}")
+  public ModelAndView loadSubjectAttendanceView(final Principal principal, @PathVariable String subjectId) {
     final ModelAndView modelAndView = new ModelAndView(SUBJECT_ATTENDANCE_VIEW);
     final String name = principal.getName();
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
-    SubjectModel subjectModel = new SubjectModel();
-    subjectModel.setSubject(attendanceService.getSubjectWithAttendanceById(Long.parseLong(id)));
-    modelAndView.addObject(SUBJECT_MODEL_OBJECT_NAME, subjectModel);
+    modelAndView.addObject(SUBJECT_MODEL_OBJECT_NAME, attendanceService.getSubjectWithAttendanceById(Long.parseLong(subjectId)));
     return modelAndView;
   }
 
-  @PostMapping
-  public ModelAndView updateAttendances(@ModelAttribute SubjectModel subjectModel) {
-    final ModelAndView modelAndView = new ModelAndView(REDIRECT_URL_TO_ATTENDANCE_VIEW);
-    // set all false
-    attendanceService.getSubjectWithAttendanceById(subjectModel.getSubject().getId()).getAppointmentTimes()
-        .forEach(appointmentTime -> attendanceService.updateAppointmentById(appointmentTime.getId(), false));
-    // set true the ones which came back
-    subjectModel.getSubject().getAppointmentTimes()
-        .forEach(appointmentTime -> attendanceService.updateAppointmentById(appointmentTime.getId(), true));
+  @PostMapping(path = "/{subjectId}/{appointmentId}/{present}")
+  public ModelAndView updateAttendances(@PathVariable String subjectId, @PathVariable String appointmentId, @PathVariable String present) {
+    final ModelAndView modelAndView = new ModelAndView(REDIRECT_URL_TO_SUBJECT_ATTENDANCE_VIEW + "/" + subjectId);
+    attendanceService.updateAppointmentById(Long.parseLong(appointmentId), !Boolean.parseBoolean(present));
     return modelAndView;
   }
 }

@@ -19,7 +19,7 @@
         <h2 th:text="#{attendance.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <h1 th:text="#{attendance.current_subjects}"></h1>
+            <h2 th:text="#{attendance.current_subjects}"></h2>
             <div th:each="subject : ${subjects}">
               <a th:class="(${subject.appointmentTimes.size() lt 1} ? 'hidden')" th:href="@{/dashboard/attendance/__${subject.id}__}"
                  th:text="${subject.subjectName}"></a>
