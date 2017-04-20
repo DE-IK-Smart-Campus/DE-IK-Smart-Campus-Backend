@@ -50,7 +50,7 @@ public class CalendarSubjectsIqRequestTest extends AbstractParserTest {
   
   private static final List<CalendarSubjectIqElement> SUBJECTEVENTS =
       Arrays.asList(CalendarSubjectIqElement.builder().id(SUBJECT_ID).subjectName(SUBJECTNAME)
-          .appointmentTimes(APPOINTMENTTIMES).description(DESCRIPTION).where(WHERE).build());
+          .appointmentTimes(APPOINTMENTTIMES).description(DESCRIPTION).where(WHERE).id(SUBJECT_ID).build());
 
   @Test
   public void testIqProvider() throws Exception {
