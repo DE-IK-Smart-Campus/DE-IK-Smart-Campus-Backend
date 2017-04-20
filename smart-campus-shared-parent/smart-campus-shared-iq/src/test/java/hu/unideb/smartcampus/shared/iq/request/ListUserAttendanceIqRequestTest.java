@@ -48,6 +48,8 @@ public class ListUserAttendanceIqRequestTest extends AbstractParserTest {
 
   private static final String WHERE = "Room";
 
+  private static final Long SUBJECT_ID = 100L;
+  
   private static final String DESCRIPTION = "description";
 
   private static final String STUDENT = "ExampleStudent";
@@ -59,6 +61,7 @@ public class ListUserAttendanceIqRequestTest extends AbstractParserTest {
 
   private static final List<CalendarSubjectIqElement> SUBJECTEVENTS =
       Arrays.asList(CalendarSubjectIqElement.builder().subjectName(SUBJECTNAME)
+          .id(SUBJECT_ID)
           .appointmentTimes(APPOINTMENTTIMES)
           .description(DESCRIPTION)
           .where(WHERE).build());

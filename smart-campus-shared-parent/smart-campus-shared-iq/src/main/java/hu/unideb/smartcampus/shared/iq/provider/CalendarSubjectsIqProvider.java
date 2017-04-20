@@ -12,6 +12,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqR
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.TO;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.WHEN;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.WHERE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.ID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,8 @@ public class CalendarSubjectsIqProvider
             endPeriod = Long.valueOf(text);
           } else if (tagname.equals(CalendarSubjectsIqRequest.ELEMENT)) {
             done = true;
+          } else if (tagname.equalsIgnoreCase(ID)){
+            subject.setId(Long.parseLong(text));
           }
           break;
         default:

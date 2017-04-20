@@ -9,6 +9,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendance
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.STUDENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.SUBJECT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.SUBJECT_EVENTS;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.SUBJECT_ID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.SUBJECT_NAME;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.TO;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.WHEN;
@@ -92,6 +93,7 @@ public class ListUserAttendanceIqRequest extends BaseSmartCampusIqRequest {
 
   private void buildSubject(StringBuilder builder, CalendarSubjectIqElement calendarIqElement) {
     builder.append(openTag(SUBJECT));
+    builder.append(tag(SUBJECT_ID, calendarIqElement.getId()));
     builder.append(tag(SUBJECT_NAME, calendarIqElement.getSubjectName()));
     builder.append(tag(WHERE, calendarIqElement.getWhere()));
     builder.append(tag(DESCRIPTION, calendarIqElement.getDescription()));

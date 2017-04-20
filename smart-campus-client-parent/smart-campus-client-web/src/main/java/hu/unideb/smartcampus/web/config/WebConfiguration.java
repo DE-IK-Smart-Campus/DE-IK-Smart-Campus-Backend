@@ -37,7 +37,15 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
   @Bean
   public ResourceBundleMessageSource messageSource() {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-    messageSource.setBasenames("i18n/index", "i18n/error", "i18n/dashboard", "i18n/home", "i18n/calendar", "i18n/consulting_hours");
+    messageSource.setBasenames(
+        "i18n/index",
+        "i18n/error",
+        "i18n/dashboard",
+        "i18n/home",
+        "i18n/calendar",
+        "i18n/consulting_hours",
+        "i18n/attendance"
+    );
     return messageSource;
   }
 

@@ -13,6 +13,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqR
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.TO;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.WHEN;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.WHERE;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.CalendarSubjectIqRequestFields.ID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +103,7 @@ public class CalendarSubjectsIqRequest extends BaseSmartCampusIqRequest {
 
   private void buildSubject(StringBuilder builder, CalendarSubjectIqElement calendarIqElement) {
     builder.append(openTag(SUBJECT));
+    builder.append(tag(ID,calendarIqElement.getId()));
     builder.append(tag(SUBJECT_NAME, calendarIqElement.getSubjectName()));
     builder.append(tag(WHERE, calendarIqElement.getWhere()));
     builder.append(tag(DESCRIPTION, calendarIqElement.getDescription()));
