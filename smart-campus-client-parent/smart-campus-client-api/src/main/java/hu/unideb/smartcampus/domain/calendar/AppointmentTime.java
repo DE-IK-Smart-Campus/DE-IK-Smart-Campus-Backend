@@ -1,6 +1,8 @@
 package hu.unideb.smartcampus.domain.calendar;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,6 +13,7 @@ public class AppointmentTime {
   private Long from;
   private Long to;
   private Timestamp when;
+  private LocalDate whenInLocalDate;
   private boolean present;
 
   public AppointmentTime() {

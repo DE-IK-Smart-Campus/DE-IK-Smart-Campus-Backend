@@ -19,7 +19,7 @@
         <h2 th:text="#{attendance.subject.page_title}"></h2>
         <div class="jumbotron">
           <div class="container">
-            <h2 th:text="${subject.subjectName}"></h2>
+            <h2 th:text="${subject.subjectName} + ' - ' + ${subject.description == 'E' ? '__#{attendance.e}__' : ''} + ${subject.description == 'L' ? '__#{attendance.l}__' : ''} + ${subject.description == 'G' ? '__#{attendance.g}__' : ''} + ${subject.description == 'O' ? '__#{attendance.o}__' : ''}"></h2>
             <div class="panel panel-default">
               <div class="panel-body">
                 <div th:each="appointment : ${subject.appointmentTimes}">
@@ -29,7 +29,7 @@
                         <span th:text="${appointment.present ? '&#10003;' : 'X'}"></span>
                       </button>
                       <span
-                          th:text="${#dates.format(new java.util.Date(appointment.when), 'yyyy-MM-dd')}"></span>
+                          th:text="${appointment.whenInLocalDate}"></span>
                     </label>
                   </form>
                 </div>
