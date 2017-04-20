@@ -1,6 +1,11 @@
 package hu.unideb.smartcampus.web.controller.dashboard;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import hu.unideb.smartcampus.service.api.CalendarService;
+import hu.unideb.smartcampus.service.api.authentication.SmartCampusUserDetails;
 import hu.unideb.smartcampus.shared.iq.request.element.CustomEventIqElement;
 import hu.unideb.smartcampus.shared.util.DateUtil;
 
@@ -44,6 +47,10 @@ public class CalendarController {
   /**
    * TODO.
    */
+  private static final String IS_STAFF_MODEL_OBJECT_NAME = "isStaff";
+  /**
+   * TODO.
+   */
   private static final String CUSTOM_EVENT_LIST_MODEL_OBJECT_NAME = "customEvents";
 
   @Autowired
@@ -57,6 +64,9 @@ public class CalendarController {
   public ModelAndView loadCalendarView(final Principal principal) {
     final ModelAndView modelAndView = new ModelAndView(CALENDAR_VIEW);
     final String name = principal.getName();
+    UsernamePasswordAuthenticationToken details = (UsernamePasswordAuthenticationToken) principal;
+    SmartCampusUserDetails userDetails = (SmartCampusUserDetails) details.getPrincipal();
+    modelAndView.addObject(IS_STAFF_MODEL_OBJECT_NAME, userDetails.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_STAFF")));
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
 
     modelAndView.addObject(CUSTOM_EVENT_LIST_MODEL_OBJECT_NAME, calendarService.getCustomEventsAsCustomEventList());
