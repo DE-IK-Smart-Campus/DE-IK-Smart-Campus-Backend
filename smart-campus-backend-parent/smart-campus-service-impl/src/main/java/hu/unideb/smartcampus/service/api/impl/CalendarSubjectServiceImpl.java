@@ -85,7 +85,8 @@ public class CalendarSubjectServiceImpl implements CalendarSubjectService {
         .subjectName(subjectEvent.getSubjectDetails().getSubjectName())
         .where(subjectEvent.getRoomLocation())
         .appointmentTimes(convertToIqElement(list))
-        .description(createDescriptionByTeachers(subjectEvent)).build();
+        .description(String.valueOf(subjectEvent.getSubjectDetails().getSubjectType().getSubjectTypeCode()))
+        .build();
   }
 
   private AppointmentTimeIqElement convertToIqElement(CourseAppointment appointmentTime) {
