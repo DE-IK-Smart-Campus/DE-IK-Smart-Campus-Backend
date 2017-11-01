@@ -12,7 +12,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.google.common.collect.Sets;
 
@@ -29,7 +31,8 @@ import hu.unideb.smartcampus.shared.wrapper.inner.SubjectWrapper;
 /**
  * Test for {@link RetrieveSubjectsRequestServiceImplTest}.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({LocalDate.class, RetrieveSubjectsRequestServiceImpl.class})
 @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.UnusedLocalVariable"})
 public class RetrieveSubjectsRequestServiceImplTest {
 
@@ -157,7 +160,9 @@ public class RetrieveSubjectsRequestServiceImplTest {
 
     // when
     // FIXME Mock date!!!
-    Mockito.when(userRepository.getSubjectsWithinRangeByUsername(USER_ID,LocalDate.of(2017, 1, 1),LocalDate.of(2017, 5, 31))).thenReturn(SUBJECTS);
+    PowerMockito.mockStatic(LocalDate.class);
+    Mockito.when(userRepository.getSubjectsWithinRangeByUsername(USER_ID, LocalDate.of(2017, 1, 1),
+        LocalDate.of(2017, 5, 31))).thenReturn(SUBJECTS);
 
     // then
     List<SubjectWrapper> requestedSubjects = service.getSubjects(USER_ID);
