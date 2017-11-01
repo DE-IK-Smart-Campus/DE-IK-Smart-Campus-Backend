@@ -17,6 +17,7 @@ public abstract class AbstractParserTest {
     StringBuilder xml = buildXml(iq);
     Reader in = new CharArrayReader(xml.toString().toCharArray());
     parser.setInput(in);
+    System.out.println(xml);
     return (T) getProvider().parse(parser, 0);
   }
 

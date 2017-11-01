@@ -40,14 +40,17 @@ public class CalendarSubjectsIqRequestTest extends AbstractParserTest {
   
   private static final String STUDENT = "ExampleStudent";
   
+
+  private static final Long SUBJECT_ID = 100L;
+
   private static final String SUBJECTNAME = "AI";
   
   private static final List<AppointmentTimeIqElement> APPOINTMENTTIMES =
       Arrays.asList(APPOINTMENT_TIME_IQ_ELEMENT, APPOINTMENT_TIME_IQ_ELEMENT_SECOND);
   
   private static final List<CalendarSubjectIqElement> SUBJECTEVENTS =
-      Arrays.asList(CalendarSubjectIqElement.builder().subjectName(SUBJECTNAME)
-          .appointmentTimes(APPOINTMENTTIMES).description(DESCRIPTION).where(WHERE).build());
+      Arrays.asList(CalendarSubjectIqElement.builder().id(SUBJECT_ID).subjectName(SUBJECTNAME)
+          .appointmentTimes(APPOINTMENTTIMES).description(DESCRIPTION).where(WHERE).id(SUBJECT_ID).build());
 
   @Test
   public void testIqProvider() throws Exception {

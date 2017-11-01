@@ -19,6 +19,7 @@ public class CalendarSubjectConverter implements Converter<CalendarSubjectIqElem
   @Override
   public CalendarSubject convert(CalendarSubjectIqElement calendarSubjectIqElement) {
     return new CalendarSubject(
+        calendarSubjectIqElement.getId(),
         calendarSubjectIqElement.getSubjectName(),
         calendarSubjectIqElement.getWhere(),
         calendarSubjectIqElement.getDescription(),

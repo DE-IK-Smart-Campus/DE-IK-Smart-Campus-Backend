@@ -1,8 +1,12 @@
 package hu.unideb.smartcampus.web.controller.dashboard;
 
+import java.security.Principal;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-import java.util.List;
 import hu.unideb.smartcampus.domain.ConsultingDate;
 import hu.unideb.smartcampus.domain.Instructor;
 import hu.unideb.smartcampus.domain.Subject;
 import hu.unideb.smartcampus.service.api.ConsultingHoursService;
+import hu.unideb.smartcampus.service.api.authentication.SmartCampusUserDetails;
 
 /**
  * TODO.
@@ -55,6 +58,10 @@ public class ConsultingHoursController {
   /**
    * TODO.
    */
+  private static final String IS_STAFF_MODEL_OBJECT_NAME = "isStaff";
+  /**
+   * TODO.
+   */
   private static final String SUBJECT_LIST_MODEL_OBJECT_NAME = "subjectList";
   /**
    * TODO.
@@ -77,6 +84,9 @@ public class ConsultingHoursController {
   public ModelAndView loadConsultingHoursView(final Principal principal) {
     final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_VIEW);
     final String name = principal.getName();
+    UsernamePasswordAuthenticationToken details = (UsernamePasswordAuthenticationToken) principal;
+    SmartCampusUserDetails userDetails = (SmartCampusUserDetails) details.getPrincipal();
+    modelAndView.addObject(IS_STAFF_MODEL_OBJECT_NAME, userDetails.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_STAFF")));
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
 
     final List<Subject> subjects = consultingHoursService.getSubjects();
@@ -93,6 +103,9 @@ public class ConsultingHoursController {
   public ModelAndView loadInstructorView(final Principal principal, @PathVariable final Long instructorId) {
     final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_INSTRUCTOR_VIEW);
     final String name = principal.getName();
+    UsernamePasswordAuthenticationToken details = (UsernamePasswordAuthenticationToken) principal;
+    SmartCampusUserDetails userDetails = (SmartCampusUserDetails) details.getPrincipal();
+    modelAndView.addObject(IS_STAFF_MODEL_OBJECT_NAME, userDetails.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_STAFF")));
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
 
     final Instructor instructor = consultingHoursService.getInstructorByInstructorId(instructorId);
@@ -113,6 +126,9 @@ public class ConsultingHoursController {
   ) {
     final ModelAndView modelAndView = new ModelAndView(CONSULTING_HOURS_CONSULTING_DATE_SIGN_UP_VIEW);
     final String name = principal.getName();
+    UsernamePasswordAuthenticationToken details = (UsernamePasswordAuthenticationToken) principal;
+    SmartCampusUserDetails userDetails = (SmartCampusUserDetails) details.getPrincipal();
+    modelAndView.addObject(IS_STAFF_MODEL_OBJECT_NAME, userDetails.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_STAFF")));
     modelAndView.addObject(CURRENT_USERNAME_MODEL_OBJECT_NAME, name);
 
     final Instructor instructor = consultingHoursService.getInstructorByInstructorId(instructorId);

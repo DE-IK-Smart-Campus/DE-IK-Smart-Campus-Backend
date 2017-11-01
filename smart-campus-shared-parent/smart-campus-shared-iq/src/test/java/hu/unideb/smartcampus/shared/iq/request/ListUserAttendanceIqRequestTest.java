@@ -16,6 +16,8 @@ import hu.unideb.smartcampus.shared.iq.request.element.CalendarSubjectIqElement;
  */
 public class ListUserAttendanceIqRequestTest extends AbstractParserTest {
 
+  private static final String LOCATION = "IK-F01";
+
   private static final long ID2 = 2L;
 
   private static final long ID = 1L;
@@ -48,6 +50,8 @@ public class ListUserAttendanceIqRequestTest extends AbstractParserTest {
 
   private static final String WHERE = "Room";
 
+  private static final Long SUBJECT_ID = 100L;
+  
   private static final String DESCRIPTION = "description";
 
   private static final String STUDENT = "ExampleStudent";
@@ -59,8 +63,10 @@ public class ListUserAttendanceIqRequestTest extends AbstractParserTest {
 
   private static final List<CalendarSubjectIqElement> SUBJECTEVENTS =
       Arrays.asList(CalendarSubjectIqElement.builder().subjectName(SUBJECTNAME)
+          .id(SUBJECT_ID)
           .appointmentTimes(APPOINTMENTTIMES)
           .description(DESCRIPTION)
+          .where(LOCATION)
           .where(WHERE).build());
 
   @Test
@@ -71,6 +77,7 @@ public class ListUserAttendanceIqRequestTest extends AbstractParserTest {
             .subjectEvents(SUBJECTEVENTS)
             .build();
     ListUserAttendanceIqRequest parse = getParsedObject(iq);
+    System.out.println(parse);
     Assert.assertEquals(STUDENT, parse.getStudent());
     Assert.assertEquals(SUBJECTEVENTS, parse.getSubjectEvents());
     Assert.assertEquals(APPOINTMENTTIMES,

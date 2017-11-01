@@ -1,13 +1,17 @@
 package hu.unideb.smartcampus.domain.calendar;
 
+import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 public class CalendarSubject {
+
+  private Long id;
+
   /**
-   * Subject name.
+   * SubjectsModel name.
    */
   private String subjectName;
 
@@ -26,12 +30,17 @@ public class CalendarSubject {
    */
   private List<AppointmentTime> appointmentTimes;
 
+  public CalendarSubject() {
+    appointmentTimes = Collections.emptyList();
+  }
+
   /**
    * Constructs a CalendarSubjectIqElement instance.
    */
   @Builder
-  public CalendarSubject(String subjectName, String where, String description,
+  public CalendarSubject(Long id, String subjectName, String where, String description,
                          List<AppointmentTime> appointmentTimes) {
+    this.id = id;
     this.subjectName = subjectName;
     this.where = where;
     this.description = description;

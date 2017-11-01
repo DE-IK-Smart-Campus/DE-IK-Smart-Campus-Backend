@@ -35,6 +35,11 @@ public class CalendarSubjectIqElement implements Serializable {
   private static final long serialVersionUID = 6717626218636857093L;
 
   /**
+   * Subject id.
+   */
+  private Long id;
+  
+  /**
    * Subject name.
    */
   private String subjectName;
@@ -54,12 +59,15 @@ public class CalendarSubjectIqElement implements Serializable {
    */
   private List<AppointmentTimeIqElement> appointmentTimes;
 
+
   /**
    * Constructs a CalendarSubjectIqElement instance.
    */
   @Builder
-  public CalendarSubjectIqElement(String subjectName, String where, String description,
+  public CalendarSubjectIqElement(Long id, String subjectName, String where, String description,
       List<AppointmentTimeIqElement> appointmentTimes) {
+    super();
+    this.id = id;
     this.subjectName = subjectName;
     this.where = where;
     this.description = description;

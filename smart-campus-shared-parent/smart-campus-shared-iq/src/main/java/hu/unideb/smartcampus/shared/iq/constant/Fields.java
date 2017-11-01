@@ -178,6 +178,11 @@ public class Fields {
 
 
     /**
+     * The id of the subject;
+     */
+    public static final String ID = "id";
+
+    /**
      * Subject field.
      */
     public static final String SUBJECT = "sub";
@@ -289,6 +294,11 @@ public class Fields {
      */
     public static final String PRESENT = "present";
 
+    /**
+     * ID field.
+     */
+    public static final String SUBJECT_ID = "subjectId";
+    
     /**
      * ID field.
      */

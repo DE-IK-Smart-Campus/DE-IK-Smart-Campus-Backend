@@ -8,6 +8,7 @@ import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendance
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.PRESENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.STUDENT;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.SUBJECT;
+import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.SUBJECT_ID;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.SUBJECT_NAME;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.TO;
 import static hu.unideb.smartcampus.shared.iq.constant.Fields.ListUserAttendanceFields.WHEN;
@@ -79,6 +80,8 @@ public class ListUserAttendanceIqProvider
             subject.setWhere(text);
           } else if (tagname.equalsIgnoreCase(SUBJECT_NAME)) {
             subject.setSubjectName(text);
+          } else if (tagname.equalsIgnoreCase(SUBJECT_ID)) {
+            subject.setId(Long.parseLong(text));
           } else if (tagname.equalsIgnoreCase(DESCRIPTION)) {
             subject.setDescription(text);
           } else if (tagname.equals(ListUserAttendanceIqRequest.ELEMENT)) {
