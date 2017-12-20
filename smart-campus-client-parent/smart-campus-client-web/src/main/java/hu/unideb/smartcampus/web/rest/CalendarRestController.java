@@ -28,7 +28,7 @@ public class CalendarRestController {
     return Stream.concat(
         calendarService.getCalendarSubjectEvents(
             LocalDate.of(2017, 1, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2)),
-            LocalDate.of(2017, 5, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2))
+            LocalDate.of(2017, 12, 31).atStartOfDay().toEpochSecond(ZoneOffset.ofHours(2))
         ).stream(),
         calendarService.getCustomEventsAsCalendarEventList().stream()
     ).collect(Collectors.toList());

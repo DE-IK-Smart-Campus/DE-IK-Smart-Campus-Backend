@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
+import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -26,6 +30,7 @@ import hu.unideb.smartcampus.web.config.security.LdapConfigurationPropertyProvid
 import hu.unideb.smartcampus.web.config.security.LdapProperties;
 import hu.unideb.smartcampus.web.config.security.SmartCampusApiRequestMatcher;
 import hu.unideb.smartcampus.web.config.security.SmartCampusAuthenticationSuccessHandler;
+import hu.unideb.smartcampus.web.config.security.SmartCampusLdapShaPasswordEncoder;
 import hu.unideb.smartcampus.web.config.security.SmartCampusLogoutSuccessHandler;
 import hu.unideb.smartcampus.web.config.security.SmartCampusSynchronizingContextMapper;
 
@@ -55,17 +60,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.ldapAuthentication()
+         .passwordEncoder(new SmartCampusLdapShaPasswordEncoder())
         .userDnPatterns(
             ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_USERPATTERN))
         .groupSearchBase(
             ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_GROUP_SERACH_BASE))
-        .groupSearchFilter(
-            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_GROUP_FILTER))
-        .contextSource(contextSource()).passwordCompare()
-        .passwordEncoder(new LdapShaPasswordEncoder())
-        .passwordAttribute(ldapConfigurationPropertyProvider
-            .getProperty(LdapProperties.LDAP_PASSWORD_ATTRIBUTE_NAME))
-        .and().userDetailsContextMapper(userDetailsContextMapper());
+//        .groupSearchFilter(
+//            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_GROUP_FILTER))
+        .contextSource(contextSource())
+        .userDetailsContextMapper(userDetailsContextMapper());
   }
 
   /**
@@ -83,12 +86,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
    */
   @Bean
   public DefaultSpringSecurityContextSource contextSource() {
-    return new DefaultSpringSecurityContextSource(
-        Arrays.asList(LDAP_PROTOCOL_PREFIX
-            + ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_HOST)
-            + COLON
-            + ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_PORT)),
-        ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_BASE_DN));
+    DefaultSpringSecurityContextSource defaultSpringSecurityContextSource = new DefaultSpringSecurityContextSource(
+            Arrays.asList(LDAP_PROTOCOL_PREFIX
+                    + ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_HOST)
+                    + COLON
+                    + ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_PORT)),
+            ldapConfigurationPropertyProvider.getProperty(LdapProperties.LDAP_PROVIDER_BASE_DN));
+    defaultSpringSecurityContextSource.setUserDn("cn=Admin,ou=System,o=DE,o=NIIF,c=HU");
+    defaultSpringSecurityContextSource.setPassword("Lr1.DEIK");
+    return defaultSpringSecurityContextSource;
   }
 
 }
