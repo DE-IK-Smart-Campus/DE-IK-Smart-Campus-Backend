@@ -1,0 +1,41 @@
+html {
+    font-size: 14px;
+}
+
+.login-page {
+	background: linear-gradient(135deg, rgba(59, 103, 158, 1) 0%, rgba(43, 136, 217, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%);
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+	text-align: center;
+    color: #fff;
+    padding: 3em;
+}
+
+.login-page .logo {
+	width: 192px;
+	filter: drop-shadow(0 0 4px #000a);
+}
+
+.login-page .form-group {
+    padding: 8px 0
+}
+
+.login-page .form-content {
+    padding: 20px 0
+}
+
+.login-page .display-4 {
+    margin-bottom: 20px;
+}
+
+.btn-round-lg {
+    border-radius: 23px;
+}
+
+.btn-shadow {
+	box-shadow: 0 0 10px 0px #0005;
+}
